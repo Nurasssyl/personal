@@ -1,195 +1,295 @@
- <!--
-        - #RESUME
-      -->
+<!DOCTYPE html>
+<html lang="en">
 
-<article class="resume" data-page="resume">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nurasyl - Resume</title>
+  
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png">
+  <link rel="manifest" href="./assets/images/site.webmanifest">
+  <link rel="shortcut icon" href="./assets/images/favicon.ico" type="image/x-icon">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
 
-  <header>
-    <h2 class="h2 article-title">Resume</h2>
-  </header>
-
-  <section class="timeline">
-
-    <div class="title-wrapper">
-      <div class="icon-box">
-        <ion-icon name="book-outline"></ion-icon>
+<body>
+  <!-- Main content -->
+  <main>
+    <!-- Sidebar -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="./assets/images/my_photo.png" alt="Nurasyl Abdrazakuly" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Nurasyl Abdrazakuly">Nurasyl Abdrazakuly</h1>
+          <p class="title">Data scientist</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Contacts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
       </div>
-
-      <h3 class="h3">Education</h3>
-    </div>
-
-    <ol class="timeline-list">
-
-      <li class="timeline-item">
-
-        <h4 class="h4 timeline-item-title">Al-Farabi Kazakh National University</h4>
-        <span>06/2024</span>
-        <p class="timeline-text">
-          Master of Science: Computer Engineering
-        </p>
-
-      </li>
-
-      <li class="timeline-item">
-
-        <h4 class="h4 timeline-item-title">Al-Farabi Kazakh National University</h4>
-        <span>07/2022</span>
-        <p class="timeline-text">
-          Bachelor of Science: Computer Science
-        </p>
-
-      </li>
-
-    </ol>
-
-  </section>
-
-  <section class="timeline">
-
-    <div class="title-wrapper">
-      <div class="icon-box">
-        <ion-icon name="briefcase-outline"></ion-icon>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:nura2242@mail.ru" class="contact-link">nura2242@mail.ru</a>
+            </div>
+          </li>
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="phone-portrait-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Phone</p>
+              <a href="https://t.me/data_Nurasyl" class="contact-link">@data_Nurasyl</a>
+            </div>
+          </li>
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="calendar-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Birthday</p>
+              <time datetime="2000-12-29">December 29, 2000</time>
+            </div>
+          </li>
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Location</p>
+              <address>Almaty city, Kazakhstan</address>
+            </div>
+          </li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://www.linkedin.com/in/nurasyl-abdrazakuly/" class="social-link">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+          <li class="social-item">
+            <a href="https://www.instagram.com/nurassyl____" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+        </ul>
       </div>
-
-      <h3 class="h3">Experience</h3>
-    </div>
-
-    <ol class="timeline-list">
-
-      <li class="timeline-item">
-
-        <h4 class="h4 timeline-item-title">Data Analyst | Jusan Garant</h4>
-        <span>07/2024 - Current</span>
-        <p class="timeline-text">
-          Working in a leading insurance company, I focus on data analysis and visualization projects to support business decision-making and enhance operational efficiency.
-        </p>
-
-      </li>
-
-      <li class="timeline-item">
-
-        <h4 class="h4 timeline-item-title">Data Analyst | Keyhorse LLP</h4>
-        <span>10/2022 - 06/2024</span>
-        <p class="timeline-text">
-          Digitalization of public and private organizational services. I analyze the service as a business process, change them as a whole, improve the process and digitize so that everyone can receive the service without leaving home.
-        </p>
-
-      </li>
-
-      <li class="timeline-item">
-
-        <h4 class="h4 timeline-item-title">Financial Analyst | Quick Money LLP</h4>
-        <span>04/2020 - 06/2022</span>
-        <p class="timeline-text">
-          Created a Data processing Model which at the input is given information from customer profiles and the output data was the credit score of the customer or organization. The model facilitates the work of employees in lending, investing, and rejects the human factor. The model was written in Python.
-        </p>
-
-      </li>
-
-      <li class="timeline-item">
-
-        <h4 class="h4 timeline-item-title">Data Analyst | ACT Kazakhstan</h4>
-        <span>11/2018 - 03/2020</span>
-        <p class="timeline-text">
-          Collaborated with large companies, analyzing their activities, predicting business features, and conducting surveys among employees and customers. Utilized tools like MS Excel, MS Power BI, and Python to create insightful reports, which were presented to both internal stakeholders and cooperating companies.
-        </p>
-
-      </li>
-
-    </ol>
-
-  </section>
-
-  <section class="skill">
-
-    <h3 class="h3 skills-title">My Skills</h3>
-
-    <ul class="skills-list content-card">
-
-      <li class="skills-item">
-
+    </aside>
+    
+    <!-- Resume Section -->
+    <article class="resume" data-page="resume">
+      <header>
+        <h2 class="h2 article-title">Resume</h2>
+      </header>
+      <section class="timeline">
         <div class="title-wrapper">
-          <h5 class="h5">Python</h5>
-          <data value="90">90%</data>
+          <div class="icon-box">
+            <ion-icon name="book-outline"></ion-icon>
+          </div>
+          <h3 class="h3">Education</h3>
         </div>
-
-        <div class="skill-progress-bg">
-          <div class="skill-progress-fill" style="width: 90%;"></div>
-        </div>
-
-      </li>
-
-      <li class="skills-item">
-
+        <ol class="timeline-list">
+          <li class="timeline-item">
+            <h4 class="h4 timeline-item-title">Al-Farabi Kazakh National University</h4>
+            <span>06/2024</span>
+            <p class="timeline-text">Master of Science: Computer Engineering</p>
+          </li>
+          <li class="timeline-item">
+            <h4 class="h4 timeline-item-title">Al-Farabi Kazakh National University</h4>
+            <span>07/2022</span>
+            <p class="timeline-text">Bachelor of Science: Computer Science</p>
+          </li>
+        </ol>
+      </section>
+      <section class="timeline">
         <div class="title-wrapper">
-          <h5 class="h5">SQL</h5>
-          <data value="85">85%</data>
+          <div class="icon-box">
+            <ion-icon name="briefcase-outline"></ion-icon>
+          </div>
+          <h3 class="h3">Experience</h3>
         </div>
+        <ol class="timeline-list">
+          <li class="timeline-item">
+            <h4 class="h4 timeline-item-title">Data Analyst | Jusan Garant</h4>
+            <span>07/2024 - Current</span>
+            <p class="timeline-text">
+              Working in a leading insurance company, I focus on data analysis and visualization projects to support business decision-making and enhance operational efficiency.
+            </p>
+          </li>
+          <li class="timeline-item">
+            <h4 class="h4 timeline-item-title">Data Analyst | Keyhorse LLP</h4>
+            <span>10/2022 - 06/2024</span>
+            <p class="timeline-text">
+              Digitalization of public and private organizational services. I analyze the service as a business process, change them as a whole, improve the process and digitize so that everyone can receive the service without leaving home.
+            </p>
+          </li>
+          <li class="timeline-item">
+            <h4 class="h4 timeline-item-title">Financial Analyst | Quick Money LLP</h4>
+            <span>04/2020 - 06/2022</span>
+            <p class="timeline-text">
+              Created a Data processing Model which at the input is given information from customer profiles and the output data was the credit score of the customer or organization. The model facilitates the work of employees in lending, investing, and rejects the human factor. The model was written in Python.
+            </p>
+          </li>
+          <li class="timeline-item">
+            <h4 class="h4 timeline-item-title">Data Analyst | ACT Kazakhstan</h4>
+            <span>11/2018 - 03/2020</span>
+            <p class="timeline-text">
+              Collaborated with large companies, analyzing their activities, predicting business features, and conducting surveys among employees and customers. Utilized tools like MS Excel, MS Power BI, and Python to create insightful reports, which were presented to both internal stakeholders and cooperating companies.
+            </p>
+          </li>
+        </ol>
+      </section>
+      <section class="skill">
+        <h3 class="h3 skills-title">What do I use in my work?</h3>
+        <ul class="skills-list content-card">
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/GeoPandas-00BFFF?style=for-the-badge&logo=geopandas&logoColor=white" alt="GeoPandas">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white" alt="Jupyter">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/R-276DC3?style=for-the-badge&logo=r&logoColor=white" alt="R">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/Tableau-E97627?style=for-the-badge&logo=tableau&logoColor=white" alt="Tableau">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white" alt="Visual Studio Code">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/QGIS-3BAB2E?style=for-the-badge&logo=qgis&logoColor=white" alt="QGIS">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/Sublime%20Text-FF9800?style=for-the-badge&logo=sublimetext&logoColor=white" alt="Sublime Text">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/LaTeX-008080?style=for-the-badge&logo=latex&logoColor=white" alt="LaTeX">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=power-bi&logoColor=black" alt="Power BI">
+              </h5>
+            </div>
+          </li>
+          <li class="skills-item">
+            <div class="title-wrapper">
+              <h5 class="h5">
+                <img src="https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
+              </h5>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </article>
+  </main>
 
-        <div class="skill-progress-bg">
-          <div class="skill-progress-fill" style="width: 85%;"></div>
-        </div>
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
 
-      </li>
-
-      <li class="skills-item">
-
-        <div class="title-wrapper">
-          <h5 class="h5">Data Analysis</h5>
-          <data value="80">80%</data>
-        </div>
-
-        <div class="skill-progress-bg">
-          <div class="skill-progress-fill" style="width: 80%;"></div>
-        </div>
-
-      </li>
-
-      <li class="skills-item">
-
-        <div class="title-wrapper">
-          <h5 class="h5">Machine Learning</h5>
-          <data value="75">75%</data>
-        </div>
-
-        <div class="skill-progress-bg">
-          <div class="skill-progress-fill" style="width: 75%;"></div>
-        </div>
-
-      </li>
-
-      <li class="skills-item">
-
-        <div class="title-wrapper">
-          <h5 class="h5">Deep Learning</h5>
-          <data value="70">70%</data>
-        </div>
-
-        <div class="skill-progress-bg">
-          <div class="skill-progress-fill" style="width: 70%;"></div>
-        </div>
-
-      </li>
-
-      <li class="skills-item">
-
-        <div class="title-wrapper">
-          <h5 class="h5">ArcGIS Products</h5>
-          <data value="65">65%</data>
-        </div>
-
-        <div class="skill-progress-bg">
-          <div class="skill-progress-fill" style="width: 65%;"></div>
-        </div>
-
-      </li>
-
-    </ul>
-
-  </section>
-
-</article>
-
-
-
-
+</html>
