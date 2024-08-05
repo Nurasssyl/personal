@@ -146,6 +146,9 @@ input, textarea {
   font: inherit;
 }
 
+
+
+
 ::selection {
   background: var(--orange-yellow-crayola);
   color: var(--smoky-black);
@@ -1763,6 +1766,17 @@ textarea.form-input::-webkit-resizer { display: none; }
 /**
  * responsive larger than 1250px screen
  */
+ .skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-item img {
+  max-height: 40px;
+  margin-right: 10px;
+}
+
 
 @media (min-width: 1250px) {
 
