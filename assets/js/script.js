@@ -106,6 +106,8 @@ for (let i = 0; i < formInputs.length; i++) {
   });
 }
 
+// Код ниже можно оставить для обработки внутренних секций на одной странице
+
 // page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
