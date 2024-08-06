@@ -14,5 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "Failed to send message.";
     }
+} else {
+    echo "405 Method Not Allowed";
 }
 ?>
