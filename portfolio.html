@@ -212,229 +212,220 @@
         - #PORTFOLIO
       -->
 
-      <article class="portfolio active" data-page="portfolio">
+      <!--
+  - #PORTFOLIO
+-->
 
-        <header>
-          <h2 class="h2 article-title">Portfolio</h2>
-        </header>
+<article class="portfolio active" data-page="portfolio">
 
-        <section class="projects">
+  <header>
+    <h2 class="h2 article-title">Portfolio</h2>
+  </header>
 
-          <ul class="filter-list">
+  <section class="projects">
 
-            <li class="filter-item">
-              <button class="active" data-filter-btn>R</button>
-            </li>
+    <ul class="filter-list">
+    </ul>
 
-            <li class="filter-item">
-              <button data-filter-btn>Python</button>
-            </li>
+    <div class="filter-select-box">
 
-            <li class="filter-item">
-              <button data-filter-btn>JavaScript</button>
-            </li>
+      <button class="filter-select" data-select>
 
-          </ul>
+        <div class="select-value" data-selecct-value>Select category</div>
 
-          <div class="filter-select-box">
+        <div class="select-icon">
+          <ion-icon name="chevron-down"></ion-icon>
+        </div>
 
-            <button class="filter-select" data-select>
+      </button>
 
-              <div class="select-value" data-selecct-value>Select category</div>
+      <ul class="select-list">
 
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
+        <li class="select-item">
+          <button data-select-item>R</button>
+        </li>
 
-            </button>
+        <li class="select-item">
+          <button data-select-item>Python</button>
+        </li>
 
-            <ul class="select-list">
+        <li class="select-item">
+          <button data-select-item>JavaScript</button>
+        </li>
 
-              <li class="select-item">
-                <button data-select-item>R</button>
-              </li>
+      </ul>
 
-              <li class="select-item">
-                <button data-select-item>Python</button>
-              </li>
+    </div>
 
-              <li class="select-item">
-                <button data-select-item>JavaScript</button>
-              </li>
+    <ul class="project-list">
 
-            </ul>
+      <li class="project-item active" data-filter-item data-category="R">
+        <a href="portfolio/1.html">
 
-          </div>
+          <figure class="project-img">
+            <div class="project-item-icon-box">
+              <ion-icon name="eye-outline"></ion-icon>
+            </div>
 
-          <ul class="project-list">
+            <img src="./assets/images/project-1.jpg" alt="finance" loading="lazy">
+          </figure>
 
-            <li class="project-item active" data-filter-item data-category="R">
-              <a href="1.html">
+          <h3 class="project-title">Finance</h3>
 
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
+          <p class="project-category">R</p>
 
-                  <img src="./assets/images/project-1.jpg" alt="finance" loading="lazy">
-                </figure>
+        </a>
+      </li>
 
-                <h3 class="project-title">Finance</h3>
+      <li class="project-item active" data-filter-item data-category="Python">
+        <a href="portfolio/2.html">
 
-                <p class="project-category">R</p>
+          <figure class="project-img">
+            <div class="project-item-icon-box">
+              <ion-icon name="eye-outline"></ion-icon>
+            </div>
 
-              </a>
-            </li>
+            <img src="./assets/images/project-2.png" alt="orizon" loading="lazy">
+          </figure>
 
-            <li class="project-item active" data-filter-item data-category="Python">
-              <a href="2.html">
+          <h3 class="project-title">Orizon</h3>
 
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
+          <p class="project-category">Python</p>
 
-                  <img src="./assets/images/project-2.png" alt="orizon" loading="lazy">
-                </figure>
+        </a>
+      </li>
 
-                <h3 class="project-title">Orizon</h3>
+      <li class="project-item active" data-filter-item data-category="JavaScript">
+        <a href="portfolio/3.html">
 
-                <p class="project-category">Python</p>
+          <figure class="project-img">
+            <div class="project-item-icon-box">
+              <ion-icon name="eye-outline"></ion-icon>
+            </div>
 
-              </a>
-            </li>
+            <img src="./assets/images/project-3.jpg" alt="fundo" loading="lazy">
+          </figure>
 
-            <li class="project-item active" data-filter-item data-category="JavaScript">
-              <a href="3.html">
+          <h3 class="project-title">Fundo</h3>
 
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
+          <p class="project-category">JavaScript</p>
 
-                  <img src="./assets/images/project-3.jpg" alt="fundo" loading="lazy">
-                </figure>
+        </a>
+      </li>
 
-                <h3 class="project-title">Fundo</h3>
+      <li class="project-item active" data-filter-item data-category="R">
+        <a href="portfolio/4.html">
 
-                <p class="project-category">JavaScript</p>
+          <figure class="project-img">
+            <div class="project-item-icon-box">
+              <ion-icon name="eye-outline"></ion-icon>
+            </div>
 
-              </a>
-            </li>
+            <img src="./assets/images/project-4.png" alt="brawlhalla" loading="lazy">
+          </figure>
 
-            <li class="project-item active" data-filter-item data-category="R">
-              <a href="4.html">
+          <h3 class="project-title">Brawlhalla</h3>
 
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
+          <p class="project-category">R</p>
 
-                  <img src="./assets/images/project-4.png" alt="brawlhalla" loading="lazy">
-                </figure>
+        </a>
+      </li>
 
-                <h3 class="project-title">Brawlhalla</h3>
+      <li class="project-item active" data-filter-item data-category="Python">
+        <a href="portfolio/5.html">
 
-                <p class="project-category">R</p>
+          <figure class="project-img">
+            <div class="project-item-icon-box">
+              <ion-icon name="eye-outline"></ion-icon>
+            </div>
 
-              </a>
-            </li>
+            <img src="./assets/images/project-5.png" alt="dsm." loading="lazy">
+          </figure>
 
-            <li class="project-item active" data-filter-item data-category="Python">
-              <a href="5.html">
+          <h3 class="project-title">DSM.</h3>
 
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
+          <p class="project-category">Python</p>
 
-                  <img src="./assets/images/project-5.png" alt="dsm." loading="lazy">
-                </figure>
+        </a>
+      </li>
 
-                <h3 class="project-title">DSM.</h3>
+      <li class="project-item active" data-filter-item data-category="JavaScript">
+        <a href="portfolio/6.html">
 
-                <p class="project-category">Python</p>
+          <figure class="project-img">
+            <div class="project-item-icon-box">
+              <ion-icon name="eye-outline"></ion-icon>
+            </div>
 
-              </a>
-            </li>
+            <img src="./assets/images/project-6.png" alt="metaspark" loading="lazy">
+          </figure>
 
-            <li class="project-item active" data-filter-item data-category="JavaScript">
-              <a href="6.html">
+          <h3 class="project-title">MetaSpark</h3>
 
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
+          <p class="project-category">JavaScript</p>
 
-                  <img src="./assets/images/project-6.png" alt="metaspark" loading="lazy">
-                </figure>
+        </a>
+      </li>
 
-                <h3 class="project-title">MetaSpark</h3>
+      <li class="project-item active" data-filter-item data-category="R">
+        <a href="portfolio/7.html">
 
-                <p class="project-category">JavaScript</p>
+          <figure class="project-img">
+            <div class="project-item-icon-box">
+              <ion-icon name="eye-outline"></ion-icon>
+            </div>
 
-              </a>
-            </li>
+            <img src="./assets/images/project-7.png" alt="summary" loading="lazy">
+          </figure>
 
-            <li class="project-item active" data-filter-item data-category="R">
-              <a href="7.html">
+          <h3 class="project-title">Summary</h3>
 
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
+          <p class="project-category">R</p>
 
-                  <img src="./assets/images/project-7.png" alt="summary" loading="lazy">
-                </figure>
+        </a>
+      </li>
 
-                <h3 class="project-title">Summary</h3>
+      <li class="project-item active" data-filter-item data-category="Python">
+        <a href="portfolio/8.html">
 
-                <p class="project-category">R</p>
+          <figure class="project-img">
+            <div class="project-item-icon-box">
+              <ion-icon name="eye-outline"></ion-icon>
+            </div>
 
-              </a>
-            </li>
+            <img src="./assets/images/project-8.jpg" alt="task manager" loading="lazy">
+          </figure>
 
-            <li class="project-item active" data-filter-item data-category="Python">
-              <a href="8.html">
+          <h3 class="project-title">Task Manager</h3>
 
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
+          <p class="project-category">Python</p>
 
-                  <img src="./assets/images/project-8.jpg" alt="task manager" loading="lazy">
-                </figure>
+        </a>
+      </li>
 
-                <h3 class="project-title">Task Manager</h3>
+      <li class="project-item active" data-filter-item data-category="JavaScript">
+        <a href="portfolio/9.html">
 
-                <p class="project-category">Python</p>
+          <figure class="project-img">
+            <div class="project-item-icon-box">
+              <ion-icon name="eye-outline"></ion-icon>
+            </div>
 
-              </a>
-            </li>
+            <img src="./assets/images/project-9.png" alt="arrival" loading="lazy">
+          </figure>
 
-            <li class="project-item active" data-filter-item data-category="JavaScript">
-              <a href="9.html">
+          <h3 class="project-title">Arrival</h3>
 
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
+          <p class="project-category">JavaScript</p>
 
-                  <img src="./assets/images/project-9.png" alt="arrival" loading="lazy">
-                </figure>
+        </a>
+      </li>
 
-                <h3 class="project-title">Arrival</h3>
+    </ul>
 
-                <p class="project-category">JavaScript</p>
+  </section>
 
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
+</article>
 
 
 
