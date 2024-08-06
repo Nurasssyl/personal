@@ -28,36 +28,36 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
+
     .skills-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
 
-    .skill-item img {
-        max-height: 40px;
-        margin-right: 10px;
-    }
+.skill-item img {
+    max-height: 40px;
+}
 
-    .languages-list {
-        display: flex;
-        gap: 20px;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-    }
+.languages-list {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
 
-    .language-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 1.2em;
-    }
+.language-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2em;
+}
 
-    .language-item img {
-        width: 48px;
-        height: 48px;
-    }
+.language-item span {
+    font-size: 2em; /* Adjust size of the flag emoji */
+}
+
 </style>
 </head>
 
@@ -402,18 +402,19 @@
     <h3 class="h3 languages-title">Languages I Speak</h3>
     <div class="languages-list content-card">
         <div class="language-item">
-            <img src="https://img.icons8.com/color/48/000000/usa.png" alt="English">
+            <span>🇺🇸</span>
             <span>English</span>
         </div>
         <div class="language-item">
-            <img src="https://img.icons8.com/color/48/000000/kazakhstan.png" alt="Kazakh">
+            <span>🇰🇿</span>
             <span>Kazakh</span>
         </div>
         <div class="language-item">
-            <img src="https://img.icons8.com/color/48/000000/russia.png" alt="Russian">
+            <span>🇷🇺</span>
             <span>Russian</span>
         </div>
     </div>
+</section>
 </section>
 
 
