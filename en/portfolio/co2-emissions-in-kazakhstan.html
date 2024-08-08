@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CO2 Emissions in Kazakhstan - Nurasyl's Blog</title>
+
+  <!--
+    - favicon
+  -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!--
+    - google font link 
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      color: #ddd;
+      background-color: #000;
+    }
+
+    .article-title {
+      color: #fff;
+    }
+
+    .article-meta {
+      color: #bbb;
+    }
+
+    .article-content {
+      color: #ddd;
+    }
+
+    .tag {
+      background-color: #444;
+      color: white;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    .article img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .author-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .author-info .author-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="/en/index.html" class="navbar-link" data-nav-link="about">About</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/resume.html" class="navbar-link" data-nav-link="resume">Resume</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/portfolio.html" class="navbar-link" data-nav-link="portfolio">Portfolio</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/blog.html" class="navbar-link" data-nav-link="blog">Blog</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/contact.html" class="navbar-link" data-nav-link="contact">Contact</a>
+          </li>
+
+          <nav>
+            <a href="/kk/portfolio/co2-emissions-in-kazakhstan.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/kazakhstan.png" alt="Kazakh">
+            </a>
+            <a href="/ru/portfolio/co2-emissions-in-kazakhstan.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/russian-federation.png" alt="Russian">
+            </a>
+            <a href="/en/portfolio/co2-emissions-in-kazakhstan.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/usa.png" alt="English">
+            </a>
+          </nav>
+        </ul>
+
+      </nav>
+
+      <!--
+        - #ARTICLE
+      -->
+
+      <article class="article active">
+
+        <header><br><br>
+          <div class="author-info">
+            <img src="/assets/images/my_photo.png" alt="Nurasyl Abdrazakuly">
+            <span class="author-name">Nurasyl Abdrazakuly</span>
+          </div>
+
+          <h1 class="h1 article-title">CO2 Emissions in Kazakhstan</h1>
+          <img src="/assets/images/portfolio/co2-emissions-in-kazakhstan.jpeg" alt="CO2 Emissions in Kazakhstan" loading="lazy">
+
+          <p class="article-meta" style="display: flex; align-items: center; color: #bbb;">
+            <ion-icon name="calendar-outline" style="margin-right: 5px;"></ion-icon>
+            <time datetime="2024-08-07">7.08.2024</time> &nbsp; &nbsp;
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">R</span>
+            &nbsp; <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #3f51b5; background-color: rgba(255, 255, 255, 0.1); color: #3f51b5; font-size: 0.9em; text-align: center;">GIS</span>
+          </p>
+        </header>
+
+        <div class="article-content">
+          <p style="color: #ddd; text-align: justify;">
+            In this project, I visualized the distribution of carbon dioxide emissions per capita in Kazakhstan for the year 2023. The visualization was created using the R programming language and libraries such as tidyverse, geodata, terra, exactextractr, sf, and classInt.
+          </p>
+<br>
+          <h2>Methods and Tools</h2>
+
+          <p style="color: #ddd; text-align: justify;">
+            The following tools and libraries were used for creating this visualization:
+          </p>
+
+          <p style="color: #ddd; text-align: justify;">
+            - <strong>tidyverse</strong>: A collection of packages for data manipulation and visualization.
+            <br>
+            - <strong>geodata</strong>: A package for accessing and working with geographic data.
+            <br>
+            - <strong>terra</strong>: A library for spatial data analysis.
+            <br>
+            - <strong>exactextractr</strong>: A package for fast extraction of summary statistics from rasters.
+            <br>
+            - <strong>sf</strong>: A package for simple features, used for handling vector data.
+            <br>
+            - <strong>classInt</strong>: A package for choosing univariate class intervals.
+          </p>
+          <br>
+          <h2>Visualization Description</h2>
+
+          <p style="color: #ddd; text-align: justify;">
+            The map graphically represents the carbon dioxide emissions per capita across different regions of Kazakhstan. The darker the area, the higher the CO2 emissions.
+          </p>
+          <br>
+          <h2>Conclusions</h2>
+
+          <p style="color: #ddd; text-align: justify;">
+            Analyzing the map allows us to draw several key conclusions:
+            <br>
+            1. <strong>Aksu District in Pavlodar Region</strong>: This district is considered the most polluted in terms of CO2 emissions.
+            <br>
+            2. <strong>Ekibastuz District in Pavlodar Region</strong>: The neighboring district ranks second in CO2 emissions.
+            <br>
+            3. <strong>Birzhan Sal District in Akmola Region</strong>: This district follows in terms of high CO2 emissions.
+            <br>
+            4. <strong>Moiynkum District in Zhambyl Region</strong>: This district also stands out with its darker color indicating higher emissions compared to neighboring districts.
+          </p>
+          <br>
+          <h2>Resolution</h2>
+
+          <p style="color: #ddd; text-align: justify;">
+            According to UNDP Kazakhstan, the country ranks among the top 10 in the world for CO2 emission intensity. The majority of CO2 emissions come from the industrial sector. Notably, 35% of the country's electricity consumption is attributed to electric motors, particularly transformers. This work underscores the importance of addressing industrial emissions and exploring sustainable energy solutions.
+          </p>
+          <br>
+          <h2>Code</h2>
+
+          <p style="color: #ddd; text-align: justify;">
+            The entire project code is available on <a href="https://github.com/Nurasssyl/carbon-emissions-per-capita-Kazakhstan" style="color: #0066cc; display: inline;">GitHub</a>
+        </p>
+      </div>
+
+    </article>
+
+  </div>
+
+</main>
+
+<!--
+  - custom js link
+-->
+<script src="/assets/js/script.js"></script>
+
+<!--
+  - ionicon link
+-->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
+
