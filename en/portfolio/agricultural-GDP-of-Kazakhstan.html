@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agricultural GDP of Kazakhstan</title>
+
+  <!--
+    - favicon
+  -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!--
+    - google font link 
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      color: #ddd;
+      background-color: #000;
+    }
+
+    .article-title {
+      color: #fff;
+    }
+
+    .article-meta {
+      color: #bbb;
+    }
+
+    .article-content {
+      color: #ddd;
+    }
+
+    .tag {
+      background-color: #444;
+      color: white;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    .article img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .author-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .author-info .author-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="/en/index.html" class="navbar-link" data-nav-link="about">About</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/resume.html" class="navbar-link" data-nav-link="resume">Resume</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/portfolio.html" class="navbar-link" data-nav-link="portfolio">Portfolio</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/blog.html" class="navbar-link" data-nav-link="blog">Blog</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/contact.html" class="navbar-link" data-nav-link="contact">Contact</a>
+          </li>
+
+          <nav>
+            <a href="/kk/portfolio/agricultural-gdp-of-kazakhstan.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/kazakhstan.png" alt="Kazakh">
+            </a>
+            <a href="/ru/portfolio/agricultural-gdp-of-kazakhstan.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/russian-federation.png" alt="Russian">
+            </a>
+            <a href="/en/portfolio/agricultural-gdp-of-kazakhstan.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/usa.png" alt="English">
+            </a>
+          </nav>
+        </ul>
+
+      </nav>
+
+      <!--
+        - #ARTICLE
+      -->
+
+      <article class="article active">
+
+        <header><br><br>
+          <div class="author-info">
+            <img src="/assets/images/my_photo.png" alt="Nurasyl Abdrazakuly">
+            <span class="author-name">Nurasyl Abdrazakuly, MSc</span>
+          </div>
+
+          <h1 class="h1 article-title">Agricultural GDP of Kazakhstan</h1>
+          <img src="/assets/images/portfolio/Agricultural GDP of Kazakhstan.jpeg" alt="Agricultural GDP of Kazakhstan" loading="lazy">
+
+          <p class="article-meta" style="display: flex; align-items: center; color: #bbb;">
+            <ion-icon name="calendar-outline" style="margin-right: 5px;"></ion-icon>
+            <time datetime="2024-08-07">7.08.2024</time> &nbsp; &nbsp;
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">R</span>
+            &nbsp; <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #3f51b5; background-color: rgba(255, 255, 255, 0.1); color: #3f51b5; font-size: 0.9em; text-align: center;">GIS</span>
+          </p>
+        </header>
+
+        <div class="article-content">
+            <p style="color: #ddd; text-align: justify;">
+              In this project, I created a cartogram of Kazakhstan's agricultural GDP for the year 2022 🌻. This visualization was developed using the R programming language with libraries such as pacman, geodata, sf, terra, tidyverse, classInt, and cartogram.
+            </p>
+            <br>
+            <h2>Methods and Tools</h2>
+          
+            <p style="color: #ddd; text-align: justify;">
+              The following tools and libraries were used for creating this visualization:
+            </p>
+          
+            <p style="color: #ddd; text-align: justify;">
+              - <strong>pacman</strong>: A package management tool for R.
+              <br>
+              - <strong>geodata</strong>: A package for working with geographic data.
+              <br>
+              - <strong>sf</strong>: A library for simple features, supporting spatial data analysis.
+              <br>
+              - <strong>terra</strong>: A library for spatial data analysis.
+              <br>
+              - <strong>tidyverse</strong>: A collection of packages for data manipulation and visualization.
+              <br>
+              - <strong>classInt</strong>: A package for class interval calculations.
+              <br>
+              - <strong>cartogram</strong>: A library for creating cartograms.
+            </p>
+            <br>
+            <h2>Visualization Description</h2>
+           
+          
+            <p style="color: #ddd; text-align: justify;">
+              The maps graphically represent the agricultural GDP of Kazakhstan. The data is from 2022, and therefore the maps do not include any newly separated regions. The first map shows the agricultural sector GDP by region, while the second map shows the agricultural sector GDP per capita by region.
+            </p>
+            <br>
+            <h2>Conclusions</h2>
+          
+            <p style="color: #ddd; text-align: justify;">
+              Analyzing these maps allows us to draw several key conclusions:
+              <br>
+              1. <strong>Kostanay and Almaty regions</strong> produce the most agricultural products, followed by Akmola and Turkistan regions.
+              <br>
+              2. <strong>On a per capita basis</strong>, North Kazakhstan region leads, followed by Kostanay region.
+              <br>
+              3. <strong>Agricultural GDP per capita</strong> is notably low in Central and Southern Kazakhstan.
+              <br>
+              4. <strong>Mangystau region</strong> shows the lowest results in both metrics.
+            </p>
+            <br>
+            <div class="image-container">
+              <img src="/assets/images/portfolio/Agricultural GDP of Kazakhstan (per capita).jpeg" alt="Agricultural GDP of Kazakhstan (per capita)">
+              <p style="color: #ddd; text-align: center;">   Agricultural GDP of Kazakhstan (per capita)  </p>
+            </div>
+          
+            <h2>Resolution</h2>
+          
+            <p style="color: #ddd; text-align: justify;">
+              This work highlights the disparities in agricultural production across Kazakhstan. The visualizations help to better understand the distribution of agricultural GDP and can serve as a foundation for further research and policy-making.
+            </p>
+          
+            <h2>Code</h2>
+          
+
+            <p style="color: #ddd; text-align: justify;">
+                The entire project code is available on <a href="https://github.com/Nurasssyl/Agricultural-GDP-for-Kazakhstan" style="color: #0066cc; display: inline;">GitHub</a>
+            </p>
+
+          </div>
+          
+
+      </article>
+
+    </div>
+
+  </main>
+
+  <!--
+    - custom js link
+  -->
+  <script src="/assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
