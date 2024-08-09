@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карта осадков Казахстана</title>
+
+  <!--
+    - favicon
+  -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!--
+    - google font link 
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      color: #ddd;
+      background-color: #000;
+    }
+
+    .article-title {
+      color: #fff;
+    }
+
+    .article-meta {
+      color: #bbb;
+    }
+
+    .article-content {
+      color: #ddd;
+    }
+
+    .tag {
+      background-color: #444;
+      color: white;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    .article img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .author-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .author-info .author-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="/ru/index.html" class="navbar-link" data-nav-link="about">О себе</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/resume.html" class="navbar-link" data-nav-link="resume">Резюме</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/portfolio.html" class="navbar-link" data-nav-link="portfolio">Портфолио</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/blog.html" class="navbar-link" data-nav-link="blog">Блог</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/contact.html" class="navbar-link" data-nav-link="contact">Контакты</a>
+          </li>
+          <nav>
+            <a href="/kk/portfolio/a-precipitation-map-of-Kazakhstan.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/kazakhstan.png" alt="Kazakh">
+            </a>
+            <a href="/ru/portfolio/a-precipitation-map-of-Kazakhstan.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/russian-federation.png" alt="Russian">
+            </a>
+            <a href="/en/portfolio/a-precipitation-map-of-Kazakhstan.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/usa.png" alt="English">
+            </a>
+          </nav>
+        </ul>
+      </nav>
+      <article class="article active">
+        <header><br><br>
+          <div class="author-info">
+            <img src="/assets/images/my_photo.png" alt="Nurasyl Abdrazakuly">
+            <span class="author-name">Нурасыл Абдразакулы</span>
+          </div>
+          <h1 class="h1 article-title">Карта осадков Казахстана</h1>
+          <img src="/assets/images/portfolio/a-precipitation-map-of-Kazakhstan.jpeg" alt="Карта осадков Казахстана" loading="lazy">
+          <p class="article-meta" style="display: flex; align-items: center; color: #bbb;">
+            <ion-icon name="calendar-outline" style="margin-right: 5px;"></ion-icon>
+            <time datetime="2024-08-07">7.08.2024</time> &nbsp; &nbsp;
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">maps</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">R</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">dataviz</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">data science</span>
+          </p>
+        </header>
+        <div class="article-content">
+          <p style="color: #ddd; text-align: justify;">
+            В этом проекте я визуализировал распределение осадков по Казахстану. Карта была создана с использованием языка программирования R с библиотеками, такими как recipe, iscar, terra, tidyverse, rayshader, sf и classInt.
+          </p>
+          <br>
+          <h2>Методы и инструменты</h2>
+          <p style="color: #ddd; text-align: justify;">
+            Для создания этой визуализации использовались следующие инструменты и библиотеки:
+          </p>
+          <p style="color: #ddd; text-align: justify;">
+            - <strong>recipe</strong>: Пакет для предобработки данных в R.
+            <br>
+            - <strong>iscar</strong>: Пакет, используемый для статистического анализа и построения графиков.
+            <br>
+            - <strong>terra</strong>: Библиотека для анализа пространственных данных.
+            <br>
+            - <strong>tidyverse</strong>: Набор пакетов для манипуляции данными и визуализации.
+            <br>
+            - <strong>rayshader</strong>: Пакет для создания 2D и 3D карт.
+            <br>
+            - <strong>sf</strong>: Пакет для работы с пространственными векторными данными.
+            <br>
+            - <strong>classInt</strong>: Пакет для выбора унивариантных классовых интервалов.
+          </p>
+          <br>
+          <h2>Описание визуализации</h2>
+          <p style="color: #ddd; text-align: justify;">
+            Карта графически представляет распределение осадков по Казахстану. Северо-восточные и юго-восточные регионы получают больше осадков, что изображено зелёным цветом, указывая на более влажный климат, характерный для горных и предгорных районов, таких как Алтай, Алатау и Тянь-Шань. Напротив, центральные и южные регионы получают меньше осадков, изображено розовым и бежевым цветами, что указывает на засушливый климат, типичный для степей и пустынь, таких как Мангистау и Кызылорда.
+          </p>
+          <div class="image-container">
+            <img src="/assets/images/portfolio/average-rainfall-by-year.jpeg" alt="Среднегодовые осадки">
+            <p style="color: #bbb; text-align: center;">Рисунок 1: Среднегодовые осадки в Казахстане за годы</p>
+          </div>
+          <div class="image-container">
+            <img src="/assets/images/portfolio/precipitation_kaz-1979-2022.png" alt="Карта осадков Казахстана">
+            <p style="color: #bbb; text-align: center;">Рисунок 2: Распределение осадков по Казахстану с 1979 по 2022 год</p>
+          </div>
+          <br>
+          <h2>Выводы</h2>
+          <p style="color: #ddd; text-align: justify;">
+            Анализ карты позволяет сделать несколько ключевых выводов:
+            <br>
+            1. Северо-восточные и юго-восточные регионы Казахстана получают значительно больше осадков, что способствует более влажному климату.
+            <br>
+            2. Центральные и южные регионы страны получают меньше осадков, создавая засушливые условия, характерные для степей и пустынь.
+            <br>
+            3. Низкий уровень осадков наблюдается в западной части Казахстана, особенно ближе к Каспийскому морю, что влияет на засушливый климат региона.
+          </p>
+          <br>
+          <h2>Код</h2>
+          <p style="color: #ddd; text-align: justify;">
+            Весь код проекта доступен на <a href="https://github.com/Nurasssyl/Precipation-Kazakhstan" style="color: #0066cc; display: inline;">GitHub</a>.
+          </p>
+        </div>
+      </article>
+      </div>
+      </main>
+      <script src="/assets/js/script.js"></script>
+      <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+      <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+      </body>
+      </html>
+      
