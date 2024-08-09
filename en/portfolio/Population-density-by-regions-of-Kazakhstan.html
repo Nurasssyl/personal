@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inhabitability Map of Kazakhstan - Nurasyl's Blog</title>
+  <title>Population Changes in Kazakhstan </title>
 
   <!--
     - favicon
@@ -118,13 +118,13 @@
           </li>
 
           <nav>
-            <a href="/kk/portfolio/inhabitability-map-of-kazakhstan.html" style="display: inline-block;">
+            <a href="/kk/portfolio/Population-density-by-regions-of-Kazakhstan.html" style="display: inline-block;">
               <img src="https://img.icons8.com/color/24/000000/kazakhstan.png" alt="Kazakh">
             </a>
-            <a href="/ru/portfolio/inhabitability-map-of-kazakhstan.html" style="display: inline-block;">
+            <a href="/ru/portfolio/Population-density-by-regions-of-Kazakhstan.html" style="display: inline-block;">
               <img src="https://img.icons8.com/color/24/000000/russian-federation.png" alt="Russian">
             </a>
-            <a href="/en/portfolio/inhabitability-map-of-kazakhstan.html" style="display: inline-block;">
+            <a href="/en/portfolio/Population-density-by-regions-of-Kazakhstan.html" style="display: inline-block;">
               <img src="https://img.icons8.com/color/24/000000/usa.png" alt="English">
             </a>
           </nav>
@@ -144,8 +144,8 @@
             <span class="author-name">Nurasyl Abdrazakuly</span>
           </div>
       
-          <h1 class="h1 article-title">Inhabitability Map of Kazakhstan</h1>
-          <img src="/assets/images/portfolio/Inhabitability Map of Kazakhstan.jpeg" alt="Inhabitability Map of Kazakhstan" loading="lazy">
+          <h1 class="h1 article-title">Population Density in Kazakhstan</h1>
+          <img src="/assets/images/portfolio/Population-density-by-regions-of-Kazakhstan.jpeg" alt="Population Density in Kazakhstan" loading="lazy">
       
           <p class="article-meta" style="display: flex; align-items: center; color: #bbb;">
             <ion-icon name="calendar-outline" style="margin-right: 5px;"></ion-icon>
@@ -159,7 +159,7 @@
       
         <div class="article-content">
           <p style="color: #ddd; text-align: justify;">
-            In this project, I created an inhabitability map of Kazakhstan for the year 2023. This visualization was developed using the R programming language and libraries such as tidyverse, giscoR, and tidyterra.
+            In this project, I created a population density map for the districts of Kazakhstan. The visualization was developed using the R programming language, utilizing libraries such as geokz, dplyr, and sf.
           </p>
           <br>
           <h2>Methods and Tools</h2>
@@ -169,41 +169,57 @@
           </p>
       
           <p style="color: #ddd; text-align: justify;">
-            - <strong>tidyverse</strong>: A collection of packages for data manipulation and visualization.
+            - <strong>geokz</strong>: A package for accessing Kazakhstan's geographic data.
             <br>
-            - <strong>giscoR</strong>: A package for accessing and working with geographic data.
+            - <strong>dplyr</strong>: A package for data manipulation.
             <br>
-            - <strong>tidyterra</strong>: A package for spatial data analysis.
+            - <strong>sf</strong>: A package for handling spatial vector data.
           </p>
           <br>
-          <h2>Visualization Description</h2>
+          <h2>Population Density Overview</h2>
       
           <p style="color: #ddd; text-align: justify;">
-            The map graphically represents inhabited and uninhabited areas in Kazakhstan. The yellow areas 🌝 represent regions where people live permanently, while the black areas 🌚 represent uninhabited regions. On the map, you can see the silhouettes of the Syr Darya, Irtysh, Ural, and Tobol rivers, as well as Lake Balkhash, due to the concentrated populations in these areas.
+            The map graphically represents the population density across various districts in Kazakhstan. Areas with the highest population density include:
+          </p>
+          <p style="color: #ddd; text-align: justify;">
+            1. <strong>Auezov (Almaty)</strong>: 14,927 people per square kilometer.
+            <br>
+            2. <strong>Almaty (Almaty)</strong>: 14,833 people per square kilometer.
+            <br>
+            3. <strong>Zhetisu (Almaty)</strong>: 5,374 people per square kilometer.
+            <br>
+            4. <strong>Saryarka (Astana)</strong>: 5,166 people per square kilometer.
+            <br>
+            5. <strong>Arkalyk (Kostanay)</strong>: 3,787 people per square kilometer.
           </p>
           <br>
-          <h2>Analysis</h2>
+          <h2>Low Density Areas</h2>
       
           <p style="color: #ddd; text-align: justify;">
-            Looking at the map, we can observe several key patterns:
+            Conversely, areas with the lowest population density include:
+          </p>
+          <p style="color: #ddd; text-align: justify;">
+            1. <strong>Ulytau (Ulytau)</strong>: 0.091 people per square kilometer.
             <br>
-            1. The major rivers and water bodies such as the Syr Darya, Irtysh, Ural, and Tobol rivers, as well as Lake Balkhash, have clear silhouettes formed by the concentrated populations around them.
+            2. <strong>Zhangeldin (Kostanay)</strong>: 0.279 people per square kilometer.
             <br>
-            2. Urban areas are densely populated, which is evident from the bright yellow clusters representing cities and towns.
+            3. <strong>Aktogay (Karagandy)</strong>: 0.304 people per square kilometer.
             <br>
-            3. Large regions, especially in the central and western parts of Kazakhstan, remain uninhabited, depicted by the extensive black areas.
+            4. <strong>Kyrgyz (Aktobe)</strong>: 0.336 people per square kilometer.
+            <br>
+            5. <strong>Shalkar (Aktobe)</strong>: 0.347 people per square kilometer.
           </p>
           <br>
           <h2>Conclusions</h2>
       
           <p style="color: #ddd; text-align: justify;">
-            Analyzing the map allows us to understand the distribution of population in Kazakhstan. This insight can aid in planning and resource allocation, ensuring sustainable development across the country.
+            The overall population density of Kazakhstan is 7.37 people per square kilometer, placing it 184th among 194 countries worldwide. This visualization provides valuable insights into the population distribution across the country, which is crucial for urban planning, resource allocation, and regional development strategies.
           </p>
           <br>
-          <h2>Code and Repository</h2>
+          <h2>Code</h2>
       
           <p style="color: #ddd; text-align: justify;">
-            The entire project code is available on <a href="https://github.com/Nurasssyl/Inhabitability-Map-of-Kazakhstan" style="color: #0066cc; display: inline;">GitHub</a>.
+            The entire project code is available on <a href="https://github.com/Nurasssyl/Population-density-by-regions-of-Kazakhstan" style="color: #0066cc; display: inline;">GitHub</a>
           </p>
         </div>
       
@@ -228,3 +244,4 @@
 </body>
 
 </html>
+
