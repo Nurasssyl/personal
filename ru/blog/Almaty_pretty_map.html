@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Красивая карта Алматы с помощью Python</title>
+
+  <!--
+    - фавикон
+  -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+  <!--
+    - ссылка на пользовательский CSS
+  -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!--
+    - ссылка на шрифт Google
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      color: #ddd;
+      background-color: #000;
+    }
+
+    .article-title {
+      color: #fff;
+    }
+
+    .article-meta {
+      color: #bbb;
+    }
+
+    .article-content {
+      color: #ddd;
+    }
+
+    .tag {
+      background-color: #444;
+      color: white;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    .article img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .author-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .author-info .author-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    - #ГЛАВНЫЙ СОДЕРЖИМОЕ
+  -->
+
+  <main>
+
+    <!--
+      - #основное содержимое
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #НАВБАР
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="/ru/index.html" class="navbar-link" data-nav-link="about">Обо мне</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/resume.html" class="navbar-link" data-nav-link="resume">Резюме</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/portfolio.html" class="navbar-link" data-nav-link="portfolio">Портфолио</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/blog.html" class="navbar-link" data-nav-link="blog">Блог</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/contact.html" class="navbar-link" data-nav-link="contact">Контакты</a>
+          </li>
+
+          <nav>
+            <a href="/kk/blog/Almaty_pretty_map.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/kazakhstan.png" alt="Kazakh">
+            </a>
+            <a href="/ru/blog/Almaty_pretty_map.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/russian-federation.png" alt="Russian">
+            </a>
+            <a href="/en/blog/Almaty_pretty_map.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/usa.png" alt="English">
+            </a>
+          </nav>
+        </ul>
+
+      </nav>
+
+      <!--
+        - #СТАТЬЯ
+      -->
+
+      <article class="article active">
+
+        <header><br><br>
+            <div class="author-info">
+                <img src="/assets/images/my_photo.png" alt="Нурасыл Абдразакулы">
+                <span class="author-name">Нурасыл Абдразакулы</span>
+            </div>
+    
+            <h1 class="h1 article-title">Визуализация Алматы с PrettyMaps</h1>
+            <img src="/assets/images/blog/Almaty_pretty_map.jpeg" alt="Красивая карта Алматы" loading="lazy">
+    
+            <p class="article-meta" style="display: flex; align-items: center; color: #bbb;">
+                <ion-icon name="calendar-outline" style="margin-right: 5px;"></ion-icon>
+                <time datetime="2024-08-13">13.08.2024</time> &nbsp; &nbsp;
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">Python</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">PrettyMaps</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">визуализация данных</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">Data Science</span>
+            </p>
+        </header>
+    
+        <div class="article-content">
+            <p style="color: #ddd; text-align: justify;">
+                В этом проекте я визуализировал город Алматы, используя библиотеку PrettyMaps на Python. PrettyMaps использует данные OpenStreetMap для создания визуально привлекательных карт, которые можно настраивать с помощью различных слоев, таких как дороги, здания, парки и многое другое.
+            </p>
+    
+            <br>
+            <h2>Пошаговое объяснение</h2>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Ниже приведен разбор кода, использованного в проекте, который можно найти на моей странице GitHub. Каждая часть кода объясняется, чтобы помочь вам понять процесс создания красивой карты Алматы.
+            </p>
+    
+            <br>
+            <h3>1. Импорт необходимых библиотек</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Сначала нам нужно импортировать необходимые библиотеки Python. Основной библиотекой здесь является PrettyMaps, а также matplotlib для отображения карты.
+            </p>
+    
+            <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    import prettymaps
+    import matplotlib.pyplot as plt
+            </pre>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Эти импорты позволяют нам использовать функции PrettyMaps и настраивать параметры отображения карты.
+            </p>
+    
+            <br>
+            <h3>2. Установка центра карты</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Следующим шагом будет определение центральной точки нашей карты. В этом примере карта центрируется на акимате Алматы, который указан его широтой и долготой.
+            </p>
+    
+            <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    location = (43.2567, 76.9286)
+  </pre>
+    
+  <p style="color: #ddd; text-align: justify;">
+      Эта строка задает координаты центра Алматы. Вы можете заменить эти координаты на любое другое место, если хотите сфокусироваться на другой области.
+  </p>
+
+  <br>
+  <h3>3. Создание красивой карты</h3>
+
+  <p style="color: #ddd; text-align: justify;">
+      После определения местоположения мы можем создать карту с помощью PrettyMaps. Следующий код отображает карту с заданным радиусом, который определяет, какая часть окружающей территории будет включена.
+  </p>
+
+  <pre style="background-color: #333; color: #ddd; padding: 10px;">
+fig, ax = plt.subplots(figsize=(10, 10))
+prettymaps.plot(
+location,
+ax=ax,
+radius=2000,  # Радиус в метрах
+layers={'perimeter': {'circle': False}},
+)
+plt.show()
+  </pre>
+
+  <p style="color: #ddd; text-align: justify;">
+      Этот блок кода создает карту с радиусом 2 километра, центрированной на акимате. Карта отображает различные слои, включая здания, дороги и зеленые зоны, предоставляя полный обзор расположения города.
+  </p>
+
+  <br>
+  <h3>4. Настройка карты</h3>
+
+  <p style="color: #ddd; text-align: justify;">
+      PrettyMaps предлагает множество вариантов настройки. Вы можете изменить слои, цвета и стили в соответствии с вашими потребностями. Например, можно добавить дополнительные слои, такие как водоемы, или настроить цветовую схему, чтобы выделить определенные элементы.
+  </p>
+
+  <br>
+  <h2>Заключение</h2>
+
+  <p style="color: #ddd; text-align: justify;">
+      Визуализация городов с помощью PrettyMaps позволяет как с художественной, так и с аналитической стороны исследовать урбанистические районы. Полученные карты не только красивы, но и предоставляют ценные сведения о структуре и планировке города. Этот проект демонстрирует, как можно использовать PrettyMaps для визуализации любого города мира, с Алматы в качестве примера.
+  </p>
+
+  <br>
+  <h2>Код</h2>
+
+  <p style="color: #ddd; text-align: justify;">
+      Полный код проекта доступен на <a href="https://github.com/Nurasssyl/Almaty_pretty_map/blob/main/Almaty_pretty_map.ipynb" style="color: #0066cc; display: inline;">GitHub</a>.
+  </p>
+</div>
+
+</article>
+
+
+
+
+
+</div>
+
+</main>
+
+<!--
+- ссылка на пользовательский JS
+-->
+<script src="/assets/js/script.js"></script>
+
+<!--
+- ссылка на ionicons
+-->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
+
+           

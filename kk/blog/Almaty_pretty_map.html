@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Алматының көрікті картасын Python арқылы визуализациялау</title>
+
+  <!--
+    - фавикон
+  -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+  <!--
+    - арнайы css сілтемесі
+  -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!--
+    - Google қаріп сілтемесі
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      color: #ddd;
+      background-color: #000;
+    }
+
+    .article-title {
+      color: #fff;
+    }
+
+    .article-meta {
+      color: #bbb;
+    }
+
+    .article-content {
+      color: #ddd;
+    }
+
+    .tag {
+      background-color: #444;
+      color: white;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    .article img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .author-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .author-info .author-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    - #БАС МАЗМҰН
+  -->
+
+  <main>
+
+    <!--
+      - #негізгі мазмұн
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #НАВБАР
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="/kk/index.html" class="navbar-link" data-nav-link="about">Басты бет</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/kk/resume.html" class="navbar-link" data-nav-link="resume">Түйіндеме</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/kk/portfolio.html" class="navbar-link" data-nav-link="portfolio">Портфолио</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/kk/blog.html" class="navbar-link" data-nav-link="blog">Блог</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/kk/contact.html" class="navbar-link" data-nav-link="contact">Байланыс</a>
+          </li>
+
+          <nav>
+            <a href="/kk/blog/Almaty_pretty_map.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/kazakhstan.png" alt="Kazakh">
+            </a>
+            <a href="/ru/blog/Almaty_pretty_map.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/russian-federation.png" alt="Russian">
+            </a>
+            <a href="/en/blog/Almaty_pretty_map.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/usa.png" alt="English">
+            </a>
+          </nav>
+        </ul>
+
+      </nav>
+
+      <!--
+        - #Мақала
+      -->
+
+      <article class="article active">
+
+        <header><br><br>
+            <div class="author-info">
+                <img src="/assets/images/my_photo.png" alt="Нұрасыл Әбдразақұлы">
+                <span class="author-name">Нұрасыл Абдразакұлы</span>
+            </div>
+    
+            <h1 class="h1 article-title">Алматыны PrettyMaps арқылы визуализациялау</h1>
+            <img src="/assets/images/blog/Almaty_pretty_map.jpeg" alt="Алматының көрікті картасы" loading="lazy">
+    
+            <p class="article-meta" style="display: flex; align-items: center; color: #bbb;">
+                <ion-icon name="calendar-outline" style="margin-right: 5px;"></ion-icon>
+                <time datetime="2024-08-13">13.08.2024</time> &nbsp; &nbsp;
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">Python</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">PrettyMaps</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">деректерді визуализациялау</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">деректер ғылымы</span>
+            </p>
+        </header>
+    
+        <div class="article-content">
+            <p style="color: #ddd; text-align: justify;">
+                Бұл жобада мен PrettyMaps кітапханасын пайдаланып Алматы қаласын визуализацияладым. PrettyMaps OpenStreetMap деректерін қолдану арқылы көрікті карталарды жасауға мүмкіндік береді, оларды жолдар, ғимараттар, саябақтар және тағы басқа қабаттармен реттеуге болады.
+            </p>
+    
+            <br>
+            <h2>Қадамдық түсініктеме</h2>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Төменде менің GitHub бетімде табуға болатын жоба кодының бөліктері берілген. Әрбір код бөлігі Алматының көрікті картасын жасау процесін түсіну үшін егжей-тегжейлі түсіндірілген.
+            </p>
+    
+            <br>
+            <h3>1. Қажетті кітапханаларды импорттау</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Біріншіден, қажетті Python кітапханаларын импорттауымыз керек. Бұл жерде негізгі кітапхана PrettyMaps, сондай-ақ картаны салу үшін matplotlib пайдаланылады.
+            </p>
+    
+            <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    import prettymaps
+    import matplotlib.pyplot as plt
+            </pre>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Бұл импорттар PrettyMaps функцияларын пайдалануға және карта көрсету параметрлерін баптауға мүмкіндік береді.
+            </p>
+    
+            <br>
+            <h3>2. Картаның орталығын орнату</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Келесі қадам - картаның орталық нүктесін анықтау. Бұл мысалда карта Алматы әкімдігіне бағытталған , оның географиялық ендігі мен бойлығы арқылы белгіленеді.
+              </p>
+      
+              <pre style="background-color: #333; color: #ddd; padding: 10px;">
+      location = (43.2567, 76.9286)
+              </pre>
+      
+              <p style="color: #ddd; text-align: justify;">
+                  Бұл жол Алматы қаласының орталығын анықтайды. Егер басқа аймаққа назар аударғыңыз келсе, бұл координаттарды кез келген басқа жермен ауыстыра аласыз.
+              </p>
+      
+              <br>
+              <h3>3. Көрікті картаны жасау</h3>
+      
+              <p style="color: #ddd; text-align: justify;">
+                  Орын анықталғаннан кейін, біз енді PrettyMaps пайдаланып картаны жасай аламыз. Төмендегі код картаны радиуспен көрсетеді, ол қоршаған аумақтың қаншалықты қамтылғанын анықтайды.
+              </p>
+      
+              <pre style="background-color: #333; color: #ddd; padding: 10px;">
+      fig, ax = plt.subplots(figsize=(10, 10))
+      prettymaps.plot(
+          location,
+          ax=ax,
+          radius=2000,  # Радиус метрмен
+          layers={'perimeter': {'circle': False}},
+      )
+      plt.show()
+              </pre>
+      
+              <p style="color: #ddd; text-align: justify;">
+                  Бұл код блогы әкімдікке бағытталған радиусы 2 километр болатын картаны жасайды. Картада ғимараттар, жолдар және жасыл аймақтар сияқты әртүрлі қабаттар көрсетіледі, ол қаланың орналасуын толық қамтиды.
+              </p>
+      
+              <br>
+              <h3>4. Картаны баптау</h3>
+      
+              <p style="color: #ddd; text-align: justify;">
+                  PrettyMaps көптеген баптау мүмкіндіктерін ұсынады. Сіз қабаттарды, түстерді және стильдерді өз қажеттіліктеріңізге сәйкес реттей аласыз. Мысалы, сіз су қоймалары сияқты қосымша қабаттарды қоса аласыз немесе белгілі бір ерекшеліктерді көрсету үшін түс схемасын реттей аласыз.
+              </p>
+      
+              <br>
+              <h2>Қорытынды</h2>
+      
+              <p style="color: #ddd; text-align: justify;">
+                  PrettyMaps арқылы қалаларды визуализациялау урбанизацияланған аймақтарды көркемдік және аналитикалық тұрғыдан зерттеуге мүмкіндік береді. Нәтижесінде алынған карталар әдемі ғана емес, сонымен бірге қаланың құрылымы мен орналасуын түсінуге пайдалы мәліметтер береді. Бұл жоба PrettyMaps-ті пайдаланып, әлемнің кез келген қаласын, Алматының тамаша үлгісі ретінде визуализациялауға болатынын көрсетеді.
+              </p>
+      
+              <br>
+              <h2>Код</h2>
+      
+              <p style="color: #ddd; text-align: justify;">
+                  Толық жоба коды <a href="https://github.com/Nurasssyl/Almaty_pretty_map/blob/main/Almaty_pretty_map.ipynb" style="color: #0066cc; display: inline;">GitHub</a> сайтында қолжетімді.
+              </p>
+          </div>
+      
+      </article>
+      
+      
+        
+        
+  
+      </div>
+  
+    </main>
+  
+    <!--
+      - арнайы js сілтемесі
+    -->
+    <script src="/assets/js/script.js"></script>
+  
+    <!--
+      - ionicon сілтемесі
+    -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  
+  </body>
+  
+  </html>
+  

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pretty map of Almaty with python</title>
+
+  <!--
+    - favicon
+  -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!--
+    - google font link 
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      color: #ddd;
+      background-color: #000;
+    }
+
+    .article-title {
+      color: #fff;
+    }
+
+    .article-meta {
+      color: #bbb;
+    }
+
+    .article-content {
+      color: #ddd;
+    }
+
+    .tag {
+      background-color: #444;
+      color: white;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    .article img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .author-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .author-info .author-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="/en/index.html" class="navbar-link" data-nav-link="about">About</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/resume.html" class="navbar-link" data-nav-link="resume">Resume</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/portfolio.html" class="navbar-link" data-nav-link="portfolio">Portfolio</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/blog.html" class="navbar-link" data-nav-link="blog">Blog</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/contact.html" class="navbar-link" data-nav-link="contact">Contact</a>
+          </li>
+
+          <nav>
+            <a href="/kk/blog/Almaty_pretty_map.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/kazakhstan.png" alt="Kazakh">
+            </a>
+            <a href="/ru/blog/Almaty_pretty_map.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/russian-federation.png" alt="Russian">
+            </a>
+            <a href="/en/blog/Almaty_pretty_map.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/usa.png" alt="English">
+            </a>
+          </nav>
+        </ul>
+
+      </nav>
+
+      <!--
+        - #ARTICLE
+      -->
+
+      <article class="article active">
+
+        <header><br><br>
+            <div class="author-info">
+                <img src="/assets/images/my_photo.png" alt="Nurasyl Abdrazakuly">
+                <span class="author-name">Nurasyl Abdrazakuly</span>
+            </div>
+    
+            <h1 class="h1 article-title">Visualizing Almaty with PrettyMaps</h1>
+            <img src="/assets/images/blog/Almaty_pretty_map.jpeg" alt="Almaty Pretty Map" loading="lazy">
+    
+            <p class="article-meta" style="display: flex; align-items: center; color: #bbb;">
+                <ion-icon name="calendar-outline" style="margin-right: 5px;"></ion-icon>
+                <time datetime="2024-08-13">13.08.2024</time> &nbsp; &nbsp;
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">Python</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">PrettyMaps</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">dataviz</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">data science</span>
+            </p>
+        </header>
+    
+        <div class="article-content">
+            <p style="color: #ddd; text-align: justify;">
+                In this project, I visualized the city of Almaty using the PrettyMaps library in Python. PrettyMaps leverages data from OpenStreetMap to generate visually appealing maps that can be customized with various layers such as roads, buildings, parks, and more.
+            </p>
+    
+            <br>
+            <h2>Step-by-Step Explanation</h2>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Below is a breakdown of the code used in the project, which you can find on my GitHub page. Each section of the code is explained to help you understand the process of creating a pretty map of Almaty.
+            </p>
+    
+            <br>
+            <h3>1. Importing the Necessary Libraries</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                First, we need to import the necessary Python libraries. PrettyMaps is the key library here, along with matplotlib for plotting the map.
+            </p>
+    
+            <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    import prettymaps
+    import matplotlib.pyplot as plt
+            </pre>
+    
+            <p style="color: #ddd; text-align: justify;">
+                These imports allow us to access the PrettyMaps functions and configure our map display settings.
+            </p>
+    
+            <br>
+            <h3>2. Setting the Map's Center</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                The next step is to define the central point of our map. In this example, the map is centered on the Akimat of Almaty, which is specified by its latitude and longitude coordinates.
+            </p>
+    
+            <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    location = (43.2567, 76.9286)
+            </pre>
+    
+            <p style="color: #ddd; text-align: justify;">
+                This line sets the coordinates for Almaty's city center. You can replace these coordinates with any other location if you wish to focus on a different area.
+            </p>
+    
+            <br>
+            <h3>3. Creating the Pretty Map</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                With the location defined, we can now generate the map using PrettyMaps. The code below plots the map with a specified radius, which defines how much of the surrounding area is included.
+            </p>
+    
+            <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    fig, ax = plt.subplots(figsize=(10, 10))
+    prettymaps.plot(
+        location,
+        ax=ax,
+        radius=2000,  # Radius in meters
+        layers={'perimeter': {'circle': False}},
+    )
+    plt.show()
+            </pre>
+    
+            <p style="color: #ddd; text-align: justify;">
+                This block of code creates a map with a radius of 2 kilometers centered on the Akimat. The map displays various layers, including buildings, roads, and green spaces, providing a comprehensive view of the city's layout.
+            </p>
+    
+            <br>
+            <h3>4. Customizing the Map</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                PrettyMaps offers many customization options. You can adjust the layers, colors, and styles to suit your needs. For instance, you can include additional layers such as water bodies or customize the color scheme to highlight specific features.
+            </p>
+    
+            <br>
+            <h2>Conclusion</h2>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Visualizing cities with PrettyMaps allows for both artistic and analytical exploration of urban areas. The resulting maps are not only beautiful but also provide meaningful insights into the structure and layout of the city. This project demonstrates how you can leverage PrettyMaps to visualize any city in the world, with Almaty as a prime example.
+            </p>
+    
+            <br>
+            <h2>Code</h2>
+    
+            <p style="color: #ddd; text-align: justify;">
+                The full project code is available on <a href="https://github.com/Nurasssyl/Almaty_pretty_map/blob/main/Almaty_pretty_map.ipynb" style="color: #0066cc; display: inline;">GitHub</a>.
+            </p>
+        </div>
+    
+    </article>
+    
+    
+      
+      
+
+    </div>
+
+  </main>
+
+  <!--
+    - custom js link
+  -->
+  <script src="/assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
+
