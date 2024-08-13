@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizing Almaty City Streets with OSM and Python</title>
+
+  <!--
+    - favicon
+  -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!--
+    - google font link 
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      color: #ddd;
+      background-color: #000;
+    }
+
+    .article-title {
+      color: #fff;
+    }
+
+    .article-meta {
+      color: #bbb;
+    }
+
+    .article-content {
+      color: #ddd;
+    }
+
+    .tag {
+      background-color: #444;
+      color: white;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    .article img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .author-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .author-info .author-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="/en/index.html" class="navbar-link" data-nav-link="about">About</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/resume.html" class="navbar-link" data-nav-link="resume">Resume</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/portfolio.html" class="navbar-link" data-nav-link="portfolio">Portfolio</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/blog.html" class="navbar-link" data-nav-link="blog">Blog</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/contact.html" class="navbar-link" data-nav-link="contact">Contact</a>
+          </li>
+
+          <nav>
+            <a href="/kk/blog/Green_Spaces_in_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/kazakhstan.png" alt="Kazakh">
+            </a>
+            <a href="/ru/blog/Green_Spaces_in_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/russian-federation.png" alt="Russian">
+            </a>
+            <a href="/en/blog/Green_Spaces_in_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/usa.png" alt="English">
+            </a>
+          </nav>
+        </ul>
+
+      </nav>
+
+      <!--
+        - #ARTICLE
+      -->
+
+      <article class="article active">
+
+        <header><br><br>
+          <div class="author-info">
+            <img src="/assets/images/my_photo.png" alt="Nurasyl Abdrazakuly">
+            <span class="author-name">Nurasyl Abdrazakuly</span>
+          </div>
+      
+          <h1 class="h1 article-title">Visualizing Green Spaces in Almaty with OSM and Python</h1>
+          <img src="/assets/images/blog/Green_spaces_Almaty.jpeg" alt="Green Spaces in Almaty" loading="lazy">
+      
+          <p class="article-meta" style="display: flex; align-items: center; color: #bbb;">
+            <ion-icon name="calendar-outline" style="margin-right: 5px;"></ion-icon>
+            <time datetime="2024-08-13">13.08.2024</time> &nbsp; &nbsp;
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">Python</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">OSM</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">dataviz</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">data science</span>
+          </p>
+        </header>
+      
+        <div class="article-content">
+          <p style="color: #ddd; text-align: justify;">
+            I visualized the green spaces of Almaty city 🇰🇿 using Python. This visualization was developed with Python, utilizing the osmnx (OpenStreetMap) and matplotlib libraries.
+          </p>
+          <p style="color: #ddd; text-align: justify;">
+            The visualization shows all the green spaces in Almaty 🌳. I also calculated the percentage of green spaces in relation to the total area of the city.
+          </p>
+          <p style="color: #ddd; text-align: justify;">
+            The result shows that 44.52% of the city's area is covered by green spaces, largely due to the inclusion of parts of the foothills in the city's territory.
+          </p>
+          <p style="color: #ddd; text-align: justify;">
+            Such maps help urban planners, ecologists, and researchers better understand the distribution of green zones, plan new green spaces, and improve the quality of life for city residents. Additionally, they support scientific research and contribute to creating more sustainable and healthy urban environments.
+          </p>
+          <br>
+          <h2>Preparing the Environment</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            Before starting, you need to install the necessary libraries:
+          </p>
+      
+          <pre style="background-color: #333; color: #ddd; padding: 10px;">
+      pip install osmnx matplotlib geopandas
+          </pre>
+      
+          <br>
+          <h2>Collecting and Visualizing Green Spaces</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            We can use the osmnx library to download the green spaces data from OpenStreetMap for Almaty:
+          </p>
+      
+          <pre style="background-color: #333; color: #ddd; padding: 10px;">
+      import osmnx as ox
+      import geopandas as gpd
+      import matplotlib.pyplot as plt
+      
+      # Download the green spaces in Almaty
+      green_spaces = ox.geometries_from_place("Almaty, Kazakhstan", tags={"landuse": "grass"})
+      
+      # Plot the green spaces
+      fig, ax = plt.subplots(figsize=(10, 10))
+      green_spaces.plot(ax=ax, color="green", alpha=0.6)
+      ax.set_title("Green Spaces in Almaty", fontsize=20)
+      ax.set_xticks([])
+      ax.set_yticks([])
+      plt.show()
+          </pre>
+      
+          <p style="color: #ddd; text-align: justify;">
+            The code above downloads all areas tagged as "grass" in OpenStreetMap for Almaty and plots them. You can further filter or modify the tags to include other types of green spaces like parks, forests, etc.
+          </p>
+      
+          <br>
+          <h2>Calculating the Percentage of Green Spaces</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            To calculate the percentage of green spaces relative to the entire city's area, you can use the following code:
+          </p>
+      
+          <pre style="background-color: #333; color: #ddd; padding: 10px;">
+      # Load the city's boundary
+      city_boundary = ox.geocode_to_gdf("Almaty, Kazakhstan")
+      
+      # Calculate the area of green spaces and the city
+      green_area = green_spaces.geometry.area.sum()
+      city_area = city_boundary.geometry.area.sum()
+      
+      # Calculate the percentage of green spaces
+      green_percentage = (green_area / city_area) * 100
+      print(f"Percentage of green spaces: {green_percentage:.2f}%")
+          </pre>
+      
+          <p style="color: #ddd; text-align: justify;">
+            The result shows that 44.52% of Almaty's area is green space, which includes parts of the foothills within the city boundary.
+          </p>
+      
+          <br>
+          <h2>Conclusion</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            This analysis and visualization provide insights into the distribution of green spaces within Almaty. Such information is valuable for urban planning, environmental studies, and enhancing the overall quality of life in urban environments. You can replicate this process for other cities to support sustainable urban development.
+          </p>
+      
+          <br>
+          <h2>Code</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            The full project code is available on <a href="https://github.com/Nurasssyl/Almaty-Green-Spaces/blob/main/Almaty_Green_Spaces.ipynb" style="color: #0066cc; display: inline;">GitHub</a>.
+          </p>
+        </div>
+      
+      </article>
+      
+      
+
+    </div>
+
+  </main>
+
+  <!--
+    - custom js link
+  -->
+  <script src="/assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
+

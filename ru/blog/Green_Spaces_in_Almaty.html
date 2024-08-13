@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Визуализация зеленых насаждений Алматы</title>
+
+  <!--
+    - favicon
+  -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!--
+    - google font link 
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      color: #ddd;
+      background-color: #000;
+    }
+
+    .article-title {
+      color: #fff;
+    }
+
+    .article-meta {
+      color: #bbb;
+    }
+
+    .article-content {
+      color: #ddd;
+    }
+
+    .tag {
+      background-color: #444;
+      color: white;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    .article img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .author-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .author-info .author-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="/ru/index.html" class="navbar-link" data-nav-link="about">Главная</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/resume.html" class="navbar-link" data-nav-link="resume">Резюме</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/portfolio.html" class="navbar-link" data-nav-link="portfolio">Портфолио</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/blog.html" class="navbar-link" data-nav-link="blog">Блог</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/contact.html" class="navbar-link" data-nav-link="contact">Контакт</a>
+          </li>
+
+          <nav>
+            <a href="/kk/blog/Green_Spaces_in_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/kazakhstan.png" alt="Kazakh">
+            </a>
+            <a href="/ru/blog/Green_Spaces_in_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/russian-federation.png" alt="Russian">
+            </a>
+            <a href="/en/blog/Green_Spaces_in_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/usa.png" alt="English">
+            </a>
+          </nav>
+        </ul>
+
+      </nav>
+
+      <!--
+        - #ARTICLE
+      -->
+
+      <article class="article active">
+
+        <header><br><br>
+          <div class="author-info">
+            <img src="/assets/images/my_photo.png" alt="Нурасыл Абдразакулы">
+            <span class="author-name">Нурасыл Абдразакулы</span>
+          </div>
+      
+          <h1 class="h1 article-title">Визуализация зеленых насаждений Алматы с помощью OSM и Python</h1>
+          <img src="/assets/images/blog/Green_spaces_Almaty.jpeg" alt="Зеленые насаждения в Алматы" loading="lazy">
+      
+          <p class="article-meta" style="display: flex; align-items: center; color: #bbb;">
+            <ion-icon name="calendar-outline" style="margin-right: 5px;"></ion-icon>
+            <time datetime="2024-08-13">13.08.2024</time> &nbsp; &nbsp;
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">Python</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">OSM</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">визуализация данных</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">data science</span>
+          </p>
+        </header>
+      
+        <div class="article-content">
+          <p style="color: #ddd; text-align: justify;">
+            Я визуализировал зеленые насаждения города Алматы 🇰🇿 с помощью Python. Эта визуализация была разработана с использованием библиотек osmnx (OpenStreetMap) и matplotlib.
+          </p>
+          <p style="color: #ddd; text-align: justify;">
+            Визуализация показывает все зеленые насаждения в Алматы 🌳. Также я рассчитал процентное соотношение зеленых насаждений от общей территории города.
+          </p>
+          <p style="color: #ddd; text-align: justify;">
+            В результате получилось, что 44,52% территории города покрыто зелеными насаждениями, что обусловлено включением части предгорий в территорию города.
+          </p>
+          <p style="color: #ddd; text-align: justify;">
+            Такие карты помогают городским планировщикам, экологам и исследователям лучше понимать распределение зелёных зон, планировать новые зелёные насаждения и повышать качество жизни горожан. Кроме того, они способствуют научным исследованиям и помогают создавать более устойчивые и здоровые городские среды.
+          </p>
+          <br>
+          <h2>Подготовка окружения</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            Прежде чем начать, вам нужно установить необходимые библиотеки:
+          </p>
+      
+          <pre style="background-color: #333; color: #ddd; padding: 10px;">
+      pip install osmnx matplotlib geopandas
+          </pre>
+      
+          <br>
+          <h2>Сбор и визуализация данных о зелёных насаждениях</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            Мы можем использовать библиотеку osmnx для загрузки данных о зелёных насаждениях из OpenStreetMap для Алматы:
+          </p>
+      
+          <pre style="background-color: #333; color: #ddd; padding: 10px;">
+      import osmnx as ox
+      import geopandas as gpd
+      import matplotlib.pyplot as plt
+      
+      # Загружаем данные о зеленых насаждениях в Алматы
+      green_spaces = ox.geometries_from_place("Almaty, Kazakhstan", tags={"landuse": "grass"})
+      
+      # Визуализируем зеленые насаждения
+      fig, ax = plt.subplots(figsize=(10, 10))
+      green_spaces.plot(ax=ax, color="green", alpha=0.6)
+      ax.set_title("Зеленые насаждения Алматы", fontsize=20)
+      ax.set_xticks([])
+      ax.set_yticks([])
+      plt.show()
+          </pre>
+      
+          <p style="color: #ddd; text-align: justify;">
+            Приведенный выше код загружает все территории, помеченные как "трава" в OpenStreetMap для Алматы, и отображает их на карте. Вы можете дополнительно фильтровать или изменять теги, чтобы включить другие типы зелёных насаждений, такие как парки, леса и т.д.
+          </p>
+      
+          <br>
+          <h2>Расчет процентного соотношения зеленых насаждений</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            Для расчета процентного соотношения зеленых насаждений относительно всей площади города можно использовать следующий код:
+          </p>
+      
+          <pre style="background-color: #333; color: #ddd; padding: 10px;">
+      # Загрузка границы города
+      city_boundary = ox.geocode_to_gdf("Almaty, Kazakhstan")
+      
+      # Расчет площади зеленых насаждений и города
+      green_area = green_spaces.geometry.area.sum()
+      city_area = city_boundary.geometry.area.sum()
+      
+      # Расчет процента зеленых насаждений
+      green_percentage = (green_area / city_area) * 100
+      print(f"Процент зеленых насаждений: {green_percentage:.2f}%")
+          </pre>
+      
+          <p style="color: #ddd; text-align: justify;">
+            В результате получается, что 44,52% территории Алматы покрыто зелеными насаждениями, включая предгорные участки, входящие в состав города.
+          </p>
+      
+          <br>
+          <h2>Заключение</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            Этот анализ и визуализация предоставляют ценные данные о распределении зеленых насаждений в пределах Алматы. Такая информация полезна для городского планирования, экологических исследований и улучшения общего качества жизни в городских условиях. Вы можете воспроизвести этот процесс для других городов, чтобы поддержать устойчивое городское развитие.
+          </p>
+      
+          <br>
+          <h2>Код</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            Полный код проекта доступен на <a href="https://github.com/Nurasssyl/Almaty-Green-Spaces/blob/main/Almaty_Green_Spaces.ipynb" style="color: #0066cc; display: inline;">GitHub</a>.
+          </p>
+        </div>
+      
+      </article>
+      
+    
+      
+
+    </div>
+
+  </main>
+
+  <!--
+    - custom js link
+  -->
+  <script src="/assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
+
