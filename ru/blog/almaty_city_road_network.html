@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Визуализация улиц города Алматы с помощью OSM</title>
+
+  <!--
+    - favicon
+  -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!--
+    - google font link 
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      color: #ddd;
+      background-color: #000;
+    }
+
+    .article-title {
+      color: #fff;
+    }
+
+    .article-meta {
+      color: #bbb;
+    }
+
+    .article-content {
+      color: #ddd;
+    }
+
+    .tag {
+      background-color: #444;
+      color: white;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    .article img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .author-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .author-info .author-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="/ru/index.html" class="navbar-link" data-nav-link="about">About</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/resume.html" class="navbar-link" data-nav-link="resume">Resume</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/portfolio.html" class="navbar-link" data-nav-link="portfolio">Portfolio</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/blog.html" class="navbar-link" data-nav-link="blog">Blog</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/contact.html" class="navbar-link" data-nav-link="contact">Contact</a>
+          </li>
+
+          <nav>
+            <a href="/kk/blog/Almaty_city_road_network.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/kazakhstan.png" alt="Kazakh">
+            </a>
+            <a href="/ru/blog/Almaty_city_road_network.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/russian-federation.png" alt="Russian">
+            </a>
+            <a href="/en/blog/Almaty_city_road_network.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/usa.png" alt="English">
+            </a>
+          </nav>
+        </ul>
+
+      </nav>
+
+      <!--
+        - #ARTICLE
+      -->
+
+      <article class="article active">
+
+        <header><br><br>
+          <div class="author-info">
+            <img src="/assets/images/my_photo.png" alt="Нурасыл Абдразакулы">
+            <span class="author-name">Нурасыл Абдразакулы</span>
+          </div>
+      
+          <h1 class="h1 article-title">Визуализация улиц города Алматы с помощью OSM и Python</h1>
+          <img src="/assets/images/blog/Almaty_city_road_network.jpeg" alt="Дорожная сеть города Алматы" loading="lazy">
+      
+          <p class="article-meta" style="display: flex; align-items: center; color: #bbb;">
+            <ion-icon name="calendar-outline" style="margin-right: 5px;"></ion-icon>
+            <time datetime="2024-08-13">13.08.2024</time> &nbsp; &nbsp;
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">Python</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">OSM</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">dataviz</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">data science</span>
+        </p>
+        </header>
+      
+        <div class="article-content">
+          <p style="color: #ddd; text-align: justify;">
+            В этом блоге я расскажу, как использовать Python и OpenStreetMap для создания визуализации дорожной сети города. С помощью таких библиотек, как osmnx и matplotlib, можно создать детализированную карту, показывающую улицы города, и проанализировать их структуру.
+          </p>
+          <br>
+          <h2>Введение</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            Недавно я создал карту дорожной сети Алматы 🇰🇿. Эта визуализация помогает лучше понять структуру города, его развитие и особенности градостроительства. Используя osmnx (для данных OpenStreetMap) и matplotlib (для визуализации), я смог создать изображение, показывающее все улицы города.
+          </p>
+          <br>
+          <h2>Подготовка к задаче</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            Прежде чем начать, необходимо установить необходимые библиотеки:
+          </p>
+      
+          <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    pip install osmnx matplotlib
+          </pre>
+          <br>
+          <h2>Сбор данных</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            Сначала, с помощью библиотеки osmnx, мы получим данные о дорожной сети Алматы:
+          </p>
+      
+          <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    import osmnx as ox
+    import matplotlib.pyplot as plt
+    
+    # Получаем граф дорожной сети Алматы
+    G = ox.graph_from_place("Almaty, Kazakhstan", network_type="drive")
+    
+    # Конвертируем граф в формат geodataframe
+    gdf_nodes, gdf_edges = ox.graph_to_gdfs(G)
+          </pre>
+          <br>
+          <h2>Визуализация данных</h2>
+          <p style="color: #ddd; text-align: justify;">
+            Теперь, когда у нас есть данные, мы можем построить карту:
+          </p>
+    
+          <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    # Устанавливаем размер фигуры
+    fig, ax = plt.subplots(figsize=(10, 10))
+    
+    # Отображаем улицы
+    gdf_edges.plot(ax=ax, linewidth=0.5, color='black')
+    
+    # Устанавливаем заголовок карты и удаляем осевые метки
+    ax.set_title("Дорожная сеть Алматы", fontsize=20)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    plt.show()
+          </pre>
+          <br>
+          <h2>Анализ карты</h2>
+    
+          <p style="color: #ddd; text-align: justify;">
+            После создания карты можно наблюдать несколько интересных особенностей:
+          </p>
+          <ul style="color: #ddd; text-align: justify; list-style-type: disc; margin-left: 20px;">
+            <li><strong>Плотность в центре города:</strong> Центр города 🏙️ намного плотнее по сравнению с окраинами 🌳, что типично для большинства крупных городов, где центр обычно развивается первым и более интенсивно.</li>
+            <li><strong>Прямые улицы в центре:</strong> В центре больше прямых улиц ↔️, в то время как на окраинах встречаются извилистые дороги 🌀, что отражает планировку центральных районов и адаптацию к ландшафту в новых районах.</li>
+            <li><strong>Пригородные районы:</strong> Карта также показывает пригородные районы и сельские дороги 🚜, что указывает на рост города и его интеграцию с окружающими территориями.</li>
+            <li><strong>Узнаваемые ориентиры:</strong> Вы легко можете определить значимые ориентиры, такие как <strong>Алматинский ипподром</strong> 🐎, <strong>озеро Сайран</strong> 🌊, <strong>кампус КазНУ</strong> 🎓 и <strong>стадион Алматы Арена</strong> 🏟️.</li>
+            <li><strong>Сеточная планировка в центральных районах:</strong> Центральные районы спланированы в сеточном формате, в то время как новые районы адаптированы к ландшафту 🌄, что показывает этапы роста города.</li>
+          </ul>
+          <br>
+          <h2>Заключение</h2>
+    
+          <p style="color: #ddd; text-align: justify;">
+            Эта визуализация позволяет не только увидеть текущую структуру дорожной сети Алматы, но и лучше понять её историческое развитие. Используя osmnx и matplotlib, вы можете создать аналогичные карты для любого города, что открывает широкие возможности для анализа и исследований.
+          </p>
+          <br>
+          <h2>Код</h2>
+    
+          <p style="color: #ddd; text-align: justify;">
+            Полный код проекта доступен на <a href="https://github.com/Nurasssyl/Almaty-city-streets/blob/main/Almaty_streets.ipynb" style="color: #0066cc; display: inline;">GitHub</a>.
+          </p>
+        </div>
+      
+      </article>
+    
+      
+
+    </div>
+
+  </main>
+
+  <!--
+    - custom js link
+  -->
+  <script src="/assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizing Almaty City Streets with OSM and Python</title>
+
+  <!--
+    - favicon
+  -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!--
+    - google font link 
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      color: #ddd;
+      background-color: #000;
+    }
+
+    .article-title {
+      color: #fff;
+    }
+
+    .article-meta {
+      color: #bbb;
+    }
+
+    .article-content {
+      color: #ddd;
+    }
+
+    .tag {
+      background-color: #444;
+      color: white;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    .article img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .author-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .author-info .author-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="/en/index.html" class="navbar-link" data-nav-link="about">About</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/resume.html" class="navbar-link" data-nav-link="resume">Resume</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/portfolio.html" class="navbar-link" data-nav-link="portfolio">Portfolio</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/blog.html" class="navbar-link" data-nav-link="blog">Blog</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/contact.html" class="navbar-link" data-nav-link="contact">Contact</a>
+          </li>
+
+          <nav>
+            <a href="/kk/blog/Almaty_city_road_network.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/kazakhstan.png" alt="Kazakh">
+            </a>
+            <a href="/ru/blog/Almaty_city_road_network.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/russian-federation.png" alt="Russian">
+            </a>
+            <a href="/en/blog/Almaty_city_road_network.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/usa.png" alt="English">
+            </a>
+          </nav>
+        </ul>
+
+      </nav>
+
+      <!--
+        - #ARTICLE
+      -->
+
+      <article class="article active">
+
+        <header><br><br>
+          <div class="author-info">
+            <img src="/assets/images/my_photo.png" alt="Nurasyl Abdrazakuly">
+            <span class="author-name">Nurasyl Abdrazakuly</span>
+          </div>
+      
+          <h1 class="h1 article-title">Visualizing Almaty City Streets with OSM and Python</h1>
+          <img src="/assets/images/blog/Almaty_city_road_network.jpeg" alt="Almaty City Road Network" loading="lazy">
+      
+          <p class="article-meta" style="display: flex; align-items: center; color: #bbb;">
+            <ion-icon name="calendar-outline" style="margin-right: 5px;"></ion-icon>
+            <time datetime="2024-08-13">13.08.2024</time> &nbsp; &nbsp;
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">Python</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">OSM</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">dataviz</span>
+            <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">data science</span>
+        </p>
+        </header>
+      
+        <div class="article-content">
+          <p style="color: #ddd; text-align: justify;">
+            In this blog, I will explain how to use Python and OpenStreetMap to create a visualization of the road network of a city. By using libraries like osmnx and matplotlib, we can produce a detailed map that shows the city's streets and analyze their structure.
+          </p>
+          <br>
+          <h2>Introduction</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            Recently, I created a map of Almaty's road network 🇰🇿. This visualization helps to better understand the city's structure, its development, and urban planning characteristics. Using osmnx (for OpenStreetMap data) and matplotlib (for visualization), I was able to create an image that shows all the streets in the city.
+          </p>
+          <br>
+          <h2>Preparing for the Task</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            Before we begin, you need to install the required libraries:
+          </p>
+      
+          <pre style="background-color: #333; color: #ddd; padding: 10px;">
+pip install osmnx matplotlib
+          </pre>
+          <br>
+          <h2>Collecting Data</h2>
+      
+          <p style="color: #ddd; text-align: justify;">
+            First, using the osmnx library, we'll fetch the road network data for Almaty:
+          </p>
+      
+          <pre style="background-color: #333; color: #ddd; padding: 10px;">
+import osmnx as ox
+import matplotlib.pyplot as plt
+
+# Get the road network graph for Almaty
+G = ox.graph_from_place("Almaty, Kazakhstan", network_type="drive")
+
+# Convert the graph to a geodataframe format
+gdf_nodes, gdf_edges = ox.graph_to_gdfs(G)
+          </pre>
+          <br>
+          <h2>Visualizing the Data</h2>
+          <p style="color: #ddd; text-align: justify;">
+            Now that we have the data, we can plot the map:
+          </p>
+
+          <pre style="background-color: #333; color: #ddd; padding: 10px;">
+# Set the figure size
+fig, ax = plt.subplots(figsize=(10, 10))
+
+# Plot the streets
+gdf_edges.plot(ax=ax, linewidth=0.5, color='black')
+
+# Set the map title and remove axis ticks
+ax.set_title("Road Network of Almaty", fontsize=20)
+ax.set_xticks([])
+ax.set_yticks([])
+plt.show()
+          </pre>
+          <br>
+          <h2>Analyzing the Map</h2>
+
+          <p style="color: #ddd; text-align: justify;">
+            After creating the map, several interesting patterns can be observed:
+          </p>
+          <ul style="color: #ddd; text-align: justify; list-style-type: disc; margin-left: 20px;">
+            <li><strong>City Center Density:</strong> The city center 🏙️ is much denser compared to the outskirts 🌳, which is typical for most large cities where the center is usually developed first and more intensively.</li>
+            <li><strong>Straight Streets in the Center:</strong> The center features more straight streets ↔️, while the outskirts have winding roads 🌀, reflecting the planning of central areas and adaptation to the landscape in newer areas.</li>
+            <li><strong>Suburban Areas:</strong> The map also shows suburban areas and rural roads 🚜, indicating the city's growth and integration with surrounding territories.</li>
+            <li><strong>Recognizable Landmarks:</strong> You can easily identify significant landmarks such as the <strong>Almaty Hippodrome</strong> 🐎, <strong>Sairan Lake</strong> 🌊, <strong>KazNU Campus</strong> 🎓, and <strong>Almaty Arena Stadium</strong> 🏟️.</li>
+            <li><strong>Grid Layout in Central Areas:</strong> The central areas are planned in a grid pattern, while newer areas are adapted to the landscape 🌄, showing the city's growth phases.</li>
+          </ul>
+          <br>
+          <h2>Conclusion</h2>
+
+          <p style="color: #ddd; text-align: justify;">
+            This visualization allows us not only to see the current structure of Almaty's road network but also to better understand its historical development. Using osmnx and matplotlib, you can create similar maps for any city, which opens up vast opportunities for analysis and research.
+          </p>
+          <br>
+          <h2>Code</h2>
+
+          <p style="color: #ddd; text-align: justify;">
+            The full project code is available on <a href="https://github.com/Nurasssyl/Almaty-city-streets/blob/main/Almaty_streets.ipynb" style="color: #0066cc; display: inline;">GitHub</a>.
+          </p>
+        </div>
+      
+      </article>
+      
+
+    </div>
+
+  </main>
+
+  <!--
+    - custom js link
+  -->
+  <script src="/assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
+
