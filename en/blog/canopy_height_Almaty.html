@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canopy Height in Almaty with R</title>
+
+  <!--
+    - favicon
+  -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!--
+    - google font link 
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      color: #ddd;
+      background-color: #000;
+    }
+
+    .article-title {
+      color: #fff;
+    }
+
+    .article-meta {
+      color: #bbb;
+    }
+
+    .article-content {
+      color: #ddd;
+    }
+
+    .tag {
+      background-color: #444;
+      color: white;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    .article img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .author-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .author-info .author-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="/en/index.html" class="navbar-link" data-nav-link="about">About</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/resume.html" class="navbar-link" data-nav-link="resume">Resume</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/portfolio.html" class="navbar-link" data-nav-link="portfolio">Portfolio</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/blog.html" class="navbar-link" data-nav-link="blog">Blog</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/en/contact.html" class="navbar-link" data-nav-link="contact">Contact</a>
+          </li>
+
+          <nav>
+            <a href="/kk/blog/canopy_height_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/kazakhstan.png" alt="Kazakh">
+            </a>
+            <a href="/ru/blog/canopy_height_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/russian-federation.png" alt="Russian">
+            </a>
+            <a href="/en/blog/canopy_height_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/usa.png" alt="English">
+            </a>
+          </nav>
+        </ul>
+
+      </nav>
+
+      <!--
+        - #ARTICLE
+      -->
+
+      <article class="article active">
+
+        <header><br><br>
+            <div class="author-info">
+                <img src="/assets/images/my_photo.png" alt="Nurasyl Abdrazakuly">
+                <span class="author-name">Nurasyl Abdrazakuly</span>
+            </div>
+    
+            <h1 class="h1 article-title">Measuring Canopy Height in Almaty</h1>
+            <img src="/assets/images/blog/canopy_height_Almaty.jpeg" alt="Canopy Height Almaty" loading="lazy">
+    
+            <p class="article-meta" style="display: flex; align-items: center; color: #bbb;">
+                <ion-icon name="calendar-outline" style="margin-right: 5px;"></ion-icon>
+                <time datetime="2024-08-13">13.08.2024</time> &nbsp; &nbsp;
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">R</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">dataviz</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">Canopy Height</span>
+            </p>
+        </header>
+    
+        <div class="article-content">
+            <p style="color: #ddd; text-align: justify;">
+                In this project, I measured the canopy height of trees in Almaty 🌳. The visualization was developed using the R programming language and the following libraries: <code>chmloader</code>, <code>terra</code>, <code>sf</code>, <code>maptiles</code>, <code>classInt</code>, <code>tidyverse</code>, <code>tidyterra</code>, <code>leaflet</code>, and <code>htmlwidgets</code>.
+            </p>
+    
+            <p style="color: #ddd; text-align: justify;">
+                <strong>Context:</strong> The darker the green color on the map, the higher the tree canopies. Canopy height refers to the height of the upper layer of vegetation in a forest or another ecosystem, typically measured from the ground to the tops of trees or other plants. It's a crucial metric in forestry, ecology, and environmental research because it can indicate the forest's age, health, and structure.
+            </p>
+    
+            <br>
+            <h2>Importance of Measuring Tree Height</h2>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Measuring the height of trees is important for several reasons:
+            </p>
+    
+            <ul style="color: #ddd; text-align: justify;">
+                <li><strong>Plant Health Assessment:</strong> It allows for the detection of diseases, stress conditions, or damage.</li>
+                <li><strong>Determining Age Structure:</strong> Indicates the age of trees, essential for assessing their condition and care needs.</li>
+                <li><strong>Evaluating Ecosystem Role:</strong> Connected to the trees' ability to capture carbon, provide shade, and offer shelter to wildlife.</li>
+                <li><strong>Urban Planning:</strong> Helps assess green spaces and their contribution to the urban environment.</li>
+                <li><strong>Monitoring Landscape Changes:</strong> Tracks the growth and health of trees for sustainable management of forests and urban green areas.</li>
+            </ul>
+    
+            <br>
+            <h2>Code Explanation</h2>
+
+            <p style="color: #ddd; text-align: justify;">
+                The full project code is available on <a href="https://github.com/Nurasssyl/almaty-tree-canopy-height-/blob/main/canopy_height.r" style="color: #0066cc; display: inline;">GitHub</a>. Below is a brief explanation of the main parts of the code used in this project:
+            </p>
+            <h3>1. Loading the Data</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                The code begins by loading the necessary libraries and data. The `chmloader` library is used to load canopy height model (CHM) data, which provides the height information for the trees. The `terra` library is used for spatial data processing, and `sf` is employed for handling spatial features.
+            </p>
+    
+            <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    library(chmloader)
+    library(terra)
+    library(sf)
+    # Load the canopy height model (CHM)
+    chm <- rast("path_to_chm_data.tif")
+            </pre>
+    
+            <h3>2. Preparing the Data</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                After loading the CHM data, the code processes it using the `terra` package. The CHM data is reprojected to match the coordinate system of the base map tiles, and specific spatial transformations are applied to prepare it for visualization.
+            </p>
+    
+            <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    # Reproject the CHM data
+    chm_reproj <- project(chm, "EPSG:4326")
+    
+    # Prepare the data for mapping
+    chm_clipped <- crop(chm_reproj, extent_of_area)
+    chm_masked <- mask(chm_clipped, mask_shapefile)
+            </pre>
+    
+            <h3>3. Visualizing the Data</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                The visualization is created using `tidyterra`, `maptiles`, and `leaflet` libraries. These libraries allow for the integration of the canopy height data with basemap tiles, enabling an interactive and informative display of tree heights across Almaty. The darker green colors represent taller tree canopies.
+            </p>
+    
+            <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    # Create a map with leaflet
+    leaflet() %>%
+      addProviderTiles(providers$CartoDB.Positron) %>%
+      addRasterImage(chm_masked, colors = height_color_palette, opacity = 0.8) %>%
+      addLegend("topright", pal = height_color_palette, values = values(chm_masked),
+                title = "Canopy Height (m)")
+            </pre>
+    
+            <h3>4. Customizing the Map</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                The map can be further customized using different layers, color palettes, and interactive elements. The code also allows for adding markers, labels, and other map features to highlight specific areas of interest or provide additional context.
+            </p>
+    
+            <br>
+            <h2>Conclusion</h2>
+    
+            <p style="color: #ddd; text-align: justify;">
+                This project showcases the process of measuring and visualizing canopy height in an urban environment like Almaty. By utilizing R and various spatial analysis libraries, we can gain valuable insights into the city's green infrastructure and its role in the urban ecosystem. For more details and the full code, visit the project on <a href="https://github.com/Nurasssyl/almaty-tree-canopy-height-/blob/main/canopy_height.r" style="color: #0066cc; display: inline;">GitHub</a>.
+            </p>
+        </div>
+    
+    </article>
+    
+    </div>
+
+  </main>
+
+  <!--
+    - custom js link
+  -->
+  <script src="/assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
+

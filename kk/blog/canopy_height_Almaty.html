@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Алматыдағы ағаштардың тәж биіктігін R арқылы өлшеу</title>
+
+  <!--
+    - фавикон
+  -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+  <!--
+    - арнайы css сілтемесі
+  -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!--
+    - Google қаріп сілтемесі
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      color: #ddd;
+      background-color: #000;
+    }
+
+    .article-title {
+      color: #fff;
+    }
+
+    .article-meta {
+      color: #bbb;
+    }
+
+    .article-content {
+      color: #ddd;
+    }
+
+    .tag {
+      background-color: #444;
+      color: white;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    .article img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .author-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .author-info .author-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    - #БАС МАЗМҰН
+  -->
+
+  <main>
+
+    <!--
+      - #негізгі мазмұн
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #НАВБАР
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="/kk/index.html" class="navbar-link" data-nav-link="about">Мен туралы</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/kk/resume.html" class="navbar-link" data-nav-link="resume">Түйіндеме</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/kk/portfolio.html" class="navbar-link" data-nav-link="portfolio">Портфолио</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/kk/blog.html" class="navbar-link" data-nav-link="blog">Блог</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/kk/contact.html" class="navbar-link" data-nav-link="contact">Байланыс</a>
+          </li>
+
+          <nav>
+            <a href="/kk/blog/canopy_height_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/kazakhstan.png" alt="Kazakh">
+            </a>
+            <a href="/ru/blog/canopy_height_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/russian-federation.png" alt="Russian">
+            </a>
+            <a href="/en/blog/canopy_height_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/usa.png" alt="English">
+            </a>
+          </nav>
+        </ul>
+
+      </nav>
+
+      <!--
+        - #Мақала
+      -->
+
+      <article class="article active">
+
+        <header><br><br>
+            <div class="author-info">
+                <img src="/assets/images/my_photo.png" alt="Нұрасыл Әбдразақұлы">
+                <span class="author-name">Нұрасыл Әбдразақұлы</span>
+            </div>
+    
+            <h1 class="h1 article-title">Алматыдағы ағаштардың тәж биіктігін өлшеу</h1>
+            <img src="/assets/images/blog/canopy_height_Almaty.jpeg" alt="Алматыдағы ағаштардың тәж биіктігі" loading="lazy">
+    
+            <p class="article-meta" style="display: flex; align-items: center; color: #bbb;">
+                <ion-icon name="calendar-outline" style="margin-right: 5px;"></ion-icon>
+                <time datetime="2024-08-13">13.08.2024</time> &nbsp; &nbsp;
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">R</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">деректерді визуализациялау</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">Тәж биіктігі</span>
+            </p>
+        </header>
+    
+        <div class="article-content">
+            <p style="color: #ddd; text-align: justify;">
+                Бұл жобада мен Алматыдағы ағаштардың тәж биіктігін өлшедім 🌳. Визуализация R бағдарламалау тілі және келесі кітапханаларды пайдалану арқылы жасалды: <code>chmloader</code>, <code>terra</code>, <code>sf</code>, <code>maptiles</code>, <code>classInt</code>, <code>tidyverse</code>, <code>tidyterra</code>, <code>leaflet</code> және <code>htmlwidgets</code>.
+            </p>
+    
+            <p style="color: #ddd; text-align: justify;">
+                <strong>Контекст:</strong> Картадағы жасыл түс неғұрлым күңгірт болса, ағаштардың тәждері соғұрлым биік болады. Тәж биіктігі – бұл орман немесе басқа экожүйедегі өсімдіктердің жоғарғы қабатының биіктігі, әдетте, жерден ағаштардың немесе басқа өсімдіктердің ұшар басына дейін өлшенеді. Бұл орман шаруашылығында, экологияда және қоршаған ортаны зерттеуде маңызды көрсеткіш болып табылады, өйткені ол орманның жасы, денсаулығы және құрылымы туралы ақпарат береді.
+            </p>
+    
+            <br>
+            <h2>Ағаштардың биіктігін өлшеудің маңызы</h2>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Ағаштардың биіктігін өлшеу бірнеше себептер бойынша маңызды:
+            </p>
+    
+            <ul style="color: #ddd; text-align: justify;">
+                <li><strong>Өсімдіктердің денсаулығын бағалау:</strong> Ауруларды, стресс жағдайларын немесе зақымдануларды анықтауға мүмкіндік береді.</li>
+                <li><strong>Жас құрылымын анықтау:</strong> Ағаштардың жасын көрсетеді, бұл олардың жағдайын және күтім қажеттіліктерін бағалау үшін маңызды.</li>
+                <li><strong>Экожүйедегі рөлін бағалау:</strong> Ағаштардың көміртекті сіңіру қабілетімен, көлеңке жасаумен және жабайы жануарларға баспана берумен байланысты.
+                </li>
+                <li><strong>Қалалық жоспарлау:</strong> Жасыл желектерді және олардың қалалық ортаға қосқан үлесін бағалауға көмектеседі.</li>
+                <li><strong>Ландшафттағы өзгерістерді бақылау:</strong> Ормандар мен қалалық жасыл аймақтарды тұрақты басқару үшін ағаштардың өсуі мен денсаулығын қадағалайды.</li>
+            </ul>
+    
+            <br>
+            <h2>Кодты түсіндіру</h2>
+
+            <p style="color: #ddd; text-align: justify;">
+                Жобаның толық коды <a href="https://github.com/Nurasssyl/almaty-tree-canopy-height-/blob/main/canopy_height.r" style="color: #0066cc; display: inline;">GitHub</a> сайтында қолжетімді. Төменде осы жобада пайдаланылған кодтың негізгі бөліктеріне қысқаша түсініктеме берілген:
+            </p>
+
+            <h3>1. Деректерді жүктеу</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Код қажетті кітапханалар мен деректерді жүктеуден басталады. `chmloader` кітапханасы ағаштардың биіктігі туралы ақпарат беретін тәж биіктігі моделі (CHM) деректерін жүктеу үшін қолданылады. `terra` кітапханасы кеңістіктік деректерді өңдеу үшін қолданылады, ал `sf` кеңістіктік объектілермен жұмыс істеуге қолданылады.
+            </p>
+    
+            <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    library(chmloader)
+    library(terra)
+    library(sf)
+    # Тәж биіктігі моделін (CHM) жүктеу
+    chm <- rast("path_to_chm_data.tif")
+            </pre>
+    
+            <h3>2. Деректерді дайындау</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                CHM деректерін жүктегеннен кейін код оларды `terra` пакетін пайдаланып өңдейді. CHM деректері базалық карталардың координаттық жүйесіне сәйкестендіру үшін қайта жобаланады және визуализация үшін деректерді дайындау мақсатында кеңістіктік түрлендірулер қолданылады.
+            </p>
+    
+            <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    # CHM деректерін қайта жобалау
+    chm_reproj <- project(chm, "EPSG:4326")
+    
+    # Картография үшін деректерді дайындау
+    chm_clipped <- crop(chm_reproj, extent_of_area)
+    chm_masked <- mask(chm_clipped, mask_shapefile)
+            </pre>
+    
+            <h3>3. Деректерді визуализациялау</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Визуализация `tidyterra`, `maptiles` және `leaflet` кітапханаларының көмегімен жасалады. Бұл кітапханалар тәж биіктігі деректерін базалық карталармен біріктіруге мүмкіндік береді, Алматыдағы ағаш биіктіктерін интерактивті және ақпараттық көрсетуге мүмкіндік береді. Қараңғы жасыл түстер биіктеу ағаш тәждерін көрсетеді.
+            </p>
+    
+            <pre style="background-color: #333; color: #ddd; padding: 10px;">
+    # leaflet көмегімен картаны жасау
+    leaflet() %>%
+      addProviderTiles(providers$CartoDB.Positron) %>%
+      addRasterImage(chm_masked, colors = height_color_palette, opacity = 0.8) %>%
+      addLegend("topright", pal = height_color_palette, values = values(chm_masked),
+                title = "Тәж биіктігі (м)")
+            </pre>
+    
+            <h3>4. Картаны баптау</h3>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Картаны әртүрлі қабаттар, түс палитралары және интерактивті элементтерді пайдалану арқылы қосымша баптауға болады. Код белгілі бір қызықтыратын аймақтарды көрсету немесе қосымша контекст беру үшін белгілер, белгілер және басқа карта элементтерін қосуға мүмкіндік береді.
+            </p>
+    
+            <br>
+            <h2>Қорытынды</h2>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Бұл жоба Алматы сияқты қалалық ортадағы тәж биіктігін өлшеу және визуализациялау процесін көрсетеді. R және әртүрлі кеңістіктік талдау кітапханаларын пайдалана отырып, біз қаланың жасыл инфрақұрылымы және оның қалалық экожүйедегі рөлі туралы құнды мәліметтер ала аламыз. Толығырақ ақпарат пен толық код үшін жобаға <a href="https://github.com/Nurasssyl/almaty-tree-canopy-height-/blob/main/canopy_height.r" style="color: #0066cc; display: inline;">GitHub</a> сайтына кіріңіз.
+            </p>
+        </div>
+    
+    </article>
+    
+    </div>
+
+  </main>
+
+  <!--
+    - арнайы js сілтемесі
+  -->
+  <script src="/assets/js/script.js"></script>
+
+  <!--
+    - ionicons сілтемесі
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

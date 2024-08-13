@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Высота крон деревьев в Алматы с использованием R</title>
+
+  <!--
+    - фавикон
+  -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/assets/images/site.webmanifest">
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+  <!--
+    - ссылка на пользовательский CSS
+  -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!--
+    - ссылка на шрифт Google
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      color: #ddd;
+      background-color: #000;
+    }
+
+    .article-title {
+      color: #fff;
+    }
+
+    .article-meta {
+      color: #bbb;
+    }
+
+    .article-content {
+      color: #ddd;
+    }
+
+    .tag {
+      background-color: #444;
+      color: white;
+      border-radius: 3px;
+      margin-right: 5px;
+    }
+
+    .article img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .author-info img {
+      border-radius: 50%;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .author-info .author-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!--
+    - #ОСНОВНОЙ КОНТЕНТ
+  -->
+
+  <main>
+
+    <!--
+      - #основное содержимое
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #НАВБАР
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="/ru/index.html" class="navbar-link" data-nav-link="about">Обо мне</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/resume.html" class="navbar-link" data-nav-link="resume">Резюме</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/portfolio.html" class="navbar-link" data-nav-link="portfolio">Портфолио</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/blog.html" class="navbar-link" data-nav-link="blog">Блог</a>
+          </li>
+          <li class="navbar-item">
+            <a href="/ru/contact.html" class="navbar-link" data-nav-link="contact">Контакты</a>
+          </li>
+
+          <nav>
+            <a href="/kk/blog/canopy_height_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/kazakhstan.png" alt="Kazakh">
+            </a>
+            <a href="/ru/blog/canopy_height_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/russian-federation.png" alt="Russian">
+            </a>
+            <a href="/en/blog/canopy_height_Almaty.html" style="display: inline-block;">
+              <img src="https://img.icons8.com/color/24/000000/usa.png" alt="English">
+            </a>
+          </nav>
+        </ul>
+
+      </nav>
+
+      <!--
+        - #СТАТЬЯ
+      -->
+
+      <article class="article active">
+
+        <header><br><br>
+            <div class="author-info">
+                <img src="/assets/images/my_photo.png" alt="Нурасыл Абдразакулы">
+                <span class="author-name">Нурасыл Абдразакулы</span>
+            </div>
+    
+            <h1 class="h1 article-title">Измерение высоты крон деревьев в Алматы</h1>
+            <img src="/assets/images/blog/canopy_height_Almaty.jpeg" alt="Высота крон деревьев в Алматы" loading="lazy">
+    
+            <p class="article-meta" style="display: flex; align-items: center; color: #bbb;">
+                <ion-icon name="calendar-outline" style="margin-right: 5px;"></ion-icon>
+                <time datetime="2024-08-13">13.08.2024</time> &nbsp; &nbsp;
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">R</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">визуализация данных</span>
+                <span class="tag" style="display: inline-block; padding: 5px 10px; margin: 5px 5px 5px 0; border-radius: 15px; border: 1px solid #e91e63; background-color: rgba(255, 255, 255, 0.1); color: #e91e63; font-size: 0.9em; text-align: center;">Высота крон</span>
+            </p>
+        </header>
+    
+        <div class="article-content">
+            <p style="color: #ddd; text-align: justify;">
+                В этом проекте я измерил высоту крон деревьев в Алматы 🌳. Визуализация была разработана с использованием языка программирования R и следующих библиотек: <code>chmloader</code>, <code>terra</code>, <code>sf</code>, <code>maptiles</code>, <code>classInt</code>, <code>tidyverse</code>, <code>tidyterra</code>, <code>leaflet</code> и <code>htmlwidgets</code>.
+            </p>
+    
+            <p style="color: #ddd; text-align: justify;">
+                <strong>Контекст:</strong> Чем темнее зеленый цвет на карте, тем выше кроны деревьев. Высота крон — это высота верхнего слоя растительности в лесу или другой экосистеме, обычно измеряемая от земли до верхушек деревьев или других растений. Это важный показатель в лесном хозяйстве, экологии и исследованиях окружающей среды, так как он может служить индикатором возраста, состояния и структуры леса.
+            </p>
+    
+            <br>
+            <h2>Значение измерения высоты деревьев</h2>
+    
+            <p style="color: #ddd; text-align: justify;">
+                Измерение высоты деревьев важно по нескольким причинам:
+            </p>
+    
+            <ul style="color: #ddd; text-align: justify;">
+                <li><strong>Оценка здоровья растений:</strong> Позволяет выявлять заболевания, стрессовые условия или повреждения.</li>
+                <li><strong>Определение возрастной структуры:</strong> Индицирует возраст деревьев, что важно для оценки их состояния и потребностей в уходе.</li>
+                <li><strong>Оценка экосистемной роли:</strong> Связана с способностью деревьев к углеродному захвату, созданию тени и обеспечению животным укрытия.</li>
+                <li><strong>Планирование урбанистической среды:</strong> Позволяет оценивать зеленые насаждения и их вклад в городскую среду.</li>
+                <li><strong>Мониторинг изменений в ландшафте:</strong> Отслеживание роста и здоровья деревьев для устойчивого управления лесными и городскими зелеными
+                    зонами.</li>
+                </ul>
+        
+                <br>
+                <h2>Объяснение кода</h2>
+    
+                <p style="color: #ddd; text-align: justify;">
+                    Полный код проекта доступен на <a href="https://github.com/Nurasssyl/almaty-tree-canopy-height-/blob/main/canopy_height.r" style="color: #0066cc; display: inline;">GitHub</a>. Ниже приведено краткое объяснение основных частей кода, использованных в этом проекте:
+                </p>
+    
+                <h3>1. Загрузка данных</h3>
+        
+                <p style="color: #ddd; text-align: justify;">
+                    Код начинается с загрузки необходимых библиотек и данных. Библиотека `chmloader` используется для загрузки данных модели высоты крон (CHM), которая предоставляет информацию о высоте деревьев. Библиотека `terra` используется для обработки пространственных данных, а `sf` применяется для работы с пространственными объектами.
+                </p>
+        
+                <pre style="background-color: #333; color: #ddd; padding: 10px;">
+        library(chmloader)
+        library(terra)
+        library(sf)
+        # Загрузка модели высоты крон (CHM)
+        chm <- rast("path_to_chm_data.tif")
+                </pre>
+        
+                <h3>2. Подготовка данных</h3>
+        
+                <p style="color: #ddd; text-align: justify;">
+                    После загрузки данных CHM код обрабатывает их с использованием пакета `terra`. Данные CHM перепроецируются для соответствия координатной системе базовых карт, и применяются специфические пространственные преобразования для подготовки данных к визуализации.
+                </p>
+        
+                <pre style="background-color: #333; color: #ddd; padding: 10px;">
+        # Перепроецирование данных CHM
+        chm_reproj <- project(chm, "EPSG:4326")
+        
+        # Подготовка данных для картографирования
+        chm_clipped <- crop(chm_reproj, extent_of_area)
+        chm_masked <- mask(chm_clipped, mask_shapefile)
+                </pre>
+        
+                <h3>3. Визуализация данных</h3>
+        
+                <p style="color: #ddd; text-align: justify;">
+                    Визуализация создается с использованием библиотек `tidyterra`, `maptiles` и `leaflet`. Эти библиотеки позволяют интегрировать данные о высоте крон с базовыми картами, создавая интерактивное и информативное отображение высоты деревьев по всему Алматы. Более темные зеленые цвета обозначают более высокие кроны деревьев.
+                </p>
+        
+                <pre style="background-color: #333; color: #ddd; padding: 10px;">
+        # Создание карты с помощью leaflet
+        leaflet() %>%
+          addProviderTiles(providers$CartoDB.Positron) %>%
+          addRasterImage(chm_masked, colors = height_color_palette, opacity = 0.8) %>%
+          addLegend("topright", pal = height_color_palette, values = values(chm_masked),
+                    title = "Высота крон (м)")
+                </pre>
+        
+                <h3>4. Настройка карты</h3>
+        
+                <p style="color: #ddd; text-align: justify;">
+                    Карту можно дополнительно настроить с помощью различных слоев, цветовых палитр и интерактивных элементов. Код также позволяет добавлять маркеры, метки и другие элементы карты для выделения определенных областей интереса или предоставления дополнительного контекста.
+                </p>
+        
+                <br>
+                <h2>Заключение</h2>
+        
+                <p style="color: #ddd; text-align: justify;">
+                    Этот проект демонстрирует процесс измерения и визуализации высоты крон в городской среде, такой как Алматы. Используя R и различные библиотеки для пространственного анализа, мы можем получить ценные сведения о зеленой инфраструктуре города и ее роли в городской экосистеме. Для получения более подробной информации и полного кода посетите проект на <a href="https://github.com/Nurasssyl/almaty-tree-canopy-height-/blob/main/canopy_height.r" style="color: #0066cc; display: inline;">GitHub</a>.
+                </p>
+            </div>
+        
+        </article>
+        
+        </div>
+    
+      </main>
+    
+      <!--
+        - ссылка на пользовательский JS
+      -->
+      <script src="/assets/js/script.js"></script>
+    
+      <!--
+        - ссылка на ionicons
+      -->
+      <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+      <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    
+    </body>
+    
+    </html>
+    
