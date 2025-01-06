@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Railway Routes Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script>
+        // Инициализация карты
+        var map = L.map('map').setView([43.27397375871034, 76.93882354417588], 6);
+
+        // Добавление слоя карты
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Путь к вашему CSV-файлу
+        var csvFilePath = 'C:/Users/N.Abdrazakuly/Desktop/railway/railway_csv.csv';
+
+        // Загрузка CSV-файла
+        Papa.parse(csvFilePath, {
+            download: true,
+            header: true,
+            complete: function(results) {
+                var data = results.data;
+                var routes = {};
+
+                // Группируем данные по маршрутам
+                data.forEach(function(row) {
+                    var routeId = row.Route_ID;
+                    if (!routes[routeId]) {
+                        routes[routeId] = {
+                            name: row.Route_Name,
+                            stations: []
+                        };
+                    }
+                    routes[routeId].stations.push({
+                        name: row.Station_Name,
+                        coordinates: row.Coordinates.split(',').map(Number),
+                        country: row.Country
+                    });
+                });
+
+                // Визуализация маршрутов
+                Object.values(routes).forEach(function(route) {
+                    var latlngs = [];
+
+                    route.stations.forEach(function(station) {
+                        // Добавляем маркеры станций
+                        L.marker(station.coordinates)
+                            .addTo(map)
+                            .bindPopup(`<b>${station.name}</b><br>${station.country}`);
+
+                        // Собираем координаты для линии маршрута
+                        latlngs.push(station.coordinates);
+                    });
+
+                    // Рисуем линию маршрута
+                    L.polyline(latlngs, { color: 'red', weight: 4 }).addTo(map)
+                        .bindPopup(`<b>Route:</b> ${route.name}`);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
