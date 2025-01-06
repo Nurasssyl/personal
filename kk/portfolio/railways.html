@@ -47,6 +47,9 @@
         // Путь к вашему CSV-файлу с данными ЖД
         var csvFilePath = 'https://raw.githubusercontent.com/Nurasssyl/personal/main/kk/portfolio/railway_csv.csv';
 
+        // Список цветов для маршрутов
+        var routeColors = ["red", "blue", "green", "orange", "purple", "brown", "pink", "yellow"];
+
         // Загрузка CSV-файла
         Papa.parse(csvFilePath, {
             download: true,
@@ -61,7 +64,8 @@
                     if (!routes[routeId]) {
                         routes[routeId] = {
                             name: row.Route_Name,
-                            stations: []
+                            stations: [],
+                            color: routeColors[Object.keys(routes).length % routeColors.length] // Назначаем цвет
                         };
                     }
                     routes[routeId].stations.push({
@@ -86,7 +90,7 @@
                     });
 
                     // Рисуем линию маршрута
-                    L.polyline(latlngs, { color: 'red', weight: 4 }).addTo(map)
+                    L.polyline(latlngs, { color: route.color, weight: 4 }).addTo(map)
                         .bindPopup(`<b>Route:</b> ${route.name}`);
                 });
             }
