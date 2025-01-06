@@ -41,60 +41,60 @@
                         fillOpacity: 1
                     }
                 }).addTo(map);
+
+                // Путь к вашему CSV-файлу с данными ЖД
+                var csvFilePath = 'https://raw.githubusercontent.com/Nurasssyl/personal/main/kk/portfolio/railway_csv.csv';
+
+                // Список цветов для маршрутов
+                var routeColors = ["red", "blue", "green", "orange", "purple", "brown", "pink", "yellow"];
+
+                // Загрузка CSV-файла
+                Papa.parse(csvFilePath, {
+                    download: true,
+                    header: true,
+                    complete: function(results) {
+                        var data = results.data;
+                        var routes = {};
+
+                        // Группируем данные по маршрутам
+                        data.forEach(function(row) {
+                            var routeId = row.Route_ID;
+                            if (!routes[routeId]) {
+                                routes[routeId] = {
+                                    name: row.Route_Name,
+                                    stations: [],
+                                    color: routeColors[Object.keys(routes).length % routeColors.length] // Назначаем цвет
+                                };
+                            }
+                            routes[routeId].stations.push({
+                                name: row.Station_Name,
+                                coordinates: row.Coordinates.split(',').map(Number),
+                                country: row.Country
+                            });
+                        });
+
+                        // Визуализация маршрутов
+                        Object.values(routes).forEach(function(route) {
+                            var latlngs = [];
+
+                            route.stations.forEach(function(station) {
+                                // Добавляем маркеры станций
+                                L.marker(station.coordinates)
+                                    .addTo(map)
+                                    .bindPopup(`<b>${station.name}</b><br>${station.country}`);
+
+                                // Собираем координаты для линии маршрута
+                                latlngs.push(station.coordinates);
+                            });
+
+                            // Рисуем линию маршрута поверх границ
+                            L.polyline(latlngs, { color: route.color, weight: 4 }).addTo(map)
+                                .bindPopup(`<b>Route:</b> ${route.name}`);
+                        });
+                    }
+                });
             })
             .catch(error => console.error('Ошибка загрузки GeoJSON:', error));
-
-        // Путь к вашему CSV-файлу с данными ЖД
-        var csvFilePath = 'https://raw.githubusercontent.com/Nurasssyl/personal/main/kk/portfolio/railway_csv.csv';
-
-        // Список цветов для маршрутов
-        var routeColors = ["red", "blue", "green", "orange", "purple", "brown", "pink", "yellow"];
-
-        // Загрузка CSV-файла
-        Papa.parse(csvFilePath, {
-            download: true,
-            header: true,
-            complete: function(results) {
-                var data = results.data;
-                var routes = {};
-
-                // Группируем данные по маршрутам
-                data.forEach(function(row) {
-                    var routeId = row.Route_ID;
-                    if (!routes[routeId]) {
-                        routes[routeId] = {
-                            name: row.Route_Name,
-                            stations: [],
-                            color: routeColors[Object.keys(routes).length % routeColors.length] // Назначаем цвет
-                        };
-                    }
-                    routes[routeId].stations.push({
-                        name: row.Station_Name,
-                        coordinates: row.Coordinates.split(',').map(Number),
-                        country: row.Country
-                    });
-                });
-
-                // Визуализация маршрутов
-                Object.values(routes).forEach(function(route) {
-                    var latlngs = [];
-
-                    route.stations.forEach(function(station) {
-                        // Добавляем маркеры станций
-                        L.marker(station.coordinates)
-                            .addTo(map)
-                            .bindPopup(`<b>${station.name}</b><br>${station.country}`);
-
-                        // Собираем координаты для линии маршрута
-                        latlngs.push(station.coordinates);
-                    });
-
-                    // Рисуем линию маршрута
-                    L.polyline(latlngs, { color: route.color, weight: 4 }).addTo(map)
-                        .bindPopup(`<b>Route:</b> ${route.name}`);
-                });
-            }
-        });
     </script>
 </body>
 </html>
