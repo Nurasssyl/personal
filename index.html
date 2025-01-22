@@ -121,14 +121,16 @@
             align-items: center;
         }
         .modal-content {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 600px;
-            width: 90%;
-            text-align: center;
-            animation: fadeIn 0.5s;
-        }
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 600px;
+        width: 90%;
+        text-align: center;
+        animation: fadeIn 0.5s;
+        max-height: 80vh; /* Ограничение высоты */
+        overflow-y: auto; /* Прокрутка по вертикали */
+    }
         .modal img {
             max-width: 100%;
             height: auto;
@@ -207,36 +209,89 @@
             <div style="background: #f1f1f1; padding: 10px; border-radius: 8px; text-align: center;">Statistical Modeling</div>
         </div>
     </section>
+    <h2 style="text-align: center; margin-top: 30px;">Portfolio</h2>
 
+    <h3 style="text-align: left; margin-top: 20px;">Analytics</h3>
+    <section class="portfolio" id="portfolio"><div class="portfolio-item" onclick="openModal('assets/images/VisaRefusemap_EU.jpeg', 'Schengen Visa Refusal Analysis', 'I created a map showing Schengen visa refusal rates for Kazakhstan citizens in 2023. This visualization was developed using R and libraries like tidyverse, rnaturalearth, rnaturalearthdata, and cowplot. Key insights:<br> <ul><li>Top 5 highest refusal rates: France (19.5%), Germany (17.8%), Spain (16.4%), Italy (15.2%), Greece (15.0%).</li><li>Top 5 lowest refusal rates: Malta (9.8%), Iceland (10.0%), Luxembourg (10.5%), Slovenia (10.6%), Estonia (10.8%).</li></ul>This map helps identify Schengen countries that might be more lenient or stricter when processing visa applications.')">
+        <img src="assets/images/VisaRefusemap_EU.jpeg" alt="Schengen Visa Refusal Analysis">
+        <p>Schengen Visa Refusal Analysis | <span style="color: gray;">R</span></p>
+    </div>
+    <div class="portfolio-item" onclick="openModal('assets/images/visa-free-score-map.jpeg', 'European Passport Rankings', 'I created a map of European passport rankings based on visa-free access. Developed using R with libraries like ggplot2, rnaturalearth, dplyr, and sf. Key insights:<br> <ul><li>Top-ranked passports (visa-free to 194 countries): France, Spain, Germany, Italy.</li><li>Lowest-ranked passports: Armenia (69 countries), Azerbaijan (72 countries), Kosovo (76 countries).</li><li>Kazakhstan: visa-free to 78 countries.</li></ul> This map highlights differences in travel freedom within Europe.')">
+        <img src="assets/images/visa-free-score-map.jpeg" alt="European Passport Rankings">
+        <p>European Passport Rankings | <span style="color: gray;">R</span></p>
+    </div>
+    <div class="portfolio-item" onclick="openModal('assets/images/age-sex-pyramid.jpeg', 'Kazakhstan Age-Sex Pyramid', 'I created an age-sex population pyramid for Kazakhstan using R and libraries like ggplot2, dplyr, readr, and tidyr. Key observations:<br><ul><li>👶 High proportion of youth (0-15 years) indicates a high birth rate.</li><li>🚶‍♂️ Narrowing in the 20-35 age groups may reflect migration, youth outflow, or changes in fertility and mortality rates.</li><li>👵 Gender imbalance: significantly more women in older age groups, reflecting higher female life expectancy.</li></ul> Total population by gender: 👨 Men - 9,783,814, 👩 Women - 10,250,028.')">
+        <img src="assets/images/age-sex-pyramid.jpeg" alt="Kazakhstan Age-Sex Pyramid">
+        <p>Kazakhstan Age-Sex Pyramid | <span style="color: gray;">R</span></p>
+    </div>
+    
+    <div class="portfolio-item" onclick="openModal('assets/images/tree-crown.jpeg', 'Tree Canopy Height Analysis in Almaty', 'I conducted a tree canopy height analysis in Almaty using R and libraries like chmloader, terra, sf, maptiles, classInt, tidyverse, tidyterra, leaflet, and htmlwidgets. <br><br>Context: The darker the green color on the map, the taller the tree canopies.<br><br>Canopy height refers to the upper layer of vegetation in a forest or ecosystem, typically measured from the ground to the treetops. It is a crucial metric in forestry, ecology, and environmental studies as it indicates forest age, health, and structure.<br><br>Importance:<ul><li><b>Plant health assessment:</b> Identifies diseases, stress conditions, or damages.</li><li><b>Age structure determination:</b> Indicates tree age for maintenance and health evaluation.</li><li><b>Ecological role assessment:</b> Relates to carbon capture, shading, and wildlife shelter.</li><li><b>Urban planning:</b> Evaluates green infrastructure and its impact on urban areas.</li><li><b>Landscape monitoring:</b> Tracks tree growth and health for sustainable management.</li></ul>')">
+        <img src="assets/images/tree-crown.jpeg" alt="Tree Canopy Height Analysis in Almaty">
+        <p>Tree Canopy Height Analysis | <span style="color: gray;">R</span></p>
+    </div>
+    
+
+</section>
+  
+    
+    
+
+
+<h3 style="text-align: left; margin-top: 20px;">Geoanalysis</h3>
+
+    
     <section class="portfolio" id="portfolio">
         <div class="portfolio-item" onclick="openModal('assets/images/change-population-pink-green.jpeg', 'Population change map of Kazakhstan', 'This project explores population dynamics in Kazakhstan over the last 30 years of independence. Using R and libraries like tidyverse, giscoR, terra, and tidyterra, I developed a visualization showing areas with population decrease (pink), increase (green), and uninhabited zones (grey). Insights include urbanization trends, regional population shifts due to climate, and overall sparsity of population. This work demonstrates the power of geoanalysis and advanced spatial data visualization techniques.')">
             <img src="assets/images/change-population-pink-green.jpeg" alt="Population change map of Kazakhstan">
-            <p>Population change map of Kazakhstan | <span style="color: blue;">Geoanalysis</span> <span style="color: gray;">R</span></p>
+            <p>Population change map of Kazakhstan |  <span style="color: gray;">R</span></p>
         </div>
         <div class="portfolio-item" onclick="openModal('assets/images/carbon_emissions.jpeg', 'Carbon Emissions Map of Kazakhstan', 'This visualization showcases per capita carbon dioxide emissions in Kazakhstan for 2023. Developed using R with libraries such as tidyverse, geodata, terra, exactextractr, sf, and classInt, the map emphasizes regional disparities in emissions. Darker shades represent areas with higher CO2 emissions. Key findings include: <br> 1. Aksu district in Pavlodar region records the highest emissions. <br> 2. Ekibastuz district, its neighbor, ranks second. <br> 3. Birzhan Sal district in Akmola region holds third place. <br> 4. Moiynkum district in Zhambyl region also demonstrates significant emissions. <br> Kazakhstan ranks among the global top 10 for carbon intensity, with the industrial sector being the leading contributor, as highlighted by UNDP Kazakhstan.')">
             <img src="assets/images/carbon_emissions.jpeg" alt="Carbon Emissions Map of Kazakhstan">
-            <p>Carbon Emissions Map of Kazakhstan | <span style="color: blue;">Geoanalysis</span> <span style="color: gray;">R</span></p>
+            <p>Carbon Emissions Map of Kazakhstan |  <span style="color: gray;">R</span></p>
         </div>
         
         
         <div class="portfolio-item" onclick="openModal('assets/images/habitability_in_Kazakhstan.jpeg', 'Habitability Map of Kazakhstan', 'This map visualizes the habitability of Kazakhstan in 2023, highlighting inhabited areas (yellow) and uninhabited zones (black). Using R and libraries like tidyverse, giscoR, and tidyterra, I analyzed population distribution and identified patterns of human settlement. The visualization showcases concentrated habitation along major rivers such as Syr Darya, Irtysh, Ural, Tobol, and Lake Balkhash, emphasizing the relationship between natural resources and population density.')">
             <img src="assets/images/habitability_in_Kazakhstan.jpeg" alt="Habitability Map of Kazakhstan">
-            <p>Habitability Map of Kazakhstan | <span style="color: blue;">Geoanalysis</span> <span style="color: gray;">R</span></p>
+            <p>Habitability Map of Kazakhstan |  <span style="color: gray;">R</span></p>
         </div>
         
         <div class="portfolio-item" onclick="openModal('assets/images/KZ_density_adm1.jpeg', 'Population Density Map of Kazakhstan (April 2024)', 'This map represents the population density of Kazakhstan as of April 2024. Developed using R and libraries such as geokz, dplyr, and sf, the visualization highlights key demographic insights. The city of Almaty emerges as the most densely populated administrative unit, followed by Astana and Shymkent. The Turkestan region ranks as the most densely populated area, with Almaty region in second place. Conversely, Ulytau region is the least populated, with Aktobe region slightly higher. Pavlodar and Atyrau regions share similar density levels, as do Akmola and North Kazakhstan regions. Kazakhstan\'s population density is 7.37 people per km², placing it 184th among 194 countries globally.')">
             <img src="assets/images/KZ_density_adm1.jpeg" alt="Population Density Map of Kazakhstan (April 2024)">
-            <p>Population Density Map of Kazakhstan | <span style="color: blue;">Geoanalysis</span> <span style="color: gray;">R</span></p>
+            <p>Population Density Map of Kazakhstan |  <span style="color: gray;">R</span></p>
         </div>
-        
-        <div class="portfolio-item" onclick="openModal('assets/images/KZ_density_adm2.jpeg', 'District Population Density Map of Kazakhstan', 'This visualization presents the population density of districts in Kazakhstan. Created using R and libraries like geokz, dplyr, and sf, the map highlights significant regional disparities in population distribution. <br><br> 📊 Districts with the highest population density: <br> 1. Äuezov (Almaty): 14,927 people per km². <br> 2. Almaly (Almaty): 14,833 people per km². <br> 3. Jetisu (Almaty): 5,374 people per km². <br> 4. Saryarka (Astana): 5,166 people per km². <br> 5. Arkalyk (Kostanay): 3,787 people per km². <br><br> 📉 Districts with the lowest population density: <br> 1. Ulytau (Ulytau): 0.091 people per km². <br> 2. Zhangeldin (Kostanay): 0.279 people per km². <br> 3. Aktogay (Karaganda): 0.304 people per km². <br> 4. Irgyz (Aktobe): 0.336 people per km². <br> 5. Shalkar (Aktobe): 0.347 people per km². <br><br> Kazakhstan's population density stands at 7.37 people per km², ranking 184th out of 194 countries globally.')">
+        <div class="portfolio-item" onclick="openModal('assets/images/KZ_density_adm2.jpeg', 'District Population Density Map of Kazakhstan', 'This visualization presents the population density of districts in Kazakhstan. Created using R and libraries like geokz, dplyr, and sf, the map highlights significant regional disparities in population distribution. <br><br> 📊 Districts with the highest population density: <br> 1. Äuezov (Almaty): 14,927 people per km². <br> 2. Almaly (Almaty): 14,833 people per km². <br> 3. Jetisu (Almaty): 5,374 people per km². <br> 4. Saryarka (Astana): 5,166 people per km². <br> 5. Arkalyk (Kostanay): 3,787 people per km². <br><br> 📉 Districts with the lowest population density: <br> 1. Ulytau (Ulytau): 0.091 people per km². <br> 2. Zhangeldin (Kostanay): 0.279 people per km². <br> 3. Aktogay (Karaganda): 0.304 people per km². <br> 4. Irgyz (Aktobe): 0.336 people per km². <br> 5. Shalkar (Aktobe): 0.347 people per km². <br><br> Kazakhstans population density stands at 7.37 people per km², ranking 184th out of 194 countries globally.')">
             <img src="assets/images/KZ_density_adm2.jpeg" alt="District Population Density Map of Kazakhstan">
-            <p>District Population Density Map of Kazakhstan | <span style="color: blue;">Geoanalysis</span> <span style="color: gray;">R</span></p>
+            <p>District Population Density Map of Kazakhstan |  <span style="color: gray;">R</span></p>
+        </div>
+        <div class="portfolio-item" onclick="openModal('assets/images/KZ_density_population.jpeg', '3D Population Density Map of Kazakhstan', 'This 3D visualization represents the population density in Kazakhstan as of January 2024. Developed using R and libraries such as tidyverse, R.utils, httr, sf, stars, and rayshader, it highlights population distribution with distinct peaks in densely populated areas.<br><br> Key observations:<br> • Prominent peaks in major cities like Almaty, Shymkent, and regional centers reflect high population density. 🌆<br> • Sparse or flat areas across much of Western and Central Kazakhstan denote low population density in steppe and desert regions. 🌾<br> • Clustered peaks indicate industrial zones, small cities, or suburban areas, e.g., monotowns like Satpayev and Arkalyk. 🏘️<br> • The southern regions, particularly Almaty and Shymkent, feature frequent and tall peaks, signifying dense urban populations. 🏙️<br> • Peaks align along major transport corridors, such as railways and highways, suggesting dense settlements along these routes. 🚉<br> • Western and central regions have rare, low peaks due to less favorable living conditions, such as deserts and steppes. 🏜️<br> • Southeastern mountainous areas like the Alatau show lower population density due to challenging living conditions. 🏔️<br> • Central regions, including Astana and Karaganda, show clustered high-density populations, emphasizing their roles as economic and administrative hubs. 🏢<br> • Industrial activity in oil and gas regions in western Kazakhstan creates localized high-density clusters, attracting workforce. ⚒️')">
+            <img src="assets/images/KZ_density_population.jpeg" alt="3D Population Density Map of Kazakhstan">
+            <p>3D Population Density Map of Kazakhstan |  <span style="color: gray;">R</span></p>
         </div>
         
+        <div class="portfolio-item" onclick="openModal('assets/images/caspian-sea-transports.jpeg', 'Caspian Sea Shipping Map', 'This map highlights shipping routes and activity in the Caspian Sea, a vital economic and ecological resource. Using R and libraries like tidyverse, terra, sf, giscoR, and ggnewscale, I visualized key shipping patterns. The map underscores the significance of the Caspian Sea for regional cooperation and economic development. <br><br> Key insights: <br> • Optimizes oil and cargo transportation between Caspian countries, improving efficiency and profitability. ⛽ <br> • Enhances maritime safety by reducing risks of accidents and environmental pollution. 🦈')">
+            <img src="assets/images/caspian-sea-transports.jpeg" alt="Caspian Sea Shipping Map">
+            <p>Caspian Sea Shipping Map |  <span style="color: gray;">R</span></p>
+        </div>
+        <div class="portfolio-item" onclick="openModal('assets/images/precipitation-map-of-Kazakhstan.jpeg', 'Precipitation Map of Kazakhstan', 'This precipitation map of Kazakhstan was developed using R and libraries such as pRecipe, giscoR, terra, tidyverse, rayshader, sf, and classInt. The visualization highlights key precipitation patterns across the country, providing insights into climatic conditions and regional variations.<br><br><strong>Key observations:</strong><br>1. The northeast and southeast regions of Kazakhstan receive higher precipitation levels. 🌧️<br>2. Central and southern regions are characterized by lower precipitation levels. 🏜️<br>3. Green areas indicate a wetter climate, often associated with mountainous and foothill regions like Altai, Alatau, and Tian Shan. ⛰️<br>4. Pink and beige areas suggest arid climates, typical of steppes and deserts (e.g., Mangystau, Kyzylorda). 🌾<br>5. The western part of Kazakhstan, particularly near the Caspian Sea, experiences low precipitation levels. 🌊')">
+            <img src="assets/images/precipitation-map-of-Kazakhstan.jpeg" alt="Precipitation Map of Kazakhstan">
+            <p>Precipitation Map of Kazakhstan |  <span style="color: gray;">R</span></p>
+        </div>
         
+<div class="portfolio-item" onclick="openModal('assets/images/kz_railways.jpeg', 'Kazakhstan Railways Map', 'This map showcases the railway network of Kazakhstan, developed using R with libraries like pRecipe, giscoR, terra, tidyverse, rayshader, sf, and classInt.<br><br><strong>🚄 Key Insights About Kazakhstan’s Railways 🚄</strong><br><br>📏 The total length of Kazakhstan’s railway network is approximately 16,614 km, with 4,200 km electrified. The entire network uses a broad gauge of 1,520 mm, typical of the former Soviet Union.<br><br>📈 In 2022, JSC NC Kazakhstan Temir Zholy set a new record in freight transport, moving over 252 billion ton-kilometers – a 5.2% increase compared to the previous year. Over the past 20 years, freight volume handled by KTJ has doubled, with coal, grain, and metallurgical products being the primary commodities. <br><br>🌍 Kazakhstan’s railways connect the country with Russia, China, Uzbekistan, and other neighboring nations. In 2022, freight turnover between Kazakhstan and China reached 23 million tons, up 14% from 2021. In 2023, Kazakhstan started constructing its third railway link to China, expected to increase throughput capacity to 48 million tons annually.<br><br>🚂 Kazakhstan’s international railway corridors include:<br>• 🌐 Northern Corridor of the Trans-Asian Railway: Linking China and Europe via Dostyk/Altynkol – Moyynty – Astana – Petropavlovsk.<br>• 🌐 Central Asian Corridor: Connecting Russia with Central Asia via Saryagash in southern Kazakhstan, Arys, and Kandyagash.<br>• 🌐 Southern Corridor: Connecting China and Southeast Asia with Central Asia and the Persian Gulf via Dostyk/Altynkol – Aktogay – Almaty – Arys – Saryagash.<br>• 🌐 TRACECA: Transport Corridor Europe – Caucasus – Asia, including 13 countries and passing through Kazakhstan’s western ports, Aktau and Kuryk.<br>• 🌐 North-South: A 7,200-km route connecting Russia with Iran, the Persian Gulf states, and India, also passing through Kazakhstan.<br><br>🔧 New infrastructure projects, such as constructing new railway lines and modernizing existing ones, aim to enhance the country’s transit potential. For example, the Darbaza-Maktaaral railway line will improve connectivity with Uzbekistan and other regional countries, facilitating freight and passenger transport.')">
+    <img src="assets/images/kz_railways.jpeg" alt="Kazakhstan Railways Map">
+    <p>Kazakhstan Railways Map | <span style="color: gray;">R</span></p>
+</div>
 
-        
+<div class="portfolio-item" onclick="openModal('assets/images/sex-domination.jpeg', 'Kazakhstan Gender Dominance Map', 'I created a gender dominance map for Kazakhstan using R and libraries like devtools, geokz, dplyr, sf, and tmap. Key observations:<br><ul><li>💓 Red - districts with more males.</li><li>💙 Blue - districts with more females.</li><li>👤 Gray - newly created districts with no data.</li></ul><br>Findings:<ul><li>Urban areas have more women.</li><li>In Mangystau region, all districts show male dominance.</li><li>129 districts are male-dominated, while 95 are female-dominated.</li><li>⚖️ Overall male-to-female ratio: 0.954 (approximately 95 males for every 100 females).</li><li>In Zhetisay district, there are 5,072 more males than females, while in Karaganda city, there are 36,002 more females than males, representing the largest positive and negative differences, respectively.</li></ul>')">
+    <img src="assets/images/sex-domination.jpeg" alt="Kazakhstan Gender Dominance Map">
+    <p>Kazakhstan Gender Dominance Map | <span style="color: gray;">R</span></p>
+</div>
+<div class="portfolio-item" onclick="openModal('assets/images/kazakhs_map.jpeg', 'Percentage of Kazakhs by District in Kazakhstan', 'I created a map showing the percentage of Kazakhs across districts in Kazakhstan using R and libraries like devtools, geokz, dplyr, sf, and tmap. Key observations:<br><ul><li>Southern Kazakhstan: High concentration of Kazakhs (80-100%).</li><li>Northern and eastern regions: Low concentration of Kazakhs (below 40%).</li><li>Central regions: Diverse concentration of Kazakhs (40-80%).</li><li>Western regions: High concentration, particularly in Mangystau and Atyrau regions.</li><li>Historical influence: Lower concentration in northern regions reflects Soviet industrialization and migration patterns.</li></ul><br>Highlights:<ul><li>Highest concentration: Aksuat district (Abai) with 99.5% Kazakhs.</li><li>Lowest concentration: Fyodorovka district (Kostanay) with 21% Kazakhs.</li></ul>')">
+    <img src="assets/images/kazakhs_map.jpeg" alt="Percentage of Kazakhs by District in Kazakhstan">
+    <p>Percentage of Kazakhs by District | <span style="color: gray;">R</span></p>
+</div>
+
         
         
     </section>
