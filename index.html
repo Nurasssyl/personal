@@ -141,6 +141,7 @@
             font-size: 1.5em;
             font-weight: bold;
         }
+
         .close {
             position: absolute;
             top: 20px;
@@ -149,6 +150,13 @@
             color: #fff;
             cursor: pointer;
         }
+        @font-face {
+        font-family: 'Noto Emoji';
+        src: url('https://fonts.gstatic.com/s/notocoloremoji/v23/Yq6P-KqIXTD0t4D9z1ESnKM3-HpIQH8fuA.woff2') format('woff2');}
+        body {
+            font-family: 'Noto Emoji', sans-serif;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
@@ -843,6 +851,26 @@ function closeModal() {
 }
 
 </script>
+
+<script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
+<script>
+    twemoji.parse(document.body);
+</script>
+
+<footer style="background-color: #f8f9fa; padding: 20px; text-align: center; margin-top: 30px; border-top: 1px solid #e0e0e0;">
+    <div>
+        <p>&copy; 2025 Nurassyl Abdrazakuly. All rights reserved.</p>
+        <p>
+            <a href="https://www.linkedin.com/in/your-profile" target="_blank" style="text-decoration: none; color: #0073b1;">LinkedIn</a> | 
+            <a href="https://github.com/your-profile" target="_blank" style="text-decoration: none; color: #333;">GitHub</a> | 
+            <a href="mailto:your-email@example.com" style="text-decoration: none; color: #d14836;">Email</a>
+        </p>
+    </div>
+    <div style="margin-top: 10px; font-size: 0.9em; color: #6c757d;">
+        <p>Made with ❤️ in Kazakhstan 🇰🇿</p>
+    </div>
+</footer>
+
 
 </body>
 </html>
