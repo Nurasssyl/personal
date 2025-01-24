@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Play Store Data Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .content {
+            max-width: 800px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #444;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px 0;
+        }
+        a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Google Play Store Data Analysis</h1>
+
+        <p>The Google Play Store serves as a digital marketplace offering a variety of apps. By analyzing its data, this project uncovers trends in app categories, user ratings, downloads, and pricing to better understand the dynamics of app popularity and user preferences.</p>
+
+        <h2>Category Analysis</h2>
+
+        <h3>1. Distribution of Apps by Category</h3>
+        <img src="/assets/images/Distribution_of_Apps_by_Category.png" alt="Distribution of Apps by Category">
+        <p>Categories such as "Family" and "Games" dominate in the number of apps available. These categories attract developers due to their broad audience appeal, making them some of the most competitive spaces in the marketplace.</p>
+
+        <h3>2. Number of Installs by Category</h3>
+        <img src="/assets/images/Distribution_of_App_Installs_by_Category.png" alt="Number of Installs by Category">
+        <p>The "Games" and "Social" categories stand out with the highest number of downloads. This indicates the universal demand for entertainment and communication platforms among users.</p>
+
+        <h3>3. Average Rating by Category</h3>
+        <img src="/assets/images/Average_Rating_by_Category.png" alt="Average Rating by Category">
+        <p>"Education" and "Events" categories have the highest average ratings, reflecting user satisfaction with apps in these domains. This suggests the importance of quality content in niche categories.</p>
+
+        <h3>4. Number of Apps by Year and Category</h3>
+        <img src="/assets/images/Number_of_Apps_by_Year_and_Category.png" alt="Number of Apps by Year and Category">
+        <p>The number of apps peaked in 2017, especially in the "Family" and "Games" categories. This growth aligns with the increasing smartphone adoption during that period.</p>
+
+        <h2>Ratings Distribution</h2>
+
+        <h3>5. Overall Ratings Distribution</h3>
+        <img src="/assets/images/Distribution_of_Ratings_by_Category.png" alt="Overall Ratings Distribution">
+        <p>Most apps achieve ratings above 4.0, indicating that the majority of users are satisfied with the available apps. This trend emphasizes the competitive standards of quality in the store.</p>
+
+        <h3>6. Ratings by Category and App Type</h3>
+        <img src="/assets/images/Distribution_of_Ratings_by_Category_and_Type.png" alt="Ratings by Category and App Type">
+        <p>Paid apps generally receive higher ratings across categories, likely due to users' higher expectations and the targeted nature of such apps.</p>
+
+        <h2>Factors Influencing Popularity</h2>
+
+        <h3>7. Relationship Between Reviews and Ratings</h3>
+        <img src="/assets/images/Relationship_between_Reviews_and_Ratings.png" alt="Relationship Between Reviews and Ratings">
+        <p>Apps with more reviews tend to maintain a stable rating, showing that user feedback contributes to both credibility and visibility in the store.</p>
+
+        <h3>8. Effect of App Size on Ratings</h3>
+        <img src="/assets/images/Relationship_between_App_Size_and_Ratings_by_Category.png" alt="Effect of App Size on Ratings">
+        <p>In categories like "Games," larger app sizes correlate with higher ratings, possibly due to the inclusion of more features or better graphics.</p>
+
+        <h3>9. Correlation Between Numeric Variables</h3>
+        <img src="/assets/images/Heatmap_of_Correlation_Between_Numeric_Variables.png" alt="Correlation Between Numeric Variables">
+        <p>The heatmap highlights that the number of installs is strongly correlated with the number of reviews, demonstrating the role of user engagement in app popularity.</p>
+
+        <h2>Free vs Paid Apps</h2>
+
+        <h3>10. Proportion of Free and Paid Apps</h3>
+        <img src="/assets/images/Distribution_of_Free_and_Paid_Apps_by_Category_1.png" alt="Proportion of Free and Paid Apps">
+        <p>Free apps dominate the store, but paid apps often secure slightly higher ratings. This reflects the higher expectations and quality associated with paid apps.</p>
+
+        <h3>11. Average Price of Paid Apps by Category</h3>
+        <img src="/assets/images/Distribution_of_App_Prices_by_Category.png" alt="Average Price of Paid Apps by Category">
+        <p>"Medical" and "Books" categories include the most expensive apps, catering to specific and professional needs.</p>
+
+        <h2>Detailed Ratings Analysis</h2>
+
+        <h3>12. Average Rating and Number of Apps</h3>
+        <img src="/assets/images/Average_Rating_and_Number_of_Apps_by_Category.png" alt="Average Rating and Number of Apps">
+        <p>Categories with a higher number of apps, such as "Games," tend to have slightly lower average ratings due to increased competition and varying quality.</p>
+
+        <h3>13. Ratings Distribution of Free and Paid Apps</h3>
+        <img src="/assets/images/Density_of_App_Ratings_by_Type.png" alt="Ratings Distribution of Free and Paid Apps">
+        <p>Free apps often have a wider range of ratings, whereas paid apps cluster around higher ratings, reflecting the expectations of paying users.</p>
+
+        <h3>14. Relationship Between Rating, Reviews, and Price</h3>
+        <img src="/assets/images/Relationship_between_Rating_Reviews_and_Price.png" alt="Relationship Between Rating, Reviews, and Price">
+        <p>Higher-priced apps with strong ratings attract more reviews, indicating their ability to engage a loyal user base despite higher costs.</p>
+
+        <h2>Conclusion</h2>
+        <p>
+            The analysis reveals critical insights into app performance on the Google Play Store:
+            <ul>
+                <li>"Games" and "Family" categories dominate in terms of app count and downloads.</li>
+                <li>Paid apps generally achieve higher ratings due to targeted audiences and enhanced quality.</li>
+                <li>User engagement, as reflected by reviews and installs, is key to an app's success.</li>
+                <li>The peak in app additions during 2017 aligns with the growth of the mobile app ecosystem.</li>
+            </ul>
+        </p>
+
+        <h2>Code</h2>
+        <p>For the complete code and analysis, visit: <a href="https://www.kaggle.com/code/nurasssyl/ggplot-15-advanced-visuals">Google Play Store Analysis Code on Kaggle</a></p>
+    </div>
+</body>
+</html>
