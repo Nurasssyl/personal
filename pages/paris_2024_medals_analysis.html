@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paris 2024 Olympics Medals Analysis</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+        .content {
+            max-width: 900px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 20px 0;
+        }
+        h1, h2, h3 {
+            color: #444;
+            text-align: center;
+        }
+        img {
+            max-width: 90%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        a {
+            color: #0077cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            text-align: justify;
+            margin: 10px 0;
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #0077cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: #005fa3;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Paris 2024 Olympics Medals Analysis</h1>
+
+        <p>The Paris 2024 Olympics mark another milestone in global sports history. By analyzing past medal data, we can identify trends, disparities, and key insights about how nations perform across different disciplines. This analysis provides a clear and visually engaging breakdown of the medals' distribution by country, type, and sport.</p>
+
+        <h2>Key Insights</h2>
+
+        <h3>1. Total Medals by Country</h3>
+        <img src="/assets/images/Total_Medals_by_Country.png" alt="Total Medals by Country">
+        <p>Medal counts reveal significant disparities between nations. The United States leads the pack, reflecting its consistent investment in sports. Meanwhile, other countries like China and Japan have steadily increased their presence, showcasing the growing competitiveness of international sports.</p>
+
+        <h3>2. Medal Distribution by Type (Top 10 Countries)</h3>
+        <img src="/assets/images/Medal_Distribution_by_Type_(Top_10_Countries).png" alt="Medal Distribution by Type">
+        <p>Gold medals account for the largest share in most top-performing countries. This highlights the dominance of nations like the United States and China in excelling across various sports categories.</p>
+
+        <h3>3. Medal Count by Type for Top 30 Countries</h3>
+        <img src="/assets/images/Medal_Count_by_Type_for_Top_30_Countries.png" alt="Medal Count by Type for Top 30 Countries">
+        <p>The top 30 countries account for a majority of the total medals, indicating an uneven global distribution of resources and training facilities. Countries such as Australia and Great Britain have diversified their efforts across numerous sports.</p>
+
+        <h3>4. Distribution of Total Medals</h3>
+        <img src="/assets/images/Distribution_of_Total_Medals.png" alt="Distribution of Total Medals">
+        <p>A histogram of total medals showcases the dominance of a few nations while most others remain at lower medal counts. This stark disparity emphasizes the need for increased support in underrepresented regions.</p>
+
+        <h3>5. Medal Count by Type for Top Countries (Interactive)</h3>
+        <iframe src="/assets/files/Medal_Count_by_Type_for_Top_Countries.mhtml" width="100%" height="500px" style="border:none;"></iframe>
+        <p>This interactive visualization explores medal counts for top-performing countries, allowing for deeper analysis of their performance trends.</p>
+
+        <h3>6. Total Medals by Country (Interactive)</h3>
+        <iframe src="/assets/files/Total_Medals_by_Country_1.mhtml" width="100%" height="500px" style="border:none;"></iframe>
+        <p>An interactive chart displaying the total medal counts by country, enabling comparisons across different nations.</p>
+
+        <h3>7. Stacked Medal Count by Country</h3>
+        <iframe src="/assets/files/Stacked_Medal_Count_by_Country.mhtml" width="100%" height="500px" style="border:none;"></iframe>
+        <p>This visualization provides a breakdown of medal types for each country, showcasing their distribution across gold, silver, and bronze medals.</p>
+
+        <h3>8. Age Distribution of Medallists by Discipline and Medal Type</h3>
+        <img src="/assets/images/Age_Distribution_of_Medallists_by_Discipline_and_Medal_Type.png" alt="Age Distribution of Medallists">
+        <p>Younger athletes dominate disciplines like gymnastics and swimming, while older athletes excel in shooting and equestrian events. This underscores the role of experience versus physical agility in different sports.</p>
+
+        <h3>9. Age Distribution by Boxplot</h3>
+        <img src="/assets/images/Age_Distribution_of_Medallists_by_Discipline_and_Medal_Type_1.png" alt="Age Distribution by Boxplot">
+        <p>The boxplot visualizes age ranges across various disciplines, showing that sports like rugby and athletics have a wide age range, while gymnastics remains concentrated among younger athletes.</p>
+
+        <h3>10. Bubble Chart of Medal Distribution by Country and Discipline</h3>
+        <img src="/assets/images/Bubble_Chart_of_Medal_Distribution_by_Country_and_Discipline_(Top_10_Countries).png" alt="Bubble Chart of Medal Distribution">
+        <p>Top countries like the United States and China exhibit a wide spread of medals across multiple disciplines. Such diversity indicates a strong and well-rounded sports infrastructure.</p>
+
+        <h2>Conclusion</h2>
+        <p>From medal distribution to athlete demographics, this analysis sheds light on the factors contributing to Olympic success. Countries with robust training systems and diverse sports programs tend to perform consistently well, while others have room for growth. The Olympics continue to be a platform for showcasing global talent and sportsmanship.</p>
+
+        <h2>Explore More</h2>
+        <p>For a deeper dive into the data and code, explore the full analysis:</p>
+        <a href="https://www.kaggle.com/code/nurasssyl/olympic-basic-visualizations/notebook" class="btn" target="_blank">Olympic Basic Visualizations</a>
+        <a href="https://www.kaggle.com/code/nurasssyl/olympics-2024-20-visuazations" class="btn" target="_blank">Olympics 2024: 20 Visualizations</a>
+    </div>
+</body>
+</html>
