@@ -238,6 +238,10 @@
     <p style="text-align: left;">This section presents data-driven analytics and visualizations designed to uncover insights and patterns. From demographic studies to geographic trends, each piece provides a detailed perspective on various aspects of Kazakhstan and beyond.</p>
 
 
+    <!-- Новый фрейм в портфолио -->
+
+
+
 
     <section class="portfolio" id="portfolio">
         
@@ -275,6 +279,41 @@
         <img src="assets/images/Age_distribution.jpeg" alt="Age Distribution of Kazakhstan's Population">
         <p>Age Distribution of Kazakhstan's Population | <span style="color: #F0DB4F; font-weight: bold;">JavaScript</span></p>
     </div>
+
+
+    <div class="portfolio-item" 
+    onclick="openModal('assets/images/religion_preview.png', 
+    'Religious Organizations in Kazakhstan', `
+    <div style='text-align: center;'>
+        <p>This visualization represents the number of registered religious organizations in Kazakhstan across different faiths.</p>
+        <p><strong>Key Insights:</strong></p>
+        <ul>
+            <li><strong>Islamic organizations</strong> dominate the religious landscape, making up the vast majority.</li>
+            <li><strong>Christian denominations</strong> (Orthodox, Catholic, and Protestant) form a significant minority.</li>
+            <li><strong>Other religious groups</strong> such as Jehovah's Witnesses, Bahá'í, and Jewish communities are present but in much smaller numbers.</li>
+        </ul>
+        <p><strong>Analysis:</strong></p>
+        <ul>
+            <li>The dominance of Islamic organizations reflects the religious composition of the country, where Islam is the predominant faith.</li>
+            <li>Christian organizations, particularly Orthodox Christianity, play a crucial role in the religious structure due to historical and cultural factors.</li>
+            <li>The presence of smaller religious communities demonstrates Kazakhstan’s religious diversity and freedom of belief.</li>
+        </ul>
+        <p><strong>Technical Details:</strong></p>
+        <ul>
+            <li>🔹 <b>Data:</b> Officially registered religious organizations in Kazakhstan.</li>
+            <li>🔹 <b>Tools:</b> <span style='color: #F0DB4F; font-weight: bold;'>JavaScript</span> for visualization.</li>
+        </ul>
+    </div>`)">
+    <img src="assets/images/religion_preview.png" alt="Religious Organizations in Kazakhstan">
+    <p>Religious Organizations | <span style="color: #F0DB4F; font-weight: bold;">JavaScript</span></p>
+</div>
+
+
+
+
+
+
+
 
     <div class="portfolio-item" onclick="openModal('assets/images/population_by_generation.jpeg', 'Population by Generation in Kazakhstan', `
     <div style='text-align: center;'>
@@ -902,19 +941,15 @@ function closeModal() {
     twemoji.parse(document.body);
 </script>
 
-<footer style="background-color: #f8f9fa; padding: 20px; text-align: center; margin-top: 30px; border-top: 1px solid #e0e0e0;">
-    <div>
-        <p>&copy; 2025 Nurassyl Abdrazakuly. All rights reserved.</p>
-        <p>
-            <a href="https://www.linkedin.com/in/your-profile" target="_blank" style="text-decoration: none; color: #0073b1;">LinkedIn</a> | 
-            <a href="https://github.com/your-profile" target="_blank" style="text-decoration: none; color: #333;">GitHub</a> | 
-            <a href="mailto:your-email@example.com" style="text-decoration: none; color: #d14836;">Email</a>
-        </p>
+<footer style="background-color: #f8f9fa; padding: 2rem 0; border-top: 1px solid #e9ecef;">
+    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+      <h4 style="margin-bottom: 1rem; font-size: 1.25rem; font-weight: 600;">Thank you for visiting!</h4>
+      <p style="margin-bottom: 1rem; font-size: 1rem; color: #6c757d;">Feel free to explore my projects and reach out if you have any questions or ideas to discuss.</p>
+           <p style="font-size: 0.875rem; color: #6c757d;">&copy; 2025 Nurasyl Abdrazakuly. All rights reserved.</p>
     </div>
-    <div style="margin-top: 10px; font-size: 0.9em; color: #6c757d;">
-        <p>Made with ❤️ in Kazakhstan 🇰🇿</p>
-    </div>
-</footer>
+  </footer>
+  
+  
 
 
 </body>
