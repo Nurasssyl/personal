@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 1500 Universities Worldwide</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://d3js.org/topojson.v3.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        svg {
+            display: block;
+            margin: auto;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            display: none;
+            pointer-events: none;
+        }
+        .legend text {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div style="max-width: 900px; margin: 40px auto; text-align: justify; font-size: 18px; line-height: 1.6;">
+        <h1 style="text-align: center;">Global Distribution of Top Universities</h1>
+        <p>
+            Higher education plays a crucial role in shaping the future of innovation, research, and economic growth worldwide. 
+            This visualization showcases the <strong>geographical distribution of the world's top universities</strong> based on the 
+            <strong>QS World University Rankings</strong>. 
+        </p>
+    
+        <p>
+            The first map represents the <strong>Top 1500 universities</strong>, providing a broader perspective on global education. 
+            The second map focuses on the <strong>Top 200 universities</strong>, highlighting the academic powerhouses with the highest rankings.
+            Darker colors indicate a greater number of ranked universities in that country.
+        </p>
+    
+        <p>
+            The United States, the United Kingdom, and China lead the rankings, boasting the highest number of world-class institutions.
+            Meanwhile, countries like Germany, Canada, Australia, and Japan also demonstrate strong contributions to global academia. 
+            This map allows students, researchers, and policymakers to explore international educational landscapes and potential opportunities.
+        </p>
+    
+        <p style="text-align: center; font-weight: bold;">Explore the maps below to see where each country stands!</p>
+    </div>
+    
+    <div class="container">
+        <h1>Top 1500 Universities Worldwide</h1>
+        <svg width="1200" height="750"></svg> <!-- Увеличена высота SVG -->
+    </div>
+    <div class="tooltip"></div>
+
+    <script>
+        const width = 950, height = 600; // Увеличена высота карты
+        const svg = d3.select("svg");
+        const tooltip = d3.select(".tooltip");
+
+        const data = {
+            "United States of America": 197, "United Kingdom": 90, "China": 80, "Japan": 49, 
+            "Germany": 48, "Russia": 47, "India": 46, "South Korea": 43, "Italy": 42, 
+            "Australia": 38, "Spain": 35, "Brazil": 35, "France": 35, "Mexico": 32, "Canada": 30,
+            "Malaysia": 28, "Taiwan": 27, "Indonesia": 26, "Argentina": 25, "Turkey": 25,
+            "Chile": 25, "Colombia": 24, "Poland": 22, "Kazakhstan": 21, "Saudi Arabia": 20,
+            "Czechia": 16, "Egypt": 15, "Bangladesh": 15, "Pakistan": 14, "Netherlands": 13,
+            "Thailand": 13, "Romania": 13, "United Arab Emirates": 12, "Ukraine": 11,
+            "Hungary": 11, "Ecuador": 11, "South Africa": 11, "Jordan": 10, "Peru": 10,
+            "Switzerland": 10, "Belgium": 9, "Iran": 9, "Finland": 9, "Ireland": 8, "Austria": 8,
+            "Portugal": 8, "New Zealand": 8, "Sweden": 8, "Venezuela": 7, "Greece": 7,
+            "Lebanon": 6, "Slovakia": 6, "Vietnam": 6, "Israel": 6, "Norway": 6, "Lithuania": 5,
+            "Denmark": 5, "Philippines": 5, "Iraq": 5, "Tunisia": 4, "Uruguay": 4, "Singapore": 4,
+            "Costa Rica": 4, "Serbia": 4, "Cuba": 4, "Croatia": 4, "Kyrgyzstan": 3, "Belarus": 3,
+            "Latvia": 3, "Sri Lanka": 3, "Azerbaijan": 3, "Kuwait": 3, "Slovenia": 3,
+            "Estonia": 3, "Bahrain": 3, "Palestine": 3, "Panama": 2, "Nigeria": 2, "Kenya": 2,
+            "Ghana": 2, "Dominican Republic": 2, "Bolivia": 2, "Brunei": 2, "Qatar": 2,
+            "Georgia": 2, "Cyprus": 2, "Oman": 2, "Uzbekistan": 2, "Guatemala": 1, "Syria": 1,
+            "Bosnia and Herzegovina": 1, "Sudan": 1, "Morocco": 1, "Iceland": 1, "Paraguay": 1,
+            "Puerto Rico": 1, "Luxembourg": 1, "Bulgaria": 1, "Armenia": 1, "Malta": 1,
+            "Uganda": 1, "Ethiopia": 1, "Honduras": 1
+        };
+
+        const colorScale = d3.scaleThreshold()
+            .domain([10, 20, 30, 40, 50, 100, 150, 200])
+            .range(["#f0f9ff", "#ccece6", "#99d8c9", "#66c2a4", "#41ae76", "#238b45", "#006d2c", "#00441b"]);
+
+        d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(world => {
+            const countries = topojson.feature(world, world.objects.countries);
+            const countriesFiltered = countries.features.filter(d => d.properties.name !== "Antarctica");
+
+            const projection = d3.geoMercator()
+                .scale(140)
+                .translate([width / 2, height / 1.2]); // Опустил карту ниже
+
+            const path = d3.geoPath().projection(projection);
+
+            svg.selectAll("path")
+                .data(countriesFiltered)
+                .enter().append("path")
+                .attr("d", path)
+                .attr("fill", d => {
+                    const countryName = d.properties.name;
+                    return data[countryName] ? colorScale(data[countryName]) : "#ccc";
+                })
+                .attr("stroke", "#000")
+                .attr("stroke-width", 0.5)
+                .on("mouseover", (event, d) => {
+                    const countryName = d.properties.name;
+                    if (data[countryName]) {
+                        tooltip.style("display", "block")
+                            .html(`${countryName}: ${data[countryName]}`)
+                            .style("left", (event.pageX + 10) + "px")
+                            .style("top", (event.pageY - 10) + "px");
+                    }
+                })
+                .on("mousemove", event => {
+                    tooltip.style("left", (event.pageX + 10) + "px")
+                           .style("top", (event.pageY - 10) + "px");
+                })
+                .on("mouseout", () => {
+                    tooltip.style("display", "none");
+                });
+
+            const legendX = width + 80, legendY = 70;
+            const legendHeight = 200;
+
+            const legend = svg.append("g")
+                .attr("class", "legend")
+                .attr("transform", `translate(${legendX},${legendY})`);
+
+            const legendScale = d3.scaleLinear()
+                .domain([0, 200])
+                .range([legendHeight, 0]);
+
+            const legendAxis = d3.axisRight(legendScale)
+                .tickValues([10, 20, 30, 40, 50, 100, 150, 200])
+                .tickFormat(d => Math.round(d));
+
+            legend.append("g")
+                .attr("transform", "translate(40,0)")
+                .call(legendAxis);
+
+            legend.append("rect")
+                .attr("width", 20)
+                .attr("height", legendHeight)
+                .style("fill", "url(#legend-gradient)");
+        });
+    </script>
+
+
+
+
+
+<h1>Top 200 Universities Worldwide</h1>
+<svg id="map200" width="1200" height="750"></svg>
+
+<script>
+    const svg200 = d3.select("#map200");
+
+    const data200 = {
+        "United States of America": 38, "United Kingdom": 27, "Australia": 15, "China": 14, 
+        "Canada": 11, "Japan": 10, "Germany": 9, "Netherlands": 8, "South Korea": 7, 
+        "Sweden": 6, "Switzerland": 6, "France": 5, "Malaysia": 5, "Spain": 4, "Italy": 3, 
+        "Denmark": 3, "Singapore": 2, "Austria": 2, "Qatar": 2, "India": 2, "Finland": 2, 
+        "Saudi Arabia": 2, "Mexico": 2, "Chile": 2, "Ireland": 2, "Belgium": 2, "Russia": 1, 
+        "Brazil": 1, "Argentina": 1, "Norway": 1, "Taiwan": 1, "New Zealand": 1, 
+        "Kazakhstan": 1, "South Africa": 1, "Colombia": 1
+    };
+
+    const colorScale200 = d3.scaleThreshold()
+        .domain([1, 2, 5, 10, 15, 20, 30, 40])
+        .range(["#f0f9ff", "#ccece6", "#99d8c9", "#66c2a4", "#41ae76", "#238b45", "#006d2c", "#00441b"]);
+
+    d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(world => {
+        const countries = topojson.feature(world, world.objects.countries);
+        const countriesFiltered = countries.features.filter(d => d.properties.name !== "Antarctica");
+
+        const projection = d3.geoMercator()
+            .scale(140)
+            .translate([width / 2, height / 1.4]); 
+
+        const path = d3.geoPath().projection(projection);
+
+        svg200.selectAll("path")
+            .data(countriesFiltered)
+            .enter().append("path")
+            .attr("d", path)
+            .attr("fill", d => {
+                const countryName = d.properties.name;
+                return data200[countryName] ? colorScale200(data200[countryName]) : "#ccc";
+            })
+            .attr("stroke", "#000")
+            .attr("stroke-width", 0.5)
+            .on("mouseover", (event, d) => {
+                const countryName = d.properties.name;
+                if (data200[countryName]) {
+                    tooltip.style("display", "block")
+                        .html(`${countryName}: ${data200[countryName]}`)
+                        .style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY - 10) + "px");
+                }
+            })
+            .on("mousemove", event => {
+                tooltip.style("left", (event.pageX + 10) + "px")
+                       .style("top", (event.pageY - 10) + "px");
+            })
+            .on("mouseout", () => {
+                tooltip.style("display", "none");
+            });
+
+        const legendX200 = width + 80, legendY200 = 70;
+        const legendHeight200 = 200;
+
+        const legend200 = svg200.append("g")
+            .attr("class", "legend")
+            .attr("transform", `translate(${legendX200},${legendY200})`);
+
+        const legendScale200 = d3.scaleLinear()
+            .domain([0, 40])
+            .range([legendHeight200, 0]);
+
+        const legendAxis200 = d3.axisRight(legendScale200)
+            .tickValues([1, 2, 5, 10, 15, 20, 30, 40])
+            .tickFormat(d => Math.round(d));
+
+        legend200.append("g")
+            .attr("transform", "translate(40,0)")
+            .call(legendAxis200);
+
+        legend200.append("rect")
+            .attr("width", 20)
+            .attr("height", legendHeight200)
+            .style("fill", "url(#legend-gradient)");
+    });
+</script>
+
+
+
+
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <svg id="donutChart" width="600" height="500" viewBox="-50 -50 700 600" style="overflow: visible;"></svg>
+</div>
+
+<script>
+    (function() {
+        const donutData = [
+            { continent: "Asia", value: 502 },
+            { continent: "Europe", value: 497 },
+            { continent: "North America", value: 274 },
+            { continent: "South America", value: 144 },
+            { continent: "Oceania", value: 46 },
+            { continent: "Africa", value: 40 }
+        ];
+
+        const width = 600, height = 500, radius = Math.min(width, height) / 2.2;
+        const svg = d3.select("#donutChart")
+            .append("g")
+            .attr("transform", `translate(${width / 2}, ${height / 2 + 20})`);
+
+        const color = d3.scaleOrdinal()
+            .domain(donutData.map(d => d.continent))
+            .range(["#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854", "#ffd92f"]);
+
+        const pie = d3.pie()
+            .sort(null)
+            .value(d => d.value);
+
+        const arc = d3.arc()
+            .innerRadius(radius * 0.6)
+            .outerRadius(radius * 0.9);
+
+        const labelArc = d3.arc()
+            .innerRadius(radius * 1.2)
+            .outerRadius(radius * 1.2);
+
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("position", "absolute")
+            .style("background", "rgba(0, 0, 0, 0.8)")
+            .style("color", "#fff")
+            .style("padding", "8px")
+            .style("border-radius", "4px")
+            .style("font-size", "14px")
+            .style("display", "none");
+
+        const slices = svg.selectAll("path")
+            .data(pie(donutData))
+            .enter().append("path")
+            .attr("d", arc)
+            .attr("fill", d => color(d.data.continent))
+            .attr("stroke", "#fff")
+            .style("stroke-width", "2px")
+            .on("mouseover", (event, d) => {
+                tooltip.style("display", "block")
+                    .html(`<strong>${d.data.continent}</strong>: ${d.data.value}`)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 10) + "px");
+            })
+            .on("mousemove", event => {
+                tooltip.style("left", (event.pageX + 10) + "px")
+                       .style("top", (event.pageY - 10) + "px");
+            })
+            .on("mouseout", () => {
+                tooltip.style("display", "none");
+            });
+
+
+        svg.selectAll("text")
+            .data(pie(donutData))
+            .enter().append("text")
+            .attr("transform", d => `translate(${labelArc.centroid(d)})`)
+            .attr("text-anchor", d => d.startAngle + (d.endAngle - d.startAngle) / 2 < Math.PI ? "start" : "end")
+            .attr("font-size", "16px")
+            .attr("fill", "#000")
+            .style("font-weight", "bold")
+            .text(d => d.data.continent);
+
+
+        svg.append("text")
+            .attr("text-anchor", "middle")
+            .attr("font-size", "18px")
+            .attr("fill", "#333")
+            .style("font-weight", "bold")
+            .attr("y", -10)
+            .text("Top Universities by Continent");
+    })();
+</script>
+
+
+
+
+
+
+
+
+
+<div style="max-width: 900px; margin: 40px auto; text-align: justify; font-size: 18px; line-height: 1.6;">
+    <h2 style="text-align: center; font-weight: bold;">University Distribution by Continent</h2>
+
+    <p>
+        The global higher education landscape is shaped by regional differences in research, funding, and academic traditions. 
+        This visualization provides a continent-level breakdown of the top-ranked universities, highlighting disparities 
+        and dominance in different parts of the world.
+    </p>
+
+    <p>
+        <strong>Asia</strong> and <strong>Europe</strong> emerge as leaders, each hosting over 500 universities in global rankings, 
+        reflecting strong investments in education and research. North America follows closely, driven primarily by the United States. 
+    </p>
+
+    <p>
+        Other regions, such as South America, Oceania, and Africa, exhibit a smaller yet significant presence. While they contribute 
+        fewer top-tier institutions, their role in the global education ecosystem continues to grow, driven by emerging economies and policy shifts.
+    </p>
+
+</div>
+
+
+
+
+
+<div style="display: flex; justify-content: center; margin-top: 40px;">
+    <svg id="bubbleChart" width="1000" height="850"></svg>
+</div>
+
+<script>
+    (function() {
+        const continentColors = {
+            "Asia": "#66c2a5",
+            "Europe": "#fc8d62",
+            "North America": "#8da0cb",
+            "South America": "#e78ac3",
+            "Oceania": "#a6d854",
+            "Africa": "#ffd92f"
+        };
+
+        const countryContinent = {
+    "United States of America": "North America", "United Kingdom": "Europe", "China": "Asia", "Japan": "Asia", 
+    "Germany": "Europe", "Russia": "Europe", "India": "Asia", "South Korea": "Asia", "Italy": "Europe", 
+    "Australia": "Oceania", "Spain": "Europe", "Brazil": "South America", "France": "Europe", "Mexico": "North America",
+    "Canada": "North America", "Malaysia": "Asia", "Taiwan": "Asia", "Indonesia": "Asia", "Argentina": "South America",
+    "Turkey": "Europe", "Chile": "South America", "Colombia": "South America", "Poland": "Europe", "Kazakhstan": "Asia",
+    "Saudi Arabia": "Asia", "South Africa": "Africa", "Hungary": "Europe", "Ecuador": "South America",
+    "Thailand": "Asia", "Romania": "Europe", "United Arab Emirates": "Asia", "Ukraine": "Europe",
+    "Czechia": "Europe", "Bangladesh": "Asia", "Pakistan": "Asia", "Netherlands": "Europe",
+    "Switzerland": "Europe", "Belgium": "Europe", "Iran": "Asia", "Finland": "Europe", "Ireland": "Europe",
+    "Austria": "Europe", "Portugal": "Europe", "New Zealand": "Oceania", "Sweden": "Europe",
+    "Venezuela": "South America", "Greece": "Europe", "Lebanon": "Asia", "Slovakia": "Europe",
+    "Vietnam": "Asia", "Israel": "Asia", "Norway": "Europe", "Lithuania": "Europe",
+    "Denmark": "Europe", "Philippines": "Asia", "Iraq": "Asia", "Tunisia": "Africa",
+    "Uruguay": "South America", "Singapore": "Asia", "Costa Rica": "North America",
+    "Serbia": "Europe", "Cuba": "North America", "Croatia": "Europe", "Kyrgyzstan": "Asia",
+    "Belarus": "Europe", "Latvia": "Europe", "Sri Lanka": "Asia", "Azerbaijan": "Asia",
+    "Kuwait": "Asia", "Slovenia": "Europe", "Estonia": "Europe", "Bahrain": "Asia",
+    "Palestine": "Asia", "Panama": "North America", "Nigeria": "Africa", "Kenya": "Africa",
+    "Ghana": "Africa", "Dominican Republic": "North America", "Bolivia": "South America",
+    "Brunei": "Asia", "Qatar": "Asia", "Georgia": "Europe", "Cyprus": "Europe",
+    "Oman": "Asia", "Uzbekistan": "Asia", "Guatemala": "North America", "Syria": "Asia",
+    "Bosnia and Herzegovina": "Europe", "Sudan": "Africa", "Morocco": "Africa",
+    "Iceland": "Europe", "Paraguay": "South America", "Puerto Rico": "North America",
+    "Luxembourg": "Europe", "Bulgaria": "Europe", "Armenia": "Asia", "Malta": "Europe",
+    "Uganda": "Africa", "Ethiopia": "Africa", "Honduras": "North America"
+};
+
+
+        const width = 1000, height = 850;
+
+        const svg = d3.select("#bubbleChart")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+        const bubble = d3.pack()
+            .size([width, height])
+            .padding(5);
+
+        const root = d3.hierarchy({ children: Object.entries(data).map(([country, value]) => ({
+                name: country,
+                value: value,
+                continent: countryContinent[country] || "Unknown"
+            }))})
+            .sum(d => d.value);
+
+        bubble(root);
+
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("position", "absolute")
+            .style("background", "rgba(0, 0, 0, 0.8)")
+            .style("color", "#fff")
+            .style("padding", "6px")
+            .style("border-radius", "4px")
+            .style("font-size", "14px")
+            .style("display", "none");
+
+        const nodes = svg.selectAll("circle")
+            .data(root.children)
+            .enter().append("circle")
+            .attr("cx", d => d.x - width / 2)
+            .attr("cy", d => d.y - height / 2)
+            .attr("r", d => d.r)
+            .attr("fill", d => continentColors[d.data.continent] || "#ccc")
+            .attr("stroke", "#fff")
+            .style("stroke-width", "2px")
+            .on("mouseover", (event, d) => {
+                tooltip.style("display", "block")
+                    .html(`<strong>${d.data.name}</strong> (${d.data.continent}): ${d.data.value}`)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 10) + "px");
+            })
+            .on("mousemove", event => {
+                tooltip.style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 10) + "px");
+            })
+            .on("mouseout", () => {
+                tooltip.style("display", "none");
+            });
+
+        svg.selectAll("text")
+            .data(root.children)
+            .enter().append("text")
+            .attr("x", d => d.x - width / 2)
+            .attr("y", d => d.y - height / 2 + 4)
+            .attr("text-anchor", "middle")
+            .attr("fill", "#000")
+            .style("font-weight", "bold")
+            .style("font-size", d => Math.max(10, d.r / 4) + "px") // Уменьшаем шрифт для маленьких пузырей
+            .text(d => d.data.name.length > 10 ? d.data.name.substring(0, 10) + "..." : d.data.name);
+
+        // Добавляем заголовок
+        svg.append("text")
+            .attr("text-anchor", "middle")
+            .attr("font-size", "26px")
+            .attr("fill", "#333")
+            .style("font-weight", "bold")
+            .attr("y", -height / 2 + 40) // Опускаем заголовок чуть ниже
+
+    })();
+</script>
+
+
+<section style="margin-top: 50px;">
+    <h2 style="text-align: center; font-weight: bold; margin-bottom: 20px;">Analyzing Global University Rankings</h2>
+    <p style="max-width: 900px; margin: 0 auto; text-align: justify; font-size: 16px; line-height: 1.6;">
+        This <strong>Bubble Chart</strong> visualizes the <strong>global distribution of top universities</strong>, with each bubble representing a country. The <strong>size of the bubble</strong> corresponds to the number of ranked universities in that country, while the <strong>color represents its continent</strong>.
+    </p>
+    <p style="max-width: 900px; margin: 20px auto 0; text-align: justify; font-size: 16px; line-height: 1.6;">
+        The <strong>United States, United Kingdom, and China</strong> dominate the rankings, reflecting their strong investment in higher education and research. <strong>European nations</strong> such as <strong>Germany, France, and Italy</strong> also have a significant presence, while <strong>Asian powerhouses like Japan, India, and South Korea</strong> contribute heavily to global rankings.
+    </p>
+    <p style="max-width: 900px; margin: 20px auto 0; text-align: justify; font-size: 16px; line-height: 1.6;">
+        While <strong>North America, Europe, and Asia</strong> lead in university rankings, <strong>South America, Africa, and Oceania</strong> exhibit steady growth, showcasing the increasing global nature of higher education. Countries like <strong>Brazil, Argentina, and South Africa</strong> are emerging as key players in their regions.
+    </p>
+    <p style="max-width: 900px; margin: 20px auto 0; text-align: justify; font-size: 16px; line-height: 1.6;">
+        This visualization provides insights into <strong>how different countries and continents invest in academic excellence</strong> and serves as a tool for understanding global education trends.
+    </p>
+</section>
+
+
+<section style="margin-top: 50px;">
+    <h2 style="text-align: center; font-weight: bold; margin-bottom: 20px;">Kazakhstan's Universities in Global Rankings</h2>
+    <p style="max-width: 900px; margin: 0 auto; text-align: justify; font-size: 16px; line-height: 1.6;">
+        Kazakhstan is home to several universities that have gained international recognition in the <strong>2025 QS World University Rankings</strong>. These institutions contribute to the country's growing academic reputation, emphasizing research, innovation, and global collaboration.
+    </p>
+
+    <div style="max-width: 900px; margin: 30px auto; text-align: center;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 16px;">
+            <thead>
+                <tr style="background-color: #0073e6; color: white;">
+                    <th style="padding: 10px; border: 1px solid #ddd;">2025 Rank</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">Institution Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">163</td><td style="padding: 8px; border: 1px solid #ddd;">Al-Farabi Kazakh National University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">321</td><td style="padding: 8px; border: 1px solid #ddd;">L.N. Gumilyov Eurasian National University (ENU)</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">405</td><td style="padding: 8px; border: 1px solid #ddd;">Satbayev University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">621-630</td><td style="padding: 8px; border: 1px solid #ddd;">Auezov South Kazakhstan University (SKU)</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">671-680</td><td style="padding: 8px; border: 1px solid #ddd;">Abai Kazakh National Pedagogical University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">671-680</td><td style="padding: 8px; border: 1px solid #ddd;">Kazakh National Agrarian University KazNAU</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">801-850</td><td style="padding: 8px; border: 1px solid #ddd;">Khoja Akhmet Yassawi International Kazakh-Turkish University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">851-900</td><td style="padding: 8px; border: 1px solid #ddd;">Karaganda State Technical University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">901-950</td><td style="padding: 8px; border: 1px solid #ddd;">Karaganda Buketov University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">951-1000</td><td style="padding: 8px; border: 1px solid #ddd;">Almaty Technological University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">951-1000</td><td style="padding: 8px; border: 1px solid #ddd;">D. Serikbayev East Kazakhstan State Technical University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">951-1000</td><td style="padding: 8px; border: 1px solid #ddd;">S.D. Asfendiyarov Kazakh National Medical University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">1001-1200</td><td style="padding: 8px; border: 1px solid #ddd;">Kazakh-British Technical University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">1001-1200</td><td style="padding: 8px; border: 1px solid #ddd;">Narxoz University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">1001-1200</td><td style="padding: 8px; border: 1px solid #ddd;">NJSC KIMEP University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">1201-1400</td><td style="padding: 8px; border: 1px solid #ddd;">Kazakh Ablai Khan University of International Relations</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">1201-1400</td><td style="padding: 8px; border: 1px solid #ddd;">Saken Seifullin Kazakh Agrotechnical University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">1201-1400</td><td style="padding: 8px; border: 1px solid #ddd;">Suleyman Demirel University, Kazakhstan</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">1201-1400</td><td style="padding: 8px; border: 1px solid #ddd;">Toraighyrov University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">1401+</td><td style="padding: 8px; border: 1px solid #ddd;">Korkyt Ata Kyzylorda University</td></tr>
+                <tr><td style="padding: 8px; border: 1px solid #ddd;">1401+</td><td style="padding: 8px; border: 1px solid #ddd;">M.Kh. Dulaty Taraz Regional University</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="max-width: 900px; margin: 0 auto; text-align: justify; font-size: 16px; line-height: 1.6;">
+        Al-Farabi Kazakh National University leads the rankings, securing a position in the <strong>top 200</strong>, demonstrating its role as Kazakhstan's flagship academic institution. Other universities, including <strong>L.N. Gumilyov Eurasian National University, Satbayev University, and Abai Kazakh National Pedagogical University</strong>, continue to strengthen Kazakhstan’s presence in global education rankings.
+    </p>
+
+    <p style="max-width: 900px; margin: 20px auto 0; text-align: justify; font-size: 16px; line-height: 1.6;">
+        The growing number of ranked universities highlights Kazakhstan’s <strong>commitment to higher education</strong>, research, and international collaborations. With increasing investments in education and science, Kazakhstan aims to solidify its position as an emerging hub for academic excellence in Central Asia.
+    </p>
+</section>
+
+
+
+<footer style="background-color: #f8f9fa; padding: 2rem 0; border-top: 1px solid #e9ecef;">
+    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+      <h4 style="margin-bottom: 1rem; font-size: 1.25rem; font-weight: 600;">Thank you for visiting!</h4>
+      <p style="margin-bottom: 1rem; font-size: 1rem; color: #6c757d;">Feel free to explore my projects and reach out if you have any questions or ideas to discuss.</p>
+           <p style="font-size: 0.875rem; color: #6c757d;">&copy; 2025 Nurasyl Abdrazakuly. All rights reserved.</p>
+    </div>
+  </footer>
+
+
+
+
+</body>
+</html>
