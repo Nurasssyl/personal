@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GDP per Capita vs. Population Density in Kazakhstan</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <style>
+        
+        canvas {
+    width: 100%;
+    height: 100%;
+}
+        h2 {
+            margin-bottom: 20px;
+            font-size: 22px;
+            color: #222;
+            font-weight: bold;
+        }
+        body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background-color: #eef2f7;
+    margin: 0;
+    padding: 20px;
+}
+
+.text-container {
+    max-width: 900px;
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    text-align: justify;
+}
+
+.chart-container {
+    width: 90vw;
+    max-width: 1200px;
+    height: 80vh;
+    max-height: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <h2>GDP per Capita vs. Population Density in Kazakhstan</h2>
+
+    <div class="text-container">
+        <p>
+            The economic development and population density of Kazakhstan's regions vary significantly, as clearly illustrated in this chart. 
+            The use of a logarithmic scale allows for an accurate representation of a broad range of values, from densely populated metropolitan areas to sparsely inhabited regions.
+        </p>
+
+        <p>
+            Almaty and Astana stand out with the highest population density, which is expected as these cities serve as economic hubs attracting workforce from across the country. 
+            Shymkent, the third-largest city, also shows high density, though its GDP per capita is slightly lower.
+        </p>
+
+        <p>
+            In contrast, regions like Atyrau exhibit the highest GDP per capita but remain sparsely populated. 
+            This phenomenon is driven by the oil and gas sector, which generates substantial economic output without requiring a large workforce.
+        </p>
+
+        <p>
+            Most regions fall within the range of $3,000 to $10,000 GDP per capita, with population densities below 10 people per square kilometer. 
+            These areas are primarily characterized by an agrarian economy and limited urbanization.
+        </p>
+
+        <p>
+            This data highlights the economic and demographic imbalance between urban centers and rural regions. 
+            The concentration of economic activity in select locations poses challenges for sustainable development, necessitating strategic planning in infrastructure and regional policies.
+        </p>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="scatterChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('scatterChart').getContext('2d');
+        
+        const labels = ["Almaty city", "Astana", "Shymkent", "Turkistan", "Kyzylorda", "Zhambyl", 
+                        "East", "North", "Pavlodar", "Kostanay", "Akmola", "Karagandy", 
+                        "West", "Atyrau", "Mangystau", "Aktobe", "Abai", "Jetisu", "Ulytau", "Almaty region"];
+        
+        const dataPoints = [
+            {x: 14590.6, y: 3286.7}, {x: 12552.4, y: 1821.2}, {x: 4736.6, y: 1052.8}, {x: 2945, y: 18.3},
+            {x: 4982.2, y: 8.5}, {x: 3641, y: 14.6}, {x: 9192.4, y: 7.4}, {x: 6865.4, y: 5.4},
+            {x: 8036, y: 5.4}, {x: 7370.6, y: 4.2}, {x: 6716.8, y: 4.7}, {x: 10231, y: 3.7},
+            {x: 9653.2, y: 4.6}, {x: 27916.4, y: 6}, {x: 9209.6, y: 4.8}, {x: 7630.2, y: 3.1},
+            {x: 7353, y: 6}, {x: 4022.8, y: 5.9}, {x: 12288.4, y: 1.2}, {x: 4903.4, y: 14.4}
+        ];
+
+        const offsets = [
+            {x: 0, y: 0}, //Almaty city
+            {x: 0, y: 0},// Astana
+            {x: 0, y: 0}, //Shymkent
+            {x: 0, y: 0},  //Turkistan
+            {x: 0, y: 0}, //Kyzylorda
+            {x: 0, y: 0}, //Zhambyl
+            {x: 10, y: 10}, //East
+             {x: -15, y:10}, //North
+            {x: 0, y: 0}, //Pavlodar
+            {x: 0, y: 0},   //Kostanay
+             {x: 0, y: 0}, //Akmola
+             {x: 0, y: 0},// Karagandy
+            {x: 10, y: 10}, //West
+            {x: 0, y: 0}, //Atyrau
+            {x: -0, y: 0}, //Mangystau
+            {x: 0, y: 0}, //Aktobe
+            {x: -15, y:10}, //Abai
+            {x: 0, y: 0}, //Jetisu
+            {x: -0, y: 0}, //Ulytau
+            {x: 0, y: 0}  //Almaty
+        ];
+
+        const scatterChart = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Regions',
+                    data: dataPoints,
+                    backgroundColor: 'rgba(255, 99, 132, 0.9)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    pointRadius: 10,
+                    pointHoverRadius: 12,
+                }]
+            },
+            
+            options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    animation: false, 
+    plugins: {
+        legend: { display: false },
+        tooltip: {
+            callbacks: {
+                label: function(context) {
+                    return labels[context.dataIndex] + ': GDP $' + context.raw.x + ', Density ' + context.raw.y + ' ppl/km²';
+                }
+            }
+        },
+        datalabels: {
+            display: true,
+            anchor: function(context) {
+                return offsets[context.dataIndex].y > 0 ? 'end' : 'start';
+            },
+            align: function(context) {
+                return offsets[context.dataIndex].x > 0 ? 'right' : 'left';
+            },
+            offset: function(context) {
+                return Math.abs(offsets[context.dataIndex].y);
+            },
+            formatter: function(value, context) {
+                return labels[context.dataIndex];
+            },
+            color: '#222',
+            font: {
+                weight: 'bold',
+                size: 12
+            }
+        }
+    },
+    scales: {
+        x: {
+            type: 'logarithmic',
+            min: 2500,  
+            max: 30000,  
+            title: { display: true, text: 'GDP per Capita (USD)' }
+        },
+        y: {
+            type: 'logarithmic',
+            min: 1,
+            max: 5000,  
+            title: { display: true, text: 'Population Density (people/km²)' }
+        }
+    }
+},
+
+            plugins: [ChartDataLabels]
+        });
+    </script>
+</body>
+</html>
