@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Citizenship by Naturalization</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script src="https://unpkg.com/topojson-client@3"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    .description {
+      max-width: 800px;
+      margin: 0 auto 20px;
+      font-size: 18px;
+      color: #555;
+    }
+    svg {
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Citizenship by Naturalization</h1>
+  <p class="description">
+    This map visualizes the minimum residence requirements for naturalization in different countries.
+    Lighter colors indicate shorter residency requirements, while darker colors represent longer durations.
+  </p>
+  <svg id="map" width="1200" height="500"></svg>
+
+  <script>
+    const width = 1200;
+    const height = 500;
+
+    const svg = d3.select("#map");
+    const projection = d3.geoNaturalEarth1().scale(160).translate([width / 2 - 100, height / 2]);
+    const path = d3.geoPath().projection(projection);
+
+    const residencyData = new Map([
+      ["Afghanistan", 5], ["Albania", 5], ["Algeria", 7], ["Andorra", 20], ["Angola", 10], ["Antigua and Barbuda", 7],
+      ["Argentina", 2], ["Armenia", 3], ["Australia", 4], ["Austria", 10], ["Azerbaijan", 5], ["Bahamas", 10],
+      ["Bahrain", 10], ["Bangladesh", 5], ["Barbados", 5], ["Belarus", 7], ["Belgium", 5], ["Belize", 5],
+      ["Benin", 10], ["Bhutan", 20], ["Bolivia", 3], ["Bosnia and Herz.", 8], ["Botswana", 10],
+      ["Brazil", 4], ["Brunei", 10], ["Bulgaria", 5], ["Burkina Faso", 10], ["Burundi", 10], ["Cambodia", 7],
+      ["Cameroon", 5], ["Canada", 3], ["Cape Verde", 5], ["Central African Rep.", 35], ["Chad", 15], ["Chile", 5],
+      ["China", null], ["Colombia", 8], ["Comoros", 10], ["Congo", 10], ["Costa Rica", 7], ["Croatia", 8],
+      ["Cuba", 5], ["Cyprus", 7], ["Czechia", 5], ["Dem. Rep. Congo", 5],
+      ["Denmark", 9], ["Djibouti", 10], ["Dominica", 7], ["Dominican Rep.", 2], ["Ecuador", 5], ["Egypt", 10],
+      ["El Salvador", 5], ["Equatorial Guinea", 10], ["Eritrea", 20], ["Estonia", 8], ["Eswatini", 5],
+      ["Ethiopia", 4], ["Fiji", 5], ["Finland", 8], ["France", 5], ["Gabon", 10], ["Gambia", 10], ["Georgia", 10],
+      ["Germany", 5], ["Ghana", 5], ["Greece", 7], ["Greenland", 9], ["Grenada", 7], ["Guatemala", 10],
+      ["Guinea", 5], ["Guinea-Bissau", 5], ["Guyana", 7], ["Haiti", 5], ["Honduras", 3], ["Hungary", 8],
+      ["Côte d'Ivoire", 5], ["Iceland", 7], ["India", 12], ["Indonesia", 5], ["Iran", 5], ["Iraq", 10],
+      ["Ireland", 5], ["Israel", 3], ["Italy", 10], ["Jamaica", 5], ["Japan", 5], ["Jordan", 15],
+      ["Kazakhstan", 5], ["Kenya", 7], ["Kiribati", 7], ["Kuwait", 15], ["Kyrgyzstan", 5], ["Laos", 10],
+      ["Latvia", 10], ["Lebanon", 5], ["Lesotho", 5], ["Liberia", 2], ["Libya", 10], ["Liechtenstein", 10],
+      ["Lithuania", 10], ["Luxembourg", 5], ["Madagascar", 5], ["Malawi", 7], ["Malaysia", 12], ["Maldives", 12],
+      ["Mali", 5], ["Malta", 5], ["Marshall Islands", 7], ["Mauritania", 5], ["Mauritius", 5], ["Mexico", 5],
+      ["Micronesia", 5], ["Moldova", 10], ["Monaco", 10], ["Mongolia", 5], ["Montenegro", 10], ["Morocco", 5],
+      ["Mozambique", 5], ["Myanmar", null], ["Namibia", 5], ["Nauru", 7], ["Nepal", 15], ["Netherlands", 5],
+      ["New Zealand", 5], ["Nicaragua", 4], ["Niger", 10], ["Nigeria", 15], ["North Korea", null],
+      ["Macedonia", 8], ["Norway", 8], ["Oman", 20], ["Pakistan", 5], ["Palau", null], ["Palestine", 5],
+      ["Panama", 5], ["Papua New Guinea", 8], ["Paraguay", 3], ["Peru", 2], ["Philippines", 10],
+      ["Poland", 10], ["Portugal", 5], ["Qatar", 25], ["Romania", 8], ["Russia", 5], ["Rwanda", 10],
+      ["Saint Kitts and Nevis", 14], ["Saint Lucia", 7], ["Saint Vincent and the Grenadines", 7],
+      ["Samoa", 5], ["San Marino", 20], ["Sao Tome and Principe", 5], ["Saudi Arabia", 10], ["Senegal", 5],
+      ["Serbia", 3], ["Seychelles", 10], ["Sierra Leone", 5], ["Singapore", 2.5], ["Slovakia", 8],
+      ["Slovenia", 10], ["Solomon Islands", 7], ["Somalia", 7], ["Somaliland", 9], ["South Africa", 5],
+      ["South Korea", 5], ["S. Sudan", 10], ["Spain", 10], ["Sri Lanka", 5], ["Sudan", 10], ["Suriname", 5],
+      ["Sweden", 8], ["Switzerland", 10], ["Syria", 5], ["Tajikistan", 5], ["Tanzania", 5], ["Thailand", 5],
+      ["Timor-Leste", 10], ["Togo", 5], ["Tonga", 5], ["Trinidad and Tobago", 7], ["Tunisia", 5], ["Turkey", 5],
+      ["Taiwan", 5], ["Turkmenistan", 5], ["Tuvalu", 7], ["Uganda", 10], ["Ukraine", 5],
+      ["United Arab Emirates", 30], ["United Kingdom", 5], ["United States of America", 5], ["Uruguay", 5],
+      ["Uzbekistan", 5], ["Vanuatu", 5], ["Vatican", null], ["Venezuela", 10], ["Vietnam", 5],
+      ["Yemen", 5], ["Zambia", 5], ["Zimbabwe", 5]
+    ]);
+
+    d3.json("https://unpkg.com/world-atlas@2.0.2/countries-110m.json").then(world => {
+      const countries = topojson.feature(world, world.objects.countries);
+
+      const legendValues = Array.from(new Set([...residencyData.values()].filter(v => v !== null))).sort((a, b) => a - b);
+      const colorLegend = d3.scaleSequential()
+        .domain([0, legendValues.length - 1])
+        .interpolator(d3.interpolatePlasma);
+
+      const valueToColor = new Map();
+      legendValues.forEach((val, i) => valueToColor.set(val, colorLegend(i)));
+
+      svg.append("g")
+        .selectAll("path")
+        .data(countries.features)
+        .join("path")
+        .attr("class", "country")
+        .attr("d", path)
+        .attr("fill", d => {
+          const val = residencyData.get(d.properties.name);
+          return val != null ? valueToColor.get(val) : "#e0e0e0";
+        })
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 0.5);
+
+      // Легенда сбоку (справа от карты)
+      const legendGroup = svg.append("g").attr("transform", "translate(980, 50)");
+
+      legendGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("font-weight", "bold")
+        .text("Residency requirement (years)");
+
+      legendValues.forEach((val, i) => {
+        const y = 20 + i * 25;
+
+        legendGroup.append("rect")
+          .attr("x", 0)
+          .attr("y", y)
+          .attr("width", 20)
+          .attr("height", 20)
+          .attr("fill", valueToColor.get(val))
+          .attr("stroke", "#333");
+
+        legendGroup.append("text")
+          .attr("x", 30)
+          .attr("y", y + 15)
+          .text(`${val}`);
+      });
+
+      const naY = 20 + legendValues.length * 25;
+      legendGroup.append("rect")
+        .attr("x", 0)
+        .attr("y", naY)
+        .attr("width", 20)
+        .attr("height", 20)
+        .attr("fill", "#e0e0e0")
+        .attr("stroke", "#333");
+
+      legendGroup.append("text")
+        .attr("x", 30)
+        .attr("y", naY + 15)
+        .text("N/A");
+    });
+  </script>
+</body>
+</html>
