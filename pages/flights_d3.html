@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Direct Flights from Kazakhstan</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+    h2, p {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .map-container {
+      width: 100%;
+      max-width: 1000px;
+      height: 650px;
+      margin: 250px auto 10px; /* добавлен отступ сверху */
+      overflow: visible;
+    }
+    .description {
+  max-width: 800px;
+  margin: 0 auto 20px;
+  font-size: 18px;
+  color: #555;
+  text-align: center;
+}
+
+    svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+    .country { fill: #e0e0e0; stroke: #fff; stroke-width: 0.5px; }
+    .kazakhstan { fill: #f9a825; }
+    .highlighted-country { fill: #1976d2; }
+    .route { fill: none; stroke: #6d4c41; stroke-width: 1; opacity: 0.5; }
+    .city { fill: #ff5722; stroke: #fff; stroke-width: 0.5px; }
+    .tooltip {
+      position: absolute;
+      padding: 6px 10px;
+      background: white;
+      border: 1px solid #ccc;
+      font-size: 12px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align: center; font-size: 32px; font-weight: 600; color: #222; margin: 40px 0 10px;">
+    Direct Flights from Kazakhstan
+  </h2>
+  <p class="description">
+    This map highlights countries where direct flights from Kazakhstan are available.
+  </p>
+  
+  
+  
+  
+  <div class="map-container">
+    <svg></svg>
+  </div>
+  <div class="tooltip" id="tooltip"></div>
+  <script>
+    const width = document.querySelector(".map-container").offsetWidth;
+    const height = 650;
+
+    const svg = d3.select("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    const tooltip = d3.select("#tooltip");
+
+    const cities = {
+      "Almaty": [76.92, 43.25],
+      "Astana": [71.43, 51.16],
+      "Shymkent": [69.59, 42.32],
+      "Oral": [51.37, 51.23],
+      "Atyrau": [51.92, 47.11],
+      "Aktau": [51.17, 43.65],
+      "Aktobe": [57.17, 50.28],
+      "Kyzylorda": [65.51, 44.85],
+      "Kostanay": [63.62, 53.21],
+      "Turkistan": [68.27, 43.30],
+      "Karaganda": [73.11, 49.80],
+      "Oskemen": [82.61, 49.97],
+      "Irkutsk": [104.28, 52.28],
+      "Krasnoyarsk": [92.87, 56.01],
+      "Novosibirsk": [82.92, 55.03],
+      "Yekaterinburg": [60.61, 56.84],
+      "Kazan": [49.12, 55.79],
+      "Samara": [50.15, 53.20],
+      "Moscow": [37.62, 55.75],
+      "Sochi": [39.73, 43.60],
+      "Mineralnye Vody": [43.13, 44.21],
+      "Saint Petersburg": [30.31, 59.94],
+      "London": [-0.13, 51.51],
+      "Frankfurt": [8.68, 50.11],
+      "Milan": [9.19, 45.46],
+      "Podgorica": [19.26, 42.43],
+      "Istanbul": [28.97, 41.01],
+      "Ankara": [32.86, 39.93],
+      "Bodrum": [27.43, 37.03],
+      "Antalya": [30.70, 36.89],
+      "Batumi": [41.63, 41.64],
+      "Kutaisi": [42.69, 42.27],
+      "Kuala Lumpur": [101.69, 3.14],
+      "Tbilisi": [44.78, 41.72],
+      "Baku": [49.89, 40.38],
+      "El Alamein": [28.95, 30.83],
+      "Sharm el_Sheikh": [34.33, 27.91],
+      "Hurghada": [33.81, 27.26],
+      "Medina": [39.61, 24.47],
+      "Jeddah": [39.19, 21.54],
+      "Kuwait city": [47.99, 29.38],
+      "Doha": [51.53, 25.29],
+      "Abu Dhabi": [54.37, 24.47],
+      "Dubai": [55.30, 25.27],
+      "Muscat": [58.41, 23.59],
+      "New Delhi": [77.21, 28.61],
+      "Mumbai": [72.88, 19.08],
+      "Male": [73.51, 4.18],
+      "Bangkok": [100.50, 13.75],
+      "Phuket": [98.39, 7.88],
+      "Phu Quoc": [103.96, 10.23],
+      "Da Nang": [108.21, 16.05],
+      "Nha Trang": [109.19, 12.25],
+      "Xi'an": [108.94, 34.34],
+      "Guangzhou": [113.26, 23.13],
+      "Hangzhou": [120.17, 30.25],
+      "Beijing": [116.40, 39.90],
+      "Seoul": [126.97, 37.56],
+      "Ulaanbaatar": [106.92, 47.92],
+      "Dushanbe": [68.78, 38.56],
+      "Nukus": [59.61, 42.46],
+      "Tashkent": [69.29, 41.31],
+      "Bishkek": [74.59, 42.87],
+      "Omsk": [73.37, 54.99],
+      "Minsk": [27.56, 53.90],
+      "Warsaw": [21.01, 52.23],
+      "Prague": [14.44, 50.08],
+      "Goa": [73.83, 15.50],
+      "Urumqi": [87.60, 43.83],
+      "Munich": [11.58, 48.14],
+      "Budapest": [19.04, 47.50],
+      "Cairo": [31.23, 30.04],
+      "Shanghai": [121.47, 31.23],
+      "Amsterdam": [4.89, 52.37],
+      "Samarkand": [66.96, 39.65]
+    };
+
+    const flights = [
+    { from: "Almaty", to: "Irkutsk", to_country: "Russia" },
+  { from: "Almaty", to: "Krasnoyarsk", to_country: "Russia" },
+  { from: "Almaty", to: "Novosibirsk", to_country: "Russia" },
+  { from: "Almaty", to: "Yekaterinburg", to_country: "Russia" },
+  { from: "Almaty", to: "Kazan", to_country: "Russia" },
+  { from: "Almaty", to: "Samara", to_country: "Russia" },
+  { from: "Almaty", to: "Moscow", to_country: "Russia" },
+  { from: "Almaty", to: "Sochi", to_country: "Russia" },
+  { from: "Almaty", to: "Mineralnye Vody", to_country: "Russia" },
+  { from: "Almaty", to: "Saint Petersburg", to_country: "Russia" },
+  { from: "Almaty", to: "London", to_country: "United Kingdom" },
+  { from: "Almaty", to: "Frankfurt", to_country: "Germany" },
+  { from: "Almaty", to: "Milan", to_country: "Italy" },
+  { from: "Almaty", to: "Podgorica", to_country: "Montenegro" },
+  { from: "Almaty", to: "Istanbul", to_country: "Turkey" },
+  { from: "Almaty", to: "Ankara", to_country: "Turkey" },
+  { from: "Almaty", to: "Bodrum", to_country: "Turkey" },
+  { from: "Almaty", to: "Antalya", to_country: "Turkey" },
+  { from: "Almaty", to: "Batumi", to_country: "Georgia" },
+  { from: "Almaty", to: "Kutaisi", to_country: "Georgia" },
+  { from: "Almaty", to: "Kuala Lumpur", to_country: "Malaysia" },
+  { from: "Almaty", to: "Tbilisi", to_country: "Georgia" },
+  { from: "Almaty", to: "Baku", to_country: "Azerbaijan" },
+  { from: "Almaty", to: "El Alamein", to_country: "Egypt" },
+  { from: "Almaty", to: "Sharm el_Sheikh", to_country: "Egypt" },
+  { from: "Almaty", to: "Hurghada", to_country: "Egypt" },
+  { from: "Almaty", to: "Medina", to_country: "Saudi Arabia" },
+  { from: "Almaty", to: "Jeddah", to_country: "Saudi Arabia" },
+  { from: "Almaty", to: "Kuwait city", to_country: "Kuwait" },
+  { from: "Almaty", to: "Doha", to_country: "Qatar" },
+  { from: "Almaty", to: "Abu Dhabi", to_country: "Unied Arab Emirates" },
+  { from: "Almaty", to: "Dubai", to_country: "Unied Arab Emirates" },
+  { from: "Almaty", to: "Muscat", to_country: "Oman" },
+  { from: "Almaty", to: "New Delhi", to_country: "India" },
+  { from: "Almaty", to: "Mumbai", to_country: "India" },
+  { from: "Almaty", to: "Male", to_country: "Maldives" },
+  { from: "Almaty", to: "Bangkok", to_country: "Thailand" },
+  { from: "Almaty", to: "Phuket", to_country: "Thailand" },
+  { from: "Almaty", to: "Phu Quoc", to_country: "Thailand" },
+  { from: "Almaty", to: "Da Nang", to_country: "Vietnam" },
+  { from: "Almaty", to: "Nha Trang", to_country: "Vietnam" },
+  { from: "Almaty", to: "Xi'an", to_country: "China" },
+  { from: "Almaty", to: "Guangzhou", to_country: "China" },
+  { from: "Almaty", to: "Hangzhou", to_country: "China" },
+  { from: "Almaty", to: "Beijing", to_country: "China" },
+  { from: "Almaty", to: "Seoul", to_country: "South Korea" },
+  { from: "Almaty", to: "Ulaanbaatar", to_country: "Mongolia" },
+  { from: "Almaty", to: "Dushanbe", to_country: "Tajikistan" },
+  { from: "Almaty", to: "Nukus", to_country: "Uzbekistan" },
+  { from: "Almaty", to: "Tashkent", to_country: "Uzbekistan" },
+  { from: "Almaty", to: "Bishkek", to_country: "Kyrgyzstan" },
+  { from: "Astana", to: "Novosibirsk", to_country: "Russia" },
+{ from: "Astana", to: "Omsk", to_country: "Russia" },
+{ from: "Astana", to: "Yekaterinburg", to_country: "Russia" },
+{ from: "Astana", to: "Kazan", to_country: "Russia" },
+{ from: "Astana", to: "Moscow", to_country: "Russia" },
+{ from: "Astana", to: "Sochi", to_country: "Russia" },
+{ from: "Astana", to: "Mineralnye Vody", to_country: "Russia" },
+{ from: "Astana", to: "Saint Petersburg", to_country: "Russia" },
+{ from: "Astana", to: "Minsk", to_country: "Belarus" },
+{ from: "Astana", to: "Warsaw", to_country: "Poland" },
+{ from: "Astana", to: "Frankfurt", to_country: "Germany" },
+{ from: "Astana", to: "Prague", to_country: "Czech Republic" },
+{ from: "Astana", to: "Podgorica", to_country: "Montenegro" },
+{ from: "Astana", to: "Istanbul", to_country: "Turkey" },
+{ from: "Astana", to: "Ankara", to_country: "Turkey" },
+{ from: "Astana", to: "Antalya", to_country: "Turkey" },
+{ from: "Astana", to: "Batumi", to_country: "Georgia" },
+{ from: "Astana", to: "Kutaisi", to_country: "Georgia" },
+{ from: "Astana", to: "Tbilisi", to_country: "Georgia" },
+{ from: "Astana", to: "Baku", to_country: "Azerbaijan" },
+{ from: "Astana", to: "Sharm el_Sheikh", to_country: "Egypt" },
+{ from: "Astana", to: "Abu Dhabi", to_country: "Unied Arab Emirates" },
+{ from: "Astana", to: "Dubai", to_country: "Unied Arab Emirates" },
+{ from: "Astana", to: "Goa", to_country: "India" },
+{ from: "Astana", to: "Dushanbe", to_country: "Tajikistan" },
+{ from: "Astana", to: "Tashkent", to_country: "Uzbekistan" },
+{ from: "Astana", to: "Bishkek", to_country: "Kyrgyzstan" },
+{ from: "Astana", to: "Urumqi", to_country: "China" },
+{ from: "Astana", to: "Beijing", to_country: "China" },
+{ from: "Astana", to: "Xi'an", to_country: "China" },
+{ from: "Astana", to: "Seoul", to_country: "South Korea" },
+{ from: "Astana", to: "Phuket", to_country: "Thailand" },
+{ from: "Astana", to: "Phu Quoc", to_country: "Thailand" },
+{ from: "Astana", to: "Nha Trang", to_country: "Vietnam" },
+{ from: "Shymkent", to: "Novosibirsk", to_country: "Russia" },
+{ from: "Shymkent", to: "Moscow", to_country: "Russia" },
+{ from: "Shymkent", to: "Munich", to_country: "Germany" },
+{ from: "Shymkent", to: "Budapest", to_country: "Hungary" },
+{ from: "Shymkent", to: "Istanbul", to_country: "Turkey" },
+{ from: "Shymkent", to: "Antalya", to_country: "Turkey" },
+{ from: "Shymkent", to: "Kutaisi", to_country: "Georgia" },
+{ from: "Shymkent", to: "Cairo", to_country: "Egypt" },
+{ from: "Shymkent", to: "Jeddah", to_country: "Saudi Arabia" },
+{ from: "Shymkent", to: "Medina", to_country: "Saudi Arabia" },
+{ from: "Shymkent", to: "Dubai", to_country: "Unied Arab Emirates" },
+{ from: "Shymkent", to: "Urumqi", to_country: "China" },
+{ from: "Shymkent", to: "Xi'an", to_country: "China" },
+{ from: "Shymkent", to: "Shanghai", to_country: "China" },
+{ from: "Shymkent", to: "Seoul", to_country: "South Korea" },
+{ from: "Oral", to: "Frankfurt", to_country: "Germany" },
+{ from: "Oral", to: "Antalya", to_country: "Turkey" },
+{ from: "Oral", to: "Sharm el_Sheikh", to_country: "Egypt" },
+{ from: "Atyrau", to: "Moscow", to_country: "Russia" },
+{ from: "Atyrau", to: "Amsterdam", to_country: "Netherlands" },
+{ from: "Atyrau", to: "Istanbul", to_country: "Turkey" },
+{ from: "Atyrau", to: "Antalya", to_country: "Turkey" },
+{ from: "Atyrau", to: "Sharm el_Sheikh", to_country: "Egypt" },
+{ from: "Atyrau", to: "Dubai", to_country: "United Arab Emirates" },
+{ from: "Atyrau", to: "Kutaisi", to_country: "Georgia" },
+{ from: "Atyrau", to: "Tbilisi", to_country: "Georgia" },
+{ from: "Aktau", to: "Moscow", to_country: "Russia" },
+{ from: "Aktau", to: "Istanbul", to_country: "Turkey" },
+{ from: "Aktau", to: "Antalya", to_country: "Turkey" },
+{ from: "Aktau", to: "Kutaisi", to_country: "Georgia" },
+{ from: "Aktau", to: "Tbilisi", to_country: "Georgia" },
+{ from: "Aktau", to: "Baku", to_country: "Azerbaijan" },
+{ from: "Aktobe", to: "Istanbul", to_country: "Turkey" },
+{ from: "Aktobe", to: "Antalya", to_country: "Turkey" },
+{ from: "Aktobe", to: "Sharm el_Sheikh", to_country: "Egypt" },
+{ from: "Kyzylorda", to: "Antalya", to_country: "Turkey" },
+{ from: "Kostanay", to: "Antalya", to_country: "Turkey" },
+{ from: "Kostanay", to: "Moscow", to_country: "Russia" },
+{ from: "Turkistan", to: "Kuwait city", to_country: "Kuwait" },
+{ from: "Turkistan", to: "Dubai", to_country: "United Arab Emirates" },
+{ from: "Turkistan", to: "Abu Dhabi", to_country: "United Arab Emirates" },
+{ from: "Turkistan", to: "Samarkand", to_country: "Uzbekistan" },
+{ from: "Karaganda", to: "Moscow", to_country: "Russia" },
+{ from: "Karaganda", to: "Istanbul", to_country: "Turkey" },
+{ from: "Karaganda", to: "Antalya", to_country: "Turkey" },
+{ from: "Oskemen", to: "Novosibirsk", to_country: "Russia" }
+    ];
+
+    const visibleCountries = new Set([
+      "England", "Russia", "Germany", "Italy", "Montenegro", "Turkey", "Georgia", "Malaysia",
+      "Azerbaijan", "Egypt", "Saudi Arabia", "Kuwait", "Qatar", "United Arab Emirates", "Oman",
+      "India", "Maldives", "Thailand", "Vietnam", "China", "South Korea", "Mongolia", "Tajikistan",
+      "Uzbekistan", "Kyrgyzstan", "Belarus", "Poland", "Czech Republic", "Hungary", "Netherlands",
+      "Kazakhstan"
+    ]);
+
+    const projection = d3.geoMercator()
+      .center([70, 40])
+      .scale(300)
+      .translate([width / 2, height / 2]);
+
+    const path = d3.geoPath().projection(projection);
+
+    d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then(data => {
+      const filtered = data.features.filter(d => visibleCountries.has(d.properties.name));
+
+      svg.selectAll(".country")
+        .data(filtered)
+        .enter().append("path")
+        .attr("d", path)
+        .attr("class", d => d.properties.name === "Kazakhstan"
+          ? "country kazakhstan"
+          : "country highlighted-country")
+        .on("mouseover", function (event, d) {
+          tooltip.style("opacity", 1).html(d.properties.name);
+        })
+        .on("mousemove", function (event) {
+          tooltip.style("left", (event.pageX + 10) + "px")
+                 .style("top", (event.pageY - 20) + "px");
+        })
+        .on("mouseout", function () {
+          tooltip.style("opacity", 0);
+        });
+
+      Object.entries(cities).forEach(([city, coords]) => {
+        const [x, y] = projection(coords);
+        svg.append("circle")
+          .attr("class", "city")
+          .attr("cx", x)
+          .attr("cy", y)
+          .attr("r", 3);
+      });
+
+      flights.forEach(({ from, to }) => {
+        const fromCoords = projection(cities[from]);
+        const toCoords = projection(cities[to]);
+        const line = d3.line().curve(d3.curveBasis)([
+          fromCoords,
+          [(fromCoords[0] + toCoords[0]) / 2, fromCoords[1] - 40],
+          toCoords
+        ]);
+
+        svg.append("path")
+          .attr("class", "route")
+          .attr("d", line);
+      });
+    });
+  </script>
+
+<section style="max-width: 900px; margin: 60px auto; padding: 0 20px; font-family: 'Segoe UI', sans-serif; line-height: 1.7; color: #333;">
+  <h2 style="text-align: center; font-size: 34px; font-weight: 600; margin-bottom: 20px; color: #111;">
+    ✈️ Overview of Direct International Flights from Kazakhstan
+  </h2>
+
+  <p style="font-size: 18px; color: #555; text-align: center; max-width: 750px; margin: 0 auto 30px;">
+    Kazakhstan currently has <strong>12 international airports</strong> offering direct flights abroad. These routes connect the country to <strong>31 different countries</strong> across Europe, Asia, and the Middle East—highlighting Kazakhstan’s growing role in regional air travel.
+  </p>
+
+  <h3 style="font-size: 24px; margin-top: 40px; color: #222;">Top Airports by Connectivity</h3>
+  <p>
+    Among all the airports, <strong>Almaty</strong> leads by the number of international cities it connects with, followed closely by <strong>Astana</strong>. These two major hubs serve as Kazakhstan’s gateways to the world.
+    Regional airports such as <strong>Shymkent</strong>, <strong>Atyrau</strong>, and <strong>Aktau</strong> also contribute to the international network by providing access to strategic destinations.
+  </p>
+
+  <h3 style="font-size: 24px; margin-top: 35px; color: #222;">Analytical Highlights</h3>
+  <ul style="padding-left: 20px; font-size: 17px; color: #444;">
+    <li><strong>Almaty</strong> offers the most international routes by city count.</li>
+    <li><strong>Astana</strong> reaches nearly as many countries, reflecting its national importance.</li>
+    <li><strong>Turkistan</strong> and <strong>Kostanay</strong> serve only a few destinations, often seasonal or niche routes.</li>
+    <li><strong>Reverse fact:</strong> Some countries only connect with Almaty or Astana — leaving regional cities underused.</li>
+    <li>Russia, Turkey, UAE, Georgia, and China are among the most frequently served destinations.</li>
+  </ul>
+
+  <p style="margin-top: 25px;">
+    These patterns reflect both demand-driven routes and geopolitical realities, offering insight for travelers, airlines, and policymakers alike.
+  </p>
+
+  <h3 style="font-size: 24px; margin-top: 45px; color: #222;">Interesting Facts</h3>
+  <ul style="padding-left: 20px; font-size: 17px; color: #444;">
+    <li><strong>Russia</strong> tops the list, with direct flights from Kazakhstan to <strong>11 different Russian cities</strong>.</li>
+    <li><strong>China</strong> and <strong>Turkey</strong> follow with <strong>6</strong> and <strong>5 cities</strong> respectively, reflecting close regional ties.</li>
+    <li><strong>Kyzylorda</strong> and <strong>Oskemen</strong> each serve only <strong>one foreign country</strong>, making them the most specialized.</li>
+    <li><strong>Turkey, Egypt, Russia, and Georgia</strong> are connected to Kazakhstan by <strong>5 or more airports</strong>, proving their popularity and accessibility.</li>
+  </ul>
+
+  <p style="margin-top: 25px; font-style: italic; color: #666;">
+    As air travel continues to recover and expand, these patterns will evolve—potentially opening new routes from emerging Kazakh cities.
+  </p>
+</section>
+
+
+</body>
+</html>
