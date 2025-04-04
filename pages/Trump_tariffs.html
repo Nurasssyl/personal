@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liberation Day Tariffs Choropleth</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://d3js.org/topojson.v3.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    h2 {
+      margin-top: 30px;
+      color: #333;
+    }
+    svg {
+      background: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin: 20px 0;
+    }
+    .legend {
+      font-size: 12px;
+    }
+    .tooltip {
+      position: absolute;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 5px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <h2>Liberation Day Tariffs</h2>
+  <svg id="map" width="960" height="600"></svg>
+  <div class="tooltip" style="display: none;"></div>
+
+  <script>
+    const width = 960;
+    const height = 600;
+
+    const svg = d3.select("#map");
+    const tooltip = d3.select(".tooltip");
+
+    const color = d3.scaleThreshold()
+      .domain([0, 10, 20, 30, 40, 50])
+      .range(["#eee", "#d6e685", "#8cc665", "#44a340", "#1e6823", "#00441b", "#000"]);
+
+    const tariffData = new Map([
+      ["United States of America", -1],
+      ["Austria", 20], ["Belgium", 20], ["Bulgaria", 20], ["Croatia", 20],
+      ["Republic of Cyprus", 20], ["Czechia", 20], ["Denmark", 20],
+      ["Estonia", 20], ["Finland", 20], ["Greenland", 20], ["France", 20], ["Germany", 20],
+      ["Greece", 20], ["Hungary", 20], ["Ireland", 20], ["Italy", 20],
+      ["Latvia", 20], ["Lithuania", 20], ["Luxembourg", 20], ["Malta", 20],
+      ["Netherlands", 20], ["Poland", 20], ["Portugal", 20], ["Romania", 20],
+      ["Slovakia", 20], ["Slovenia", 20], ["Spain", 20], ["Sweden", 20],
+      ["Afghanistan", 10], ["Albania", 10], ["Algeria", 30], ["Andorra", 10], ["Angola", 32], 
+      ["Anguilla", 10], ["Antigua and Barbuda", 10], ["Argentina", 10], ["Armenia", 10], 
+      ["Aruba", 10], ["Australia", 10], ["Azerbaijan", 10], ["The Bahamas", 10], ["Bahrain", 10], 
+      ["Bangladesh", 37], ["Barbados", 10], ["Belize", 10], ["Benin", 10], ["Bermuda", 10], ["Bhutan", 10],
+       ["Bolivia", 10], ["Bosnia and Herz.", 35], ["Botswana", 37], ["Brazil", 10], ["Brunei", 24], 
+       ["Burundi", 10], ["Cambodia", 49], ["Cameroon", 11], ["Central African Rep.", 10], ["Chad", 13], 
+       ["Chile", 10], ["China", 34], ["Colombia", 10], ["Comoros", 10], ["Costa Rica", 10], ["Côte d'Ivoire", 21], 
+       ["Dem. Rep. Congo", 11], ["Dominican Rep.", 10], ["Ecuador", 10], ["Egypt", 10], 
+       ["El Salvador", 10], ["Eq. Guinea", 13], ["Eritrea", 10], ["eSwatini", 10], ["Ethiopia", 10],
+      ["Falkland Islands", 41], ["Fiji", 32], ["Gabon", 10], ["The Gambia", 10], ["Georgia", 10], ["Ghana", 10],
+      ["Grenada", 10], ["Guatemala", 10], ["Mali", 10], ["Guinea", 10], ["Guyana", 38], ["Haiti", 10], ["Honduras", 10],
+      ["Iceland", 10], ["India", 26], ["Indonesia", 32], ["Iran", 10], ["Iraq", 39], ["Israel", 17],
+           ["Jamaica", 10], ["Japan", 24], ["Jordan", 20], ["Kazakhstan", 27], ["Kenya", 10], ["Kuwait", 10],
+["Kyrgyzstan", 10], ["Laos", 48], ["Lebanon", 10], ["Liberia", 10], ["Lesotho", 50], ["Libya", 31], ["Liechtenstein", 37],
+ ["Madagascar", 47], ["Malawi", 17], ["Malaysia", 24], ["Mauritania", 10], ["Mauritius", 40],
+["Moldova", 31], ["Monaco", 10], ["Mongolia", 10], ["Montenegro", 10], ["Morocco", 10],
+ ["Mozambique", 16], ["Myanmar", 44], ["Namibia", 21], ["Nepal", 10], ["New Zealand", 10],
+["Nicaragua", 18], ["Niger", 10], ["Nigeria", 14], ["Macedonia", 33], 
+["Norway", 15], ["Oman", 10], ["Pakistan", 29], ["Panama", 10], ["Papua New Guinea", 10],
+["Paraguay", 10], ["Peru", 10], ["Philippines", 17], ["Qatar", 10], ["Congo", 10], 
+["Rwanda", 10], ["Saint Kitts and Nevis", 10], ["Saint Lucia", 10], ["Guinea-Bissau", 10],  ["Djibouti", 10],
+["Saint Vincent and the Grenadines", 10], ["Samoa", 10], ["San Marino", 10],  ["Gambia", 10],
+ ["Saudi Arabia", 10], ["Senegal", 10], ["Serbia", 37], ["Sierra Leone", 10],
+  ["Singapore", 10], ["South Africa", 30], ["South Korea", 25], ["Kosovo", 10], ["S. Sudan", 10],
+["Sri Lanka", 44], ["Sudan", 10], ["Suriname", 10], ["Switzerland", 31], ["Syria", 41],
+ ["Taiwan", 32], ["Tajikistan", 10], ["Tanzania", 10], ["Thailand", 36], ["Togo", 10], 
+ ["Trinidad and Tobago", 10], ["Tunisia", 28], ["Turkey", 10], ["Turkmenistan", 10], 
+ ["Uganda", 10], ["Ukraine", 10], ["United Arab Emirates", 10], ["United Kingdom", 10],
+  ["Uruguay", 10], ["Uzbekistan", 10], ["Vanuatu", 22], ["Venezuela", 15],
+   ["Vietnam", 46], ["Yemen", 10], ["Zambia", 17], ["Zimbabwe", 18]
+    ]);
+
+    d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(world => {
+      const countries = topojson.feature(world, world.objects.countries);
+      const projection = d3.geoNaturalEarth1().fitSize([width, height], countries);
+      const path = d3.geoPath().projection(projection);
+
+      svg.selectAll("path")
+        .data(countries.features)
+        .join("path")
+        .attr("d", path)
+        .attr("fill", d => {
+          const name = d.properties.name;
+          const val = tariffData.get(name);
+          if (val === -1) return "#ff0000";
+          if (val === undefined) return "#ccc";
+          return color(val);
+        })
+        .attr("stroke", "#333")
+        .on("mouseover", function (event, d) {
+          const name = d.properties.name;
+          const val = tariffData.get(name);
+          tooltip.style("display", "block")
+.style("left", event.pageX + 5 + "px")
+.style("top", event.pageY + 5 + "px")
+.html(`<strong>${name}</strong><br/>Tariff: ${val === undefined ? "No Tariff" : val === -1 ? "United States" : val + "%"}`);
+        })
+        .on("mouseout", () => tooltip.style("display", "none"));
+
+      const legend = svg.append("g").attr("class", "legend").attr("transform", "translate(20, 400)");
+      const legendVals = [0, 10, 20, 30, 40, 50];
+      legendVals.forEach((d, i) => {
+        legend.append("rect")
+          .attr("x", 0)
+          .attr("y", i * 20)
+          .attr("width", 20)
+          .attr("height", 20)
+          .attr("fill", color(d));
+
+        legend.append("text")
+          .attr("x", 25)
+          .attr("y", i * 20 + 15)
+          .text(d + "%");
+      });
+
+      legend.append("rect").attr("x", 0).attr("y", legendVals.length * 20).attr("width", 20).attr("height", 20).attr("fill", "#ff0000");
+      legend.append("text").attr("x", 25).attr("y", legendVals.length * 20 + 15).text("USA");
+
+      legend.append("rect").attr("x", 0).attr("y", (legendVals.length + 1) * 20).attr("width", 20).attr("height", 20).attr("fill", "#ccc");
+      legend.append("text").attr("x", 25).attr("y", (legendVals.length + 1) * 20 + 15).text("No Tariff");
+    });
+  </script>
+</body>
+</html>
