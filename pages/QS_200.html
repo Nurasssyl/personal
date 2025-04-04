@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Top 200 Universities Worldwide</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script src="https://d3js.org/topojson.v3.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    h2 {
+  text-align: left;
+  margin-left: 100px;
+}
+
+    .tooltip {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      display: none;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <h2> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Top 200 Universities Worldwide</h2>
+  <svg id="map200" width="1000" height="650"></svg>
+  <div class="tooltip"></div>
+
+  <script>
+    const data200 = {
+      "United States of America": 38, "United Kingdom": 27, "Australia": 15, "China": 14,
+      "Canada": 11, "Japan": 10, "Germany": 9, "Netherlands": 8, "South Korea": 7,
+      "Sweden": 6, "Switzerland": 6, "France": 5, "Malaysia": 5, "Spain": 4, "Italy": 3,
+      "Denmark": 3, "Singapore": 2, "Austria": 2, "Qatar": 2, "India": 2, "Finland": 2,
+      "Saudi Arabia": 2, "Mexico": 2, "Chile": 2, "Ireland": 2, "Belgium": 2, "Russia": 1,
+      "Brazil": 1, "Argentina": 1, "Norway": 1, "Taiwan": 1, "New Zealand": 1,
+      "Kazakhstan": 1, "South Africa": 1, "Colombia": 1
+    };
+
+    const thresholds = [1, 2, 5, 10, 15, 20, 30, 40];
+    const colors = ["#f0f9ff", "#ccece6", "#99d8c9", "#66c2a4", "#41ae76", "#238b45", "#006d2c", "#00441b"];
+
+    const width = 1000, height = 650;
+    const svg = d3.select("#map200");
+    const tooltip = d3.select(".tooltip");
+
+    const colorScale = d3.scaleThreshold()
+      .domain(thresholds)
+      .range(colors);
+
+    d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(world => {
+      const countries = topojson.feature(world, world.objects.countries);
+      const countriesFiltered = countries.features.filter(d => d.properties.name !== "Antarctica");
+
+      const projection = d3.geoMercator()
+        .scale(140)
+        .translate([width / 2, height / 1.4]);
+
+      const path = d3.geoPath().projection(projection);
+
+      svg.selectAll("path")
+        .data(countriesFiltered)
+        .enter().append("path")
+        .attr("d", path)
+        .attr("fill", d => {
+          const name = d.properties.name;
+          return data200[name] ? colorScale(data200[name]) : "#ccc";
+        })
+        .attr("stroke", "#000")
+        .attr("stroke-width", 0.5)
+        .on("mouseover", (event, d) => {
+          const name = d.properties.name;
+          if (data200[name]) {
+            tooltip.style("display", "block")
+              .html(`${name}: ${data200[name]}`)
+              .style("left", (event.pageX + 10) + "px")
+              .style("top", (event.pageY - 10) + "px");
+          }
+        })
+        .on("mousemove", event => {
+          tooltip.style("left", (event.pageX + 10) + "px")
+                 .style("top", (event.pageY - 10) + "px");
+        })
+        .on("mouseout", () => {
+          tooltip.style("display", "none");
+        });
+
+      // Discrete Legend (bottom left)
+      const legend = svg.append("g")
+        .attr("class", "legend")
+        .attr("transform", `translate(40, ${height - thresholds.length * 25 - 40})`);
+
+      legend.selectAll("rect")
+        .data(thresholds)
+        .enter()
+        .append("rect")
+        .attr("x", 0)
+        .attr("y", (d, i) => i * 25)
+        .attr("width", 20)
+        .attr("height", 20)
+        .attr("fill", (d, i) => colors[i]);
+
+      legend.selectAll("text")
+        .data(thresholds)
+        .enter()
+        .append("text")
+        .attr("x", 30)
+        .attr("y", (d, i) => i * 25 + 15)
+        .text((d, i) => {
+          const start = thresholds[i];
+          const end = thresholds[i + 1] ? thresholds[i + 1] - 1 : "and more";
+          return `${start}–${end}`;
+        })
+        .attr("font-size", "14px")
+        .attr("fill", "#000");
+    });
+  </script>
+</body>
+</html>
