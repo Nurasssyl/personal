@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kazakhstan's Diplomatic Missions Map (SVG D3)</title>
+  
+  
+  <style>
+body {
+  margin: 0;
+  background: white;
+  font-family: sans-serif;
+  overflow: auto;
+}
+
+#map-container {
+  width: 100%;
+  overflow: auto;
+}
+
+svg {
+  width: 100%;
+  height: 600px;
+  display: block;
+}
+
+
+    .legend {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      padding: 10px;
+      line-height: 1.5em;
+      box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    }
+    
+    .legend div {
+      display: flex;
+      align-items: center;
+    }
+    .legend span {
+      width: 1em;
+      height: 1em;
+      margin-right: 6px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+    <h1 style="text-align:center;font-size: 28px;">
+        Kazakhstan's Diplomatic Missions Around the World
+      </h1>
+      
+      
+      <div id="map-container">
+        <svg></svg>
+      </div>
+      <div id="tooltip" style="position:absolute; pointer-events:none; background:white; border:1px solid #ccc; padding:6px 10px; font-size:14px; box-shadow:0 0 5px rgba(0,0,0,0.3); display:none;"></div>
+      
+      
+<div id="map"></div>
+<div class="legend">
+    <div><span style="background:#37474f"></span>Kazakhstan</div>
+    <div><span style="background:#1976d2"></span>Embassy</div>
+    <div><span style="background:#43a047"></span>Consulate (country only)</div>
+    <div><span style="background:#000; border-radius: 50%; width: 10px; height: 10px;"></span>Consulate location (city)</div>
+    <div><span style="background:#ffb300"></span>Accredited from abroad</div>
+    <div><span style="background:#eeeeee; border:1px solid #999"></span>No representation</div>
+  </div>
+  
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://unpkg.com/topojson-client@3"></script>
+<script>
+const width = window.innerWidth;
+const height = window.innerHeight;
+
+const missions = [
+  { country: 'Canada', city: 'Toronto', lat: 43.65107, lon: -79.347015, type: 'consulate' },
+  { country: 'USA', city: 'New York City', lat: 40.712776, lon: -74.005974, type: 'consulate' },
+  { country: 'USA', city: 'San Francisco', lat: 37.774929, lon: -122.419418, type: 'consulate' },
+
+  { country: 'China', city: 'Hong Kong', lat: 22.3193, lon: 114.1694, type: 'consulate' },
+  { country: 'China', city: 'Shanghai', lat: 31.2304, lon: 121.4737, type: 'consulate' },
+  { country: 'China', city: 'Xi\'an', lat: 34.3416, lon: 108.9398, type: 'consulate' },
+  { country: 'China', city: 'Ürümqi', lat: 43.8256, lon: 87.6168, type: 'consulate' },
+
+  { country: 'Iran', city: 'Bandar Abbas', lat: 27.1832, lon: 56.2666, type: 'consulate' },
+  { country: 'Iran', city: 'Gorgan', lat: 36.8456, lon: 54.4436, type: 'consulate' },
+
+  { country: 'Kyrgyzstan', city: 'Osh', lat: 40.5283, lon: 72.7985, type: 'consulate' },
+
+  { country: 'Saudi Arabia', city: 'Jeddah', lat: 21.4858, lon: 39.1925, type: 'consulate' },
+
+  { country: 'South Korea', city: 'Busan', lat: 35.1796, lon: 129.0756, type: 'consulate' },
+
+  { country: 'Turkey', city: 'Antalya', lat: 36.8969, lon: 30.7133, type: 'consulate' },
+  { country: 'Turkey', city: 'Istanbul', lat: 41.0082, lon: 28.9784, type: 'consulate' },
+
+  { country: 'Turkmenistan', city: 'Türkmenbaşy', lat: 40.0220, lon: 52.9556, type: 'consulate' },
+
+  { country: 'United Arab Emirates', city: 'Dubai', lat: 25.276987, lon: 55.296249, type: 'consulate' },
+
+  { country: 'Uzbekistan', city: 'Samarkand', lat: 39.6542, lon: 66.9597, type: 'consulate' },
+
+  { country: 'Belarus', city: 'Brest', lat: 52.0976, lon: 23.7341, type: 'consulate' },
+
+  { country: 'France', city: 'Strasbourg', lat: 48.5734, lon: 7.7521, type: 'consulate' },
+
+  { country: 'Syria', city: 'Damascus', lat: 33.5138, lon: 36.2765, type: 'consulate' },
+
+
+  { country: 'Germany', city: 'Bonn', lat: 50.7374, lon: 7.0982, type: 'consulate' },
+  { country: 'Germany', city: 'Frankfurt', lat: 50.1109, lon: 8.6821, type: 'consulate' },
+  { country: 'Germany', city: 'Munich', lat: 48.1351, lon: 11.5820, type: 'consulate' },
+
+  { country: 'Russia', city: 'Astrakhan', lat: 46.3497, lon: 48.0408, type: 'consulate' },
+  { country: 'Russia', city: 'Kazan', lat: 55.7963, lon: 49.1088, type: 'consulate' },
+  { country: 'Russia', city: 'Omsk', lat: 54.9885, lon: 73.3242, type: 'consulate' },
+  { country: 'Russia', city: 'Saint Petersburg', lat: 59.9343, lon: 30.3351, type: 'consulate' },
+  { country: 'Russia', city: 'Yekaterinburg', lat: 56.8389, lon: 60.6057, type: 'consulate' },
+
+  { country: 'Spain', city: 'Barcelona', lat: 41.3851, lon: 2.1734, type: 'consulate' },
+
+  { country: 'Australia', city: 'Sydney', lat: -33.8688, lon: 151.2093, type: 'consulate' }
+];
+
+
+const statusColors = {
+  'kz': '#37474f',       // тёмно-серый для Казахстана
+  'embassy': '#1976d2',  // насыщенный синий
+  'consulate': '#4caf50',// зелёный
+  'external': '#ffb300', // жёлтый
+  'none': '#eeeeee'      // светло-серый
+};
+
+const countryStatus = {
+  'Kazakhstan': 'kz',
+  'Afghanistan': 'embassy',
+  'Albania': 'embassy',
+  'Algeria': 'embassy',
+  'Andorra': 'external',
+  'Angola': 'external',
+  'Antigua and Barbuda': 'external',
+  'Argentina': 'consulate',
+  'Armenia': 'embassy',
+  'Australia': 'consulate',
+  'Austria': 'embassy',
+  'Azerbaijan': 'embassy',
+  'Bahamas': 'external',
+  'Bahrain': 'consulate',
+  'Bangladesh': 'external',
+  'Barbados': 'external',
+  'Belarus': 'embassy',
+  'Belgium': 'embassy',
+  'Belize': 'external',
+  'Benin': 'external',
+  'Bhutan': 'external',
+  'Bolivia': 'external',
+  'Bosnia and Herzegovina': 'external',
+  'Botswana': 'external',
+  'Brazil': 'embassy',
+  'Brunei': 'external',
+  'Bulgaria': 'embassy',
+  'Burkina Faso': 'external',
+  'Burundi': 'external',
+  'Cambodia': 'external',
+  'Cameroon': 'external',
+  'Canada': 'embassy',
+  'Cape Verde': 'external',
+  'Chad': 'external',
+  'Costa Rica': 'external',
+  'Central African Republic': 'external',
+  'Chile': 'external',
+  'China': 'embassy',
+  'Colombia': 'external',
+  'Comoros': 'external',
+  'Congo': 'external',
+  'Croatia': 'embassy',
+  'Cuba': 'embassy',
+  'Cyprus': 'embassy',
+  'Czech Republic': 'embassy',
+  'Denmark': 'external',
+  'Djibouti': 'external',
+  'Dominica': 'external',
+  'Dominican Republic': 'external',
+  'Ecuador': 'external',
+  'Egypt': 'embassy',
+  'El Salvador': 'external',
+  'Equatorial Guinea': 'external',
+  'Eritrea': 'external',
+  'Estonia': 'embassy',
+  'Swaziland': 'external',
+  'Ethiopia': 'embassy',
+  'Finland': 'embassy',
+  'France': 'embassy',
+  'Gabon': 'external',
+  'Gambia': 'external',
+  'Georgia': 'embassy',
+  'Germany': 'embassy',
+  'Ghana': 'external',
+  'Greece': 'embassy',
+  'Grenada': 'external',
+  'Greenland': 'external',
+  'Guatemala': 'external',
+  'Guinea': 'external',
+  'Guinea Bissau': 'external',
+  'Guyana': 'external',
+  'Haiti': 'external',
+  'Holy See': 'embassy',
+  'Honduras': 'external',
+  'Hungary': 'embassy',
+  'Iceland': 'external',
+  'India': 'embassy',
+  'Indonesia': 'embassy',
+  'Iran': 'embassy',
+  'Iraq': 'external',
+  'Ireland': 'external',
+  'Israel': 'embassy',
+  'Italy': 'embassy',
+  'Ivory Coast': 'external',
+  'Jamaica': 'external',
+  'Japan': 'embassy',
+  'Jordan': 'embassy',
+  'Kenya': 'external',
+  'Kuwait': 'embassy',
+  'Kyrgyzstan': 'embassy',
+  'Laos': 'external',
+  'Latvia': 'embassy',
+  'Lebanon': 'embassy',
+  'Lesotho': 'external',
+  'Liberia': 'external',
+  'Libya': 'external',
+  'Liechtenstein': 'external',
+  'Lithuania': 'embassy',
+  'Luxembourg': 'external',
+  'Madagascar': 'external',
+  'Malawi': 'external',
+  'Malaysia': 'embassy',
+  'Maldives': 'external',
+  'Mali': 'external',
+  'Malta': 'external',
+  'Macedonia': 'embassy',
+  'Mauritania': 'external',
+  'Mauritius': 'external',
+  'Mexico': 'embassy',
+  'Moldova': 'embassy',
+  'Monaco': 'external',
+  'Mongolia': 'embassy',
+  'Montenegro': 'external',
+  'Morocco': 'embassy',
+  'Mozambique': 'external',
+  'Myanmar': 'external',
+  'Namibia': 'external',
+  'Nepal': 'external',
+  'Netherlands': 'embassy',
+  'New Zealand': 'external',
+  'Nicaragua': 'external',
+  'Niger': 'external',
+  'Nigeria': 'external',
+  'North Korea': 'external',
+  'Norway': 'embassy',
+  'Oman': 'embassy',
+  'Pakistan': 'embassy',
+  'Palestine': 'external',
+  'Panama': 'external',
+  'Paraguay': 'external',
+  'Peru': 'external',
+  'Philippines': 'external',
+  'Poland': 'embassy',
+  'Portugal': 'embassy',
+  'Puerto Rico': 'embassy',
+  'Qatar': 'embassy',
+  'Republic of the Congo': 'external',
+  'Republic of Serbia': 'embassy',
+  'Romania': 'embassy',
+  'Russia': 'embassy',
+  'Rwanda': 'external',
+  'Saint Kitts and Nevis': 'external',
+  'Saint Lucia': 'external',
+  'Saint Vincent and the Grenadines': 'external',
+  'San Marino': 'external',
+  'Sao Tome and Principe': 'external',
+  'Saudi Arabia': 'embassy',
+  'Senegal': 'external',
+  'Seychelles': 'external',
+  'Sierra Leone': 'external',
+  'Singapore': 'embassy',
+  'Slovakia': 'embassy',
+  'Slovenia': 'embassy',
+  'Somalia': 'external',
+  'Somaliland': 'external',
+  'South Africa': 'embassy',
+  'South Korea': 'embassy',
+  'South Sudan': 'external',
+  'Spain': 'embassy',
+  'Sri Lanka': 'external',
+  'Sudan': 'external',
+  'Suriname': 'external',
+  'Sweden': 'embassy',
+  'Switzerland': 'embassy',
+  'Syria': 'consulate',
+  'Taiwan': 'embassy',
+  'Tajikistan': 'embassy',
+  'Tanzania': 'external',
+  'Thailand': 'embassy',
+  'The Bahamas': 'external',
+  'Timor-Leste': 'external',
+  'Togo': 'external',
+  'Trinidad and Tobago': 'external',
+  'Tunisia': 'external',
+  'Turkey': 'embassy',
+  'Turkmenistan': 'embassy',
+  'Uganda': 'external',
+  'Ukraine': 'embassy',
+  'United Arab Emirates': 'embassy',
+  'England': 'embassy',
+  'United Republic of Tanzania': 'external',
+  'USA': 'embassy',
+  'Uruguay': 'external',
+  'Uzbekistan': 'embassy',
+  'Venezuela': 'external',
+  'Vietnam': 'embassy',
+  'West Bank': 'external',
+  'Western Sahara': 'embassy',
+  'Yemen': 'external',
+  'Zambia': 'external',
+  'Zimbabwe': 'external'
+};
+
+
+
+
+const projection = d3.geoNaturalEarth1().scale(210).translate([width / 2, height / 2]);
+const path = d3.geoPath().projection(projection);
+const svg = d3.select("svg");
+
+
+svg.append("g")
+  .attr("id", "countries");
+  const astanaCoords = projection([71.4304, 51.1285]); // [lon, lat]
+svg.append("text")
+  .attr("x", astanaCoords[0])
+  .attr("y", astanaCoords[1])
+  .attr("font-size", "7px")
+  .attr("text-anchor", "middle")
+  .attr("dominant-baseline", "central")
+  .text("❤️");
+
+
+  const accreditationMap = {
+  // Обслуживаются из Egypt
+  'Tunisia': 'Egypt',
+  'Libya': 'Egypt',
+  'Mauritania': 'Egypt',
+  'Sudan': 'Egypt',
+  'Chad': 'Egypt',
+  'Nigeria': 'Egypt',
+  'Mali': 'Egypt',
+  'Niger': 'Egypt',
+  'Senegal': 'Egypt',
+  'Burkina Faso': 'Egypt',
+
+  // Из Ethiopia
+  'Djibouti': 'Ethiopia',
+  'Kenya': 'Ethiopia',
+  'Uganda': 'Ethiopia',
+  'Congo': 'Ethiopia',
+  'Republic of the Congo': 'Ethiopia',
+  'Somalia': 'Ethiopia',
+  'Burundi': 'Ethiopia',
+  'Equatorial Guinea': 'Ethiopia',
+  'Central African Republic': 'Ethiopia',
+  'Cameroon': 'Ethiopia',
+  'Rwanda': 'Ethiopia',
+  'Sao Tome and Principe': 'Ethiopia',
+  'Benin': 'Ethiopia',
+  'Togo': 'Ethiopia',
+  'Gabon': 'Ethiopia',
+  'Ivory Coast': 'Ethiopia',
+  'Cape Verde': 'Ethiopia',
+  'Liberia': 'Ethiopia',
+  'Ghana': 'Ethiopia',
+  'Guinea': 'Ethiopia',
+  'Gambia': 'Ethiopia',
+  'Guinea-Bissau': 'Ethiopia',
+  'Sierra Leone': 'Ethiopia',
+  'South Sudan': 'Ethiopia',
+  'Eritrea': 'Ethiopia',
+  'Somaliland': 'Ethiopia',
+
+  // Из South Africa
+  'Angola': 'South Africa',
+  'Mozambique': 'South Africa',
+  'Namibia': 'South Africa',
+  'Swaziland': 'South Africa',
+  'Lesotho': 'South Africa',
+  'Botswana': 'South Africa',
+  'Malawi': 'South Africa',
+  'Mauritius': 'South Africa',
+  'United Republic of Tanzania': 'South Africa',
+  'Zambia': 'South Africa',
+  'Zimbabwe': 'South Africa',
+  'Madagascar': 'South Africa',
+  'Seychelles': 'South Africa',
+  'Comoros': 'South Africa',
+
+  // Из Oman
+  'Yemen': 'Oman',
+
+  // Из Brazil
+  'Bolivia': 'Brazil',
+  'Venezuela': 'Brazil',
+  'Colombia': 'Brazil',
+  'Paraguay': 'Brazil',
+  'Peru': 'Brazil',
+  'Uruguay': 'Brazil',
+  'Chile': 'Brazil',
+  'Ecuador': 'Brazil',
+
+  'Antigua and Barbuda': 'Mexico',
+  'Bahamas': 'Mexico',
+  'Barbados': 'Mexico',
+  'Belize': 'Mexico',
+  'Costa Rica': 'Mexico',
+  'Dominica': 'Mexico',
+  'Dominican Republic': 'Mexico',
+  'El Salvador': 'Mexico',
+  'Guatemala': 'Mexico',
+  'Guyana': 'Mexico',
+  'Grenada': 'Mexico',
+  'Haiti': 'Mexico',
+  'Honduras': 'Mexico',
+  'Jamaica': 'Mexico',
+  'Nicaragua': 'Mexico',
+  'Panama': 'Mexico',
+  'Saint Kitts and Nevis': 'Mexico',
+  'Saint Lucia': 'Mexico',
+  'Saint Vincent and the Grenadines': 'Mexico',
+  'Trinidad and Tobago': 'Mexico',
+
+  'North Korea': 'China',
+
+  'Bangladesh': 'India',
+  'Bhutan': 'India',
+  'Maldives': 'India',
+  'Nepal': 'India',
+  'Sri Lanka': 'India',
+
+  'East Timor': 'Indonesia',
+  'Philippines': 'Indonesia',
+
+  'Cyprus': 'Israel',
+  'Iraq': 'Jordan',
+  'Palestine': 'Jordan',
+
+  'Brunei': 'Malaysia',
+  'Bahrain': 'Saudi Arabia',
+
+  'Australia': 'Singapore',
+  'New Zealand': 'Singapore',
+
+  'Myanmar': 'Thailand',
+
+  'Cambodia': 'Vietnam',
+  'Laos': 'Vietnam',
+
+  'Luxembourg': 'Belgium',
+  'Bosnia and Herzegovina': 'Croatia',
+  'Montenegro': 'Croatia',
+
+  'Monaco': 'France',
+
+  'Malta': 'Italy',
+  'San Marino': 'Italy',
+
+  'Andorra': 'Spain',
+  'Denmark': 'Sweden',
+  'Liechtenstein': 'Switzerland',
+  'Iceland': 'England',
+  'Ireland': 'England'
+
+
+};
+
+
+fetch("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
+  .then(res => res.json())
+  .then(data => {
+    svg.select("#countries")
+      .selectAll("path")
+      .data(data.features)
+      .join("path")
+      .attr("d", path)
+      .attr("fill", d => statusColors[countryStatus[d.properties.name] || 'none'])
+      .attr("stroke", "#999")
+      .attr("stroke-width", 0.5)
+      .on("mouseover", function(event, d) {
+        const name = d.properties.name;
+        const status = countryStatus[name] || 'none';
+        const accreditedFrom = accreditationMap[name];
+
+        const text = `<strong>${name}</strong><br>Status: ${status}` +
+                     (status === 'external' && accreditedFrom ? `<br>Accredited from: ${accreditedFrom}` : '');
+
+        d3.select("#tooltip")
+          .style("display", "block")
+          .html(text);
+      })
+      .on("mousemove", function(event) {
+        d3.select("#tooltip")
+          .style("left", (event.pageX + 10) + "px")
+          .style("top", (event.pageY - 28) + "px");
+      })
+      .on("mouseout", function() {
+        d3.select("#tooltip").style("display", "none");
+      });
+
+
+    // ⬇️ Добавляем круги для консульств
+    svg.selectAll("circle")
+      .data(missions)
+      .enter()
+      .append("circle")
+      .attr("cx", d => projection([d.lon, d.lat])[0])
+      .attr("cy", d => projection([d.lon, d.lat])[1])
+      .attr("r", 2)
+      .attr("fill", "#000")
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 0.3)
+      .append("title")
+      .text(d => `${d.city}, ${d.country}`);
+  });
+
+</script>
+</body>
+</html>
