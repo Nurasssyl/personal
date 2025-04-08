@@ -87,7 +87,7 @@
       "Kyzylorda": [65.51, 44.85],
       "Kostanay": [63.62, 53.21],
       "Turkistan": [68.27, 43.30],
-      "Karaganda": [73.11, 49.80],
+      "Qaragandy": [73.11, 49.80],
       "Oskemen": [82.61, 49.97],
       "Irkutsk": [104.28, 52.28],
       "Krasnoyarsk": [92.87, 56.01],
@@ -232,6 +232,7 @@
 { from: "Astana", to: "Goa", to_country: "India" },
 { from: "Astana", to: "Dushanbe", to_country: "Tajikistan" },
 { from: "Astana", to: "Tashkent", to_country: "Uzbekistan" },
+{ from: "Astana", to: "Samarkand", to_country: "Uzbekistan" },
 { from: "Astana", to: "Bishkek", to_country: "Kyrgyzstan" },
 { from: "Astana", to: "Urumqi", to_country: "China" },
 { from: "Astana", to: "Beijing", to_country: "China" },
@@ -282,9 +283,9 @@
 { from: "Turkistan", to: "Dubai", to_country: "United Arab Emirates" },
 { from: "Turkistan", to: "Abu Dhabi", to_country: "United Arab Emirates" },
 { from: "Turkistan", to: "Samarkand", to_country: "Uzbekistan" },
-{ from: "Karaganda", to: "Moscow", to_country: "Russia" },
-{ from: "Karaganda", to: "Istanbul", to_country: "Turkey" },
-{ from: "Karaganda", to: "Antalya", to_country: "Turkey" },
+{ from: "Qaragandy", to: "Moscow", to_country: "Russia" },
+{ from: "Qaragandy", to: "Istanbul", to_country: "Turkey" },
+{ from: "Qaragandy", to: "Antalya", to_country: "Turkey" },
 { from: "Oskemen", to: "Novosibirsk", to_country: "Russia" }
     ];
 
@@ -324,14 +325,45 @@
           tooltip.style("opacity", 0);
         });
 
-      Object.entries(cities).forEach(([city, coords]) => {
-        const [x, y] = projection(coords);
-        svg.append("circle")
-          .attr("class", "city")
-          .attr("cx", x)
-          .attr("cy", y)
-          .attr("r", 3);
-      });
+        // Словарь: to_city → список from-городов
+const arrivalMap = {};
+
+flights.forEach(({ from, to }) => {
+  if (!arrivalMap[to]) {
+    arrivalMap[to] = new Set();
+  }
+  arrivalMap[to].add(from);
+});
+
+
+
+Object.entries(cities).forEach(([city, coords]) => {
+  const [x, y] = projection(coords);
+  const isArrival = arrivalMap[city]; // есть ли этот город как пункт назначения
+  const fromCities = isArrival ? Array.from(arrivalMap[city]).join(', ') : null;
+
+  svg.append("circle")
+    .attr("class", "city")
+    .attr("cx", x)
+    .attr("cy", y)
+    .attr("r", 3)
+    .on("mouseover", function () {
+      let html = `<strong>${city}</strong>`;
+      if (fromCities) {
+        html += `<br><span style="color: #888;">Flights from: ${fromCities}</span>`;
+      }
+      tooltip.style("opacity", 1).html(html);
+    })
+    .on("mousemove", function (event) {
+      tooltip.style("left", (event.pageX + 10) + "px")
+             .style("top", (event.pageY - 20) + "px");
+    })
+    .on("mouseout", function () {
+      tooltip.style("opacity", 0);
+    });
+});
+
+
 
       flights.forEach(({ from, to }) => {
         const fromCoords = projection(cities[from]);
@@ -349,46 +381,46 @@
     });
   </script>
 
-<section style="max-width: 900px; margin: 60px auto; padding: 0 20px; font-family: 'Segoe UI', sans-serif; line-height: 1.7; color: #333;">
-  <h2 style="text-align: center; font-size: 34px; font-weight: 600; margin-bottom: 20px; color: #111;">
-    ✈️ Overview of Direct International Flights from Kazakhstan
+<section style="max-width: 900px; margin: 60px auto; padding: 0 20px; font-family: 'Segoe UI', system-ui, sans-serif; color: #333;">
+  <h2 style="text-align: center; font-size: 36px; font-weight: 600; margin-bottom: 20px; color: #1a237e;">
+    <span style="font-size: 32px;">🛫</span> Overview of Direct International Flights from Kazakhstan
   </h2>
 
-  <p style="font-size: 18px; color: #555; text-align: center; max-width: 750px; margin: 0 auto 30px;">
-    Kazakhstan currently has <strong>12 international airports</strong> offering direct flights abroad. These routes connect the country to <strong>31 different countries</strong> across Europe, Asia, and the Middle East—highlighting Kazakhstan’s growing role in regional air travel.
+  <p style="font-size: 18px; color: #444; text-align: center; max-width: 740px; margin: 0 auto 32px;">
+    Kazakhstan currently operates <strong>12 international airports</strong>, offering direct connections to <strong>31 countries</strong> across Europe, Asia, and the Middle East — highlighting the country's growing air transit significance in the region.
   </p>
 
-  <h3 style="font-size: 24px; margin-top: 40px; color: #222;">Top Airports by Connectivity</h3>
-  <p>
-    Among all the airports, <strong>Almaty</strong> leads by the number of international cities it connects with, followed closely by <strong>Astana</strong>. These two major hubs serve as Kazakhstan’s gateways to the world.
-    Regional airports such as <strong>Shymkent</strong>, <strong>Atyrau</strong>, and <strong>Aktau</strong> also contribute to the international network by providing access to strategic destinations.
+  <h3 style="font-size: 22px; margin-top: 40px; margin-bottom: 12px; color: #111;">Top Airports by Connectivity</h3>
+  <p style="font-size: 17px; line-height: 1.6;">
+    Among all the airports, <strong>Almaty</strong> leads in the number of direct international routes, followed closely by <strong>Astana</strong>. These two hubs serve as Kazakhstan’s global gateways. Other cities like <strong>Shymkent</strong>, <strong>Atyrau</strong>, and <strong>Aktau</strong> also contribute notably to international air traffic.
   </p>
 
-  <h3 style="font-size: 24px; margin-top: 35px; color: #222;">Analytical Highlights</h3>
-  <ul style="padding-left: 20px; font-size: 17px; color: #444;">
-    <li><strong>Almaty</strong> offers the most international routes by city count.</li>
-    <li><strong>Astana</strong> reaches nearly as many countries, reflecting its national importance.</li>
-    <li><strong>Turkistan</strong> and <strong>Kostanay</strong> serve only a few destinations, often seasonal or niche routes.</li>
-    <li><strong>Reverse fact:</strong> Some countries only connect with Almaty or Astana — leaving regional cities underused.</li>
-    <li>Russia, Turkey, UAE, Georgia, and China are among the most frequently served destinations.</li>
+  <h3 style="font-size: 22px; margin-top: 35px; margin-bottom: 12px; color: #111;">Analytical Highlights</h3>
+  <ul style="padding-left: 20px; font-size: 17px; color: #444; line-height: 1.8;">
+    <li><strong>Almaty</strong> offers the widest range of international destinations.</li>
+    <li><strong>Astana</strong> nearly matches Almaty in country coverage, reflecting its capital status.</li>
+    <li><strong>Turkistan</strong> and <strong>Kostanay</strong> are more limited, often operating seasonal or regional flights.</li>
+    <li><strong>Reverse insight:</strong> Many countries are only connected to <strong>Almaty</strong> or <strong>Astana</strong>, underutilizing other regional airports.</li>
+    <li><strong>Top destinations</strong> include Russia, Turkey, UAE, Georgia, and China — driven by tourism, labor, and business ties.</li>
   </ul>
 
-  <p style="margin-top: 25px;">
-    These patterns reflect both demand-driven routes and geopolitical realities, offering insight for travelers, airlines, and policymakers alike.
+  <p style="margin-top: 28px; font-size: 17px; color: #555;">
+    These patterns reflect both demand and strategic priorities — offering a data-driven lens for travelers, planners, and policymakers.
   </p>
 
-  <h3 style="font-size: 24px; margin-top: 45px; color: #222;">Interesting Facts</h3>
-  <ul style="padding-left: 20px; font-size: 17px; color: #444;">
-    <li><strong>Russia</strong> tops the list, with direct flights from Kazakhstan to <strong>11 different Russian cities</strong>.</li>
-    <li><strong>China</strong> and <strong>Turkey</strong> follow with <strong>6</strong> and <strong>5 cities</strong> respectively, reflecting close regional ties.</li>
-    <li><strong>Kyzylorda</strong> and <strong>Oskemen</strong> each serve only <strong>one foreign country</strong>, making them the most specialized.</li>
-    <li><strong>Turkey, Egypt, Russia, and Georgia</strong> are connected to Kazakhstan by <strong>5 or more airports</strong>, proving their popularity and accessibility.</li>
+  <h3 style="font-size: 22px; margin-top: 45px; margin-bottom: 12px; color: #111;">Interesting Facts</h3>
+  <ul style="padding-left: 20px; font-size: 17px; color: #444; line-height: 1.8;">
+    <li><strong>Russia</strong> leads with flights to <strong>11 different cities</strong> — by far the most extensive network.</li>
+    <li><strong>China</strong> and <strong>Turkey</strong> follow with <strong>6</strong> and <strong>5 city connections</strong>, respectively.</li>
+    <li><strong>Kyzylorda</strong> and <strong>Oskemen</strong> each have routes to only <strong>one country</strong>, showing their niche role.</li>
+    <li><strong>Turkey, Egypt, Russia, and Georgia</strong> are accessible from <strong>5 or more airports</strong> within Kazakhstan.</li>
   </ul>
 
-  <p style="margin-top: 25px; font-style: italic; color: #666;">
-    As air travel continues to recover and expand, these patterns will evolve—potentially opening new routes from emerging Kazakh cities.
+  <p style="margin-top: 28px; font-style: italic; font-size: 16px; color: #666; text-align: center;">
+    ✈️ As global air travel recovers, Kazakhstan's regional hubs may unlock new international routes and partnerships.
   </p>
 </section>
+
 
 
 </body>
