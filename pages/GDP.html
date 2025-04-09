@@ -62,7 +62,12 @@
 <body>
     <h2>GDP per Capita vs. Population Density in Kazakhstan</h2>
 
-    <div class="text-container">
+    
+
+    <div class="chart-container">
+        <canvas id="scatterChart"></canvas>
+    </div>
+<div class="text-container">
         <p>
             The economic development and population density of Kazakhstan's regions vary significantly, as clearly illustrated in this chart. 
             The use of a logarithmic scale allows for an accurate representation of a broad range of values, from densely populated metropolitan areas to sparsely inhabited regions.
@@ -88,11 +93,6 @@
             The concentration of economic activity in select locations poses challenges for sustainable development, necessitating strategic planning in infrastructure and regional policies.
         </p>
     </div>
-
-    <div class="chart-container">
-        <canvas id="scatterChart"></canvas>
-    </div>
-
     <script>
         const ctx = document.getElementById('scatterChart').getContext('2d');
         
