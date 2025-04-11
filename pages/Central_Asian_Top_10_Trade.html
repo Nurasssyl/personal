@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TOP-10 Partners of Central Asian Countries</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    svg {
+      width: 100vw;
+      height: 100vh;
+    }
+    h1 {
+      position: absolute;
+      top: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 24px;
+      z-index: 10;
+    }
+    .node circle { stroke: #fff; stroke-width: 1.5px; }
+    .node text { pointer-events: none; font-size: 14px; font-weight: bold; }
+    .link { stroke: #aaa; stroke-opacity: 0.6; }
+  </style>
+</head>
+<body>
+  <h1>TOP-10 Partners of Central Asian Countries</h1>
+<svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid meet"></svg>
+<script>
+const nodes = [
+  { id: "Kazakhstan", group: "CA" },
+  { id: "Uzbekistan", group: "CA" },
+  { id: "Kyrgyzstan", group: "CA" },
+  { id: "Turkmenistan", group: "CA" },
+  { id: "Tajikistan", group: "CA" },
+  { id: "China", group: "Partner", size: 70.3 },
+  { id: "Russia", group: "Partner", size: 42.4 },
+  { id: "UK", group: "Partner", size: 17.5 },
+  { id: "Turkey", group: "Partner", size: 15.7 },
+  { id: "Italy", group: "Partner", size: 6.2 },
+  { id: "France", group: "Partner", size: 4.7 },
+  { id: "Switzerland", group: "Partner", size: 12.7 },
+  { id: "Japan", group: "Partner", size: 2.4 },
+  { id: "USA", group: "Partner", size: 3.3 },
+  { id: "South Korea", group: "Partner", size: 2.94 },
+  { id: "India", group: "Partner", size: 0.84 },
+  { id: "UAE", group: "Partner", size: 1.68 },
+  { id: "Germany", group: "Partner", size: 2.08 },
+  { id: "Afghanistan", group: "Partner", size: 0.77 },
+  { id: "Greece", group: "Partner", size: 1.03 }
+];
+
+const links = [
+  // Kazakhstan (10)
+  { source: "Kazakhstan", target: "China", value: 33.9 },
+  { source: "Kazakhstan", target: "Russia", value: 25.9 },
+  { source: "Kazakhstan", target: "UK", value: 14.8 },
+  { source: "Kazakhstan", target: "Turkey", value: 7.81 },
+  { source: "Kazakhstan", target: "Italy", value: 5.75 },
+  { source: "Kazakhstan", target: "France", value: 4.68 },
+  { source: "Kazakhstan", target: "Uzbekistan", value: 4.41 },
+  { source: "Kazakhstan", target: "Switzerland", value: 3.8 },
+  { source: "Kazakhstan", target: "Japan", value: 2.17 },
+  { source: "Kazakhstan", target: "USA", value: 2.86 },
+  // Uzbekistan (10)
+  { source: "Uzbekistan", target: "China", value: 13.92 },
+  { source: "Uzbekistan", target: "Russia", value: 9.56 },
+  { source: "Uzbekistan", target: "Kazakhstan", value: 4.41 },
+  { source: "Uzbekistan", target: "South Korea", value: 2.39 },
+  { source: "Uzbekistan", target: "Turkey", value: 3.35 },
+  { source: "Uzbekistan", target: "Switzerland", value: 8.18 },
+  { source: "Uzbekistan", target: "UK", value: 2.65 },
+  { source: "Uzbekistan", target: "Germany", value: 1.16 },
+  { source: "Uzbekistan", target: "India", value: 0.78 },
+  { source: "Uzbekistan", target: "Afghanistan", value: 0.77 },
+  // Kyrgyzstan (10)
+  { source: "Kyrgyzstan", target: "China", value: 7.94 },
+  { source: "Kyrgyzstan", target: "Russia", value: 2.93 },
+  { source: "Kyrgyzstan", target: "Kazakhstan", value: 1.65 },
+  { source: "Kyrgyzstan", target: "Turkey", value: 1.33 },
+  { source: "Kyrgyzstan", target: "Uzbekistan", value: 1.05 },
+  { source: "Kyrgyzstan", target: "UAE", value: 0.42 },
+  { source: "Kyrgyzstan", target: "Germany", value: 0.62 },
+  { source: "Kyrgyzstan", target: "USA", value: 0.41 },
+  { source: "Kyrgyzstan", target: "South Korea", value: 0.55 },
+  { source: "Kyrgyzstan", target: "India", value: 0.1 },
+  // Turkmenistan (10)
+  { source: "Turkmenistan", target: "China", value: 10.59 },
+  { source: "Turkmenistan", target: "Turkey", value: 2.67 },
+  { source: "Turkmenistan", target: "UAE", value: 0.998 },
+  { source: "Turkmenistan", target: "Uzbekistan", value: 1.12 },
+  { source: "Turkmenistan", target: "Greece", value: 1.03 },
+  { source: "Turkmenistan", target: "Kazakhstan", value: 0.397 },
+  { source: "Turkmenistan", target: "Germany", value: 0.215 },
+  { source: "Turkmenistan", target: "Italy", value: 0.35 },
+  { source: "Turkmenistan", target: "Russia", value: 0.9 },
+  { source: "Turkmenistan", target: "India", value: 0.25 },
+  // Tajikistan (10)
+  { source: "Tajikistan", target: "China", value: 3.93 },
+  { source: "Tajikistan", target: "Kazakhstan", value: 1.13 },
+  { source: "Tajikistan", target: "Switzerland", value: 0.683 },
+  { source: "Tajikistan", target: "Uzbekistan", value: 0.631 },
+  { source: "Tajikistan", target: "Turkey", value: 0.529 },
+  { source: "Tajikistan", target: "UAE", value: 0.267 },
+  { source: "Tajikistan", target: "Italy", value: 0.133 },
+  { source: "Tajikistan", target: "Germany", value: 0.087 },
+  { source: "Tajikistan", target: "India", value: 0.07 },
+  { source: "Tajikistan", target: "Russia", value: 0.1 }
+];
+
+const width = 1200;
+const height = 800;
+
+const svg = d3.select("svg");
+
+const simulation = d3.forceSimulation(nodes)
+  .force("link", d3.forceLink(links).id(d => d.id).distance(200))
+  .force("charge", d3.forceManyBody().strength(-500))
+  .force("center", d3.forceCenter(width / 2, height / 2));
+
+const link = svg.append("g")
+  .selectAll("line")
+  .data(links)
+  .join("line")
+  .attr("class", "link")
+  .attr("stroke-width", d => Math.sqrt(d.value));
+
+const node = svg.append("g")
+  .selectAll("g")
+  .data(nodes)
+  .join("g")
+  .attr("class", "node")
+  .call(d3.drag()
+    .on("start", (event, d) => {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x; d.fy = d.y;
+    })
+    .on("drag", (event, d) => {
+      d.fx = event.x; d.fy = event.y;
+    })
+    .on("end", (event, d) => {
+      if (!event.active) simulation.alphaTarget(0);
+      d.fx = null; d.fy = null;
+    })
+  );
+
+node.append("circle")
+  .attr("r", d => d.size ? d.size / 1.5 : 24)
+  .attr("fill", d => d.group === "CA" ? "#1f77b4" : "#ff7f0e");
+
+node.append("text")
+  .attr("dy", 4)
+  .attr("text-anchor", "middle")
+  .text(d => d.id);
+
+simulation.on("tick", () => {
+  link
+    .attr("x1", d => d.source.x)
+    .attr("y1", d => d.source.y)
+    .attr("x2", d => d.target.x)
+    .attr("y2", d => d.target.y);
+
+  node.attr("transform", d => `translate(${d.x},${d.y})`);
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
