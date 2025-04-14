@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Visa Requirements for Kazakhstan Citizens</title>
+  <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
+</head>
+<body>
+  <div id="container" style="width: 100%; height: 90vh;"></div>
+
+  <script>
+    Highcharts.mapChart('container', {
+      chart: {
+        map: 'custom/world'
+      },
+
+      title: {
+        text: 'Visa Requirements for Kazakhstan Citizens'
+      },
+
+      legend: {
+        title: {
+          text: 'Entry Category',
+          style: { color: 'black' }
+        }
+      },
+
+      colorAxis: {
+        dataClasses: [{
+          from: 0, to: 0, color: '#4CC14C', name: 'Visa-free'
+        }, {
+          from: 1, to: 1, color: '#FFD447', name: 'Visa on arrival'
+        }, {
+          from: 2, to: 2, color: '#FFA552', name: 'eVisa'
+        }, {
+          from: 3, to: 3, color: '#8EA3E6', name: 'eVisa + On arrival'
+        }, {
+          from: 4, to: 4, color: '#B0B0B0', name: 'Visa required'
+        }]
+      },
+      tooltip: {
+  formatter: function () {
+    const stay = this.point.stay || '—';
+    const note = this.point.note ? `<br><b>Note:</b> ${this.point.note}` : '';
+    const categories = {
+      0: 'Visa-free',
+      1: 'Visa on arrival',
+      2: 'eVisa',
+      3: 'eVisa + On arrival',
+      4: 'Visa required',
+      5: 'Kazakhstan'
+    };
+    return `<b>${this.point.name}</b><br>` +
+           `<b>Category:</b> ${categories[this.point.value]}<br>` +
+           `<b>Allowed stay:</b> ${stay}${note}`;
+  }
+},
+
+      series: [{
+        data: [
+        { 'hc-key': 'kz', value: 5, stay: 'Unlimited', note: 'Atameken' },
+  { 'hc-key': 'al', value: 0, stay: '90 days', note: '' },
+  { 'hc-key': 'ag', value: 0, stay: '180 days', note: '' },
+  { 'hc-key': 'ar', value: 0, stay: '30 days', note: '' },
+  { 'hc-key': 'am', value: 0, stay: '180 days', note: '180 days during 1 year' },
+  { 'hc-key': 'au', value: 2, stay: '—', note: 'Online visa required, Online Visitor e600 visa' },
+  { 'hc-key': 'bh', value: 3, stay: 'Up to 90 days', note: 'Single & multiple entry; available both online and on arrival' },
+  { 'hc-key': 'bd', value: 1, stay: '30 days', note: 'Visitors can apply to extend their stay when in the country' },
+  { 'hc-key': 'by', value: 0, stay: '90 days', note: '90 days within any 180 days' },
+  { 'hc-key': 'bo', value: 3, stay: '30 days', note: 'Online or on arrival' },
+  { 'hc-key': 'bz', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'bj', value: 2, stay: '30 days', note: '' },
+  { 'hc-key': 'dz', value: 4, stay: '', note: '' }, 
+{ 'hc-key': 'ao', value: 4, stay: '', note: '' },  
+  { 'hc-key': 'bt', value: 2, stay: '—', note: 'Pre-approved visa can be picked up on arrival. Visitors are required to book with a registered tour operator in Bhutan.' },
+  { 'hc-key': 'bw', value: 2, stay: '3 months', note: '' },
+  { 'hc-key': 'br', value: 0, stay: '30 days', note: '' },
+  { 'hc-key': 'bn', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'bg', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'bf', value: 2, stay: '—', note: '' },
+  { 'hc-key': 'br', value: 0, stay: '30 days', note: '' },
+  { 'hc-key': 'bi', value: 1, stay: '1 month', note: 'Passengers holding an entry authorisation letter from the authorities may obtain a visa on arrival for a maximum stay of 1 month' },
+  { 'hc-key': 'kh', value: 3, stay: '30 days', note: '' },
+  { 'hc-key': 'cm', value: 2, stay: '—', note: 'Pre-arranged visa can be picked up on arrival' },
+  { 'hc-key': 'ca', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'cv', value: 1, stay: '—', note: '' },
+  { 'hc-key': 'cf', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'td', value: 4, stay: '—', note: 'Visitors holding an entry authorisation letter can pick up a visa on arrival.' },
+  { 'hc-key': 'cl', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'cn', value: 0, stay: '30 days', note: ' 90 days within any 180-day period' },
+  { 'hc-key': 'co', value: 0, stay: '90 days', note: '90 days - extendable up to 180-days stay within a 1-year period' },
+  { 'hc-key': 'km', value: 1, stay: '45 days', note: '' },
+  { 'hc-key': 'cg', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'cd', value: 2, stay: '7 days', note: '' },
+  { 'hc-key': 'cr', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'ci', value: 2, stay: '3 months', note: 'e-Visa holders must arrive via Port Bouet Airport' },
+  { 'hc-key': 'hr', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'cu', value: 4, stay: '90 days', note: 'Tourist card required, Can be extended up to 90 days with a fee' },
+  { 'hc-key': 'cy', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'cz', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'dk', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'dj', value: 2, stay: '90 days', note: '' },
+  { 'hc-key': 'dm', value: 0, stay: '21 days', note: '' },
+  { 'hc-key': 'do', value: 0, stay: '90 days', note: '' },
+  { 'hc-key': 'ec', value: 0, stay: '90 days', note: 'Extension of stay is possible' },
+  { 'hc-key': 'eg', value: 2, stay: '30 days', note: '30 days on arrival' },
+  { 'hc-key': 'sv', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'gq', value: 2, stay: '—', note: '' },
+  { 'hc-key': 'er', value: 4, stay: '—', note: 'Pre-arranged visa can be picked up on arrival' },
+  { 'hc-key': 'ee', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'sz', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'et', value: 2, stay: '90 days', note: 'e-Visa holders must arrive via Addis Ababa Bole International Airport' },
+  { 'hc-key': 'fj', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'fi', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'fr', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'ga', value: 2, stay: '90 days', note: 'e-Visa holders must arrive via Libreville International Airport' },
+  { 'hc-key': 'gm', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'ge', value: 0, stay: '1 year', note: '' },
+  { 'hc-key': 'de', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'gh', value: 4, stay: '—', note: 'Pre-arranged emergency visa can be picked up on arrival' },
+  { 'hc-key': 'gr', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'gd', value: 4, stay: '—', note: 'Holders of a pre-clearance letter may collect visa upon arrival' },
+  { 'hc-key': 'gt', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'gn', value: 2, stay: '90 days', note: '' },
+  { 'hc-key': 'gw', value: 1, stay: '90 days', note: '' },
+  { 'hc-key': 'gy', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'ht', value: 0, stay: '3 months', note: '' },
+  { 'hc-key': 'hn', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'hu', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'is', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'in', value: 2, stay: '30 days', note: '' },
+  { 'hc-key': 'id', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'ir', value: 0, stay: '14 days', note: '' },
+  { 'hc-key': 'iq', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'ie', value: 4, stay: '—', note: 'Visa-free regime for holders of a British category "C" visa until the expiration of this visa' },
+  { 'hc-key': 'il', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'it', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'jm', value: 1, stay: '—', note: 'Visa cancellation for holders of valid visas issued by Canada, the United States, the United Kingdom or the member States of the Schengen area' },
+  { 'hc-key': 'jp', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'jo', value: 3, stay: '3 months', note: '' },
+  { 'hc-key': 'ke', value: 0, stay: '90 days', note: 'Electronic Travel Authorization, Applications can be submitted no later than 90 days before the trip, and must be submitted at least 3 days before the start of the trip, with an ETA of $32.50' },
+  { 'hc-key': 'ki', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'kp', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'kr', value: 0, stay: '30 days', note: 'Electronic Travel Authorization, 60 days within any 180-day period, The validity period of a K-ETA is 3 years from the date of approval' },
+  { 'hc-key': 'kw', value: 4, stay: '—', note: 'Pre-arranged visa can be picked up on arrival' },
+  { 'hc-key': 'kg', value: 0, stay: '90 days', note: '90 days within any 180-day period' },
+  { 'hc-key': 'la', value: 3, stay: '30 days', note: 'Only 14/31 checkpoints accept eVisa/VoA. Airports: LPQ, PKZ, VTE. Bridges: 3 eVisa, 4 VoA. Boten: eVisa. Extendable +60 days in Vientiane' },
+  { 'hc-key': 'lv', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'lb', value: 1, stay: '30 days', note: 'Free visa on arrival, Can be extended stay for 2 additional months, Holders of passports containing an Israeli stamp or visa will be refused entry in Lebanon.' },
+  { 'hc-key': 'ls', value: 2, stay: '—', note: '' },
+  { 'hc-key': 'lr', value: 4, stay: '—', note: 'Pre-arranged visa can be picked up on arrival' },
+  { 'hc-key': 'ly', value: 2, stay: '—', note: '' },
+  { 'hc-key': 'li', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'lt', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'lu', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'mg', value: 1, stay: '60 days', note: '' },
+  { 'hc-key': 'mw', value: 2, stay: '90 days', note: '' },
+  { 'hc-key': 'my', value: 0, stay: '30 days', note: '' },
+  { 'hc-key': 'mv', value: 0, stay: '30 days', note: '' },
+  { 'hc-key': 'ml', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'mt', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'mh', value: 1, stay: '90 days', note: '' },
+  { 'hc-key': 'mr', value: 1, stay: '—', note: 'Available at Nouakchott–Oumtounsy International Airport' },
+  { 'hc-key': 'mu', value: 1, stay: '60 days', note: '' },
+  { 'hc-key': 'mx', value: 4, stay: '—', note: 'US visa or green card holders, Schengen C-visa holders exempted from visa for up to 180 days' },
+  { 'hc-key': 'fm', value: 0, stay: '30 days', note: 'Extension of stay is possible' },
+  { 'hc-key': 'md', value: 0, stay: '90 days', note: '90 days within any 180 day period' },
+  { 'hc-key': 'mc', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'mn', value: 0, stay: '90 days', note: '' },
+  { 'hc-key': 'me', value: 0, stay: '30 days', note: 'visa-free for up to 30 days between March 1 and December 31, 2025' },
+  { 'hc-key': 'ma', value: 0, stay: '30 days', note: '' },
+  { 'hc-key': 'mz', value: 3, stay: '30 days', note: 'Available at Beira, Nampula, Maputo, Pemba, Tete and Vilankulo airports, Extension of stay for 30 days is possible.' },
+  { 'hc-key': 'mm', value: 2, stay: '28 days', note: 'e-Visa holders must arrive via Yangon, Nay Pyi Taw or Mandalay airports or via land border crossings with Thailand — Tachileik, Myawaddy and Kawthaung or India — Rih Khaw Dar and Tamu' },
+  { 'hc-key': 'na', value: 0, stay: '3 months', note: '90 days within any 180-day period' },
+  { 'hc-key': 'nr', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'np', value: 3, stay: '90 days', note: 'Online or on arrival, Extension of stay is possible of up to 150 days' },
+  { 'hc-key': 'nl', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'nz', value: 4, stay: '—', note: 'Australian permanent residents can get a New Zealand Resident Visa on arrival for indefinite stay, with an ETA and character check' },
+  { 'hc-key': 'ni', value: 0, stay: '30 days', note: 'Tourist card must be obtained on arrival, subject to a fee. Extension of stay is possible for additional 30 days for a fee.' },
+  { 'hc-key': 'ne', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'ng', value: 2, stay: '90 days', note: '' },
+  { 'hc-key': 'mk', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'no', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'om', value: 0, stay: '30 days', note: '' },
+  { 'hc-key': 'pk', value: 2, stay: '90 days', note: '' },
+  { 'hc-key': 'pw', value: 1, stay: '30 days', note: 'Free visa on arrival' },
+  { 'hc-key': 'pa', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'pg', value: 2, stay: '60 days', note: 'Visitors may apply for a visa online under the "Tourist - Own Itinerary" category' },
+  { 'hc-key': 'py', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'pe', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'ph', value: 0, stay: '30 days', note: 'Extension of stay is only possible for those who obtained a visa on arrival, to a maximum of 1 year' },
+  { 'hc-key': 'pl', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'pt', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'qa', value: 0, stay: '30 days', note: '' },
+  { 'hc-key': 'ro', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'ru', value: 0, stay: '90 days', note: '90 days within one calendar year period' },
+  { 'hc-key': 'rw', value: 3, stay: '30 days', note: 'A visa on arrival is available for 30 days. Can also be entered on an East Africa Tourist Visa issued by Kenya or Uganda.' },
+  { 'hc-key': 'kn', value: 0, stay: '90 days', note: '' },
+  { 'hc-key': 'lc', value: 4, stay: '3 months', note: 'Cruise ship passengers visiting for one day are exempted from obtaining a visa' },
+  { 'hc-key': 'vc', value: 0, stay: '3 months', note: '' },
+  { 'hc-key': 'ws', value: 0, stay: '60 days', note: '' },
+  { 'hc-key': 'sm', value: 0, stay: '30 days', note: 'Officially, a visa is not required, but a de facto Schengen visa is needed, since San Marino does not have its own airport' },
+  { 'hc-key': 'st', value: 2, stay: '—', note: '' },
+  { 'hc-key': 'sa', value: 3, stay: '90 days', note: '' },
+  { 'hc-key': 'sn', value: 1, stay: '—', note: '' },
+  { 'hc-key': 'rs', value: 0, stay: '30 days', note: 'Must register with police within 24h of arrival' },
+  { 'hc-key': 'sc', value: 0, stay: '30 days', note: '' },
+  { 'hc-key': 'sl', value: 2, stay: '3 months', note: '' },
+  { 'hc-key': 'sg', value: 4, stay: '—', note: 'Visa free for 96 hours in case of transit to/from 3rd countries' },
+  { 'hc-key': 'sk', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'si', value: 4, stay: '—', note: '' },
+  { 'hc-key': 'sb', value: 4, stay: '—', note: 'Pre-arranged visa can be picked up on arrival' },
+  { 'hc-key': 'so', value: 1, stay: '30 days', note: 'Available at Bosaso Airport, Galcaio Airport and Mogadishu Airport' },
+  { 'hc-key': 'af', value: 4, stay: '', note: '' },
+  { 'hc-key': 'at', value: 4, stay: '', note: '' },
+  { 'hc-key': 'az', value: 0, stay: '90 days', note: '90 days within any 180-day period' },
+  { 'hc-key': 'ba', value: 4, stay: '', note: '' },
+  { 'hc-key': 'bb', value: 0, stay: '28 days', note: '' },
+  { 'hc-key': 'be', value: 4, stay: '', note: '' },
+  { 'hc-key': 'ch', value: 4, stay: '', note: '' },
+  { 'hc-key': 'es', value: 4, stay: '', note: '' },
+  { 'hc-key': 'gb', value: 4, stay: '', note: '' },
+  { 'hc-key': 'gl', value: 4, stay: '', note: '' },
+  { 'hc-key': 'lk', value: 3, stay: '60/30 days', note: 'eVisa or on arrival, Standard visa: 60 days in 6 months. Fees: $35 (SAARC), $75 (others) + $18.50 eVisa fee. Transit (≤2 days) via Sri Lankan airports — no eVisa needed' },
+  { 'hc-key': 'sd', value: 4, stay: '', note: '' },
+  { 'hc-key': 'se', value: 4, stay: '', note: '' },
+  { 'hc-key': 'sr', value: 0, stay: '90 days', note: 'An entrance fee of USD 50 or EUR 50 must be paid online prior to arrival' },
+  { 'hc-key': 'ss', value: 2, stay: '', note: 'eVisa' },
+  { 'hc-key': 'sy', value: 2, stay: '', note: 'eVisa, By law, a visa is required before arrival — but per IATA, Visa on Arrival is available for 15 days' },
+  { 'hc-key': 'tg', value: 2, stay: '15 days', note: '' },
+  { 'hc-key': 'th', value: 0, stay: '60 days', note: '' },
+  { 'hc-key': 'tj', value: 0, stay: 'Unlimited', note: '' },
+  { 'hc-key': 'tl', value: 1, stay: '30 days', note: 'Visa on arrival is only available at Presidente Nicolau Lobato Airport or Dili Sea Port. Stay can be extended up to 90 days' },
+  { 'hc-key': 'tm', value: 4, stay: '', note: '' },
+  { 'hc-key': 'tw', value: 4, stay: '', note: '' },
+  { 'hc-key': 'tn', value: 0, stay: '90 days', note: '' },
+  { 'hc-key': 'to', value: 4, stay: '', note: '' },
+  { 'hc-key': 'xk', value: 4, stay: '', note: '' },
+  { 'hc-key': 'tr', value: 0, stay: '90 days', note: '90 days within any 180 day period' },
+  { 'hc-key': 'tt', value: 4, stay: '', note: '' },
+  { 'hc-key': 'tv', value: 1, stay: '1 month', note: '' },
+  { 'hc-key': 'tz', value: 3, stay: '', note: 'eVisa or on arrival' },
+  { 'hc-key': 'ua', value: 0, stay: '90 days', note: '90 days within any 180 day period' },
+  { 'hc-key': 'ug', value: 2, stay: '3 months', note: 'Can also be entered on an East Africa Tourist Visa issued by Kenya or Rwanda' },
+  { 'hc-key': 'us', value: 4, stay: '', note: '' },
+  { 'hc-key': 'uy', value: 4, stay: '', note: '' },
+  { 'hc-key': 'uz', value: 0, stay: 'Unlimited', note: '' },
+  { 'hc-key': 've', value: 4, stay: '', note: '' },
+  { 'hc-key': 'vn', value: 0, stay: '30 days', note: '90 calendar days every six months' },
+  { 'hc-key': 'vu', value: 4, stay: '', note: '' },
+  { 'hc-key': 'xk', value: 4, stay: '', note: '' },
+  { 'hc-key': 'ye', value: 4, stay: '', note: '' },
+  { 'hc-key': 'za', value: 4, stay: '', note: '' },
+  { 'hc-key': 'zm', value: 3, stay: '90 days', note: 'Business: max 30 days/year. Tourism: 90 days/year. Also eligible for universal visa to Zimbabwe' },
+  { 'hc-key': 'zw', value: 1, stay: '30 days', note: 'Tourism: extendable up to 90 days. Business: visa on arrival for up to 30 days. Also eligible for universal visa to Zambia.' }
+
+      ],
+        name: 'Visa Access',
+        borderWidth: 0.3,
+        borderColor: '#E0E0E0',
+        states: {
+          hover: {
+            color: '#BADA55'
+          }
+        },
+        dataLabels: {
+          enabled: false
+        }
+      }]
+    });
+  </script>
+</body>
+</html>
+
