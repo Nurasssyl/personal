@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Visa Policy of Kazakhstan</title>
+  <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
+</head>
+<body>
+  <div id="container" style="width: 100%; height: 90vh;"></div>
+
+  <script>
+    Highcharts.mapChart('container', {
+      chart: {
+        map: 'custom/world'
+      },
+      title: {
+        text: 'Visa Policy of Kazakhstan'
+      },
+      legend: {
+        title: {
+          text: 'Visa Requirement',
+          style: { color: 'black' }
+        }
+      },
+      colorAxis: {
+        dataClasses: [{
+          from: 0, to: 0, color: '#00B050', name: 'Visa not required (90 days)'
+        }, {
+          from: 1, to: 1, color: '#92D050', name: 'Visa not required (30 days)'
+        }, {
+          from: 2, to: 2, color: '#FFFF00', name: 'Visa not required (14 days)'
+        }, {
+          from: 3, to: 3, color: '#D9D9D9', name: 'Visa required'
+        }, {
+          from: 4, to: 4, color: '#4472C4', name: 'Kazakhstan'
+        }]
+      },
+      tooltip: {
+        formatter: function () {
+          const stay = this.point.stay || '—';
+          const note = this.point.note ? `<br><b>Note:</b> ${this.point.note}` : '';
+          const categories = {
+            0: 'Visa not required (90 days)',
+            1: 'Visa not required (30 days)',
+            2: 'Visa not required (14 days)',
+            3: 'Visa required',
+            4: 'Atameken❤️'
+          };
+          return `<b>${this.point.name}</b><br>` +
+                 `<b>Category:</b> ${categories[this.point.value]}<br>` +
+                 `${note}`;
+        }
+      },
+      series: [{
+        
+        data: [
+        { 'hc-key': 'kz', value: 4, stay: 'Unlimited🤗', note: '' },
+        { 'hc-key': 'al', value: 0, stay: '90 days', note: '' },
+{ 'hc-key': 'ad', value: 0, stay: '90 days', note: '' },
+{ 'hc-key': 'am', value: 0, stay: '90 days', note: '' },
+{ 'hc-key': 'by', value: 0, stay: '90 days', note: '' },
+{ 'hc-key': 'ge', value: 0, stay: '90 days', note: '' },
+{ 'hc-key': 'kg', value: 0, stay: '90 days', note: '' },
+{ 'hc-key': 'md', value: 0, stay: '90 days', note: '' },
+{ 'hc-key': 'mn', value: 0, stay: '90 days', note: '' },
+{ 'hc-key': 'ru', value: 0, stay: '90 days', note: '' },
+{ 'hc-key': 'ua', value: 0, stay: '90 days', note: '' },
+{ 'hc-key': 'ar', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'az', value: 0, stay: '90 days', note: '' },
+{ 'hc-key': 'br', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'cn', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'ec', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'mv', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'ma', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'ni', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'sm', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'rs', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'sc', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'kr', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'tj', value: 0, stay: '90 days', note: '' },
+{ 'hc-key': 'tr', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'ae', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'uz', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'vn', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'au', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'bh', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'ca', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'cl', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'co', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'is', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'id', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'il', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'jp', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'kw', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'li', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'my', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'mx', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'mc', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'nz', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'no', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'om', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'ph', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'qa', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'sa', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'sg', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'ch', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'th', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'gb', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'us', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'va', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'at', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'be', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'bg', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'hr', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'cy', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'cz', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'dk', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'ee', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'fi', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'fr', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'de', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'gr', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'hu', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'ie', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'it', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'lv', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'lt', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'lu', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'mt', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'nl', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'pl', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'pt', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'ro', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'sk', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'si', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'es', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'se', value: 1, stay: '30 days', note: '' },
+{ 'hc-key': 'hk', value: 2, stay: '14 days', note: '' },
+{ 'hc-key': 'in', value: 2, stay: '14 days', note: '' },
+{ 'hc-key': 'ir', value: 2, stay: '14 days', note: '' },
+{ 'hc-key': 'mo', value: 2, stay: '14 days', note: '' },
+{ 'hc-key': 'gl', value: 1, stay: '30 days', note: '' }, 
+{ 'hc-key': 'xk', value: 3, stay: '—', note: 'Not recognized' }, 
+{ 'hc-key': 'tw', value: 3, stay: '—', note: 'Considered part of China' } 
+
+
+
+
+
+
+        ],
+        name: 'Visa Access',
+        borderWidth: 0.3,
+        borderColor: '#E0E0E0',
+        states: {
+          hover: {
+            color: '#BADA55'
+          }
+        },
+        dataLabels: {
+          enabled: false
+        }
+      }]
+    });
+
+    const existingKeys = visaData.map(entry => entry['hc-key']);
+
+Highcharts.maps['custom/world'].features.forEach(function (feature) {
+  const key = feature.properties['hc-key'];
+  if (!existingKeys.includes(key)) {
+    visaData.push({ 'hc-key': key, value: 3, stay: '—', note: '' });
+  }
+});
+
+  </script>
+</body>
+</html>
