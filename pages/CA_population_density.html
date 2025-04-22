@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Central Asia Population Concentration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <style>
+    html, body, #map {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    h1#title {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: sans-serif;
+      font-size: 22px;
+      font-weight: bold;
+      z-index: 1000;
+      background: white;
+      padding: 6px 12px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    #counter {
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: sans-serif;
+      font-size: 16px;
+      z-index: 1000;
+      background: white;
+      padding: 4px 10px;
+      border-radius: 6px;
+      box-shadow: 0 0 4px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1 id="title">Districts where 50% of the population lives</h1>
+  <div id="counter"></div>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map', {
+      center: [41.3, 69.3],
+      zoom: 6,
+      zoomControl: true,
+      attributionControl: false
+    });
+
+    const highlightDistricts = new Set([
+      "Büzmeýin", "Namangan", "Izboskan", "Toshloq", "Andijon",
+      "Zangiota", "Buvayda", "Biškek", "Osh", "Bostandyk", "Buloqboshi", "Rudaki", "Paxtaobod", "Uychi",
+       "Aktobe", "Samarqand", "Quva", "Dänew", "Karaganda", "Medeu", "Alatau"
+      , "Zhetysu", "Almaly", "Nauryzbay", "Turksib", "Auezov", "Almaty", "Baykonyr", "Saryarka"
+      ,"Turan", "Al-Farabi", "Enbekshi", "Sayram", "Karatau", "Farg'ona", "Oqdaryo", "Kosonsoy", "Chinoz", "Aktau", "Dasoguz", "Turkestan", "Ust-Kamenogorsk"
+      , "Taldykorgan", "Bagtyýarlyk", "Köpetdag", "Berkararlyk", "Kyzylorda", "Taraz", "Furqat", "Atyrau", "Ishtixon", "Ghafurov", "Angor", "Denov", "Qibray", "Oltiariq"
+      , "TashkentCity", "Narpay", "Vobkent", "Urgut", "Urganch", "Xonqa", "Shovot", "Kara-Suu", "Pastdarg'om", "Pavlodar", "Xiva", "Uralsk"
+      , "Kokshetau", "Gurlan", "Jomboy", "Oltinsoy", "Karasay",  "Kasbi",  "Qiziriq",  "Vose",  "Shahrixon",  "Semey",  "Bostandyk", 
+      "G'ijduvon",  "Beshariq",  "Tursunzoda",  "Yangiariq",   "Chust",  "Yuqorichirchiq",  "Qarshi",  "Uzgen", "Kattaqo'rg'on", "Yozyovon", "Yangibozor", "Kostanay", "Türkmenabat",
+      "Nura_AST", "Esil_AST", "Abay_SHY",
+    ]);
+
+    const highlightColor = '#e31a1c';
+
+    fetch("central_asia_adm2_combined.geojson")
+      .then(res => res.json())
+      .then(geoData => {
+        fetch("central_asia_population_sorted.json")
+          .then(res => res.json())
+          .then(popData => {
+            let total = 0;
+
+            const layer = L.geoJSON(geoData, {
+              style: feature => {
+                const district = feature.properties.ADM2_EN || feature.properties.NAME_2;
+                const isHighlight = highlightDistricts.has(district);
+                return {
+                  color: '#444',
+                  weight: 0.5,
+                  fillColor: isHighlight ? highlightColor : '#ccc',
+                  fillOpacity: isHighlight ? 0.85 : 0.35
+                };
+              },
+              onEachFeature: (feature, layer) => {
+                const name = feature.properties.ADM2_EN || feature.properties.NAME_2 || "undefined";
+                const region = feature.properties.ADM1_EN || feature.properties.NAME_1 || "undefined";
+                const country = feature.properties.GID_0;
+                const pop = popData[name];
+                if (highlightDistricts.has(name) && pop) total += pop;
+
+                const label = pop ? `${name}: ${pop.toLocaleString()} people` : name;
+                layer.bindPopup(`${label} (${region}, ${country})`);
+              }
+            });
+
+            layer.addTo(map);
+            document.getElementById('counter').innerText = `🟥 Population in these districts: ${total.toLocaleString()} people`;
+          });
+      });
+  </script>
+</body>
+</html>
