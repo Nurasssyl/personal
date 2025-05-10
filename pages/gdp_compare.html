@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GDP Map Compared to Kazakhstan</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/topojson@3"></script>
+  <style>
+    body { margin: 0; font-family: sans-serif; }
+    svg { width: 100%; height: 100vh; }
+    h1 {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 18px;
+      background: white;
+      padding: 5px 15px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    }
+    .tooltip {
+      position: absolute;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 6px 10px;
+      pointer-events: none;
+      font-size: 14px;
+      border-radius: 4px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+  </style>
+</head>
+<body>
+<h1>🟡 Kazakhstan | 🔵 Higher GDP | 🔴 Lower GDP</h1> <br><br><br><br>
+<div class="tooltip" id="tooltip"></div>
+<svg></svg>
+
+<script>
+const kazakhstanGDP = 300.5; // in USD billions
+
+
+const gdpData = {
+    "USA": 30507.2,
+  "China": 19231.7,
+  "Germany": 4744.8,
+  "India": 4187.0,
+  "Japan": 4186.4,
+  "England": 3839.2,
+  "France": 3211.3,
+  "Italy": 2422.9,
+  "Canada": 2225.3,
+  "Brazil": 2126.0,
+  "Russia": 2076.4,
+  "Spain": 1799.5,
+  "South Korea": 1790.3,
+  "Australia": 1771.7,
+  "Mexico": 1692.6,
+  "Turkey": 1437.4,
+  "Indonesia": 1429.7,
+  "Netherlands": 1272.0,
+  "Saudi Arabia": 1083.7,
+  "Poland": 980.0,
+  "Switzerland": 947.1,
+  "Taiwan": 804.9,
+  "Belgium": 684.9,
+  "Argentina": 683.5,
+  "Sweden": 620.3,
+  "Ireland": 598.8,
+  "Israel": 583.4,
+  "Singapore": 564.8,
+  "United Arab Emirates": 548.6,
+  "Thailand": 546.2,
+  "Austria": 534.3,
+  "Norway": 504.3,
+  "Philippines": 497.5,
+  "Vietnam": 491.0,
+  "Bangladesh": 467.2,
+  "Denmark": 449.9,
+  "Malaysia": 445.0,
+  "Colombia": 427.8,
+  "Hong Kong": 424.0,
+  "South Africa": 410.3,
+  "Romania": 403.4,
+  "Czech Republic": 360.2,
+  "Egypt": 347.3,
+  "Chile": 343.8,
+  "Iran": 341.0,
+  "Pakistan": 338.4,       // из 2023
+  "Portugal": 321.4,
+  "Finland": 303.9,
+  "Peru": 303.3,
+  "Kazakhstan": 300.5,
+  "Algeria": 268.9,
+  "Greece": 267.3,
+  "Iraq": 258.0,
+  "New Zealand": 248.7,
+  "Hungary": 237.1,
+  "Qatar": 222.8,
+  "Ukraine": 205.7,
+  "Nigeria": 188.3,
+  "Morocco": 165.8,
+  "Western Sahara": 165.8,
+  "Kuwait": 153.1,
+  "Cuba": 147.2,            // из 2022
+  "Slovakia": 147.0,
+  "Uzbekistan": 132.5,
+  "Kenya": 131.7,
+  "Dominican Republic": 127.8,
+  "Ecuador": 125.7,
+  "Puerto Rico": 122.5,
+  "Guatemala": 121.2,
+  "Ethiopia": 117.5,
+  "Bulgaria": 117.0,
+  "Angola": 113.3,
+  "Venezuela": 108.5,
+  "Oman": 104.4,
+  "Costa Rica": 102.6,
+  "Croatia": 99.0,
+  "Luxembourg": 96.6,
+  "Ivory Coast": 94.5,
+  "Republic of Serbia": 92.5,
+  "Panama": 91.7,
+  "Lithuania": 89.2,
+  "Turkmenistan": 89.1,
+  "Ghana": 88.3,
+  "United Republic of Tanzania": 86.0,
+  "Sri Lanka": 84.4,         // из 2023
+  "Uruguay": 79.7,
+  "Democratic Republic of the Congo": 79.1,
+  "Azerbaijan": 78.9,
+  "Slovenia": 75.2,
+  "Belarus": 71.6,
+  "Myanmar": 64.9,
+  "Uganda": 64.3,
+  "Bolivia": 56.3,
+  "Tunisia": 56.3,
+  "Jordan": 56.1,
+  "Cameroon": 56.0,
+  "Macau": 53.4,
+  "Cambodia": 49.8,
+  "Bahrain": 47.8,
+  "Libya": 47.5,
+  "Nepal": 46.1,
+  "Latvia": 45.5,
+  "Paraguay": 45.5,
+  "Estonia": 45.0,
+  "Cyprus": 38.7,
+  "Honduras": 38.2,
+  "Zimbabwe": 38.2,
+  "El Salvador": 36.7,
+  "Georgia": 35.4,
+  "Iceland": 35.3,
+  "Senegal": 34.7,
+  "Haiti": 33.5,
+  "Papua New Guinea": 32.8,
+  "Sudan": 31.6,
+  "Guinea": 30.1,
+  "Zambia": 28.9,
+  "Bosnia and Herzegovina": 28.8,
+  "Albania": 28.4,
+  "Burkina Faso": 27.1,
+  "Trinidad and Tobago": 26.5,
+  "Armenia": 26.3,
+  "Guyana": 25.8,
+  "Mongolia": 25.8,
+  "Malta": 25.8,
+  "Mozambique": 23.8,
+  "Mali": 23.1,
+  "Benin": 22.2,
+  "Niger": 21.9,
+  "Jamaica": 21.4,
+  "Nicaragua": 21.2,
+  "Gabon": 20.4,
+  "Kyrgyzstan": 19.5,
+  "Moldova": 19.5,
+  "Botswana": 19.4,
+  "Chad": 18.8,
+  "Madagascar": 18.7,
+  "Palestine": 18.6,
+  "Syria": 9.0,
+  "Lebanon": 17.9,
+  "Macedonia": 17.9,
+  "Yemen": 17.4,
+  "Laos": 16.3,
+  "Brunei": 16.0,
+  "Mauritius": 15.5,
+  "Republic of the Congo": 15.3,
+  "Bahamas": 15.2,
+  "North Korea": 15,
+  "Tajikistan": 14.8,
+  "Rwanda": 14.8,
+  "Afghanistan": 14.5,
+  "Namibia": 14.2,
+  "Malawi": 14.0,
+  "Somalia": 13.0,
+  "Somaliland": 13.0,
+  "Equatorial Guinea": 12.7,
+  "Mauritania": 11.5,
+  "Kosovo": 11.3,
+  "Togo": 10.0,
+  "New Caledonia": 9.6,
+  "Monaco": 8.8,
+  "Montenegro": 8.6,
+  "Sierra Leone": 8.4,
+  "Bermuda": 7.8,
+  "Barbados": 7.6,
+  "Maldives": 7.5,
+  "Liechtenstein": 7.4,
+  "Burundi": 6.7,
+  "Cayman Islands": 6.6,
+  "Fiji": 6.3,
+  "French Polynesia": 5.8,
+  "Swaziland": 5.5,
+  "Liberia": 5.2,
+  "Djibouti": 4.6,
+  "Suriname": 4.5,
+  "Aruba": 4.1,
+  "Andorra": 4.0,
+  "South Sudan": 4.0,
+  "Belize": 3.6,
+  "Bhutan": 3.4,
+  "Curaçao": 3.1,
+  "Central African Republic": 2.9,
+  "Greenland": 3.3,
+  "Cape Verde": 2.8,
+  "Gambia": 2.8,
+  "Saint Lucia": 2.6,
+  "Lesotho": 2.4,
+  "Eritrea": 2.4,
+  "Antigua and Barbuda": 2.4,
+  "Zanzibar": 2.4,
+  "Guinea Bissau": 2.3,
+  "Seychelles": 2.2,
+  "Timor-Leste": 2.1,
+  "San Marino": 2.0,
+  "Solomon Islands": 1.7,
+  "Sint Maarten": 1.6,
+  "Comoros": 1.5,
+  "Grenada": 1.5,
+  "Turks and Caicos Islands": 1.4,
+  "Vanuatu": 1.3,
+  "Saint Vincent and the Grenadines": 1.2,
+  "Samoa": 1.2,
+  "Saint Kitts and Nevis": 1.1,
+  "São Tomé and Príncipe": 0.9,
+  "Dominica": 0.7,
+  "Tonga": 0.6,
+  "Micronesia": 0.5,
+  "Palau": 0.3,
+  "Kiribati": 0.3,
+  "Marshall Islands": 0.3,
+  "Nauru": 0.2,
+  "Tuvalu": 0.07
+};
+
+// Получаем ранги по убыванию ВВП
+const sortedCountries = Object.entries(gdpData)
+  .sort((a, b) => b[1] - a[1])
+  .map((entry, i) => ({ name: entry[0], rank: i + 1 }));
+const gdpRanks = Object.fromEntries(sortedCountries.map(d => [d.name, d.rank]));
+
+const colorScale = (country) => {
+  const gdp = gdpData[country];
+  if (gdp === undefined) return '#ccc';
+  if (country === "Kazakhstan") return '#FFD700';
+  return gdp > kazakhstanGDP ? '#1f77b4' : '#d62728';
+};
+
+const svg = d3.select("svg");
+const projection = d3.geoNaturalEarth1();
+const path = d3.geoPath().projection(projection);
+const tooltip = d3.select("#tooltip");
+
+Promise.all([
+  d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
+]).then(([worldData]) => {
+  const countries = topojson.feature(worldData, worldData.objects.countries);
+
+  d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then(function(geoData) {
+    svg.append("g")
+      .selectAll("path")
+      .data(geoData.features)
+      .join("path")
+      .attr("d", path)
+      .attr("fill", d => colorScale(d.properties.name))
+      .attr("stroke", "#333")
+      .attr("stroke-width", 0.3)
+      .on("mouseover", function(event, d) {
+        const name = d.properties.name;
+        const gdp = gdpData[name];
+        const rank = gdpRanks[name];
+        if (gdp !== undefined) {
+          const ratio = gdp > kazakhstanGDP
+            ? (gdp / kazakhstanGDP).toFixed(1) + " more than Kazakhstan"
+            : (kazakhstanGDP / gdp).toFixed(1) + " less than Kazakhstan";
+          tooltip.style("opacity", 1)
+                 .html(`<strong>${name}</strong><br>GDP: $${gdp}B<br>${ratio}<br>Rank: #${rank}`);
+        } else {
+          tooltip.style("opacity", 1)
+                 .html(`<strong>${name}</strong><br>GDP: unknown`);
+        }
+      })
+      .on("mousemove", function(event) {
+        tooltip.style("left", (event.pageX + 15) + "px")
+               .style("top", (event.pageY + 15) + "px");
+      })
+      .on("mouseout", function() {
+        tooltip.style("opacity", 0);
+      });
+  });
+});
+</script>
+</body>
+</html>
