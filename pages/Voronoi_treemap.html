@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>UTC Voronoi Treemap</title>
+  <style>
+    #chartdiv {
+      width: 100%;
+      height: 100vh;
+    }
+  </style>
+  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/hierarchy.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+</head>
+<body>
+  <div id="chartdiv"></div>
+
+  <script>
+    am5.ready(function() {
+
+      var root = am5.Root.new("chartdiv");
+
+      root.setThemes([
+        am5themes_Animated.new(root)
+      ]);
+
+      var series = root.container.children.push(
+        am5hierarchy.VoronoiTreemap.new(root, {
+          singleBranchOnly: false,
+          downDepth: 1,
+          initialDepth: 1,
+          valueField: "value",
+          categoryField: "name",
+          childDataField: "children",
+          paddingTop: 0,
+          paddingBottom: 0,
+          paddingLeft: 0,
+          paddingRight: 0
+        })
+      );
+
+      series.labels.template.setAll({
+        fontSize: 12,
+        fill: am5.color(0xffffff),
+        text: "{name}"
+      });
+
+      series.slices.template.setAll({
+        tooltipText: "{name}: {value}",
+        stroke: am5.color(0xffffff),
+        strokeWidth: 1
+      });
+
+      var data = {
+        name: "UTC Offsets",
+        children: [
+          { name: "UTC+0", value: 308506120 },
+          { name: "UTC+1", value: 892026176 },
+          { name: "UTC+10", value: 35741054.15 },
+          { name: "UTC+11", value: 5299510.87 },
+          { name: "UTC+12", value: 6964710.72 },
+          { name: "UTC+13", value: 343772.19 },
+          { name: "UTC+14", value: 11663.60 },
+          { name: "UTC+2", value: 626085687 },
+          { name: "UTC+3", value: 664213882.56 },
+          { name: "UTC+4", value: 175590522 },
+          { name: "UTC+5", value: 1816265370.02 },
+          { name: "UTC+6", value: 275902863.46 },
+          { name: "UTC+7", value: 430327495 },
+          { name: "UTC+8", value: 1676225211.74 },
+          { name: "UTC+9", value: 219231926.66 },
+          { name: "UTC-1", value: 835522.10 },
+          { name: "UTC-10", value: 1895253.41 },
+          { name: "UTC-11", value: 45096 },
+          { name: "UTC-12", value: 0 },
+          { name: "UTC-2", value: 3052.78 },
+          { name: "UTC-3", value: 254918555 },
+          { name: "UTC-4", value: 76201381.22 },
+          { name: "UTC-5", value: 350697894 },
+          { name: "UTC-6", value: 265473008 },
+          { name: "UTC-7", value: 42219868 },
+          { name: "UTC-8", value: 66084708 },
+          { name: "UTC-9", value: 847003 }
+        ]
+      };
+
+      series.data.setAll([data]);
+
+    }); // end am5.ready()
+  </script>
+</body>
+</html>
