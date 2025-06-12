@@ -1,93 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>UTC Voronoi Treemap</title>
   <style>
-    #chartdiv {
-      width: 100%;
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+    svg {
+      width: 100vw;
       height: 100vh;
     }
+    text {
+      font-size: 10px;
+      fill: white;
+      pointer-events: none;
+    }
   </style>
-  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-  <script src="https://cdn.amcharts.com/lib/5/hierarchy.js"></script>
-  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 </head>
 <body>
-  <div id="chartdiv"></div>
+  <svg></svg>
 
-  <script>
-    am5.ready(function() {
+  <script type="module">
+    import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+    import { voronoiTreemap } from "https://cdn.jsdelivr.net/npm/d3-voronoi-treemap@1.2.0/+esm";
 
-      var root = am5.Root.new("chartdiv");
+    const data = [
+      { name: "UTC+0", value: 308506120 },
+      { name: "UTC+1", value: 892026176 },
+      { name: "UTC+10", value: 35741054.15 },
+      { name: "UTC+11", value: 5299510.87 },
+      { name: "UTC+12", value: 6964710.72 },
+      { name: "UTC+13", value: 343772.19 },
+      { name: "UTC+14", value: 11663.60 },
+      { name: "UTC+2", value: 626085687 },
+      { name: "UTC+3", value: 664213882.56 },
+      { name: "UTC+4", value: 175590522 },
+      { name: "UTC+5", value: 1816265370.02 },
+      { name: "UTC+6", value: 275902863.46 },
+      { name: "UTC+7", value: 430327495 },
+      { name: "UTC+8", value: 1676225211.74 },
+      { name: "UTC+9", value: 219231926.66 },
+      { name: "UTC-1", value: 835522.10 },
+      { name: "UTC-10", value: 1895253.41 },
+      { name: "UTC-11", value: 45096 },
+      { name: "UTC-12", value: 0 },
+      { name: "UTC-2", value: 3052.78 },
+      { name: "UTC-3", value: 254918555 },
+      { name: "UTC-4", value: 76201381.22 },
+      { name: "UTC-5", value: 350697894 },
+      { name: "UTC-6", value: 265473008 },
+      { name: "UTC-7", value: 42219868 },
+      { name: "UTC-8", value: 66084708 },
+      { name: "UTC-9", value: 847003 }
+    ];
 
-      root.setThemes([
-        am5themes_Animated.new(root)
-      ]);
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
-      var series = root.container.children.push(
-        am5hierarchy.VoronoiTreemap.new(root, {
-          singleBranchOnly: false,
-          downDepth: 1,
-          initialDepth: 1,
-          valueField: "value",
-          categoryField: "name",
-          childDataField: "children",
-          paddingTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0
-        })
-      );
+    const root = d3.hierarchy({ children: data }).sum(d => d.value);
+    const polygons = voronoiTreemap().clip([[0,0],[width,0],[width,height],[0,height]])(root);
 
-      series.labels.template.setAll({
-        fontSize: 12,
-        fill: am5.color(0xffffff),
-        text: "{name}"
-      });
+    const svg = d3.select("svg");
 
-      series.slices.template.setAll({
-        tooltipText: "{name}: {value}",
-        stroke: am5.color(0xffffff),
-        strokeWidth: 1
-      });
+    const color = d3.scaleSequential(d3.interpolatePlasma)
+      .domain(d3.extent(data, d => d.value));
 
-      var data = {
-        name: "UTC Offsets",
-        children: [
-          { name: "UTC+0", value: 308506120 },
-          { name: "UTC+1", value: 892026176 },
-          { name: "UTC+10", value: 35741054.15 },
-          { name: "UTC+11", value: 5299510.87 },
-          { name: "UTC+12", value: 6964710.72 },
-          { name: "UTC+13", value: 343772.19 },
-          { name: "UTC+14", value: 11663.60 },
-          { name: "UTC+2", value: 626085687 },
-          { name: "UTC+3", value: 664213882.56 },
-          { name: "UTC+4", value: 175590522 },
-          { name: "UTC+5", value: 1816265370.02 },
-          { name: "UTC+6", value: 275902863.46 },
-          { name: "UTC+7", value: 430327495 },
-          { name: "UTC+8", value: 1676225211.74 },
-          { name: "UTC+9", value: 219231926.66 },
-          { name: "UTC-1", value: 835522.10 },
-          { name: "UTC-10", value: 1895253.41 },
-          { name: "UTC-11", value: 45096 },
-          { name: "UTC-12", value: 0 },
-          { name: "UTC-2", value: 3052.78 },
-          { name: "UTC-3", value: 254918555 },
-          { name: "UTC-4", value: 76201381.22 },
-          { name: "UTC-5", value: 350697894 },
-          { name: "UTC-6", value: 265473008 },
-          { name: "UTC-7", value: 42219868 },
-          { name: "UTC-8", value: 66084708 },
-          { name: "UTC-9", value: 847003 }
-        ]
-      };
+    svg.selectAll("path")
+      .data(root.leaves())
+      .enter()
+      .append("path")
+      .attr("d", d => "M" + polygons[d.data.name].join("L") + "Z")
+      .attr("fill", d => color(d.data.value))
+      .attr("stroke", "#fff");
 
-      series.data.setAll([data]);
-
-    }); // end am5.ready()
+    svg.selectAll("text")
+      .data(root.leaves())
+      .enter()
+      .append("text")
+      .attr("x", d => d3.polygonCentroid(polygons[d.data.name])[0])
+      .attr("y", d => d3.polygonCentroid(polygons[d.data.name])[1])
+      .attr("text-anchor", "middle")
+      .attr("alignment-baseline", "middle")
+      .text(d => d.data.name);
   </script>
 </body>
 </html>
