@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Schengen Visa Statistics - Kazakhstan</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+  body {
+    font-family: sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  h1 {
+    font-size: 22px;
+  }
+  p {
+    font-size: 14px;
+    max-width: 700px;
+    margin: 0 auto 20px auto;
+  }
+  path {
+    fill: #4e79a7;
+    stroke: #fff;
+    stroke-width: 0.5px;
+  }
+  .tooltip {
+    position: absolute;
+    background: white;
+    border: 1px solid #999;
+    padding: 5px;
+    font-size: 12px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<h1>Schengen Visa Approval for Kazakhstan Citizens</h1>
+<p>This page shows statistics and insights about Schengen visa applications and approval rates for residents of Kazakhstan in 2024.</p>
+
+<p>The Schengen Area encompasses 29 European countries that have officially abolished border controls at their common borders. As an element within the wider area of freedom, security and justice (AFSJ) policy of the European Union (EU), it mostly functions as a single jurisdiction under a common visa policy for international travel purposes.</p>
+
+<h1>Schengen Area Map</h1>
+<svg id="map" width="900" height="600"></svg>
+
+<h1>Schengen Visa Applications and Approvals (Kazakhstan, 2024)</h1>
+<p>This chart shows the number of Schengen visa applications and approved visas by country for Kazakhstan residents in 2024. Hover over the bars to see approval rates.</p>
+<svg id="barchart" width="900" height="600"></svg>
+
+<h1>Share of Multiple-Entry Visas (MEV) by Country (Kazakhstan, 2024)</h1>
+<p>This chart shows the percentage of MEVs among all issued Schengen visas for Kazakhstan residents in 2024. Hover over the dots to see exact values.</p>
+<svg id="dotplot" width="900" height="600"></svg>
+
+<script>
+// ----- MAP -----
+const schengenCountries = [
+  "Austria", "Belgium", "Denmark", "Finland", "France", "Germany", "Greece", "Iceland",
+  "Italy", "Latvia", "Lithuania", "Luxembourg", "Malta", "Netherlands", "Norway", "Poland",
+  "Portugal", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Czech Republic",
+  "Hungary", "Croatia", "Liechtenstein", "Romania", "Bulgaria", "Estonia"
+];
+
+d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then(function(world) {
+  const svgMap = d3.select("#map");
+  const projection = d3.geoMercator().scale(400).center([0, 60]).translate([450, 300]);
+  const path = d3.geoPath().projection(projection);
+
+  svgMap.selectAll("path")
+    .data(world.features.filter(d => {
+      if (!schengenCountries.includes(d.properties.name)) return false;
+      const [minLon, minLat, maxLon, maxLat] = d.bbox || [];
+      if (d.properties.name === "France" && minLon < -50) return false;
+      return true;
+    }))
+    .enter()
+    .append("path")
+    .attr("d", path);
+});
+</script>
+
+<script>
+// ----- BAR CHART -----
+const dataBar = [
+  { country: "Austria", applied: 5176, issued: 4590 },
+  { country: "Bulgaria", applied: 5673, issued: 5199 },
+  { country: "Croatia", applied: 1161, issued: 947 },
+  { country: "Czech Republic", applied: 10843, issued: 9702 },
+  { country: "Estonia", applied: 1176, issued: 1079 },
+  { country: "Finland", applied: 1901, issued: 1598 },
+  { country: "France", applied: 17759, issued: 16222 },
+  { country: "Germany", applied: 45094, issued: 37916 },
+  { country: "Greece", applied: 10320, issued: 10146 },
+  { country: "Hungary", applied: 10944, issued: 10255 },
+  { country: "Italy", applied: 26562, issued: 25108 },
+  { country: "Latvia", applied: 1917, issued: 1842 },
+  { country: "Lithuania", applied: 8701, issued: 7322 },
+  { country: "Netherlands", applied: 20, issued: 19 },
+  { country: "Poland", applied: 3815, issued: 3623 },
+  { country: "Romania", applied: 556, issued: 537 },
+  { country: "Slovakia", applied: 785, issued: 765 },
+  { country: "Spain", applied: 23138, issued: 21280 },
+  { country: "Switzerland", applied: 3905, issued: 3282 }
+];
+
+dataBar.sort((a, b) => b.applied - a.applied);
+
+const svgBar = d3.select("#barchart");
+const marginBar = { top: 20, right: 20, bottom: 60, left: 150 };
+const widthBar = +svgBar.attr("width") - marginBar.left - marginBar.right;
+const heightBar = +svgBar.attr("height") - marginBar.top - marginBar.bottom;
+
+const xBar = d3.scaleLinear().domain([0, d3.max(dataBar, d => d.applied)]).range([0, widthBar]);
+const yBar = d3.scaleBand().domain(dataBar.map(d => d.country)).range([0, heightBar]).padding(0.2);
+
+const chartBar = svgBar.append("g").attr("transform", `translate(${marginBar.left},${marginBar.top})`);
+
+chartBar.selectAll(".bar-total")
+  .data(dataBar)
+  .enter()
+  .append("rect")
+  .attr("class", "bar-total")
+  .attr("y", d => yBar(d.country))
+  .attr("height", yBar.bandwidth())
+  .attr("width", d => xBar(d.applied))
+  .attr("fill", "steelblue");
+
+chartBar.selectAll(".bar-issued")
+  .data(dataBar)
+  .enter()
+  .append("rect")
+  .attr("class", "bar-issued")
+  .attr("y", d => yBar(d.country))
+  .attr("height", yBar.bandwidth())
+  .attr("width", d => xBar(d.issued))
+  .attr("fill", "orange");
+
+chartBar.append("g").call(d3.axisLeft(yBar));
+chartBar.append("g").attr("transform", `translate(0,${heightBar})`).call(d3.axisBottom(xBar));
+
+const tooltipBar = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
+
+chartBar.selectAll(".bar-issued")
+  .on("mouseover", (event, d) => {
+    const percent = ((d.issued / d.applied) * 100).toFixed(1);
+    tooltipBar.transition().duration(200).style("opacity", .9);
+    tooltipBar.html(`${d.country}<br>Approval rate: ${percent}%`)
+      .style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY - 28) + "px");
+  })
+  .on("mouseout", () => {
+    tooltipBar.transition().duration(200).style("opacity", 0);
+  });
+</script>
+
+<script>
+// ----- DOT PLOT -----
+const dataDot = [
+  { country: "Austria", mevRate: 65 },
+  { country: "Bulgaria", mevRate: 72 },
+  { country: "Croatia", mevRate: 55 },
+  { country: "Czech Republic", mevRate: 68 },
+  { country: "Estonia", mevRate: 61 },
+  { country: "Finland", mevRate: 70 },
+  { country: "France", mevRate: 66 },
+  { country: "Germany", mevRate: 75 },
+  { country: "Greece", mevRate: 58 },
+  { country: "Hungary", mevRate: 63 },
+  { country: "Italy", mevRate: 69 },
+  { country: "Latvia", mevRate: 67 },
+  { country: "Lithuania", mevRate: 64 },
+  { country: "Netherlands", mevRate: 80 },
+  { country: "Poland", mevRate: 62 },
+  { country: "Romania", mevRate: 70 },
+  { country: "Slovakia", mevRate: 60 },
+  { country: "Spain", mevRate: 65 },
+  { country: "Switzerland", mevRate: 68 }
+];
+
+dataDot.sort((a, b) => b.mevRate - a.mevRate);
+
+const svgDot = d3.select("#dotplot");
+const marginDot = { top: 20, right: 20, bottom: 60, left: 150 };
+const widthDot = +svgDot.attr("width") - marginDot.left - marginDot.right;
+const heightDot = +svgDot.attr("height") - marginDot.top - marginDot.bottom;
+
+const xDot = d3.scaleLinear().domain([0, 100]).range([0, widthDot]);
+const yDot = d3.scaleBand().domain(dataDot.map(d => d.country)).range([0, heightDot]).padding(0.5);
+
+const chartDot = svgDot.append("g").attr("transform", `translate(${marginDot.left},${marginDot.top})`);
+
+chartDot.append("g").call(d3.axisLeft(yDot));
+chartDot.append("g").attr("transform", `translate(0,${heightDot})`).call(d3.axisBottom(xDot).ticks(10).tickFormat(d => d + "%"));
+
+chartDot.selectAll("circle")
+  .data(dataDot)
+  .enter()
+  .append("circle")
+  .attr("cy", d => yDot(d.country) + yDot.bandwidth() / 2)
+  .attr("cx", d => xDot(d.mevRate))
+  .attr("r", 6)
+  .attr("fill", "orange");
+
+const tooltipDot = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
+
+chartDot.selectAll("circle")
+  .on("mouseover", (event, d) => {
+    tooltipDot.transition().duration(200).style("opacity", .9);
+    tooltipDot.html(`${d.country}<br>MEV rate: ${d.mevRate}%`)
+      .style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY - 28) + "px");
+  })
+  .on("mouseout", () => {
+    tooltipDot.transition().duration(200).style("opacity", 0);
+  });
+</script>
+
+
+<h1>Schengen Visa Refusal Rates by Country (Kazakhstan, 2024)</h1>
+<p>This chart shows the percentage of refused Schengen visa applications for Kazakhstan residents in 2024. Hover over the bars to see exact refusal rates.</p>
+<svg id="refusalchart" width="900" height="600"></svg>
+
+<script>
+const dataRefusal = [
+  { country: "Austria", refusalRate: 11.3 },
+  { country: "Bulgaria", refusalRate: 8.4 },
+  { country: "Croatia", refusalRate: 18.4 },
+  { country: "Czech Republic", refusalRate: 10.5 },
+  { country: "Estonia", refusalRate: 8.3 },
+  { country: "Finland", refusalRate: 16 },
+  { country: "France", refusalRate: 8.7 },
+  { country: "Germany", refusalRate: 15.9 },
+  { country: "Greece", refusalRate: 1.7 },
+  { country: "Hungary", refusalRate: 6.3 },
+  { country: "Italy", refusalRate: 5.5 },
+  { country: "Latvia", refusalRate: 3.9 },
+  { country: "Lithuania", refusalRate: 15.9 },
+  { country: "Netherlands", refusalRate: 5 },
+  { country: "Poland", refusalRate: 5 },
+  { country: "Romania", refusalRate: 3.4 },
+  { country: "Slovakia", refusalRate: 2.6 },
+  { country: "Spain", refusalRate: 8 },
+  { country: "Switzerland", refusalRate: 16 }
+];
+
+dataRefusal.sort((a, b) => b.refusalRate - a.refusalRate);
+
+const svgRefusal = d3.select("#refusalchart");
+const marginRefusal = { top: 20, right: 20, bottom: 60, left: 150 };
+const widthRefusal = +svgRefusal.attr("width") - marginRefusal.left - marginRefusal.right;
+const heightRefusal = +svgRefusal.attr("height") - marginRefusal.top - marginRefusal.bottom;
+
+const xRefusal = d3.scaleLinear().domain([0, d3.max(dataRefusal, d => d.refusalRate)]).range([0, widthRefusal]);
+const yRefusal = d3.scaleBand().domain(dataRefusal.map(d => d.country)).range([0, heightRefusal]).padding(0.2);
+
+const chartRefusal = svgRefusal.append("g").attr("transform", `translate(${marginRefusal.left},${marginRefusal.top})`);
+
+chartRefusal.selectAll(".bar-refusal")
+  .data(dataRefusal)
+  .enter()
+  .append("rect")
+  .attr("class", "bar-refusal")
+  .attr("y", d => yRefusal(d.country))
+  .attr("height", yRefusal.bandwidth())
+  .attr("width", d => xRefusal(d.refusalRate))
+  .attr("fill", "crimson");
+
+chartRefusal.append("g").call(d3.axisLeft(yRefusal));
+chartRefusal.append("g")
+  .attr("transform", `translate(0,${heightRefusal})`)
+  .call(d3.axisBottom(xRefusal).ticks(10).tickFormat(d => d + "%"));
+
+const tooltipRefusal = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
+
+chartRefusal.selectAll(".bar-refusal")
+  .on("mouseover", (event, d) => {
+    tooltipRefusal.transition().duration(200).style("opacity", .9);
+    tooltipRefusal.html(`${d.country}<br>Refusal rate: ${d.refusalRate}%`)
+      .style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY - 28) + "px");
+  })
+  .on("mouseout", () => {
+    tooltipRefusal.transition().duration(200).style("opacity", 0);
+  });
+</script>
+
+
+
+
+
+<h1>Limited Territorial Validity (LTV) Visas by Country (Kazakhstan, 2024)</h1>
+<p>This lollipop chart shows how many LTV visas each country issued to Kazakhstan residents in 2024. LTV visas allow travel only to specific Schengen countries.</p>
+
+<svg id="ltvlollipop" width="900" height="600"></svg>
+
+<script>
+const dataLTV = [
+  { country: "Germany", ltvCount: 320 },
+  { country: "France", ltvCount: 270 },
+  { country: "Italy", ltvCount: 190 },
+  { country: "Poland", ltvCount: 160 },
+  { country: "Spain", ltvCount: 140 },
+  { country: "Netherlands", ltvCount: 50 },
+  { country: "Czech Republic", ltvCount: 30 }
+];
+
+const svg = d3.select("#ltvlollipop");
+const margin = { top: 20, right: 20, bottom: 60, left: 150 };
+const width = +svg.attr("width") - margin.left - margin.right;
+const height = +svg.attr("height") - margin.top - margin.bottom;
+
+const chart = svg.append("g")
+  .attr("transform", `translate(${margin.left},${margin.top})`);
+
+const x = d3.scaleLinear()
+  .domain([0, d3.max(dataLTV, d => d.ltvCount)])
+  .range([0, width]);
+
+const y = d3.scaleBand()
+  .domain(dataLTV.map(d => d.country))
+  .range([0, height])
+  .padding(0.4);
+
+chart.append("g").call(d3.axisLeft(y));
+chart.append("g")
+  .attr("transform", `translate(0,${height})`)
+  .call(d3.axisBottom(x).ticks(10));
+
+chart.selectAll("line")
+  .data(dataLTV)
+  .enter()
+  .append("line")
+  .attr("y1", d => y(d.country) + y.bandwidth() / 2)
+  .attr("y2", d => y(d.country) + y.bandwidth() / 2)
+  .attr("x1", 0)
+  .attr("x2", d => x(d.ltvCount))
+  .attr("stroke", "gray")
+  .attr("stroke-width", 2);
+
+chart.selectAll("circle")
+  .data(dataLTV)
+  .enter()
+  .append("circle")
+  .attr("cy", d => y(d.country) + y.bandwidth() / 2)
+  .attr("cx", d => x(d.ltvCount))
+  .attr("r", 6)
+  .attr("fill", "purple");
+
+const tooltipLTV = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
+
+chart.selectAll("circle")
+  .on("mouseover", (event, d) => {
+    tooltipLTV.transition().duration(200).style("opacity", .9);
+    tooltipLTV.html(`${d.country}<br>LTV visas issued: ${d.ltvCount}`)
+      .style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY - 28) + "px");
+  })
+  .on("mouseout", () => {
+    tooltipLTV.transition().duration(200).style("opacity", 0);
+  });
+</script>
+
+
+
+
+
+<h1>Consulate Comparison: Almaty vs Astana (Kazakhstan, 2024)</h1>
+<p>This chart compares visa applications across consulates of Germany, Lithuania, and Poland in Almaty and Astana.</p>
+
+<svg id="comparisonchart" width="900" height="500"></svg>
+
+<script>
+const dataComparison = [
+  { country: "Germany", city: "Almaty", applied: 24797 },
+  { country: "Germany", city: "Astana", applied: 20297 },
+  { country: "Lithuania", city: "Almaty", applied: 7479 },
+  { country: "Lithuania", city: "Astana", applied: 1222 },
+  { country: "Poland", city: "Almaty", applied: 2163 },
+  { country: "Poland", city: "Astana", applied: 1652 }
+];
+
+const svgComparison = d3.select("#comparisonchart");
+const marginComparison = { top: 20, right: 20, bottom: 60, left: 150 };
+const widthComparison = +svgComparison.attr("width") - marginComparison.left - marginComparison.right;
+const heightComparison = +svgComparison.attr("height") - marginComparison.top - marginComparison.bottom;
+
+const chartComparison = svgComparison.append("g").attr("transform", `translate(${marginComparison.left},${marginComparison.top})`);
+
+const x0Comparison = d3.scaleBand()
+  .domain(["Germany", "Lithuania", "Poland"])
+  .range([0, widthComparison])
+  .padding(0.4);
+
+const x1Comparison = d3.scaleBand()
+  .domain(["Almaty", "Astana"])
+  .range([0, x0Comparison.bandwidth()])
+  .padding(0.1);
+
+const yComparison = d3.scaleLinear()
+  .domain([0, d3.max(dataComparison, d => d.applied) * 1.1])
+  .range([heightComparison, 0]);
+
+chartComparison.append("g").attr("transform", `translate(0,${heightComparison})`).call(d3.axisBottom(x0Comparison));
+chartComparison.append("g").call(d3.axisLeft(yComparison));
+
+const colorComparison = d3.scaleOrdinal().domain(["Almaty", "Astana"]).range(["steelblue", "orange"]);
+
+const tooltipComparison = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
+
+chartComparison.selectAll(".group")
+  .data(["Germany", "Lithuania", "Poland"])
+  .enter()
+  .append("g")
+  .attr("transform", d => `translate(${x0Comparison(d)},0)`)
+  .selectAll("rect")
+  .data(d => dataComparison.filter(e => e.country === d))
+  .enter()
+  .append("rect")
+  .attr("x", d => x1Comparison(d.city))
+  .attr("y", d => yComparison(d.applied))
+  .attr("width", x1Comparison.bandwidth())
+  .attr("height", d => heightComparison - yComparison(d.applied))
+  .attr("fill", d => colorComparison(d.city))
+  .on("mouseover", (event, d) => {
+    tooltipComparison.transition().duration(200).style("opacity", .9);
+    tooltipComparison.html(`${d.country} (${d.city})<br>Applications: ${d.applied}`)
+      .style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY - 28) + "px");
+  })
+  .on("mouseout", () => {
+    tooltipComparison.transition().duration(200).style("opacity", 0);
+  });
+</script>
+
+
+
+
+<h1>Schengen Countries by Strictness (Kazakhstan, 2024)</h1>
+<p>Hover over countries to see refusal rates for Kazakhstan residents.</p>
+
+<svg id="schengenmapStrictness" width="900" height="600"></svg>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<script>
+const refusalRates = {
+  "Austria": 11.1,
+  "Bulgaria": 1.8,
+  "Croatia": 14.6,
+  "Czech Republic": 10.5,
+  "Estonia": 8.2,
+  "Finland": 13.3,
+  "France": 5.1,
+  "Germany": 13.6,
+  "Greece": 1.4,
+  "Hungary": 6.3,
+  "Italy": 5.4,
+  "Latvia": 3.3,
+  "Lithuania": 16.1,
+  "Netherlands": 0.0,
+  "Poland": 5.0,
+  "Romania": 0.0,
+  "Slovakia": 1.8,
+  "Spain": 6.5,
+  "Switzerland": 15.6
+};
+
+const schengenCountriess = Object.keys(refusalRates);
+
+d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then(function(world) {
+
+  const svg = d3.select("#schengenmapStrictness");
+  const projection = d3.geoMercator().scale(450).center([20, 55]).translate([450, 300]);
+  const path = d3.geoPath().projection(projection);
+
+  const tooltip = d3.select("body").append("div")
+    .style("position", "absolute")
+    .style("background", "#fff")
+    .style("padding", "4px 8px")
+    .style("border", "1px solid #999")
+    .style("border-radius", "4px")
+    .style("pointer-events", "none")
+    .style("opacity", 0);
+
+  svg.selectAll("path")
+    .data(world.features.filter(d => schengenCountriess.includes(d.properties.name)))
+    .enter()
+    .append("path")
+    .attr("d", path)
+    .attr("fill", "#ccc")
+    .attr("stroke", "#333")
+    .attr("stroke-width", 0.5)
+    .on("mouseover", function(event, d) {
+      d3.select(this).attr("fill", "red");
+      const rate = refusalRates[d.properties.name] !== undefined ? refusalRates[d.properties.name] + "%" : "No data";
+      tooltip.transition().duration(200).style("opacity", 1);
+      tooltip.html(d.properties.name + ": " + rate)
+        .style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY - 28) + "px");
+    })
+    .on("mouseout", function() {
+      d3.select(this).attr("fill", "#ccc");
+      tooltip.transition().duration(200).style("opacity", 0);
+    });
+});
+</script>
+
+<h1>Schengen Visa Applications vs MEV Share (2024)</h1>
+<p>Bubble size shows the total number of visa applications. Color reflects the share of multiple-entry visas (MEVs) issued. Hover to see details.</p>
+
+<svg id="bubbleChart" width="900" height="600"></svg>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+
+const data = [
+  { country: "Austria", applied: 262017, mevShare: 1.1, code: "AT" },
+  { country: "Belgium", applied: 255564, mevShare: 0.3, code: "BE" },
+  { country: "Bulgaria", applied: 122229, mevShare: 41.7, code: "BG" },
+  { country: "Croatia", applied: 42165, mevShare: 0.5, code: "HR" },
+  { country: "Czech Republic", applied: 150629, mevShare: 0.6, code: "CZ" },
+  { country: "Denmark", applied: 132158, mevShare: 0.3, code: "DK" },
+  { country: "Estonia", applied: 12125, mevShare: 12.3, code: "EE" },
+  { country: "Finland", applied: 90611, mevShare: 5.5, code: "FI" },
+  { country: "France", applied: 3072728, mevShare: 0.9, code: "FR" },
+  { country: "Germany", applied: 1512675, mevShare: 0.6, code: "DE" },
+  { country: "Greece", applied: 710024, mevShare: 0.5, code: "GR" },
+  { country: "Hungary", applied: 251364, mevShare: 0.1, code: "HU" },
+  { country: "Iceland", applied: 35413, mevShare: 0.1, code: "IS" },
+  { country: "Italy", applied: 1233316, mevShare: 0.7, code: "IT" },
+  { country: "Latvia", applied: 17654, mevShare: 6.2, code: "LV" },
+  { country: "Lithuania", applied: 33532, mevShare: 2.3, code: "LT" },
+  { country: "Luxembourg", applied: 13007, mevShare: 1.8, code: "LU" },
+  { country: "Malta", applied: 45578, mevShare: 1.4, code: "MT" },
+  { country: "Netherlands", applied: 728656, mevShare: 0.7, code: "NL" },
+  { country: "Norway", applied: 149988, mevShare: 0.0, code: "NO" },
+  { country: "Poland", applied: 111538, mevShare: 1.4, code: "PL" },
+  { country: "Portugal", applied: 206420, mevShare: 0.2, code: "PT" },
+  { country: "Romania", applied: 35359, mevShare: 3.4, code: "RO" },
+  { country: "Slovakia", applied: 14215, mevShare: 2.8, code: "SK" },
+  { country: "Slovenia", applied: 18171, mevShare: 0.7, code: "SI" },
+  { country: "Spain", applied: 1634887, mevShare: 2.4, code: "ES" },
+  { country: "Sweden", applied: 188623, mevShare: 1.2, code: "SE" },
+  { country: "Switzerland", applied: 636077, mevShare: 1.0, code: "CH" }
+];
+
+const svgBubble = d3.select("#bubbleChart");
+const widthBubble = +svgBubble.attr("width");
+const heightBubble = +svgBubble.attr("height");
+
+const sizeScale = d3.scaleSqrt()
+  .domain([0, d3.max(data, d => d.applied)])
+  .range([5, 50]);
+
+const colorScale = d3.scaleSequential()
+  .domain([0, d3.max(data, d => d.mevShare)])
+  .interpolator(d3.interpolateBlues);
+
+const simulation = d3.forceSimulation(data)
+  .force("charge", d3.forceManyBody().strength(0.5))
+  .force("center", d3.forceCenter(widthBubble / 2, heightBubble / 2))
+  .force("collision", d3.forceCollide().radius(d => sizeScale(d.applied) + 2))
+  .on("tick", ticked);
+
+const tooltip = d3.select("body").append("div")
+  .attr("class", "tooltip")
+  .style("opacity", 0)
+  .style("position", "absolute")
+  .style("background", "#fff")
+  .style("border", "1px solid #ccc")
+  .style("padding", "5px")
+  .style("font-size", "12px");
+
+const nodes = svgBubble.selectAll("g")
+  .data(data)
+  .enter()
+  .append("g")
+  .on("mouseover", (event, d) => {
+    tooltip.transition().duration(200).style("opacity", .9);
+    tooltip.html(`<strong>${d.country}</strong><br>Applications: ${d.applied.toLocaleString()}<br>MEV Share: ${d.mevShare}%`)
+      .style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY - 28) + "px");
+  })
+  .on("mouseout", () => tooltip.transition().duration(200).style("opacity", 0));
+
+nodes.append("circle")
+  .attr("r", d => sizeScale(d.applied))
+  .attr("fill", d => colorScale(d.mevShare))
+  .attr("stroke", "#333")
+  .attr("stroke-width", 0.5);
+
+nodes.append("text")
+  .text(d => d.code)
+  .attr("text-anchor", "middle")
+  .attr("dy", "0.35em")
+  .style("font-size", "10px")
+  .style("pointer-events", "none");
+
+function ticked() {
+  nodes.attr("transform", d => `translate(${d.x},${d.y})`);
+}
+
+</script>
+
+
+<h1>Top 20 Countries by Schengen Visa Applications (2024)</h1>
+<p>Donut chart shows the share of applications by country. Country code shown inside, number of applications shown outside.</p>
+
+<svg id="donutChartAppsFinal" width="600" height="600"></svg>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+
+const dataDonutFinal = [
+  { country: "CN", applied: 1779255 },
+  { country: "TR", applied: 1173917 },
+  { country: "IN", applied: 1108239 },
+  { country: "MA", applied: 606800 },
+  { country: "RU", applied: 606594 },
+  { country: "DZ", applied: 544634 },
+  { country: "SA", applied: 505455 },
+  { country: "UK", applied: 470569 },
+  { country: "TH", applied: 265243 },
+  { country: "AE", applied: 260229 },
+  { country: "PH", applied: 218301 },
+  { country: "EG", applied: 209438 },
+  { country: "ID", applied: 203557 },
+  { country: "US", applied: 201602 },
+  { country: "ZA", applied: 193768 },
+  { country: "KZ", applied: 179446 },
+  { country: "TN", applied: 177951 },
+  { country: "KW", applied: 170754 },
+  { country: "BY", applied: 164009 },
+  { country: "IR", applied: 162017 }
+];
+
+const widthDonutFinal = 600;
+const heightDonutFinal = 600;
+const radiusDonutFinal = Math.min(widthDonutFinal, heightDonutFinal) / 2 - 50;
+
+const svgDonutFinal = d3.select("#donutChartAppsFinal")
+  .attr("width", widthDonutFinal)
+  .attr("height", heightDonutFinal)
+  .append("g")
+  .attr("transform", `translate(${widthDonutFinal / 2}, ${heightDonutFinal / 2})`);
+
+const colorDonutFinal = d3.scaleOrdinal(d3.schemeTableau10);
+
+const pieDonutFinal = d3.pie()
+  .sort(null)
+  .value(d => d.applied);
+
+const arcDonutFinal = d3.arc()
+  .innerRadius(radiusDonutFinal * 0.6)
+  .outerRadius(radiusDonutFinal);
+
+const outerArcDonutFinal = d3.arc()
+  .innerRadius(radiusDonutFinal * 1.05)
+  .outerRadius(radiusDonutFinal * 1.05);
+
+svgDonutFinal.selectAll("path")
+  .data(pieDonutFinal(dataDonutFinal))
+  .enter()
+  .append("path")
+  .attr("d", arcDonutFinal)
+  .attr("fill", d => colorDonutFinal(d.data.country))
+  .attr("stroke", "#fff")
+  .attr("stroke-width", 1);
+
+svgDonutFinal.selectAll("textInner")
+  .data(pieDonutFinal(dataDonutFinal))
+  .enter()
+  .append("text")
+  .attr("transform", d => `translate(${arcDonutFinal.centroid(d)})`)
+  .attr("text-anchor", "middle")
+  .attr("font-size", "10px")
+  .attr("fill", "#fff")
+  .text(d => d.data.country);
+
+svgDonutFinal.selectAll("textOuter")
+  .data(pieDonutFinal(dataDonutFinal))
+  .enter()
+  .append("text")
+  .attr("transform", d => `translate(${outerArcDonutFinal.centroid(d)})`)
+  .attr("text-anchor", d => (d.startAngle + d.endAngle) / 2 < Math.PI ? "start" : "end")
+  .attr("font-size", "10px")
+  .attr("fill", "#333")
+  .text(d => d.data.applied.toLocaleString());
+
+</script>
+
+
+
+
+
+</body>
+</html>
