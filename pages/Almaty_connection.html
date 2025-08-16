@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Almaty Flight Arcs — D3</title>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+  <style>
+    :root { --bg: #0b1020; --fg: #e8eefc; --muted:#8ba3c7; --accent:#7cc5ff; --arc:#66d0a4; --land:#1c2746; --graticule:#24335e; }
+    html,body { height:100%; margin:0; background:var(--bg); color:var(--fg); font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    .wrap { max-width: 1100px; margin: 16px auto; padding: 0 16px; }
+    h1 { font-size: 20px; margin: 8px 0 4px; font-weight: 700; }
+    p { margin: 0 0 12px; color: var(--muted); }
+    .panel { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin:8px 0 16px; }
+    .card { background:#0f1630; border:1px solid #1e2a53; border-radius:12px; padding:10px 12px; }
+    label { color:#a9b7d9; }
+    input[type="range"] { width:220px; }
+    .legend { display:flex; gap:12px; align-items:center; color:#a9b7d9; }
+    .dot { fill: var(--fg); }
+    .airport { fill: #ffd26a; stroke: #1a1a1a; stroke-width: 0.8; }
+    .arc { fill: none; stroke: var(--arc); stroke-width: 1.6; stroke-opacity: 0.9; }
+    .arc:hover { stroke-width: 2.2; }
+    .halo { fill:none; stroke:#000; stroke-width:4px; paint-order: stroke; }
+    .graticule { fill:none; stroke: var(--graticule); stroke-width: 0.6; stroke-opacity: 0.6; }
+    .land { fill: var(--land); stroke: #162044; stroke-width: 0.5; }
+    .country-borders { fill: none; stroke: #162044; stroke-width: 0.4; opacity: 0.8; }
+    .tooltip { position:fixed; pointer-events:none; background:#0f1630; border:1px solid #2a3972; color:#e8eefc; padding:6px 8px; border-radius:8px; font-size:12px; transform: translate(-50%, calc(-100% - 10px)); white-space:nowrap; opacity:0; transition:opacity .12s ease; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Parabolic Arcs of Flights from Almaty</h1>
+<p>Interactive <strong>D3</strong> with adjustable curvature, animation, and tooltips. Source: <span class="halo">ALA (Almaty)</span>.</p>
+    <div class="panel card">
+      <label>Arc curvature: <span id="curvVal">0.28</span></label>
+      <input id="curv" type="range" min="-0.6" max="0.6" step="0.02" value="0.28" />
+      <label>Animation speed (seconds): <span id="speedVal">6</span></label>
+      <input id="speed" type="range" min="2" max="20" step="1" value="6" />
+    </div>
+    <div id="chart" class="card"></div>
+    <div class="legend card">
+      <svg width="16" height="16"><circle cx="8" cy="8" r="4" class="airport"/></svg> Airport
+      <svg width="30" height="16"><path d="M2,8 Q15,0 28,8" class="arc"/></svg> Route
+    </div>
+  </div>
+  <div class="tooltip" id="tip"></div>
+
+<script>
+(async function() {
+  const el = document.getElementById('chart');
+  const tip = document.getElementById('tip');
+  const curvInput = document.getElementById('curv');
+  const curvVal = document.getElementById('curvVal');
+  const speedInput = document.getElementById('speed');
+  const speedVal = document.getElementById('speedVal');
+
+  const width = Math.min(1100, window.innerWidth - 40);
+  const height = Math.round(width * 0.55);
+
+  const svg = d3.select('#chart').append('svg')
+      .attr('width', width)
+      .attr('height', height);
+
+  const projection = d3.geoNaturalEarth1()
+      .precision(0.1)
+      .fitExtent([[10,10],[width-10,height-10]], {type:"Sphere"});
+
+  const path = d3.geoPath(projection);
+  const g = svg.append('g');
+
+  // Background sphere
+  g.append('path').attr('d', path({type:'Sphere'})).attr('fill', '#0c1229');
+
+  // Graticule
+  const graticule = d3.geoGraticule10();
+  g.append('path').attr('class','graticule').attr('d', path(graticule));
+
+  // World land & borders
+  const world = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(r=>r.json());
+  const countries = topojson.feature(world, world.objects.countries);
+  const borders = topojson.mesh(world, world.objects.countries, (a,b)=>a!==b);
+
+  g.append('g').selectAll('path')
+    .data(countries.features)
+    .join('path')
+    .attr('class','land')
+    .attr('d', path);
+
+  g.append('path')
+    .attr('class','country-borders')
+    .attr('d', path(borders));
+
+  // --- DATA ---
+  const origin = { city: 'Almaty', code: 'ALA', lon: 77.040, lat: 43.354 };
+  // Примеры направлений — добавляйте/редактируйте список
+  const flights = [
+    { city:'Astana', code:'NQZ', lon:71.467, lat:51.022 },
+    { city:'Dubai', code:'DXB', lon:55.365, lat:25.253 },
+    { city:'Istanbul', code:'IST', lon:28.751, lat:41.275 },
+    { city:'Frankfurt', code:'FRA', lon:8.562, lat:50.037 },
+    { city:'London', code:'LHR', lon:-0.454, lat:51.470 },
+    { city:'Seoul', code:'ICN', lon:126.440, lat:37.460 },
+    { city:'Moscow', code:'SVO', lon:37.414, lat:55.972 },
+{ city:'Istanbul', code:'IST', lon:28.751, lat:41.275 },
+{ city:'Dubai', code:'DXB', lon:55.365, lat:25.253 },
+{ city:'Tashkent', code:'TAS', lon:69.281, lat:41.260 },
+{ city:'Antalya', code:'AYT', lon:30.801, lat:36.898 },
+{ city:'Seoul', code:'ICN', lon:126.440, lat:37.460 },
+{ city:'Delhi', code:'DEL', lon:77.103, lat:28.566 },
+{ city:'Bishkek', code:'FRU', lon:74.469, lat:43.061 },
+{ city:'Doha', code:'DOH', lon:51.614, lat:25.273 },
+{ city:'Sharjah', code:'SHJ', lon:55.517, lat:25.328 },
+{ city:'Abu Dhabi', code:'AUH', lon:54.651, lat:24.433 },
+{ city:'Ankara', code:'ESB', lon:32.993, lat:40.114 },
+{ city:'Krasnoyarsk', code:'KJA', lon:92.493, lat:56.172 },
+{ city:'Novosibirsk', code:'OVB', lon:82.650, lat:55.012 },
+{ city:'Yekaterinburg', code:'SVX', lon:60.804, lat:56.750 },
+{ city:'Zhukovsky', code:'ZIA', lon:38.150, lat:55.553 },
+{ city:'Kazan', code:'KZN', lon:49.278, lat:55.606 },
+{ city:'Ufa', code:'UFA', lon:55.874, lat:54.566 },
+{ city:'Mumbai', code:'BOM', lon:72.868, lat:19.089 },
+{ city:'Urumqi', code:'URC', lon:87.476, lat:43.907 },
+{ city:'Xi’an', code:'XIY', lon:108.751, lat:34.447 },
+{ city:'Beijing', code:'PEK', lon:116.585, lat:40.080 },
+{ city:'Kuwait City', code:'KWI', lon:47.968, lat:29.227 },
+{ city:'Sharm El Sheikh', code:'SSH', lon:34.393, lat:27.978 },
+{ city:'Jeddah', code:'JED', lon:39.152, lat:21.679 },
+{ city:'Medina', code:'MED', lon:39.705, lat:24.553 },
+{ city:'Nha Trang', code:'CXR', lon:109.219, lat:12.227 },
+{ city:'Hangzhou', code:'HGH', lon:120.434, lat:30.229 },
+{ city:'Colombo', code:'CMB', lon:79.884, lat:7.180 },
+{ city:'Phuket', code:'HKT', lon:98.317, lat:8.113 },
+{ city:'Male', code:'MLE', lon:73.529, lat:4.191 },
+{ city:'Bangkok', code:'BKK', lon:100.747, lat:13.681 },
+{ city:'Frankfurt', code:'FRA', lon:8.562, lat:50.037 },
+{ city:'Milan', code:'MXP', lon:8.728, lat:45.630 },
+{ city:'Ulaanbaatar', code:'ULN', lon:106.766, lat:47.843 },
+{ city:'Baku', code:'GYD', lon:50.051, lat:40.467 },
+{ city:'Dushanbe', code:'DYU', lon:68.817, lat:38.543 },
+{ city:'Tbilisi', code:'TBS', lon:44.955, lat:41.669 },
+    { city:'Tokyo', code:'NRT', lon:140.387, lat:35.773 },
+    { city:'Beijing', code:'PEK', lon:116.585, lat:40.080 },
+    { city:'Antalya', code:'AYT', lon:30.801, lat:36.898 },
+    { city:'Shymkent', code:'CIT', lon:69.478, lat:42.364 }
+  ];
+
+  // Helpers
+  const O = projection([origin.lon, origin.lat]);
+  const toP = (d) => projection([d.lon, d.lat]);
+
+  // Airports (origin + destinations)
+  const airports = [origin, ...flights];
+
+  g.selectAll('circle.airport')
+    .data(airports)
+    .join('circle')
+    .attr('class','airport')
+    .attr('r', 3.2)
+    .attr('cx', d => projection([d.lon, d.lat])[0])
+    .attr('cy', d => projection([d.lon, d.lat])[1])
+    .on('mousemove', (event, d) => showTip(event, `${d.city} (${d.code})\n${fmt(d.lat)}, ${fmt(d.lon)}`))
+    .on('mouseleave', hideTip);
+
+  // Labels (codes)
+  g.selectAll('text.code')
+    .data(airports)
+    .join('text')
+    .attr('class','code')
+    .attr('x', d => projection([d.lon, d.lat])[0] + 6)
+    .attr('y', d => projection([d.lon, d.lat])[1] - 6)
+    .attr('font-size', 10)
+    .attr('fill', '#b9c8ea')
+    .text(d => d.code);
+
+  const arcsG = g.append('g');
+
+  function parabolaPath(A, B, curvature=0.28) {
+    const mx = (A[0] + B[0]) / 2;
+    const my = (A[1] + B[1]) / 2;
+    const dx = B[0] - A[0];
+    const dy = B[1] - A[1];
+    const nx = -dy; // perpendicular
+    const ny = dx;
+    const len = Math.hypot(dx, dy) || 1;
+    const ux = nx / len, uy = ny / len;
+    const c = curvature * len; // scale by distance so long routes arc more
+    const Cx = mx + ux * c;
+    const Cy = my + uy * c;
+    return `M${A[0]},${A[1]} Q${Cx},${Cy} ${B[0]},${B[1]}`;
+  }
+
+  // Draw arcs
+  let curvature = +curvInput.value;
+  let speedSec = +speedInput.value;
+
+  const arcSel = arcsG.selectAll('path.arc')
+    .data(flights)
+    .join('path')
+    .attr('class','arc')
+    .attr('d', d => {
+      const A = O, B = toP(d);
+      return parabolaPath(A, B, curvature);
+    })
+    .on('mousemove', (event, d) => {
+      const dist = haversine(origin.lat, origin.lon, d.lat, d.lon);
+      showTip(event, `${origin.code} → ${d.code}\n${d.city} • ~${Math.round(dist)} км`);
+    })
+    .on('mouseleave', hideTip);
+
+  // Animate dots along each arc
+  const movers = arcsG.selectAll('circle.dot')
+    .data(flights)
+    .join('circle')
+    .attr('class','dot')
+    .attr('r', 2.2);
+
+  function animate() {
+    movers.interrupt();
+    movers.each(function(d, i) {
+      const pathEl = arcSel.nodes()[i];
+      const L = pathEl.getTotalLength();
+      d3.select(this)
+        .attr('opacity', 1)
+        .transition()
+        .duration(speedSec * 1000)
+        .ease(d3.easeLinear)
+        .attrTween('transform', function() {
+          return function(t) {
+            const p = pathEl.getPointAtLength(t * L);
+            return `translate(${p.x},${p.y})`;
+          }
+        })
+        .on('end', animate); // loop
+    });
+  }
+
+  animate();
+
+  // UI handlers
+  curvInput.addEventListener('input', () => {
+    curvature = +curvInput.value; curvVal.textContent = curvature.toFixed(2);
+    arcSel.attr('d', d => parabolaPath(O, toP(d), curvature));
+  });
+
+  speedInput.addEventListener('input', () => {
+    speedSec = +speedInput.value; speedVal.textContent = speedSec;
+    animate();
+  });
+
+  // Tooltip helpers
+  function showTip(event, html) {
+    tip.style.opacity = 1;
+    tip.innerHTML = html.replaceAll('\n','<br>');
+    const { clientX:x, clientY:y } = event;
+    tip.style.left = x + 'px';
+    tip.style.top = y + 'px';
+  }
+  function hideTip(){ tip.style.opacity = 0; }
+
+  function fmt(v) { return (Math.abs(v) < 10 ? v.toFixed(3) : v.toFixed(2)); }
+
+  // Distance (km)
+  function haversine(lat1, lon1, lat2, lon2) {
+    const R = 6371; const toRad = d => d * Math.PI / 180;
+    const dLat = toRad(lat2-lat1), dLon = toRad(lon2-lon1);
+    const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+    return 2 * R * Math.asin(Math.sqrt(a));
+  }
+
+  // Resize handler (basic)
+  window.addEventListener('resize', d3.debounce?.(()=>location.reload(), 150) || (()=>{}));
+})();
+</script>
+</body>
+</html>
