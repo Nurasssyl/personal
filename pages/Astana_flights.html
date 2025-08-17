@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Astana → World — Parabolic Arcs Globe (D3)</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/versor@0.0.4"></script>
+<style>
+  :root{--bg:#0b1020;--panel:#0f1630;--line:#b94a4a;--glow:#ffd;--muted:#93a6c8}
+  html,body{height:100%;margin:0;background:var(--bg);color:#e8eefc;font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+  .wrap{max-width:1100px;margin:18px auto;padding:0 16px}
+  h1{font-size:20px;margin:6px 0 2px}
+  p{margin:0 0 12px;color:var(--muted)}
+  .card{background:var(--panel);border:1px solid #1e2a53;border-radius:14px;padding:8px 12px}
+  svg{display:block;max-width:100%}
+  .note{font-size:12px;color:#9bb0d6}
+  .legend{display:flex;gap:14px;align-items:center;margin-top:10px}
+  .legend .sw{width:30px;height:8px;background:#8c2e2e;border-radius:4px;box-shadow:0 0 10px #8c2e2e55}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Direct international flights from Astana (NQZ)</h1>
+  <p>Orthographic globe with draggable rotation and <em>parabolic</em> flight arcs (D3). Data: current public schedules by Ministry of Transport / airlines (selection).</p>
+  <div id="vis" class="card"></div>
+  <div class="legend card"><div class="sw"></div>Route arc <span class="note">drag to rotate the globe</span></div>
+</div>
+<script>
+(async function(){
+  const width = Math.min(1100, innerWidth-40), height = 620;
+  const r = Math.min(width,height)/2.5;
+  const cx = width/2, cy = height/2;
+
+  const svg = d3.select('#vis').append('svg')
+    .attr('width', width).attr('height', height).attr('fill','none')
+    .style('overflow','visible');
+
+  const defs = svg.append('defs');
+  defs.html(`
+    <radialGradient id="ocean_fill" cx="75%" cy="25%">
+      <stop offset="5%" stop-color="#fff"/>
+      <stop offset="100%" stop-color="#aaa"/>
+    </radialGradient>
+    <radialGradient id="globe_highlight" cx="75%" cy="25%">
+      <stop offset="5%" stop-color="#ffd" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ba9" stop-opacity="0.2"/>
+    </radialGradient>
+    <radialGradient id="globe_shading" cx="55%" cy="45%">
+      <stop offset="30%" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#556" stop-opacity="0.3"/>
+    </radialGradient>
+    <radialGradient id="drop_shadow" cx="50%" cy="50%">
+      <stop offset="20%" stop-color="#000" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>`);
+
+  const gBack = svg.append('g').attr('pointer-events','none');
+  gBack.append('ellipse').attr('cx',cx).attr('cy',cy+r*0.95).attr('rx',r*0.90).attr('ry',r*0.25).attr('fill','url(#drop_shadow)');
+  gBack.append('circle').attr('cx',cx).attr('cy',cy).attr('r',r).attr('fill','url(#ocean_fill)');
+  const feature = gBack.append('path').attr('id','feature').attr('fill','#999');
+  gBack.append('circle').attr('cx',cx).attr('cy',cy).attr('r',r).attr('fill','url(#globe_highlight)');
+  gBack.append('circle').attr('cx',cx).attr('cy',cy).attr('r',r).attr('fill','url(#globe_shading)');
+
+  const gPoints = svg.append('g').attr('id','points').attr('fill','black').attr('fill-opacity',0.65);
+  const gArcs = svg.append('g').attr('id','arcs').attr('stroke','#ffffff').attr('stroke-opacity',0.06).attr('stroke-width',3);
+  const gFlyers = svg.append('g').attr('id','flyers').attr('stroke','#b94a4a');
+
+  const projection = d3.geoOrthographic().translate([cx,cy]).clipAngle(90).scale(r);
+  const path = d3.geoPath(projection).pointRadius(2.6);
+
+  // Data -----------------
+  const origin = {name:'Astana', code:'NQZ', coord:[71.467,51.022]};
+  const cities = [
+    // Azerbaijan
+    {name:'Baku', code:'GYD', coord:[50.051,40.467]},
+    // Belarus
+    {name:'Minsk', code:'MSQ', coord:[28.030,53.882]},
+    // Vietnam
+    {name:'Cam Ranh', code:'CXR', coord:[109.219,12.227]},
+    // Germany
+    {name:'Frankfurt', code:'FRA', coord:[8.562,50.037]},
+    // Georgia
+    {name:'Tbilisi', code:'TBS', coord:[44.955,41.669]},
+    {name:'Batumi', code:'BUS', coord:[41.600,41.610]},
+    // Egypt
+    {name:'Sharm El Sheikh', code:'SSH', coord:[34.393,27.978]},
+    // Qatar
+    {name:'Doha', code:'DOH', coord:[51.614,25.273]},
+    // China
+    {name:'Beijing', code:'PEK', coord:[116.585,40.080]},
+    {name:'Sanya', code:'SYX', coord:[109.412,18.302]},
+    {name:"Xi'an", code:'XIY', coord:[108.751,34.447]},
+    {name:'Urumqi', code:'URC', coord:[87.476,43.907]},
+    // Kyrgyzstan
+    {name:'Bishkek', code:'FRU', coord:[74.469,43.061]},
+    // UAE
+    {name:'Abu Dhabi', code:'AUH', coord:[54.651,24.433]},
+    {name:'Dubai', code:'DXB', coord:[55.365,25.253]},
+    // Poland
+    {name:'Warsaw', code:'WAW', coord:[20.967,52.165]},
+    // Russia
+    {name:'Moscow', code:'SVO', coord:[37.414,55.972]},
+    {name:'Saint Petersburg', code:'LED', coord:[30.262,59.800]},
+    {name:'Yekaterinburg', code:'SVX', coord:[60.804,56.750]},
+    {name:'Kazan', code:'KZN', coord:[49.278,55.606]},
+    {name:'Mineralnye Vody', code:'MRV', coord:[43.081,44.225]},
+    {name:'Krasnoyarsk', code:'KJA', coord:[92.493,56.172]},
+    {name:'Novosibirsk', code:'OVB', coord:[82.650,55.012]},
+    {name:'Omsk', code:'OMS', coord:[73.311,54.967]},
+    // Tajikistan
+    {name:'Dushanbe', code:'DYU', coord:[68.817,38.543]},
+    // Turkey
+    {name:'Ankara', code:'ESB', coord:[32.993,40.114]},
+    {name:'Antalya', code:'AYT', coord:[30.801,36.898]},
+    {name:'Bodrum', code:'BJV', coord:[27.667,37.250]},
+    {name:'Istanbul', code:'IST', coord:[28.751,41.275]},
+    // Uzbekistan
+    {name:'Tashkent', code:'TAS', coord:[69.281,41.260]},
+    // Montenegro
+    {name:'Podgorica', code:'TGD', coord:[19.252,42.359]},
+    // Czechia
+    {name:'Prague', code:'PRG', coord:[14.263,50.101]},
+    // South Korea
+    {name:'Seoul', code:'ICN', coord:[126.440,37.460]},
+    // (Recent seasonal / new) Cambodia
+    {name:'Sihanoukville', code:'KOS', coord:[103.637,10.580]},
+    {name:'Phu Quoc', code:'PQC', coord:[103.993,10.169]}
+  ];
+
+  const places = [
+    {type:'Feature', geometry:{type:'Point', coordinates: origin.coord}, properties:{name: `${origin.name} (${origin.code})`}},
+    ...cities.map(c=>({type:'Feature', geometry:{type:'Point', coordinates:c.coord}, properties:{name:`${c.name} (${c.code})`}}))
+  ];
+
+  const links = cities.map(c=>({source: origin.coord, target: c.coord}));
+
+  // World topojson
+  const world = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json').then(r=>r.json());
+  const land = topojson.feature(world, world.objects.land);
+
+  // Selections
+  feature.datum(land);
+  const point = gPoints.selectAll('path').data(places).join('path');
+  const arc = gArcs.selectAll('path').data(links).join('path');
+  const flyer = gFlyers.selectAll('path').data(links).join('path');
+
+  function render(){
+    feature.attr('d', path);
+    point.attr('d', path);
+    arc.attr('d', renderArc);
+    flyer.attr('d', renderFlyer).attr('stroke-opacity', fadeArc);
+  }
+
+  function renderArc({source,target}){
+    return path({type:'LineString', coordinates:[source,target]});
+  }
+
+  function renderFlyer({source,target}){
+    const interpolate = d3.geoInterpolate(source, target);
+    return 'M' + d3.ticks(0,1,40).map(t=>{
+      const h = 1.5 * t * (1 - t);
+      const p = interpolate(t);
+      const [x1,y1] = projection(p);
+      return [ x1 + (x1 - cx) * h, y1 + (y1 - cy) * h ];
+    }).filter(Boolean).join('L');
+  }
+
+  function fadeArc({source,target}){
+    const center = projection.invert([cx,cy]);
+    const sd = d3.geoDistance(source, center);
+    const td = d3.geoDistance(target, center);
+    return Math.PI/2 - Math.max(sd, td) + 0.2;
+  }
+
+  svg.call(d3.drag()
+    .on('start.drag', dragstarted)
+    .on('drag.drag', dragged));
+
+  let v0,q0,r0,a0,l;
+  function pointer(event, that){
+    const t = d3.pointers(event, that);
+    if (t.length !== l){ l = t.length; if(l>1) a0 = Math.atan2(t[1][1]-t[0][1], t[1][0]-t[0][0]); dragstarted.apply(that,[event,that]); }
+    if (l>1){ const x=d3.mean(t,p=>p[0]); const y=d3.mean(t,p=>p[1]); const a=Math.atan2(t[1][1]-t[0][1], t[1][0]-t[0][0]); return [x,y,a]; }
+    return t[0];
+  }
+  function dragstarted({x,y}){
+    v0 = versor.cartesian(projection.invert([x,y]));
+    q0 = versor(r0 = projection.rotate());
+  }
+  function dragged(event){
+    const v1 = versor.cartesian(projection.rotate(r0).invert([event.x,event.y]));
+    const delta = versor.delta(v0, v1);
+    let q1 = versor.multiply(q0, delta);
+    const p = pointer(event, this);
+    if (p[2]){ const d=(p[2]-a0)/2; const s=-Math.sin(d); const c=Math.sign(Math.cos(d)); q1 = versor.multiply([Math.sqrt(1 - s*s),0,0,c*s], q1); }
+    projection.rotate(versor.rotation(q1));
+    if (delta[0] < 0.7) dragstarted.apply(this,[event,this]);
+    render();
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
