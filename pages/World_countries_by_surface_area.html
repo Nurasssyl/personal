@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>World countries by surface area — Interactive (WB official)</title>
+<style>
+  html,body{margin:0;height:100%;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+  #wrap{height:100%;display:flex;flex-direction:column}
+  header{
+  padding:10px 14px;
+  font-weight:600;
+  border-bottom:1px solid #eee;
+  text-align:center;   /* центрируем текст */
+}
+
+  #viz{flex:1;position:relative}
+  svg{width:100%;height:100%;display:block;background:#f6f8fb}
+  .tooltip{position:absolute;pointer-events:none;background:rgba(0,0,0,.85);color:#fff;padding:8px 10px;border-radius:8px;font-size:12px;transform:translate(12px,12px);white-space:nowrap;z-index:10}
+  .legend{position:absolute;left:14px;bottom:14px;background:#fff;border:1px solid #eee;border-radius:10px;padding:10px 12px;box-shadow:0 2px 10px rgba(0,0,0,.08);font-size:12px}
+  .legend .bar{width:180px;height:12px;border-radius:6px;display:block;margin:6px 0}
+  .legend .items{display:flex;gap:10px;margin-top:6px;align-items:center;flex-wrap:wrap}
+  .swatch{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-right:6px}
+  .sw-red{background:#e74c3c}
+  .sw-green{background:#27ae60}
+  .sw-yellow{background:#f1c40f;border:1px solid rgba(0,0,0,.25)}
+  .note{position:absolute;right:14px;bottom:14px;font-size:12px;color:#666;background:#fff;border:1px solid #eee;border-radius:10px;padding:8px 10px}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <header>World countries by surface area</header>
+
+  <div id="viz">
+    <div class="legend">
+      <div>Default: choropleth by <strong>surface area</strong> (World Bank)</div>
+      <svg width="200" height="26">
+        <defs><linearGradient id="grad" x1="0" x2="1" y1="0" y2="0"></linearGradient></defs>
+        <rect class="bar" x="10" y="7" width="180" height="12" fill="url(#grad)"></rect>
+        <g font-size="10" fill="#555">
+          <text id="minLabel" x="10" y="24"></text>
+          <text id="maxLabel" x="190" y="24" text-anchor="end"></text>
+        </g>
+      </svg>
+      <div class="items">
+        <span><span class="swatch sw-red"></span>Smaller</span>
+        <span><span class="swatch sw-green"></span>Green</span>
+        <span><span class="swatch sw-yellow"></span>Selected country</span>
+      </div>
+    </div>
+    <div class="note">Zoom & pan • Data: World Bank <code>AG.SRF.TOTL.K2</code> (latest)</div>
+    <div id="tip" class="tooltip" style="opacity:0"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script>
+const fmt = d3.format(",.0f");
+const WORLD_GEOJSON = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson";
+
+/* Если рядом с HTML есть свой CSV (iso3,name,area_km2), он имеет приоритет. */
+const LOCAL_CSV = "true-size-of-countries-2024.csv";
+
+/* World Bank: SURFACE AREA (land + inland waters) */
+const WB_API_SURFACE = "https://api.worldbank.org/v2/country/all/indicator/AG.SRF.TOTL.K2?format=json&per_page=20000";
+
+const svg = d3.select("#viz").append("svg");
+const g = svg.append("g");
+const ocean = g.append("path").attr("fill","#e6f0ff");
+const countriesG = g.append("g");
+const bordersG   = g.append("g");
+const tip = d3.select("#tip");
+
+const W = () => document.querySelector("#viz").clientWidth;
+const H = () => document.querySelector("#viz").clientHeight;
+
+async function getAreaByISO() {
+  // 1) local CSV (optional)
+  try {
+    const csv = await d3.csv(LOCAL_CSV);
+    if (csv && csv.length) {
+      const m = new Map();
+      csv.forEach(r=>{
+        const iso = (r.iso3||r.ISO3||r.iso_a3||"").trim().toUpperCase();
+        const v = +r.area_km2 || +r.area || +r.value;
+        if (iso && isFinite(v)) m.set(iso, v);
+      });
+      if (m.size > 50) return m;
+    }
+  } catch(e){}
+
+  // 2) World Bank Surface Area
+  const resp = await fetch(WB_API_SURFACE);
+  const json = await resp.json();
+  const rows = json[1] || [];
+  const latest = new Map();
+  rows.forEach(r=>{
+    if (!r || !r.countryiso3code || !r.value) return;
+    const isAgg = r.region && r.region.id === "NA";
+    if (isAgg) return; // skip aggregates
+    const iso = r.countryiso3code.toUpperCase();
+    const year = +r.date;
+    const prev = latest.get(iso);
+    if (!prev || year > prev.year) latest.set(iso, {year, val:+r.value});
+  });
+  const out = new Map();
+  latest.forEach((v,k)=> out.set(k, v.val));
+  return out;
+}
+
+(async function init(){
+  const [world, areaMap] = await Promise.all([ d3.json(WORLD_GEOJSON), getAreaByISO() ]);
+
+  const features = world.features.filter(f => !/antarctica/i.test(f.properties.name||""));
+
+  let proj = d3.geoEqualEarth().fitExtent([[8,8],[W()-8,H()-8]], {type:"FeatureCollection", features});
+  let path = d3.geoPath(proj);
+
+  ocean.attr("d", path({type:"Sphere"}));
+
+  // attach surface areas (km²); если нет в WB/CSV — геометрический фолбэк
+  const R = 6371;
+  features.forEach(f=>{
+    const iso = (f.id||"").toUpperCase();
+    let val = areaMap.get(iso);
+    if (!isFinite(val)) {
+      const ster = d3.geoArea(f);
+      val = ster * R * R;
+    }
+    f.properties.area_km2 = val;
+  });
+
+  // ranks
+  const sorted = [...features].sort((a,b)=>b.properties.area_km2 - a.properties.area_km2);
+  sorted.forEach((f,i)=> f.properties.rank = i+1);
+
+  const areas = features.map(f=>f.properties.area_km2).filter(isFinite);
+  const extent = d3.extent(areas);
+  const color = d3.scaleSequential(d3.interpolateViridis).domain(extent);
+
+  d3.select("#minLabel").text(fmt(extent[0])+" km²");
+  d3.select("#maxLabel").text(fmt(extent[1])+" km²");
+  d3.select("#grad").selectAll("stop")
+    .data(d3.range(0,1.0001,0.1))
+    .join("stop")
+    .attr("offset",d=>d*100+"%")
+    .attr("stop-color",d=>color(d3.quantile(areas,d)));
+
+  let hoverArea = null, hoverISO = null;
+
+  const baseFill = d => color(d.properties.area_km2);
+  const compFill = d => {
+    if (hoverISO && d.id === hoverISO) return "#f1c40f";     // selected = yellow
+    if (hoverArea == null) return baseFill(d);                // default choropleth
+    if (d.properties.area_km2 < hoverArea) return "#e74c3c";  // smaller = red
+    if (d.properties.area_km2 > hoverArea) return "#27ae60";  // larger  = green
+    return "#bdc3c7";
+  };
+
+  const paths = countriesG.selectAll("path")
+    .data(features)
+    .join("path")
+    .attr("d", path)
+    .attr("fill", baseFill)
+    .attr("stroke","#fff")
+    .attr("stroke-width",0.5)
+    .on("mousemove", (event,d)=>{
+      hoverArea = d.properties.area_km2;
+      hoverISO  = d.id;
+      paths.attr("fill", compFill);
+      tip.style("opacity",1)
+         .style("left",(event.clientX+12)+"px")
+         .style("top",(event.clientY+12)+"px")
+         .html(`<strong>${d.properties.name}</strong>
+                <div>${fmt(hoverArea)} km²</div>
+                <div>Place: ${d.properties.rank}</div>`);
+    })
+    .on("mouseout", ()=>{
+      hoverArea = null; hoverISO  = null;
+      paths.attr("fill", baseFill);
+      tip.style("opacity",0);
+    });
+
+  bordersG.selectAll("path")
+    .data(features)
+    .join("path")
+    .attr("d", path)
+    .attr("fill","none")
+    .attr("stroke","#888")
+    .attr("stroke-width",0.4)
+    .attr("pointer-events","none");
+
+  svg.call(d3.zoom()
+    .extent([[0,0],[W(),H()]])
+    .scaleExtent([1,8])
+    .on("zoom", ({transform})=>{
+      g.attr("transform", transform);
+      g.attr("stroke-width", 0.5/transform.k);
+      bordersG.selectAll("path").attr("stroke-width", 0.4/transform.k);
+    }));
+
+  window.addEventListener("resize", ()=>{
+    proj = d3.geoEqualEarth().fitExtent([[8,8],[W()-8,H()-8]], {type:"FeatureCollection", features});
+    path = d3.geoPath(proj);
+    ocean.attr("d", path({type:"Sphere"}));
+    countriesG.selectAll("path").attr("d", path);
+    bordersG.selectAll("path").attr("d", path);
+  });
+})();
+</script>
+</body>
+</html>
