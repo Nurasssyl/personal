@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>KZ Exports 2024</title>
+<style>
+  html,body{margin:0;height:100%;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+  #wrap{height:100%;display:flex;flex-direction:column}
+  header{padding:10px 14px;font-weight:800;text-align:center;border-bottom:1px solid #eee}
+  #viz{flex:1;position:relative}
+  svg{width:100%;height:100%;display:block;background:#fff}
+  .tooltip{position:absolute;pointer-events:none;background:rgba(17,24,39,.95);color:#fff;
+           padding:8px 10px;border-radius:8px;font-size:12px;white-space:nowrap;opacity:0}
+  .legend{position:absolute;left:14px;bottom:14px;background:#fff;border:1px solid #eee;border-radius:10px;
+          padding:10px 12px;box-shadow:0 2px 10px rgba(0,0,0,.08);font-size:12px}
+  .legend .bar{width:180px;height:12px;border-radius:6px;display:block;margin:6px 0}
+  .legend .items{display:flex;gap:10px;margin-top:6px;align-items:center;flex-wrap:wrap}
+  .swatch{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-right:6px}
+  .sw-kz{background:#e11d48}
+  .sw-zero{background:#d9d9d9}
+  .sw-tiny{background:#7f7f7f}
+  .country{stroke:#9aa3af;stroke-width:.6}
+  .country:hover{stroke:#111;stroke-width:1}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <header>KZ Exports 2024</header>
+  <div id="viz">
+    <div class="legend">
+      <div>Export Value <strong>(thousand USD)</strong></div>
+      <svg width="200" height="26">
+        <defs><linearGradient id="grad" x1="0" x2="1" y1="0" y2="0"></linearGradient></defs>
+        <rect class="bar" x="10" y="7" width="180" height="12" fill="url(#grad)"></rect>
+        <g font-size="10" fill="#555">
+          <text id="minLabel" x="10" y="24"></text>
+          <text id="maxLabel" x="190" y="24" text-anchor="end"></text>
+        </g>
+      </svg>
+      <div class="items">
+        <span><span class="swatch sw-kz"></span>Kazakhstan</span>
+        <span><span class="swatch sw-zero"></span>0</span>
+        <span><span class="swatch sw-tiny"></span>&lt; 10k</span>
+      </div>
+    </div>
+    <div id="tip" class="tooltip"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script>
+/* ====== Твои данные (thousand USD, округлено) ====== */
+const DATA = {
+  "Italy":18663765,"China":14891441,"Russia":9551856,"Netherlands":5295627,
+  "France":3688789,"Turkey":3314354,"Uzbekistan":2826583,"Romania":2788442,
+  "Greece":2757527,"USA":1974026,"Spain":1354582,
+  "Kyrgyzstan":1285787,"South Korea":1252449,"Switzerland":1228216,
+  "Germany":1160773,"Tajikistan":996140,"Singapore":854608,"Ireland":647400,
+  "Afghanistan":527766,"Japan":506550,"Poland":487853,"Azerbaijan":485350,
+  "India":464210,"England":420100,"Turkmenistan":335013,
+  "Bulgaria":303595,"Canada":253908,"Croatia":253506,"Morocco":250253,
+  "Belgium":210396,"Vietnam":204993,"Brunei":184928,"Belarus":171270,
+  "Israel":167590,"Latvia":166650,"Czechia":151932,"Egypt":137195,
+  "United Arab Emirates":130734,"Iran":123349,"Indonesia":120788,"Mongolia":120156,
+  "Georgia":117481,"Uruguay":100142,"Hong Kong":94522,"Brazil":90724,
+  "Lithuania":71631,"Ukraine":68156,"The Bahamas":51010,"Moldova":50505,
+  "Estonia":38736,"Armenia":36250,"Denmark":34925,"Sweden":27687,
+  "Republic of Serbia":15870,"Senegal":14468,"Australia":12406,"Pakistan":11846,
+  "Tunisia":9782,"Finland":8560,"Bangladesh":6592,"Mexico":6571,"Cyprus":6157,
+  "Thailand":6113,"Slovenia":5734,"Hungary":5309,"South Africa":5128,
+  "Qatar":4787,"Norway":4787,"Portugal":4739,"Austria":4133,"Malaysia":3756,
+  "Taiwan":3747,"Jordan":3717,"Saudi Arabia":3644,"Kuwait":3396,"Peru":3188,
+  "Algeria":3136,"Slovakia":2930,"Iceland":2870,"Chile":2566,"Argentina":2462,
+  "Iraq":2210,"Nigeria":2125,"Somalia":1298,"Angola":987,"Oman":758,
+  "Colombia":753,"Malta":511,"Guinea":406,"North Macedonia":301,"Libya":294,
+  "Ghana":293,"Syria":266,"Zambia":250,"Dominican Rep.":199,"Maldives":182,
+  "Cameroon":156,"Philippines":96,"Dem. Rep. Congo":92,"Lebanon":71,"Panama":69,
+  "Liechtenstein":68,"Ecuador":63,"Congo":53,"Cambodia":47,"Laos":46,
+  "Bosnia and Herz.":42,"Luxembourg":37,"Sri Lanka":33,"New Zealand":15,
+  "Papua New Guinea":12,"Tanzania":7,"Jamaica":7,"Albania":7,"Namibia":5,
+  "Myanmar":4,"Uganda":3,"Cuba":3,"Trinidad and Tobago":2,"Monaco":2,"Gabon":1,
+  "Zimbabwe":1,"Equatorial Guinea":1,"Kenya":0,"Côte d'Ivoire":0
+};
+
+/* === КЛЮЧЕВОЕ: фиксы имён под world.geojson (holtzy) === */
+const NAME_FIX = {
+  "Czechia":"Czech Republic",
+  "Bosnia and Herz.":"Bosnia and Herzegovina",
+  "Dem. Rep. Congo":"Democratic Republic of the Congo",
+  "Dominican Rep.":"Dominican Republic",
+  "Congo":"Republic of the Congo",
+  "Côte d'Ivoire":"Ivory Coast",
+  "North Macedonia":"Macedonia",
+  // редкие варианты на будущее
+  "Türkiye":"Turkey",
+  "Lao PDR":"Laos",
+  "Viet Nam":"Vietnam",
+  "Syrian Arab Republic":"Syria",
+  "Cabo Verde":"Cape Verde",
+  "Eswatini":"Swaziland",         // если вдруг встретится
+  "Timor-Leste":"East Timor"      // если вдруг встретится
+};
+
+/* преобразуем ключи данных в имена из geojson */
+const DATA_FIXED = {};
+for (const [k,v] of Object.entries(DATA)){
+  const kk = NAME_FIX[k] || k;
+  DATA_FIXED[kk] = (DATA_FIXED[kk]||0) + v;
+}
+
+/* ====== рисуем ====== */
+const GEOJSON = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson";
+const tinyThreshold = 10;
+const fmt = x => d3.format(",")(x);
+
+const svg = d3.select("#viz").append("svg");
+const g = svg.append("g");
+const tip = d3.select("#tip");
+
+const W = () => document.querySelector("#viz").clientWidth;
+const H = () => document.querySelector("#viz").clientHeight;
+
+d3.json(GEOJSON).then(world => {
+  const features = world.features.filter(f => f.properties?.name !== "Antarctica");
+  let proj = d3.geoEqualEarth().fitExtent([[8,8],[W()-8,H()-8]], {type:"FeatureCollection",features});
+  let path = d3.geoPath(proj);
+
+  const posVals = Object.entries(DATA_FIXED).map(([_,v])=>v).filter(v=>v>0);
+  const color = d3.scaleSequential(d3.interpolateYlGnBu)
+                  .domain([d3.min(posVals), d3.max(posVals)]);
+
+  // легенда
+  const minV = d3.min(posVals), maxV = d3.max(posVals);
+  d3.select("#minLabel").text(fmt(minV));
+  d3.select("#maxLabel").text(fmt(maxV));
+  d3.select("#grad").selectAll("stop")
+    .data(d3.range(0,1.0001,0.1))
+    .join("stop")
+    .attr("offset", d => (d*100)+"%")
+    .attr("stop-color", d => color(minV + (maxV-minV)*d));
+
+  const paths = g.selectAll("path.country")
+    .data(features)
+    .join("path")
+    .attr("class","country")
+    .attr("d", path)
+    .attr("fill", d => {
+      const name = d.properties.name;
+      if (name === "Kazakhstan") return "#e11d48";
+      const v = DATA_FIXED[name];
+      if (v === 0) return "#d9d9d9";
+      if (v > 0 && v < tinyThreshold) return "#7f7f7f";
+      if (v > 0) return color(v);
+      return "#e5e7eb"; // no data
+    })
+    .on("mousemove", (event,d) => {
+      const name = d.properties.name;
+      const v = DATA_FIXED[name];
+      const val = (v==null) ? "No data" : `${fmt(v)} thousand USD`;
+      tip.style("opacity",1)
+         .style("left",(event.clientX+12)+"px")
+         .style("top",(event.clientY+12)+"px")
+         .html(`<strong>${name}</strong><br>${val}`);
+    })
+    .on("mouseleave", () => tip.style("opacity",0));
+
+  // отладка: покажем что не сматчилось (в консоли)
+  const geoNames = new Set(features.map(f => f.properties.name));
+  const unmatched = Object.keys(DATA_FIXED).filter(k => !geoNames.has(k));
+  if (unmatched.length){
+    console.warn("Не сматчились (их нет/другие имена в geojson):", unmatched);
+  }
+
+  svg.call(
+    d3.zoom().extent([[0,0],[W(),H()]]).scaleExtent([1,8])
+      .on("zoom", ({transform}) => {
+        g.attr("transform", transform);
+        g.attr("stroke-width", 0.6/transform.k);
+      })
+  );
+
+  window.addEventListener("resize", ()=>{
+    proj = d3.geoEqualEarth().fitExtent([[8,8],[W()-8,H()-8]], {type:"FeatureCollection",features});
+    path = d3.geoPath(proj);
+    paths.attr("d", path);
+  });
+});
+</script>
+</body>
+</html>
