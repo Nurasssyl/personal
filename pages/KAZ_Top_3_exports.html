@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>KAZ Top 3 Exports</title>
+<style>
+  html,body{margin:0;height:100%;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+  #wrap{height:100%;display:flex;flex-direction:column}
+  header{padding:10px 14px;font-weight:800;text-align:center;border-bottom:1px solid #eee}
+  #viz{flex:1;position:relative}
+  svg{width:100%;height:100%;display:block;background:#fff}
+  .tooltip{position:absolute;pointer-events:none;background:rgba(17,24,39,.95);color:#fff;
+           padding:10px 12px;border-radius:8px;font-size:13px;max-width:240px;opacity:0}
+  .country{stroke:#9aa3af;stroke-width:.6}
+  .country:hover{stroke:#111;stroke-width:1}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <header>KAZ Top 3 Exports by Country</header>
+  <div id="viz"><div id="tip" class="tooltip"></div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script>
+const GEOJSON = "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson";
+
+const svg = d3.select("#viz").append("svg");
+const g = svg.append("g");
+const tip = d3.select("#tip");
+
+const W = () => document.querySelector("#viz").clientWidth;
+const H = () => document.querySelector("#viz").clientHeight;
+
+Promise.all([
+  d3.json(GEOJSON),
+  fetch("country_top3_products.json").then(r => r.json())
+]).then(([world, PRODUCTS]) => {
+  const features = world.features.filter(f => f.properties?.name !== "Antarctica");
+  let proj = d3.geoEqualEarth().fitExtent([[8,8],[W()-8,H()-8]], {type:"FeatureCollection",features});
+  let path = d3.geoPath(proj);
+
+  // список стран из geojson
+  const geoNames = new Set(features.map(f => f.properties.name));
+
+  // unmatched: есть в JSON, нет в карте
+  const unmatched = Object.keys(PRODUCTS).filter(k => !geoNames.has(k));
+  if (unmatched.length) {
+    console.warn("Не сматчились страны (есть в JSON, нет в geojson):", unmatched);
+  }
+
+  const paths = g.selectAll("path.country")
+    .data(features)
+    .join("path")
+    .attr("class","country")
+    .attr("d", path)
+    .attr("fill", d => {
+      const name = d.properties.name;
+      if (name === "Kazakhstan") return "#e11d48";
+      return PRODUCTS[name] ? "#3b82f6" : "#e5e7eb";
+    })
+    .on("mousemove", (event,d) => {
+      const name = d.properties.name;
+      const products = PRODUCTS[name] || [];
+      let html = `<strong>${name}</strong>`;
+      if (products.length){
+        html += "<ul style='margin:4px 0;padding-left:18px'>";
+        products.forEach(p => { html += `<li>${p}</li>` });
+        html += "</ul>";
+      } else {
+        html += "<br><em>No data</em>";
+      }
+      tip.style("opacity",1)
+         .style("left",(event.clientX+12)+"px")
+         .style("top",(event.clientY+12)+"px")
+         .html(html);
+    })
+    .on("mouseleave", () => tip.style("opacity",0));
+
+  svg.call(
+    d3.zoom().extent([[0,0],[W(),H()]]).scaleExtent([1,8])
+      .on("zoom", ({transform}) => {
+        g.attr("transform", transform);
+        g.attr("stroke-width", 0.6/transform.k);
+      })
+  );
+
+  window.addEventListener("resize", ()=>{
+    proj = d3.geoEqualEarth().fitExtent([[8,8],[W()-8,H()-8]], {type:"FeatureCollection",features});
+    path = d3.geoPath(proj);
+    paths.attr("d", path);
+  });
+});
+</script>
+</body>
+</html>
