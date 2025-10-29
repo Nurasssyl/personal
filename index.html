@@ -342,105 +342,126 @@
 
 
     
+<section id="experience" class="exp-wrap">
+  <h2 class="exp-title">EXPERIENCE</h2>
 
+  <div class="exp-col">
+    <article class="exp-card">
+      <span class="exp-dot"></span>
+      <div class="exp-years">11/2018 – 03/2020</div>
+      <h3 class="exp-role">Data Analyst</h3>
+      <p class="exp-company">ACT Kazakhstan</p>
+      <p class="exp-desc">Analyzed operations, forecasted trends, and surveyed staff and clients. Used Excel, Power BI, and Python to deliver reports that improved performance.</p>
+    </article>
 
-    
-<section id="experience" class="timeline-container">
-  <h2>Experience</h2>
-  <div class="timeline-grid">
+    <article class="exp-card">
+      <span class="exp-dot"></span>
+      <div class="exp-years">04/2020 – 06/2022</div>
+      <h3 class="exp-role">Data Scientist</h3>
+      <p class="exp-company">Quick Money</p>
+      <p class="exp-desc">Prepared and tested customer profile data for a credit scoring project, cleaned and structured datasets to support accurate scoring and automation.</p>
+    </article>
 
-    <div class="timeline-item">
-      <h3>Data Analyst</h3>
-      <h4>ACT Kazakhstan</h4>
-      <span>11/2018 – 03/2020</span>
-      <p>Analyzed operations, forecasted trends, and surveyed staff and clients. Used Excel, Power BI, and Python to deliver reports that improved performance.</p>
-    </div>
+    <article class="exp-card">
+      <span class="exp-dot"></span>
+      <div class="exp-years">10/2022 – 07/2024</div>
+      <h3 class="exp-role">Data Analyst</h3>
+      <p class="exp-company">Keyhorse</p>
+      <p class="exp-desc">Redesigned public and private service workflows using data analysis, improving efficiency and enabling online access for citizens.</p>
+    </article>
 
-    <div class="timeline-item">
-      <h3>Data Scientist</h3>
-      <h4>Quick Money</h4>
-      <span>04/2020 – 06/2022</span>
-      <p>Prepared and tested customer profile data for a credit scoring project, cleaned and structured datasets to support accurate scoring and automation.</p>
-    </div>
-
-    <div class="timeline-item">
-      <h3>Data Analyst</h3>
-      <h4>Keyhorse</h4>
-      <span>10/2022 – 07/2024</span>
-      <p>Redesigned public and private service workflows using data analysis, improving efficiency and enabling online access for citizens.</p>
-    </div>
-
-    <div class="timeline-item active">
-      <h3>Data Scientist</h3>
-      <h4>Alatau City Garant</h4>
-      <span>07/2024 – Present</span>
-      <p>I analyze large volumes of insurance data to identify trends, assess risks, and support strategic decisions. I create visualizations and dashboards that help stakeholders understand insights and improve performance.</p>
-    </div>
-
+    <article class="exp-card active">
+      <span class="exp-dot"></span>
+      <div class="exp-years">07/2024 – Present</div>
+      <h3 class="exp-role">Data Scientist</h3>
+      <p class="exp-company">Alatau City Garant</p>
+      <p class="exp-desc">Analyze large volumes of insurance data to identify trends, assess risks, and support strategic decisions. Create visualizations and dashboards that help stakeholders understand insights and improve performance.</p>
+    </article>
   </div>
 </section>
 
 <style>
-.timeline-container {
-  text-align: center;
-  padding: 40px 0 20px;
-}
+  :root{
+    --brand:#16a085;
+    --line:#e7f1ed;
+    --card:#ffffff;
+    --text:#1f2d2b;
+    --muted:#6b7b78;
+    --shadow:0 6px 22px rgba(22,160,133,.12);
+  }
 
-.timeline-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 25px;
-  justify-items: center;
-  max-width: 1100px;
-  margin: 0 auto;
-}
+  .exp-wrap{
+    max-width:980px;
+    margin:0 auto;
+    padding:20px 10px 40px;
+  }
 
-.timeline-item {
-  background: #0b0b0b;
-  border: 1px solid #1e1e1e;
-  border-radius: 18px;
-  padding: 22px;
-  color: #f5f5f5;
-  text-align: left;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-  transition: all 0.3s ease;
-}
+  .exp-title{
+    color:var(--brand);
+    letter-spacing:.06em;
+    font-weight:700;
+    font-size:1rem;
+    margin:8px 0 16px;
+    text-transform:uppercase;
+  }
 
-.timeline-item:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.45);
-}
+  .exp-col{
+    position:relative;
+    padding-left:22px;
+    border-left:2px solid var(--line);
+  }
 
-.timeline-item.active {
-  border: 1px solid #00bfa6;
-  box-shadow: 0 0 18px rgba(0,191,166,0.4);
-}
+  .exp-card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px 12px;
+    margin:14px 0;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
 
-.timeline-item h3 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 700;
-  color: #00bfa6;
-}
+  .exp-card:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--shadow);
+    border-color:#dbeae6;
+  }
 
-.timeline-item h4 {
-  margin: 6px 0;
-  font-size: 15px;
-  color: #ccc;
-  font-weight: 500;
-}
+  .exp-card.active{
+    border-color:var(--brand);
+    box-shadow:0 0 14px rgba(22,160,133,.2);
+  }
 
-.timeline-item span {
-  font-size: 13px;
-  opacity: 0.7;
-}
+  .exp-dot{
+    position:absolute; left:-28px; top:20px;
+    width:10px; height:10px; border-radius:50%;
+    background:var(--brand);
+    box-shadow:0 0 0 4px rgba(22,160,133,.18);
+  }
 
-.timeline-item p {
-  font-size: 13.5px;
-  margin-top: 10px;
-  line-height: 1.5em;
-}
+  .exp-years{
+    font-weight:700; color:var(--brand); font-size:.9rem; margin-bottom:6px;
+  }
+
+  .exp-role{
+    margin:0 0 4px; color:var(--text); font-size:1.05rem;
+  }
+
+  .exp-company{
+    margin:0 0 6px; color:var(--muted); font-size:.95rem;
+  }
+
+  .exp-desc{
+    margin:0; color:var(--text); font-size:.92rem; line-height:1.45;
+  }
+
+  @media (max-width:600px){
+    .exp-wrap{padding:4px 8px;}
+    .exp-card{padding:12px 14px;}
+    .exp-dot{left:-26px;}
+  }
 </style>
+
 
 
 <section class="skills" style="margin-top: 20px;">
