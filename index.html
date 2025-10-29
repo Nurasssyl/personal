@@ -197,59 +197,87 @@
         </div>
         <p>Data Scientist with over 5 years of experience in data analysis, machine learning, and data visualization. Skilled in Python, R, and various tools like Power BI. I have developed predictive models, optimized data pipelines, and created impactful dashboards for strategic decision-making. I am passionate about crafting beautiful and insightful visualizations to make complex data understandable. As a Master of Computer Science, I am open to relocation and ready to contribute to international projects with a global impact.</p>
     </header>
+
+
+
+
 <section id="education" class="section">
-  <h2>🎓 Education</h2>
-  <div class="edu-container">
-    <div class="edu-card">
-      <h3>MSc in Computer Engineering</h3>
-      <p><strong>Al-Farabi Kazakh National University</strong></p>
-      <p>Almaty, Kazakhstan</p>
-      <p class="edu-date">09/2022 – 07/2024</p>
+  <h2>Education</h2>
+
+  <div class="edu-timeline">
+    <!-- BSc FIRST -->
+    <div class="edu-item">
+      <div class="edu-dot"></div>
+      <div class="edu-body">
+        <h3>BSc in Computer Engineering</h3>
+        <p>
+          <strong><a href="https://www.topuniversities.com/universities/al-farabi-kazakh-national-university" target="_blank">
+            Al-Farabi Kazakh National University
+          </a></strong>
+          — #1 university in Central Asia, QS World University Rankings #163.
+        </p>
+        <div class="edu-meta">
+          <span>Almaty, Kazakhstan</span>
+          <span>09/2018 – 07/2022</span>
+        </div>
+      </div>
     </div>
 
-    <div class="edu-card">
-      <h3>BSc in Computer Engineering</h3>
-      <p><strong>Al-Farabi Kazakh National University</strong></p>
-      <p>Almaty, Kazakhstan</p>
-      <p class="edu-date">09/2018 – 07/2022</p>
+    <div class="edu-item">
+      <div class="edu-dot"></div>
+      <div class="edu-body">
+        <h3>MSc in Computer Engineering</h3>
+        <p>
+          <strong><a href="https://www.topuniversities.com/universities/al-farabi-kazakh-national-university" target="_blank">
+            Al-Farabi Kazakh National University
+          </a></strong>
+          — #1 university in Central Asia, QS World University Rankings #163.
+        </p>
+        <div class="edu-meta">
+          <span>Almaty, Kazakhstan</span>
+          <span>09/2022 – 07/2024</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  #education h2 {
-    text-align: center;
-    margin-bottom: 20px;
+  :root { --accent:#00ffaa; --text:#e6e6e6; --muted:#a9a9a9; --line:#2a2a2a; }
+  #education h2 { text-align:center; margin:0 0 14px; }
+  .edu-timeline { position:relative; max-width:860px; margin:0 auto; padding-left:18px; }
+  .edu-timeline::before {
+    content:""; position:absolute; left:7px; top:0; bottom:0;
+    width:2px; background:linear-gradient(180deg,var(--accent),transparent);
+    opacity:.6;
   }
-
-  .edu-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
+  .edu-item { position:relative; display:flex; gap:14px; padding:14px 12px; }
+  .edu-item + .edu-item { border-top:1px dashed var(--line); }
+  .edu-dot {
+    position:absolute; left:-2px; top:20px; width:10px; height:10px; border-radius:50%;
+    background:var(--accent); box-shadow:0 0 0 4px rgba(0,255,170,.12);
   }
-
-  .edu-card {
-    width: 80%;
-    background: #111;
-    color: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    text-align: center;
-    transition: transform 0.2s ease;
-  }
-
-  .edu-card:hover {
-    transform: translateY(-3px);
-  }
-
-  .edu-date {
-    color: #00ffaa;
-    font-weight: 600;
-    margin-top: 5px;
+  .edu-body { flex:1; border:1px solid var(--line); border-radius:12px; padding:14px 16px; background:rgba(255,255,255,.02); }
+  .edu-body h3 { margin:0 0 6px; font-size:1.05rem; }
+  .edu-body p { margin:0 0 8px; color:var(--text); line-height:1.45; }
+  .edu-body a { color:var(--accent); text-decoration:none; }
+  .edu-body a:hover { text-decoration:underline; }
+  .edu-meta { display:flex; gap:14px; flex-wrap:wrap; font-size:.92rem; color:var(--muted); }
+  @media (max-width:640px){
+    .edu-body { padding:12px; }
+    .edu-timeline { padding-left:16px; }
   }
 </style>
+
+
+
+
+
+
+
+
+
+    
 
 
     
