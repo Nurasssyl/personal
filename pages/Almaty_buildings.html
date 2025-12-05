@@ -2,23 +2,44 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Almaty Buildings</title>
+<title>Structure of Almaty Buildings</title>
+
+<!-- OpenSeadragon -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.0.0/openseadragon.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.0.0/openseadragon.min.css" />
+
 <style>
-    html, body {
+    body {
         margin: 0;
-        padding: 0;
-        height: 100%;
-        background: black;
+        background-color: #000;
     }
-    .fullpage {
-        width: 100%;
-        height: 100%;
-        object-fit: contain; 
-        display: block;
+    #almaty-viewer {
+        width: 100vw;
+        height: 100vh;
+        background-color: #000;
     }
 </style>
 </head>
 <body>
-    <img src="/assets/images/almaty_heights_hd.png" class="fullpage">
+
+<div id="almaty-viewer"></div>
+
+<script>
+    OpenSeadragon({
+        id: "almaty-viewer",
+        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.0.0/images/",
+        tileSources: {
+            type: 'image',
+            url: '../assets/images/almaty_heights_hd.png'
+        },
+        showNavigator: true,
+        animationTime: 0.8,
+        zoomPerScroll: 1.2,
+        defaultZoomLevel: 1,
+        minZoomLevel: 1,
+        maxZoomLevel: 20
+    });
+</script>
+
 </body>
 </html>
