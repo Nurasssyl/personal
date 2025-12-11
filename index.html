@@ -3,173 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nurasyl Abdrazakuly — Portfolio</title>
+<title>Nurasyl Abdrazakuly</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 <style>
     body {
         font-family: "Inter", sans-serif;
         margin: 0;
         padding: 0;
-        background: #fafafa;
-        color: #1d1d1d;
+        background: #fcfcfc;
+        color: #222;
         line-height: 1.55;
     }
 
     .container {
         width: 90%;
-        max-width: 900px;
+        max-width: 1100px;
         margin: 0 auto;
     }
 
-    /* HEADER — минималистичный */
-    header.intro {
-        text-align: center;
-        padding: 80px 20px 60px;
+    /* HEADER — PHOTO LEFT, TEXT RIGHT */
+    .header-wrap {
+        display: flex;
+        gap: 40px;
+        padding: 60px 0 40px;
+        align-items: center;
     }
 
-    .intro-photo img {
-        width: 150px;
-        height: 150px;
+    .header-photo img {
+        width: 170px;
+        height: 170px;
         border-radius: 50%;
         object-fit: cover;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     }
 
-    .intro-name {
-        margin: 20px 0 10px;
-        font-size: 2.3rem;
+    .header-text h1 {
+        font-size: 2.6rem;
+        margin: 0 0 15px;
         font-weight: 700;
         letter-spacing: -0.5px;
     }
 
-    .intro-bio {
-        max-width: 630px;
-        margin: 0 auto 20px;
+    .header-text p {
+        max-width: 700px;
         font-size: 1.05rem;
         color: #444;
+        margin: 0 0 20px;
     }
 
-    .intro-links {
-        display: flex;
-        justify-content: center;
-        gap: 25px;
-        margin: 20px 0;
-    }
-
-    .intro-links a {
+    .header-links a {
+        margin-right: 22px;
         font-weight: 600;
         color: #0a4da8;
         text-decoration: none;
     }
 
-    .intro-links a:hover {
-        text-decoration: underline;
-    }
+    .header-links a:hover { text-decoration: underline; }
 
-    .intro-cv {
+    .cv-btn {
         display: inline-block;
         margin-top: 10px;
-        padding: 10px 18px;
-        font-weight: 600;
-        color: white;
+        padding: 9px 16px;
         background: #0a4da8;
-        border-radius: 6px;
+        color: white;
         text-decoration: none;
+        border-radius: 5px;
+        font-weight: 600;
     }
 
-    .intro-cv:hover {
-        background: #083b82;
-    }
+    .cv-btn:hover { background: #093b80; }
 
-    /* SECTION TITLE */
+    /* SECTION HEADER */
     h2.section-title {
-        margin: 60px 0 20px;
-        font-size: 1rem;
-        letter-spacing: 0.07em;
-        color: #0a4da8;
         font-weight: 700;
+        color: #222;
+        font-size: 1.6rem;
+        margin: 60px 0 25px;
     }
 
-    /* LINE LIST STYLE */
-    .line-list {
-        border-left: 2px solid #e5e8eb;
-        padding-left: 18px;
+    /* ARTICLE STYLE BLOCKS */
+    .article-line {
+        border-left: 2px solid #e1e1e1;
+        padding-left: 22px;
+        margin-bottom: 30px;
     }
 
-    .line-item {
-        background: white;
-        border: 1px solid #e5e8eb;
-        border-radius: 8px;
-        padding: 14px 18px;
-        margin-bottom: 14px;
-        transition: 0.2s ease;
+    .article-block {
+        margin-bottom: 35px;
     }
 
-    .line-item:hover {
-        background: #f5f7f9;
-    }
-
-    .item-date {
-        color: #0a4da8;
+    .article-date {
         font-size: 0.9rem;
+        color: #666;
         font-weight: 600;
-        margin-bottom: 6px;
+        margin-bottom: 4px;
     }
 
-    .item-title {
-        font-size: 1.05rem;
-        margin: 0 0 4px;
+    .article-title {
+        font-size: 1.1rem;
         font-weight: 600;
+        margin-bottom: 4px;
     }
 
-    .item-place {
-        font-size: 0.92rem;
+    .article-sub {
+        font-size: 0.95rem;
         color: #777;
         margin-bottom: 6px;
     }
 
-    /* MEDIA */
-    .media-list li {
-        margin-bottom: 10px;
-        background: white;
-        padding: 14px 18px;
-        border-radius: 8px;
-        border: 1px solid #e5e8eb;
-        list-style: none;
+    .article-text {
+        font-size: 0.95rem;
+        color: #444;
+        max-width: 700px;
     }
 
+    /* MEDIA LIST */
     .media-list a {
         color: #0a4da8;
         font-weight: 600;
         text-decoration: none;
     }
+    .media-list a:hover { text-decoration: underline; }
 
-    .media-list a:hover {
-        text-decoration: underline;
-    }
-
-    /* SKILLS */
+    /* SKILLS GRID */
     .skills-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-        gap: 8px;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 10px;
+        padding: 5px;
     }
 
     .skill-box {
-        background: #eee;
+        background: #efefef;
         padding: 10px;
-        border-radius: 6px;
         text-align: center;
+        border-radius: 5px;
+        font-size: 0.95rem;
+    }
+
+    /* PORTFOLIO GRID (4 per row) */
+    .portfolio {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-top: 20px;
+    }
+
+    .portfolio-item {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .portfolio-item:hover {
+        transform: translateY(-4px);
+    }
+
+    .portfolio-item img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+    }
+
+    .portfolio-item p {
+        padding: 10px;
+        margin: 0;
         font-size: 0.9rem;
     }
 
-    /* MODAL (оставляю твой код, только почистил) */
+    /* MODAL */
     .modal {
         display: none;
-        position: fixed; inset: 0;
+        position: fixed;
+        inset: 0;
         background: rgba(0,0,0,0.85);
         justify-content: center;
         align-items: center;
@@ -177,181 +187,200 @@
     }
 
     .modal-content {
-        background: #fff;
+        background: white;
         padding: 20px;
-        max-width: 650px;
         width: 90%;
-        border-radius: 8px;
-        overflow-y: auto;
+        max-width: 650px;
+        border-radius: 6px;
         max-height: 80vh;
+        overflow-y: auto;
     }
 
     .close {
         position: absolute;
-        top: 20px; right: 25px;
+        top: 25px;
+        right: 35px;
         font-size: 2rem;
-        cursor: pointer;
         color: white;
+        cursor: pointer;
     }
 
     footer {
-        margin-top: 60px;
-        padding: 30px 10px;
+        margin-top: 90px;
+        padding: 30px 0;
         text-align: center;
+        border-top: 1px solid #e1e1e1;
         font-size: 0.95rem;
-        color: #777;
-        border-top: 1px solid #e5e8eb;
+        color: #555;
     }
+
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-<!-- ============================================ -->
-<!--                 NEW HEADER                   -->
-<!-- ============================================ -->
+<!-- ========================================================== -->
+<!--                        HEADER (A MODE)                      -->
+<!-- ========================================================== -->
 
-<header class="intro">
-    <div class="intro-photo">
+<div class="header-wrap">
+    <div class="header-photo">
         <img src="assets/images/my_photo.jpg">
     </div>
 
-    <h1 class="intro-name">Nurasyl Abdrazakuly</h1>
+    <div class="header-text">
+        <h1>Nurasyl Abdrazakuly</h1>
+        <p>
+            Data Scientist exploring statistical modeling, geospatial analytics and data-driven stories about
+            society, economics and territory. I build analytical tools, create large-scale visualizations and work with
+            complex datasets to uncover meaningful patterns.
+        </p>
 
-    <p class="intro-bio">
-        Data Scientist working with statistical modeling, geospatial analytics, and large-scale data visualization.
-        I build analytical tools, create public-focused visual stories, and explore how data reveals economic,
-        demographic, and territorial patterns.
-    </p>
+        <div class="header-links">
+            <a href="https://www.linkedin.com/in/nurasyl-abdrazakuly/" target="_blank">LinkedIn</a>
+            <a href="https://www.kaggle.com/nurasssyl" target="_blank">Kaggle</a>
+            <a href="https://github.com/Nurasssyl" target="_blank">GitHub</a>
+            <a href="mailto:nurassyl.abdrazakuly@gmail.com">Email</a>
+        </div>
 
-    <div class="intro-links">
-        <a href="https://www.linkedin.com/in/nurasyl-abdrazakuly/" target="_blank">LinkedIn</a>
-        <a href="https://www.kaggle.com/nurasssyl" target="_blank">Kaggle</a>
-        <a href="https://github.com/Nurasssyl" target="_blank">GitHub</a>
-        <a href="mailto:nurassyl.abdrazakuly@gmail.com" target="_blank">Email</a>
+        <a class="cv-btn" href="assets/images/Nurasyl_Abdrazakuly_2025.pdf" target="_blank">Download CV</a>
     </div>
+</div>
 
-    <a class="intro-cv" href="assets/images/Nurasyl_Abdrazakuly_2025.pdf" target="_blank">Download CV</a>
-</header>
-
-
-<!-- ============================================ -->
-<!--                 EDUCATION                    -->
-<!-- ============================================ -->
+<!-- ========================================================== -->
+<!--                         EDUCATION                           -->
+<!-- ========================================================== -->
 
 <h2 class="section-title">EDUCATION</h2>
 
-<div class="line-list">
-    <div class="line-item">
-        <div class="item-date">2018 – 2022</div>
-        <div class="item-title">BSc in Computer Engineering</div>
-        <div class="item-place">Al-Farabi Kazakh National University</div>
+<div class="article-line">
+
+    <div class="article-block">
+        <div class="article-date">2018 – 2022</div>
+        <div class="article-title">BSc in Computer Engineering</div>
+        <div class="article-sub">Al-Farabi Kazakh National University</div>
     </div>
 
-    <div class="line-item">
-        <div class="item-date">2022 – 2024</div>
-        <div class="item-title">MSc in Computer Engineering</div>
-        <div class="item-place">Al-Farabi Kazakh National University</div>
+    <div class="article-block">
+        <div class="article-date">2022 – 2024</div>
+        <div class="article-title">MSc in Computer Engineering</div>
+        <div class="article-sub">Al-Farabi Kazakh National University</div>
     </div>
+
 </div>
 
-
-<!-- ============================================ -->
-<!--                 EXPERIENCE                    -->
-<!-- ============================================ -->
+<!-- ========================================================== -->
+<!--                         EXPERIENCE                          -->
+<!-- ========================================================== -->
 
 <h2 class="section-title">EXPERIENCE</h2>
 
-<div class="line-list">
+<div class="article-line">
 
-    <div class="line-item">
-        <div class="item-date">2018 – 2020</div>
-        <div class="item-title">Data Analyst</div>
-        <div class="item-place">ACT Kazakhstan</div>
-        <p>Worked with operational data, created analytical reports, and supported decision-making through
-           forecasting and data exploration.</p>
+    <div class="article-block">
+        <div class="article-date">2018 – 2020</div>
+        <div class="article-title">Data Analyst</div>
+        <div class="article-sub">ACT Kazakhstan</div>
+        <p class="article-text">Worked with operational datasets, forecasting models and analytical reporting for organizational improvements.</p>
     </div>
 
-    <div class="line-item">
-        <div class="item-date">2020 – 2022</div>
-        <div class="item-title">Data Scientist</div>
-        <div class="item-place">Quick Money</div>
-        <p>Prepared structured datasets for credit scoring, built feature sets, and improved automation of internal
-           scoring processes.</p>
+    <div class="article-block">
+        <div class="article-date">2020 – 2022</div>
+        <div class="article-title">Data Scientist</div>
+        <div class="article-sub">Quick Money</div>
+        <p class="article-text">Prepared feature datasets for credit scoring pipelines and supported automation of scoring processes.</p>
     </div>
 
-    <div class="line-item">
-        <div class="item-date">2022 – 2024</div>
-        <div class="item-title">Data Analyst</div>
-        <div class="item-place">Keyhorse</div>
-        <p>Redesigned public digital services using analytics and mapping, improving workflows and user access.</p>
+    <div class="article-block">
+        <div class="article-date">2022 – 2024</div>
+        <div class="article-title">Data Analyst</div>
+        <div class="article-sub">Keyhorse</div>
+        <p class="article-text">Developed digital public service workflows using analytics, mapping and statistical insights.</p>
     </div>
 
-    <div class="line-item">
-        <div class="item-date">2024 – Present</div>
-        <div class="item-title">Data Scientist</div>
-        <div class="item-place">Alatau City Garant</div>
-        <p>Analyze large insurance datasets, uncover risk patterns, build dashboards, and support strategic
-           product development.</p>
+    <div class="article-block">
+        <div class="article-date">2024 – Present</div>
+        <div class="article-title">Data Scientist</div>
+        <div class="article-sub">Alatau City Garant</div>
+        <p class="article-text">Analyze insurance datasets, detect risk patterns, build dashboards and support strategic product decisions.</p>
     </div>
 
 </div>
 
-
-<!-- ============================================ -->
-<!--                    MEDIA                      -->
-<!-- ============================================ -->
+<!-- ========================================================== -->
+<!--                         MEDIA                               -->
+<!-- ========================================================== -->
 
 <h2 class="section-title">PUBLICATIONS & MEDIA</h2>
 
-<ul class="media-list">
+<div class="article-line media-list">
 
-    <li><strong>Kursiv Media (2025)</strong> — Millennials earn the highest salaries, Zoomers the lowest in Kazakhstan  
+    <div class="article-block">
+        <div class="article-title">Kursiv Media (2025)</div>
+        Millennials earn the highest salaries, Zoomers the lowest in Kazakhstan —
         <a href="https://kz.kursiv.media/en/2025-11-18/engk-yeri-millennials-earn-the-highest-salaries-zoomers-earn-the-lowest-in-kazakhstan/"
-           target="_blank">Read</a></li>
+           target="_blank">Read</a>
+    </div>
 
-    <li><strong>The Steppe (2025)</strong> — How education is linked to income in Kazakhstan  
+    <div class="article-block">
+        <div class="article-title">The Steppe (2025)</div>
+        How education is linked to income in Kazakhstan —
         <a href="https://the-steppe.com/steppe-select/kak-obrazovanie-svjazano-s-zarplatoj-v-kazahstane"
-           target="_blank">Read</a></li>
+           target="_blank">Read</a>
+    </div>
 
-    <li><strong>Hronika.kz (2025)</strong> — Female flight instructors earn four times less  
+    <div class="article-block">
+        <div class="article-title">Hronika.kz (2025)</div>
+        Female flight instructors earn four times less —
         <a href="https://hronika.kz/kaiteyk-endy/v-kazahstane-piloty-instruktory-zhenskogo-pola-poluchayut-v-chetyre-raza-menshe-svoih-kolleg-muzhchin/"
-           target="_blank">Read</a></li>
+           target="_blank">Read</a>
+    </div>
 
-    <li><strong>Nedra.kz (2025)</strong> — Ranking of private Kazakhstani companies by revenue  
+    <div class="article-block">
+        <div class="article-title">Nedra.kz (2025)</div>
+        Ranking of private Kazakhstani companies by revenue —
         <a href="https://nedra.kz/news/rejting-chastnyh-kazahstanskih-kompanij-po-vyruchke-za-2024-god"
-           target="_blank">Read</a></li>
+           target="_blank">Read</a>
+    </div>
 
-    <li><strong>Tengrinews (2024)</strong> — Visa refusals to Europe: which countries reject most  
+    <div class="article-block">
+        <div class="article-title">Tengrinews (2024)</div>
+        Visa refusals to Europe: which countries reject most —
         <a href="https://tengrinews.kz/my-country/viza-evropu-kakie-stranyi-otkazyivayut-kazahstantsam-chasche-539419/"
-           target="_blank">Read</a></li>
+           target="_blank">Read</a>
+    </div>
 
-</ul>
+</div>
 
-
-<!-- ============================================ -->
-<!--                    SKILLS                     -->
-<!-- ============================================ -->
+<!-- ========================================================== -->
+<!--                         SKILLS                              -->
+<!-- ========================================================== -->
 
 <h2 class="section-title">SKILLS</h2>
 
-<div class="skills-grid">
-    <div class="skill-box">Python</div> <div class="skill-box">R</div>
-    <div class="skill-box">SQL</div> <div class="skill-box">Machine Learning</div>
-    <div class="skill-box">Deep Learning</div> <div class="skill-box">Scikit-learn</div>
-    <div class="skill-box">Pandas</div> <div class="skill-box">NumPy</div>
-    <div class="skill-box">Power BI</div> <div class="skill-box">Tableau</div>
-    <div class="skill-box">Geospatial</div> <div class="skill-box">QGIS</div>
-    <div class="skill-box">Statistics</div> <div class="skill-box">Data Visualization</div>
+<div class="article-line">
+    <div class="skills-grid">
+        <div class="skill-box">Python</div> <div class="skill-box">R</div>
+        <div class="skill-box">SQL</div> <div class="skill-box">Machine Learning</div>
+        <div class="skill-box">Deep Learning</div> <div class="skill-box">Pandas</div>
+        <div class="skill-box">NumPy</div> <div class="skill-box">Scikit-learn</div>
+        <div class="skill-box">Geospatial</div> <div class="skill-box">QGIS</div>
+        <div class="skill-box">Tableau</div> <div class="skill-box">Power BI</div>
+        <div class="skill-box">Statistics</div> <div class="skill-box">Visualization</div>
+    </div>
 </div>
 
+<!-- ========================================================== -->
+<!--                   PORTFOLIO GRID (UNCHANGED)                -->
+<!-- ========================================================== -->
 
+<h2 class="section-title">PORTFOLIO</h2>
 
-<!-- =================================================================== -->
-<!-- ========================  ТВОЁ ПОРТФОЛИО  ========================== -->
-<!-- =================================================================== -->
+<p style="max-width:700px;margin-bottom:20px;">
+    Selected analytical works and visualizations exploring demographic, economic and geographic patterns.
+</p>
+
 
 
 
@@ -359,12 +388,6 @@
 
 
     
-    <h2 style="text-align: center; margin-top: 30px;">Portfolio</h2>
-
-    <h3 style="text-align: left; margin-top: 20px;">Analytics and Visualization</h3>
-    <p style="text-align: left;">This section presents data-driven analytics and visualizations designed to uncover insights and patterns. From demographic studies to geographic trends, each piece provides a detailed perspective on various aspects of Kazakhstan and beyond.</p>
-
-
     <!-- Новый фрейм в портфолио -->
 
 
