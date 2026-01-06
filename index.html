@@ -3917,31 +3917,56 @@ html,body{
 
 <!-- MODAL -->
 <div class="modal" id="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <div class="modal-content">
-        <img id="modal-image" src="" style="width:100%; border-radius:6px;">
-        <h2 id="modal-title"></h2>
-        <p id="modal-description"></p>
-    </div>
+  <span class="close">&times;</span>
+  <div class="modal-content">
+    <img id="modal-image" style="width:100%;border-radius:6px;">
+    <h2 id="modal-title"></h2>
+    <div id="modal-description"></div>
+  </div>
 </div>
 
 <script>
-function openModal(image, title, description) {
-    const modal = document.getElementById("modal");
-    document.getElementById("modal-image").src = image;
-    document.getElementById("modal-title").innerHTML = title;
-    document.getElementById("modal-description").innerHTML = description;
-    modal.style.display = "flex";
-}
-function closeModal() {
-    document.getElementById("modal").style.display = "none";
-}
+(function () {
+  const modal = document.getElementById('modal');
+  const img = document.getElementById('modal-image');
+  const title = document.getElementById('modal-title');
+  const desc = document.getElementById('modal-description');
+
+  // Переопределяем openModal глобально
+  window.openModal = function (image, t, d) {
+    img.src = image;
+    title.textContent = t || '';
+    desc.innerHTML = d || '';
+    modal.style.display = 'flex';
+  };
+
+  window.closeModal = function () {
+    modal.style.display = 'none';
+  };
+
+  // Закрытие
+  modal.addEventListener('click', e => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.querySelector('.close').addEventListener('click', closeModal);
+
+  // ГАРАНТИЯ клика по карточке
+  document.querySelectorAll('.portfolio-item').forEach(item => {
+    item.addEventListener('click', () => {
+      if (typeof item.onclick === 'function') {
+        item.onclick();
+      }
+    });
+  });
+})();
 </script>
 
 <footer>
-    © 2025 Nurasyl Abdrazakuly — Data Science, Analytics & Visualization
+  © 2025 Nurasyl Abdrazakuly — Data Science, Analytics & Visualization
 </footer>
 
-</div> <!-- container -->
+</div>
 </body>
 </html>
+
