@@ -623,8 +623,8 @@ html,body{
 }
 </style>
 
-
-  <style> /* ===== PORTFOLIO GRID ===== */
+<style>
+/* ===== PORTFOLIO GRID ===== */
 
 .portfolio{
   max-width:1100px;
@@ -638,13 +638,18 @@ html,body{
 /* ===== CARD ===== */
 
 .portfolio-item{
-  background:#fff;
+  background:var(--bg);
   border-radius:10px;
   overflow:hidden;
   cursor:pointer;
   display:flex;
   flex-direction:column;
   transition:transform .2s ease, box-shadow .2s ease;
+}
+
+/* ВАЖНО: весь клик уходит в .portfolio-item */
+.portfolio-item *{
+  pointer-events:none;
 }
 
 .portfolio-item:hover{
@@ -665,8 +670,8 @@ html,body{
   margin:0;
   padding:14px 14px 16px;
   font-size:14px;
-  line-height:1.4;
-  color:#1f2d2b;
+  line-height:1.45;
+  color:var(--text);
 }
 
 /* tech tag */
@@ -674,12 +679,13 @@ html,body{
   white-space:nowrap;
 }
 
-/* disable link styles inside cards */
+/* визуально нейтрализуем ссылки внутри карточки */
 .portfolio-item a{
   color:inherit;
   text-decoration:none;
 }
-   </style>
+</style>
+
 
    <h2 class="section-title">Portfolio</h2>
 <section class="portfolio" id="portfolio">
@@ -3906,24 +3912,7 @@ html,body{
     <img src="assets/images/50_50.jpeg" alt="Population Distribution in Kazakhstan (50/50)">
     <p>Population Distribution (50/50) | <span style="color: #198754; font-weight: bold;">R</span>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        
-        
+  
 </section>
 
 <!-- MODAL -->
