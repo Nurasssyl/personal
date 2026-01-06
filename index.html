@@ -6,6 +6,7 @@
 <title>Portfolio</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 <style>
 :root{
@@ -61,13 +62,15 @@ body{
 
 .about-links{
   margin-top:18px;
+  display:flex;
+  gap:16px;
 }
 
 .about-links a{
-  margin-right:14px;
-  font-size:15px;
   color:var(--muted);
+  font-size:18px;
   text-decoration:none;
+  transition:color .15s ease;
 }
 
 .about-links a:hover{
@@ -87,6 +90,11 @@ body{
   border-bottom:1px solid rgba(0,0,0,.2);
 }
 
+.resume a:hover{
+  color:var(--text);
+  border-bottom-color:transparent;
+}
+
 @media (max-width:640px){
   .about{
     grid-template-columns:1fr;
@@ -100,6 +108,10 @@ body{
 
   .about h1{
     font-size:26px;
+  }
+
+  .about-links{
+    gap:14px;
   }
 }
 </style>
@@ -121,26 +133,31 @@ body{
     <div>
       <h1>Nurasyl Abdrazakuly</h1>
 
-      <p>
-        Nurasyl is a Kazakhstan-based data scientist and visual researcher.
-        He works at the intersection of data analytics, economics, and geography,
-        focusing on clear storytelling through data visualizations.
-        His work has been published by major media outlets and explores
-        socio-economic patterns, demographics, and global trends.
-      </p>
+  <p>
+  Data Scientist with over 5 years of experience in data analysis, predictive modeling,
+  and data visualization. I work with complex datasets to build analytical and predictive
+  models, and translate their results into clear, intuitive, and visually compelling
+  narratives. My focus is on visual storytelling, exploratory analysis, and revealing
+  patterns and trends in economic, demographic, and geospatial data.
+  Strong background in Python and R. Master of Computer Science, open to relocation
+  and international projects.
+</p>
+
+
 
       <div class="about-links">
-        <a href="https://www.linkedin.com/in/nurasyl-abdrazakuly/" target="_blank">LinkedIn</a>
-        <a href="https://github.com/Nurasssyl" target="_blank">GitHub</a>
-        <a href="https://www.kaggle.com/nurasssyl" target="_blank">Kaggle</a>
-        <a href="https://t.me/data_Nurasyl" target="_blank">Telegram</a>
-        <a href="mailto:nurassyl.abdrazakuly@gmail.com">Email</a>
-        <a href="https://wa.me/77073545257" target="_blank">WhatsApp</a>
+        <a href="https://t.me/data_Nurasyl" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a>
+        <a href="https://www.kaggle.com/nurasssyl" target="_blank" title="Kaggle"><i class="fab fa-kaggle"></i></a>
+        <a href="https://www.linkedin.com/in/nurasyl-abdrazakuly/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/Nurasssyl" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="mailto:nurassyl.abdrazakuly@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+        <a href="https://wa.me/77073545257" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
       </div>
     </div>
   </header>
 
 </div>
+
 
 
 
