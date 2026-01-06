@@ -12,7 +12,7 @@
   --accent:#0a8f7b;
   --text:#1f2d2b;
   --muted:#6b7b78;
-  --bg:#faf7f2;
+  --bg:#fbf8f2;
 }
 
 body{
@@ -22,25 +22,12 @@ body{
   background:#fff;
 }
 
-.container{
-  max-width:980px;
-  margin:0 auto;
-  padding:0 12px;
-}
-
 /* ===== ABOUT ===== */
-
-<!-- ================= ABOUT ================= -->
-:root{
-  --bg:#fbf8f2;
-  --text:#1f2d2b;
-  --muted:#7a7a7a;
-  --accent:#0a8f7b;
-}
 
 .about-wrap{
   background:var(--bg);
   padding:48px 0 40px;
+  position:relative;
 }
 
 .about{
@@ -70,7 +57,6 @@ body{
   max-width:760px;
   font-size:16px;
   line-height:1.65;
-  color:var(--text);
 }
 
 .about-links{
@@ -82,7 +68,6 @@ body{
   font-size:15px;
   color:var(--muted);
   text-decoration:none;
-  transition:color .2s ease;
 }
 
 .about-links a:hover{
@@ -102,10 +87,6 @@ body{
   border-bottom:1px solid rgba(0,0,0,.2);
 }
 
-.resume a:hover{
-  border-bottom-color:transparent;
-}
-
 @media (max-width:640px){
   .about{
     grid-template-columns:1fr;
@@ -122,13 +103,17 @@ body{
   }
 }
 </style>
+</head>
+
+<body>
 
 <div class="about-wrap">
+
   <section class="resume">
     <a href="https://github.com/Nurasssyl/Resume/blob/main/Nurassyl_Abdrazakuly_2025.pdf" target="_blank">
       Download CV
     </a>
-  
+  </section>
 
   <header id="about" class="about">
     <img src="assets/images/my_photo.jpg" alt="Nurasyl Abdrazakuly">
@@ -154,7 +139,9 @@ body{
       </div>
     </div>
   </header>
+
 </div>
+
 
 
 
