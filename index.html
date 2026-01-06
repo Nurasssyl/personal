@@ -83,17 +83,36 @@ body{
   right:20px;
 }
 
-.resume a{
+.cv-link{
   font-size:13px;
-  color:var(--muted);
+  font-weight:600;
+  color:var(--accent);
   text-decoration:none;
-  border-bottom:1px solid rgba(0,0,0,.2);
+  letter-spacing:.02em;
+  position:relative;
 }
 
-.resume a:hover{
-  color:var(--text);
-  border-bottom-color:transparent;
+.cv-link::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-3px;
+  width:100%;
+  height:1px;
+  background:linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation:glow 1.8s infinite;
 }
+
+@keyframes glow{
+  0%{opacity:.2;}
+  50%{opacity:1;}
+  100%{opacity:.2;}
+}
+
+.cv-link:hover{
+  color:var(--text);
+}
+
 
 @media (max-width:640px){
   .about{
@@ -121,11 +140,14 @@ body{
 
 <div class="about-wrap">
 
-  <section class="resume">
-    <a href="https://github.com/Nurasssyl/Resume/blob/main/Nurassyl_Abdrazakuly_2025.pdf" target="_blank">
-      Download CV
-    </a>
-  </section>
+<section class="resume">
+  <a class="cv-link"
+     href="https://docs.google.com/document/d/1PvKEQRfU78mTFYF9Zg-HFAZqEGggXJkaQjbHbUA1EMs/edit?usp=sharing"
+     target="_blank">
+    View CV
+  </a>
+</section>
+
 
   <header id="about" class="about">
     <img src="assets/images/my_photo.jpg" alt="Nurasyl Abdrazakuly">
