@@ -30,6 +30,37 @@ body{
 }
 
 /* ===== ABOUT ===== */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:9999;
+  padding:24px;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal-content{
+  background:var(--bg);
+  width:min(980px,92vw);
+  max-height:90vh;
+  overflow:auto;
+  border-radius:12px;
+  padding:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,.2);
+}
+
+.close{
+  position:fixed;
+  top:16px;
+  right:18px;
+  font-size:34px;
+  line-height:1;
+  color:#fff;
+  cursor:pointer;
+  user-select:none;
+}
 
 .about-wrap{
   background:var(--bg);
