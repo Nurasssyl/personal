@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>European Cities at Kazakhstan’s Latitude</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.0.0/openseadragon.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.0.0/openseadragon.min.css" />
+
+<style>
+    body {
+        margin: 0;
+        background-color: #000;
+        font-family: Arial, sans-serif;
+    }
+    #europe-viewer {
+        width: 100vw;
+        height: 100vh;
+        background-color: #000;
+    }
+    .legend {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background: rgba(0,0,0,0.65);
+        color: #fff;
+        padding: 12px 18px;
+        border-radius: 8px;
+        font-size: 16px;
+        line-height: 1.5;
+        backdrop-filter: blur(4px);
+    }
+    .legend-title {
+        font-weight: bold;
+        margin-bottom: 6px;
+        font-size: 18px;
+    }
+</style>
+</head>
+<body>
+
+<div id="europe-viewer"></div>
+
+<div class="legend">
+    <div class="legend-title">European Cities aligned with Kazakhstan</div>
+    • Cities shown at the same latitude band<br>
+
+</div>
+
+<script>
+    OpenSeadragon({
+        id: "europe-viewer",
+        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.0.0/images/",
+        tileSources: {
+            type: 'image',
+            url: 'https://raw.githubusercontent.com/Nurasssyl/personal/main/assets/images/European%20Cities%20at%20Kazakhstan%E2%80%99s%20Latitude.png'
+        },
+        showNavigator: true,
+        animationTime: 0.8,
+        zoomPerScroll: 1.2,
+        defaultZoomLevel: 1,
+        minZoomLevel: 1,
+        maxZoomLevel: 20
+    });
+</script>
+
+</body>
+</html>
