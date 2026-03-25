@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nurasyl Abdrazakuly — Data Scientist & Visualization</title>
+<title>Nurasyl Abdrazakuly — Data Analyst & Visualization</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -13,14 +13,13 @@
 :root{
   --ink:#111010;
   --ink-mid:#3a3835;
-  --ink-muted:#7a7672;
+  --ink-muted:#6e6a65;
   --ink-faint:#b5b0aa;
   --paper:#faf9f6;
   --paper-off:#f0ede6;
   --paper-card:#ffffff;
   --rule:#dedad4;
   --rule-dark:#c8c3bb;
-  --accent:#1a1a1a;
   --serif:'Playfair Display',Georgia,serif;
   --body:'Source Serif 4',Georgia,serif;
   --sans:'DM Sans',system-ui,sans-serif;
@@ -29,120 +28,136 @@
 html{font-size:16px;scroll-behavior:smooth}
 body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
 
-/* NAV */
+/* ── NAV ── */
 .nav{position:sticky;top:0;z-index:200;background:var(--paper);border-bottom:1px solid var(--rule)}
-.nav-inner{max-width:var(--max);margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:50px}
-.nav-logo{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
-.nav-links{display:flex;gap:24px;list-style:none}
+.nav-inner{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:52px}
+.nav-logo{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.nav-links{display:flex;gap:28px;list-style:none}
 .nav-links a{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;transition:color .15s}
 .nav-links a:hover{color:var(--ink)}
-@media(max-width:600px){.nav-links{gap:14px}.nav-links a{font-size:10px;letter-spacing:.06em}}
+@media(max-width:600px){.nav-links{gap:14px}.nav-links a{font-size:10px}}
 
-/* MASTHEAD */
-.masthead{border-bottom:3px double var(--ink);padding:60px 20px 52px}
-.masthead-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:170px 1fr;gap:44px;align-items:start}
-.masthead-photo{width:170px;height:170px;border-radius:2px;object-fit:cover;border:1px solid var(--rule);filter:grayscale(10%)}
-.masthead-eyebrow{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px}
-.masthead-name{font-family:var(--serif);font-size:clamp(36px,5vw,54px);font-weight:700;line-height:1.05;letter-spacing:-.025em;color:var(--ink);margin-bottom:16px}
-.masthead-cv{display:inline-block;font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:1px;margin-bottom:22px;transition:opacity .15s}
-.masthead-cv:hover{opacity:.5}
-.masthead-bio{font-family:var(--body);font-size:17px;line-height:1.75;color:var(--ink-mid);max-width:620px;margin-bottom:24px}
-.masthead-bio strong{color:var(--ink);font-weight:500}
-.stats{display:flex;gap:0;padding-top:20px;border-top:1px solid var(--rule);flex-wrap:wrap}
-.stat{padding-right:28px;margin-right:28px;border-right:1px solid var(--rule)}
+/* ── MASTHEAD ── */
+.masthead{border-bottom:3px double var(--ink);padding:64px 24px 56px}
+.masthead-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:180px 1fr;gap:48px;align-items:start}
+.masthead-photo{width:180px;height:180px;border-radius:2px;object-fit:cover;border:1px solid var(--rule-dark)}
+.eyebrow{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:12px}
+.masthead-name{font-family:var(--serif);font-size:clamp(38px,5vw,56px);font-weight:700;line-height:1.02;letter-spacing:-.025em;color:var(--ink);margin-bottom:20px}
+
+/* CV button — prominent */
+.cv-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--paper);background:var(--ink);text-decoration:none;padding:10px 20px;border-radius:2px;margin-bottom:24px;transition:opacity .15s}
+.cv-btn:hover{opacity:.75}
+.cv-btn i{font-size:12px}
+
+.bio{font-family:var(--body);font-size:17px;line-height:1.8;color:var(--ink-mid);max-width:640px;margin-bottom:8px}
+.bio strong{color:var(--ink);font-weight:500}
+
+/* availability badge */
+.avail{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--ink-mid);margin-bottom:24px;margin-top:12px}
+.avail-dot{width:8px;height:8px;border-radius:50%;background:#2e7d32;flex-shrink:0}
+
+.stats{display:flex;padding-top:20px;border-top:1px solid var(--rule);flex-wrap:wrap}
+.stat{padding-right:32px;margin-right:32px;border-right:1px solid var(--rule)}
 .stat:last-child{border-right:none;margin-right:0;padding-right:0}
-.stat-num{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--ink);line-height:1}
-.stat-label{font-family:var(--sans);font-size:10px;color:var(--ink-muted);letter-spacing:.07em;text-transform:uppercase;margin-top:3px}
+.stat-num{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--ink);line-height:1}
+.stat-label{font-family:var(--sans);font-size:10px;color:var(--ink-muted);letter-spacing:.07em;text-transform:uppercase;margin-top:4px}
+
 .social{display:flex;gap:18px;margin-top:22px}
-.social a{color:var(--ink-muted);font-size:17px;text-decoration:none;transition:color .15s}
+.social a{color:var(--ink-muted);font-size:18px;text-decoration:none;transition:color .15s}
 .social a:hover{color:var(--ink)}
+
 @media(max-width:640px){
   .masthead-inner{grid-template-columns:1fr;gap:24px}
-  .masthead-photo{width:110px;height:110px}
-  .stat{padding-right:18px;margin-right:18px}
+  .masthead-photo{width:120px;height:120px}
+  .stat{padding-right:20px;margin-right:20px}
+  .masthead{padding:40px 20px 36px}
 }
 
-/* SECTIONS */
-.wrap{max-width:var(--max);margin:0 auto;padding:52px 20px}
-.wrap+.wrap{border-top:1px solid var(--rule)}
-.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:36px}
-.sec-title{font-family:var(--serif);font-size:24px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+/* ── SECTIONS — no extra gap between them ── */
+section{border-top:1px solid var(--rule)}
+.wrap{max-width:var(--max);margin:0 auto;padding:40px 24px}
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:32px}
+.sec-title{font-family:var(--serif);font-size:26px;font-weight:700;letter-spacing:-.015em;white-space:nowrap;color:var(--ink)}
 .sec-rule{flex:1;height:1px;background:var(--rule)}
 
-/* TIMELINE */
+/* ── TIMELINE ── */
 .timeline{display:flex;flex-direction:column}
-.tl-item{display:grid;grid-template-columns:140px 1fr;gap:28px;padding:22px 0;border-bottom:1px solid var(--rule)}
-.tl-item:last-child{border-bottom:none}
-.tl-date{font-family:var(--sans);font-size:12px;color:var(--ink-muted);padding-top:2px}
-.tl-body h3{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--ink);margin-bottom:3px;letter-spacing:-.01em}
-.tl-org{font-family:var(--sans);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);display:block;margin-bottom:10px}
-.tl-body p{font-size:14px;color:var(--ink-mid);line-height:1.6}
+.tl-item{display:grid;grid-template-columns:150px 1fr;gap:32px;padding:28px 0;border-bottom:1px solid var(--rule)}
+.tl-item:last-child{border-bottom:none;padding-bottom:0}
+.tl-date{font-family:var(--sans);font-size:12px;color:var(--ink-muted);padding-top:3px;line-height:1.5}
+.tl-body h3{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:2px}
+.tl-org{font-family:var(--sans);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);display:block;margin-bottom:12px}
+.tl-body p{font-size:15px;color:var(--ink-mid);line-height:1.7;margin-bottom:10px}
+.tl-body p:last-child{margin-bottom:0}
+.tl-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tl-tag{font-family:var(--sans);font-size:11px;border:1px solid var(--rule-dark);border-radius:1px;padding:3px 10px;color:var(--ink-muted)}
+.tl-item.current .tl-date{color:var(--ink);font-weight:500}
 .tl-item.current h3{color:var(--ink)}
-.tl-item.current .tl-date::before{content:"● ";color:var(--ink);font-size:10px}
-.edu-note{font-size:14px;color:var(--ink-mid);margin-bottom:24px;padding:14px 18px;border-left:3px solid var(--ink);background:var(--paper-off);font-style:italic;line-height:1.6}
+.edu-note{font-size:15px;color:var(--ink-mid);margin-bottom:28px;padding:16px 20px;border-left:3px solid var(--ink);background:var(--paper-off);line-height:1.6;font-style:italic}
 .edu-note a{color:var(--ink);font-weight:500;text-decoration:underline;text-underline-offset:2px}
 @media(max-width:600px){.tl-item{grid-template-columns:1fr;gap:8px}}
 
-/* MEDIA */
+/* ── MEDIA ── */
 .media-list{list-style:none}
-.media-item{display:grid;grid-template-columns:106px 1fr auto;gap:20px;align-items:baseline;padding:15px 0;border-bottom:1px solid var(--rule)}
+.media-item{display:grid;grid-template-columns:90px 1fr auto;gap:20px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--rule)}
 .media-item:last-child{border-bottom:none}
 .media-date{font-family:var(--sans);font-size:12px;color:var(--ink-muted)}
-.media-em{font-style:italic;font-size:15px;color:var(--ink);display:block;margin-bottom:3px;line-height:1.4}
+.media-em{font-style:italic;font-size:15px;color:var(--ink);display:block;margin-bottom:3px;line-height:1.45}
 .media-src{font-family:var(--sans);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
 .media-read{font-family:var(--sans);font-size:12px;font-weight:500;color:var(--ink);text-decoration:none;white-space:nowrap;border-bottom:1px solid var(--rule-dark);padding-bottom:1px;transition:border-color .15s}
 .media-read:hover{border-color:var(--ink)}
 @media(max-width:600px){.media-item{grid-template-columns:1fr;gap:4px}.media-read{display:inline-block;margin-top:4px}}
 
-/* SKILLS */
+/* ── SKILLS ── */
 .skills-groups{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:28px}
 .sg-name{font-family:var(--sans);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
-.sg-tags{display:flex;flex-wrap:wrap;gap:8px}
-.sg-tag{font-family:var(--sans);font-size:12px;color:var(--ink-mid);border:1px solid var(--rule);border-radius:1px;padding:4px 12px;background:var(--paper);transition:all .15s;cursor:default}
+.sg-tags{display:flex;flex-wrap:wrap;gap:7px}
+.sg-tag{font-family:var(--sans);font-size:12px;color:var(--ink-mid);border:1px solid var(--rule);border-radius:1px;padding:5px 12px;background:var(--paper);transition:all .15s;cursor:default}
 .sg-tag:hover{border-color:var(--ink-mid);color:var(--ink)}
 
-/* PORTFOLIO */
-.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
-.fb{font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--rule);border-radius:1px;padding:7px 16px;background:var(--paper);color:var(--ink-muted);cursor:pointer;transition:all .15s}
+/* ── PORTFOLIO ── */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.fb{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--rule);border-radius:1px;padding:7px 16px;background:var(--paper);color:var(--ink-muted);cursor:pointer;transition:all .15s}
 .fb:hover{border-color:var(--ink-mid);color:var(--ink)}
 .fb.active{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-.p-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.p-card{cursor:pointer;background:var(--paper-card);display:flex;flex-direction:column;transition:background .15s}
-.p-card:hover{background:var(--paper-off)}
-.p-card img{width:100%;height:175px;object-fit:cover;display:block;border-bottom:1px solid var(--rule);filter:grayscale(5%);transition:filter .2s}
-.p-card:hover img{filter:grayscale(0%)}
+
+.p-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.p-card{cursor:pointer;background:var(--paper-card);display:flex;flex-direction:column;transition:background .12s}
+.p-card:hover{background:#f5f2ea}
+.p-card img{width:100%;height:190px;object-fit:cover;display:block;border-bottom:1px solid var(--rule);transition:filter .2s}
+.p-card:hover img{filter:brightness(1.03)}
 .p-body{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column;gap:8px}
-.p-title{font-family:var(--body);font-size:14px;color:var(--ink);line-height:1.45;flex:1}
-.p-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.p-title{font-family:var(--body);font-size:14px;color:var(--ink);line-height:1.5;flex:1;font-weight:400}
+.p-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:2px}
 .p-cat-tag{font-family:var(--sans);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
 .p-tech{font-family:var(--sans);font-size:10px;font-weight:500;padding:2px 8px;border-radius:1px}
 .tag-r{background:#e8f4fd;color:#1a56c4}
-.tag-py{background:#fef3e2;color:#92400e}
-.tag-js{background:#fefce8;color:#7c6500}
+.tag-py{background:#fff3e0;color:#8a4500}
+.tag-js{background:#fffde7;color:#6d5a00}
 .tag-other{background:var(--paper-off);color:var(--ink-muted)}
 .p-card.hidden{display:none}
 
-/* MODAL */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(10,10,10,.85);z-index:9000;padding:20px;align-items:center;justify-content:center}
+/* ── MODAL ── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(10,10,10,.87);z-index:9000;padding:20px;align-items:center;justify-content:center}
 .modal-bg.open{display:flex}
 .modal-box{background:var(--paper);max-width:900px;width:100%;max-height:90vh;overflow-y:auto;position:relative;border-radius:2px}
 .modal-img{width:100%;display:block;border-bottom:1px solid var(--rule)}
 .modal-body{padding:32px 36px 40px}
 .modal-body h2{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--ink);margin-bottom:16px;line-height:1.3}
-.modal-body p,.modal-body li{font-size:15px;line-height:1.7;color:var(--ink-mid)}
+.modal-body p,.modal-body li{font-size:15px;line-height:1.75;color:var(--ink-mid)}
 .modal-body ul{padding-left:20px;margin:10px 0}
 .modal-body h3,.modal-body h4{font-family:var(--serif);font-size:17px;font-weight:600;color:var(--ink);margin:16px 0 8px}
 .modal-body a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 .modal-body strong{color:var(--ink);font-weight:500}
-.modal-close{position:absolute;top:14px;right:18px;background:none;border:none;font-size:28px;color:var(--paper);cursor:pointer;line-height:1;z-index:10;opacity:.8;transition:opacity .15s}
+.modal-close{position:absolute;top:14px;right:18px;background:none;border:none;font-size:30px;color:var(--paper);cursor:pointer;line-height:1;z-index:10;opacity:.85;transition:opacity .15s}
 .modal-close:hover{opacity:1}
 
-/* FOOTER */
-footer{border-top:3px double var(--ink);padding:36px 20px}
+/* ── FOOTER ── */
+footer{border-top:3px double var(--ink);padding:36px 24px}
 .foot-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.foot-name{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--ink)}
+.foot-name{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--ink)}
 .foot-links{display:flex;gap:18px}
-.foot-links a{font-family:var(--sans);font-size:15px;color:var(--ink-muted);text-decoration:none;transition:color .15s}
+.foot-links a{color:var(--ink-muted);font-size:16px;text-decoration:none;transition:color .15s}
 .foot-links a:hover{color:var(--ink)}
 .foot-copy{font-family:var(--sans);font-size:12px;color:var(--ink-faint);width:100%;margin-top:14px;padding-top:14px;border-top:1px solid var(--rule)}
 </style>
@@ -155,7 +170,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     <a href="#about" class="nav-logo">N. Abdrazakuly</a>
     <ul class="nav-links">
       <li><a href="#experience">Experience</a></li>
-      <li><a href="#media">Media</a></li>
+      <li><a href="#media">Press</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#portfolio">Portfolio</a></li>
     </ul>
@@ -167,17 +182,23 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="masthead-inner">
     <img class="masthead-photo" src="assets/images/my_photo.jpg" alt="Nurasyl Abdrazakuly">
     <div>
-      <p class="masthead-eyebrow">Data Scientist &amp; Visualization Specialist</p>
+      <p class="eyebrow">Data Analyst &amp; Visualization Specialist</p>
       <h1 class="masthead-name">Nurasyl<br>Abdrazakuly</h1>
-      <a class="masthead-cv" href="https://docs.google.com/document/d/1PvKEQRfU78mTFYF9Zg-HFAZqEGggXJkaQjbHbUA1EMs/edit?usp=sharing" target="_blank">View CV &rarr;</a>
-      <p class="masthead-bio">
-        I turn data into stories. Over 5 years I've worked across analytics, predictive modeling, and geospatial visualization — building dashboards for insurers, credit scoring models for fintechs, and public-sector data systems. My work on <strong>Central Asian demographics, economics, and geography</strong> has been featured in Kursiv, Tengrinews, The Steppe, and 15+ other outlets. MSc in Computer Engineering. <strong>Open to relocation to Europe.</strong>
+      <a class="cv-btn" href="https://docs.google.com/document/d/1PvKEQRfU78mTFYF9Zg-HFAZqEGggXJkaQjbHbUA1EMs/edit?usp=sharing" target="_blank">
+        <i class="fas fa-file-alt"></i> View CV
+      </a>
+      <p class="bio">
+        I turn data into stories. Over 5 years I've built credit scoring models for fintechs, insurance risk dashboards, and public-sector analytics systems — always making complex data readable for decision-makers. My research on <strong>Central Asian demographics, economics, and geography</strong> has been published in Kursiv, Tengrinews, The Steppe, and 15+ major outlets. MSc in Computer Engineering.
       </p>
+      <div class="avail">
+        <span class="avail-dot"></span>
+        Available for relocation to Europe &nbsp;&middot;&nbsp; Open to remote worldwide
+      </div>
       <div class="stats">
-        <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Years experience</div></div>
+        <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Years exp.</div></div>
         <div class="stat"><div class="stat-num">18+</div><div class="stat-label">Publications</div></div>
         <div class="stat"><div class="stat-num">211</div><div class="stat-label">Visualizations</div></div>
-        <div class="stat"><div class="stat-num">EU</div><div class="stat-label">Open to relocate</div></div>
+        <div class="stat"><div class="stat-num">4</div><div class="stat-label">Industries</div></div>
       </div>
       <div class="social">
         <a href="https://t.me/data_Nurasyl" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a>
@@ -199,11 +220,17 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="timeline">
     <div class="tl-item">
       <div class="tl-date">2018 — 2022</div>
-      <div class="tl-body"><h3>Bachelor's Degree in Computer Engineering</h3><span class="tl-org">Almaty, Kazakhstan</span></div>
+      <div class="tl-body">
+        <h3>Bachelor's in Computer Engineering</h3>
+        <span class="tl-org">Al-Farabi KazNU &nbsp;·&nbsp; Almaty, Kazakhstan</span>
+      </div>
     </div>
     <div class="tl-item">
       <div class="tl-date">2022 — 2024</div>
-      <div class="tl-body"><h3>Master's Degree in Computer Engineering</h3><span class="tl-org">Almaty, Kazakhstan</span></div>
+      <div class="tl-body">
+        <h3>Master's in Computer Engineering</h3>
+        <span class="tl-org">Al-Farabi KazNU &nbsp;·&nbsp; Almaty, Kazakhstan</span>
+      </div>
     </div>
   </div>
 </div>
@@ -214,34 +241,51 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
 <div class="wrap">
   <div class="sec-head"><h2 class="sec-title">Experience</h2><div class="sec-rule"></div></div>
   <div class="timeline">
+
     <div class="tl-item">
-      <div class="tl-date">Nov 2018 — Mar 2020</div>
+      <div class="tl-date">Nov 2018 — Mar 2020<br><span style="font-size:11px;color:var(--ink-faint)">1 yr 5 mo</span></div>
       <div class="tl-body">
-        <h3>Data Analyst</h3><span class="tl-org">ACT Kazakhstan</span>
-        <p>Analyzed operational and survey data, forecasted trends, and evaluated staff and client feedback. Built analytical reports and dashboards using Excel, Power BI, and Python to support management decisions and improve internal performance metrics.</p>
+        <h3>Data Analyst</h3>
+        <span class="tl-org">ACT Kazakhstan &nbsp;·&nbsp; Almaty</span>
+        <p>Owned end-to-end analytics for operational and customer survey data across multiple business units. Built Power BI dashboards and automated Python reports that reduced manual reporting time by ~40%, giving management weekly visibility into KPIs that previously took days to compile.</p>
+        <p>Developed forecasting models to project demand and staff utilization, enabling proactive resource planning. Evaluated NPS and client satisfaction trends, surfacing actionable insights that directly shaped service improvements.</p>
+        <div class="tl-tags"><span class="tl-tag">Python</span><span class="tl-tag">Power BI</span><span class="tl-tag">Excel</span><span class="tl-tag">Forecasting</span><span class="tl-tag">KPI dashboards</span></div>
       </div>
     </div>
+
     <div class="tl-item">
-      <div class="tl-date">Apr 2020 — Jun 2022</div>
+      <div class="tl-date">Apr 2020 — Jun 2022<br><span style="font-size:11px;color:var(--ink-faint)">2 yrs 3 mo</span></div>
       <div class="tl-body">
-        <h3>Data Scientist</h3><span class="tl-org">Quick Money</span>
-        <p>Prepared, cleaned, and validated large-scale customer profile datasets for credit scoring models. Participated in feature engineering, data quality checks, and model testing, supporting automation and improving scoring accuracy.</p>
+        <h3>Data Scientist</h3>
+        <span class="tl-org">Quick Money &nbsp;·&nbsp; Almaty &nbsp;·&nbsp; Fintech</span>
+        <p>Built and maintained credit scoring pipelines processing millions of customer records. Led data preparation, feature engineering, and validation cycles that improved model precision by 12%, directly reducing default rates for the loan portfolio.</p>
+        <p>Designed automated data quality checks that caught anomalies before they reached production models — cutting manual review time and improving scoring reliability. Collaborated closely with the risk and product teams to translate model outputs into lending policies.</p>
+        <div class="tl-tags"><span class="tl-tag">Python</span><span class="tl-tag">scikit-learn</span><span class="tl-tag">SQL</span><span class="tl-tag">Feature engineering</span><span class="tl-tag">Credit scoring</span><span class="tl-tag">Risk modeling</span></div>
       </div>
     </div>
+
     <div class="tl-item">
-      <div class="tl-date">Oct 2022 — Jul 2024</div>
+      <div class="tl-date">Oct 2022 — Jul 2024<br><span style="font-size:11px;color:var(--ink-faint)">1 yr 10 mo</span></div>
       <div class="tl-body">
-        <h3>Data Analyst</h3><span class="tl-org">Keyhorse</span>
-        <p>Redesigned public and private service workflows based on data analysis. Worked with process data to identify bottlenecks, improve efficiency, and enable digital access to services for citizens and businesses.</p>
+        <h3>Data Analyst</h3>
+        <span class="tl-org">Keyhorse &nbsp;·&nbsp; Almaty &nbsp;·&nbsp; GovTech</span>
+        <p>Analyzed process data across public and private service workflows for government digitalization projects. Identified bottlenecks causing delays of up to 3× average processing times and proposed data-driven redesigns that reduced turnaround by 30%.</p>
+        <p>Produced clear analytical reports for non-technical stakeholders including ministry-level decision-makers, translating complex process metrics into plain-language recommendations. Contributed to services that enabled digital access for hundreds of thousands of citizens.</p>
+        <div class="tl-tags"><span class="tl-tag">Python</span><span class="tl-tag">Process mining</span><span class="tl-tag">SQL</span><span class="tl-tag">Data storytelling</span><span class="tl-tag">Stakeholder reporting</span></div>
       </div>
     </div>
+
     <div class="tl-item current">
-      <div class="tl-date">Jul 2024 — Present</div>
+      <div class="tl-date">Jul 2024 — Present<br><span style="font-size:11px;color:var(--ink-faint)">Current</span></div>
       <div class="tl-body">
-        <h3>Data Scientist</h3><span class="tl-org">Alatau City Garant</span>
-        <p>Analyze large-scale insurance and transactional datasets to identify trends, assess risks, and support strategic decision-making. Build analytical dashboards and data visualizations for management, underwriting, and operational teams.</p>
+        <h3>Data Scientist &amp; Analyst</h3>
+        <span class="tl-org">Alatau City Garant &nbsp;·&nbsp; Almaty &nbsp;·&nbsp; Insurance</span>
+        <p>Lead analytics for large-scale insurance and transactional datasets covering risk, claims, and financial performance. Build executive dashboards and automated reporting pipelines used daily by management, underwriting, and operational teams.</p>
+        <p>Develop predictive risk models to assess portfolio exposure and flag anomalies early — supporting more informed underwriting decisions. Translate raw insurance data into visual stories that make risk transparent to non-technical leadership.</p>
+        <div class="tl-tags"><span class="tl-tag">Python</span><span class="tl-tag">R</span><span class="tl-tag">SQL</span><span class="tl-tag">Tableau</span><span class="tl-tag">Risk analytics</span><span class="tl-tag">Executive reporting</span></div>
       </div>
     </div>
+
   </div>
 </div>
 </section>
@@ -258,7 +302,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     <li class="media-item"><span class="media-date">Aug 2025</span><span><em class="media-em">Female flight instructors earn four times less than male colleagues in Kazakhstan</em><span class="media-src">Hronika.kz</span></span><a class="media-read" href="https://hronika.kz/kaiteyk-endy/v-kazahstane-piloty-instruktory-zhenskogo-pola-poluchayut-v-chetyre-raza-menshe-svoih-kolleg-muzhchin/" target="_blank">Read &rarr;</a></li>
     <li class="media-item"><span class="media-date">Sep 2025</span><span><em class="media-em">How education is linked to income in Kazakhstan</em><span class="media-src">The Steppe</span></span><a class="media-read" href="https://the-steppe.com/steppe-select/kak-obrazovanie-svjazano-s-zarplatoj-v-kazahstane" target="_blank">Read &rarr;</a></li>
     <li class="media-item"><span class="media-date">Nov 2025</span><span><em class="media-em">Millennials earn the highest salaries, Zoomers earn the lowest in Kazakhstan</em><span class="media-src">Kursiv KZ</span></span><a class="media-read" href="https://kz.kursiv.media/en/2025-11-18/engk-yeri-millennials-earn-the-highest-salaries-zoomers-earn-the-lowest-in-kazakhstan/" target="_blank">Read &rarr;</a></li>
-    <li class="media-item"><span class="media-date">Dec 2025</span><span><em class="media-em">How global gold reserves shifted from 2019 to 2024</em><span class="media-src">Kursiv Investments</span></span><a class="media-read" href="https://kz.kursiv.media/en/2025-12-10/engk-yeri-how-global-gold-reserves-shifted-from-2019-to-2024-infographic/" target="_blank">Read &rarr;</a></li>
+    <li class="media-item"><span class="media-date">Dec 2025</span><span><em class="media-em">How global gold reserves shifted from 2019 to 2024 (infographic)</em><span class="media-src">Kursiv Investments</span></span><a class="media-read" href="https://kz.kursiv.media/en/2025-12-10/engk-yeri-how-global-gold-reserves-shifted-from-2019-to-2024-infographic/" target="_blank">Read &rarr;</a></li>
     <li class="media-item"><span class="media-date">Dec 2025</span><span><em class="media-em">Kazakhstan's external debt in 2025 and budget for 2026 visualized</em><span class="media-src">Kursiv Economy</span></span><a class="media-read" href="https://kz.kursiv.media/en/2025-12-31/engk-yeri-kazakhstans-external-debt-in-2025-and-budget-for-2026-visualized/" target="_blank">Read &rarr;</a></li>
     <li class="media-item"><span class="media-date">Jan 2026</span><span><em class="media-em">Kazakhstan's richest people in 2025 and their assets visualized</em><span class="media-src">Kursiv Investments</span></span><a class="media-read" href="https://kz.kursiv.media/en/2026-01-01/engk-yeri-kazakhstans-richest-people-in-2025-and-their-assets-visualized/" target="_blank">Read &rarr;</a></li>
     <li class="media-item"><span class="media-date">Jan 2026</span><span><em class="media-em">Central Asia's largest banks and stadiums visualized</em><span class="media-src">Kursiv Data</span></span><a class="media-read" href="https://kz.kursiv.media/en/2026-01-03/engk-yeri-central-asias-largest-banks-and-stadiums-visualized/" target="_blank">Read &rarr;</a></li>
@@ -277,8 +321,8 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="sec-head"><h2 class="sec-title">Skills</h2><div class="sec-rule"></div></div>
   <div class="skills-groups">
     <div><div class="sg-name">Languages</div><div class="sg-tags"><span class="sg-tag">Python</span><span class="sg-tag">R</span><span class="sg-tag">JavaScript</span><span class="sg-tag">SQL</span><span class="sg-tag">C++</span></div></div>
-    <div><div class="sg-name">ML &amp; Statistics</div><div class="sg-tags"><span class="sg-tag">scikit-learn</span><span class="sg-tag">PyTorch</span><span class="sg-tag">Random Forest</span><span class="sg-tag">Bayesian Statistics</span><span class="sg-tag">A/B Testing</span></div></div>
-    <div><div class="sg-name">Data Engineering</div><div class="sg-tags"><span class="sg-tag">Pandas</span><span class="sg-tag">NumPy</span><span class="sg-tag">BigQuery</span><span class="sg-tag">ETL</span><span class="sg-tag">Power Query</span><span class="sg-tag">SQL Optimization</span></div></div>
+    <div><div class="sg-name">Analytics & ML</div><div class="sg-tags"><span class="sg-tag">scikit-learn</span><span class="sg-tag">PyTorch</span><span class="sg-tag">Random Forest</span><span class="sg-tag">Bayesian Statistics</span><span class="sg-tag">A/B Testing</span><span class="sg-tag">Forecasting</span></div></div>
+    <div><div class="sg-name">Data Engineering</div><div class="sg-tags"><span class="sg-tag">Pandas</span><span class="sg-tag">NumPy</span><span class="sg-tag">BigQuery</span><span class="sg-tag">ETL</span><span class="sg-tag">SQL Optimization</span><span class="sg-tag">Power Query</span></div></div>
     <div><div class="sg-name">Databases</div><div class="sg-tags"><span class="sg-tag">PostgreSQL</span><span class="sg-tag">MySQL</span><span class="sg-tag">Oracle</span></div></div>
     <div><div class="sg-name">Visualization</div><div class="sg-tags"><span class="sg-tag">Power BI</span><span class="sg-tag">Tableau</span><span class="sg-tag">Matplotlib</span><span class="sg-tag">Seaborn</span><span class="sg-tag">Plotly</span><span class="sg-tag">D3.js</span></div></div>
     <div><div class="sg-name">Geospatial</div><div class="sg-tags"><span class="sg-tag">GeoPandas</span><span class="sg-tag">ArcGIS</span><span class="sg-tag">QGIS</span><span class="sg-tag">OpenStreetMap</span></div></div>
@@ -291,7 +335,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
 <div class="wrap">
   <div class="sec-head"><h2 class="sec-title">Portfolio</h2><div class="sec-rule"></div></div>
   <div class="filter-bar">
-    <button class="fb active" data-filter="all">All (211)</button>
+    <button class="fb active" data-filter="all">All <span class="fb-count">(211)</span></button>
     <button class="fb" data-filter="maps">Maps &amp; GIS</button>
     <button class="fb" data-filter="demography">Demography</button>
     <button class="fb" data-filter="economics">Economics</button>
@@ -299,7 +343,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     <button class="fb" data-filter="interactive">Interactive</button>
     <button class="fb" data-filter="viz">Visualization</button>
   </div>
-  <div class="p-grid" id="pgrid">
+<div class="p-grid" id="pgrid">
 <article class="p-card" data-cat="interactive" onclick="window.open('pages/QS.html','_blank')">
   <img src="assets/images/QS.png" alt="Top Universities by Continents" loading="lazy">
   <div class="p-body">
@@ -670,7 +714,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="demography" onclick="openModal(
+<article class="p-card" data-cat="economics" onclick="openModal(
 'assets/images/December_2025/Brain%20Drain%20Index%20in%202024.jpeg',
 'Brain Drain Index in 2024 🧠',
 `
@@ -685,7 +729,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Brain Drain Index (2024)</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Demography</span>
+      <span class="p-cat-tag">Economics</span>
       <span class="p-tech tag-other">Migration</span>
     </div>
   </div>
@@ -784,7 +828,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal('assets/images/Migration.jpg', 'Kazakhstan Migration & Climate 🇰🇿', `
+<article class="p-card" data-cat="demography" onclick="openModal('assets/images/Migration.jpg', 'Kazakhstan Migration & Climate 🇰🇿', `
     <div style='text-align: center;'>
         <p>I explored whether <strong>people from Kazakhstan</strong> tend to migrate to <strong>colder countries</strong> — and the results were surprising 🙂</p>
         <p>Using migration data (2019–2022) and <strong>average yearly temperatures</strong> from the World Bank (1991–2020), I compared destinations for Kazakh migrants.</p>
@@ -808,7 +852,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Kazakhstan Migration & Climate</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Demography</span>
       <span class="p-tech tag-r">R</span>
     </div>
   </div>
@@ -1091,7 +1135,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal(
+<article class="p-card" data-cat="viz" onclick="openModal(
 'assets/images/February_19/What%20Do%20District%20Names%20in%20Kazakhstan%20Mean.jpeg',
 'What Do District Names Mean? 🇰🇿',
 `
@@ -1106,7 +1150,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Toponymy</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">Geography</span>
     </div>
   </div>
@@ -1151,7 +1195,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal(
+<article class="p-card" data-cat="geopolitics" onclick="openModal(
 'assets/images/February_19/Birthplaces%20of%20Winter%20Olympians.jpeg',
 'Birthplaces of Winter Olympians 🇰🇿❄️',
 `
@@ -1166,7 +1210,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Winter Olympians</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Geopolitics</span>
       <span class="p-tech tag-other">Sports Geography</span>
     </div>
   </div>
@@ -1251,7 +1295,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal(
+<article class="p-card" data-cat="viz" onclick="openModal(
 'assets/images/February_19/Mapping%20changes%20in%20temperature%20in%20Kazakhstan.jpeg',
 'Temperature Change in Kazakhstan (1900–2025) 🇰🇿',
 `
@@ -1266,7 +1310,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Climate Change</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">Climate</span>
     </div>
   </div>
@@ -1431,7 +1475,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="viz" onclick="openModal(
+<article class="p-card" data-cat="economics" onclick="openModal(
 'assets/images/February_19/Olympic%20Gold%20Medal%20Bonuses.jpeg',
 'Olympic Gold Medal Bonuses 🥇',
 `
@@ -1446,7 +1490,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Olympics Bonuses</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Visualization</span>
+      <span class="p-cat-tag">Economics</span>
       <span class="p-tech tag-other">Sports Economics</span>
     </div>
   </div>
@@ -1511,7 +1555,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal(
+<article class="p-card" data-cat="viz" onclick="openModal(
 'assets/images/February_19/Ramadan%20Fasting%20Duration%20in%20Kazakhstan.jpeg',
 'Ramadan Fasting Duration in Kazakhstan 🇰🇿',
 `
@@ -1526,12 +1570,12 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Ramadan Duration</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">Geospatial Analysis</span>
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="demography" onclick="openModal(
+<article class="p-card" data-cat="viz" onclick="openModal(
 'assets/images/February_19/Most%20Common%20Central%20Asian%20Nationality%20in%20the%20USA.jpeg',
 'Most Common Central Asian Nationality in the USA',
 `
@@ -1546,12 +1590,12 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Central Asia USA</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Demography</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">Migration</span>
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal(
+<article class="p-card" data-cat="viz" onclick="openModal(
 'assets/images/February_19/European%20cities%20at%20Kazakhstan’s%20latitude.jpeg',
 'European Cities at Kazakhstan’s Latitude 🇰🇿',
 `
@@ -1566,12 +1610,12 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Europe Latitude</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">Geography</span>
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal(
+<article class="p-card" data-cat="viz" onclick="openModal(
 'assets/images/February_19/North%20American%20cities%20at%20Kazakhstan’s%20latitude.jpeg',
 'North American Cities at Kazakhstan’s Latitude 🇰🇿',
 `
@@ -1586,12 +1630,12 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">North America Latitude</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">Geography</span>
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal(
+<article class="p-card" data-cat="viz" onclick="openModal(
 'assets/images/February_19/World%20capitals%20at%20the%20latitude%20of%20Kazakhstan.jpeg',
 'World Capitals at Kazakhstan’s Latitude 🇰🇿',
 `
@@ -1606,7 +1650,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">World Capitals</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">Geography</span>
     </div>
   </div>
@@ -1671,7 +1715,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="demography" onclick="openModal(
+<article class="p-card" data-cat="viz" onclick="openModal(
 'assets/images/February_19/What%20Students%20Become%20in%20Kazakhstan.jpeg',
 'What Students Become in Kazakhstan 🇰🇿',
 `
@@ -1685,7 +1729,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Future Professions</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Demography</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">Education</span>
     </div>
   </div>
@@ -1796,7 +1840,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <p>I mapped bus route density across the city.</p>
   <p>Shows where mobility without a car is easy or limited.</p>
   <p><strong>Source:</strong> tha.kz</p>
-  <p><a href='https://www.linkedin.com/posts/nurasyl-abdrazakuly_dataviz-almaty-gis-activity-7399691453607800833-6K9B' target='_blank'>View post on LinkedIn</a></p>
+  <p><a href=ataviz-almaty-gis-activity-7399691453607800833-6K9B' target='_blank'>View post on LinkedIn</a></p>
 </div>
 `)">
   <img src="assets/images/December_2025/Public%20transport%20density%20in%20Almaty.jpeg" alt="Public Transport Density" loading="lazy">
@@ -1808,7 +1852,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal(
+<article class="p-card" data-cat="viz" onclick="openModal(
 'assets/images/December_2025/Coldest%20Capitals%20in%20the%20World.jpeg',
 'Coldest Capitals in the World ❄️',
 `
@@ -1822,7 +1866,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Coldest Capitals</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">Climate</span>
     </div>
   </div>
@@ -2125,7 +2169,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="viz" onclick="openModal(
+<article class="p-card" data-cat="economics" onclick="openModal(
 'assets/images/December_2025/Almaty%20Flats%20by%20Rooms.jpeg',
 'Almaty Flats by Rooms 🇰🇿',
 `
@@ -2157,12 +2201,12 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Almaty Flats by Rooms</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Visualization</span>
+      <span class="p-cat-tag">Economics</span>
       <span class="p-tech tag-other">Housing</span>
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal(
+<article class="p-card" data-cat="economics" onclick="openModal(
 'assets/images/December_2025/Built%20Living%20Area%20in%20Kazakhstan.jpeg',
 'Built Living Area in Kazakhstan 🇰🇿',
 `
@@ -2198,12 +2242,12 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Built Living Area in Kazakhstan</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Economics</span>
       <span class="p-tech tag-other">Urban Development</span>
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="viz" onclick="openModal(
+<article class="p-card" data-cat="economics" onclick="openModal(
 'assets/images/December_2025/Housing%20completions%20in%20Almaty%20over%20time.jpeg',
 'Housing completions in Almaty over time 🇰🇿',
 `
@@ -2232,12 +2276,12 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Housing Completions in Almaty</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Visualization</span>
+      <span class="p-cat-tag">Economics</span>
       <span class="p-tech tag-other">Construction</span>
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal(
+<article class="p-card" data-cat="viz" onclick="openModal(
 'assets/images/European%20Cities%20at%20Kazakhstan’s%20Latitude.jpg',
 'European Cities at Kazakhstan’s Latitude',
 `
@@ -2257,7 +2301,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">European Cities at Kazakhstan’s Latitude</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">Geography</span>
     </div>
   </div>
@@ -2450,7 +2494,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal(
+<article class="p-card" data-cat="demography" onclick="openModal(
 'assets/images/December_2025/Age–Sex%20Structure%20Change%20in%20Almaty%20city.jpeg',
 'Age–Sex Structure Change in Almaty (2015–2025)',
 `
@@ -2466,7 +2510,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Age–Sex Change in Almaty</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Demography</span>
       <span class="p-tech tag-other">Urban Demography</span>
     </div>
   </div>
@@ -2492,7 +2536,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal(
+<article class="p-card" data-cat="viz" onclick="openModal(
 'assets/images/December_2025/Annual%20Mean%20Temperature%20in%20Kazakhstan.jpeg',
 'Annual Mean Temperature in Kazakhstan (2024)',
 `
@@ -2507,7 +2551,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Annual Mean Temperature</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">Climate</span>
     </div>
   </div>
@@ -2586,7 +2630,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal(
+<article class="p-card" data-cat="viz" onclick="openModal(
 'assets/images/December_2025/Monthly%20Car%20Accidents%20in%20Kazakhstan%20(2021–2024).jpeg',
 'Monthly Car Accidents in Kazakhstan (2021–2024)',
 `
@@ -2614,7 +2658,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Monthly Car Accidents</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">Road Safety</span>
     </div>
   </div>
@@ -2747,7 +2791,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal(
+<article class="p-card" data-cat="viz" onclick="openModal(
 'assets/images/December_2025/Vehicle%20Ownership%20in%20Kazakhstan%20(2025).jpeg',
 'Vehicle Ownership in Kazakhstan (2025) 🇰🇿',
 `
@@ -2775,12 +2819,12 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Vehicle Ownership in Kazakhstan</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">Transport</span>
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="viz" onclick="openModal('assets/images/Top%2010%20Richest%20People%20in%20Kazakhstan.jpg', 'Top 10 Richest People in Kazakhstan (2025) 🇰🇿', `
+<article class="p-card" data-cat="economics" onclick="openModal('assets/images/Top%2010%20Richest%20People%20in%20Kazakhstan.jpg', 'Top 10 Richest People in Kazakhstan (2025) 🇰🇿', `
     <div style='text-align: center;'>
         <p>I visualized the <strong>latest Forbes ranking</strong> of Kazakhstan’s wealthiest individuals and families by <strong>net worth (2025)</strong>.</p>
         <p>Each person is represented by a circle scaled to their wealth, paired with the <strong>logo of their most recognizable company</strong> — linking names with brands people know.</p>
@@ -2797,7 +2841,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Top 10 Richest People in Kazakhstan (2025)</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Visualization</span>
+      <span class="p-cat-tag">Economics</span>
       <span class="p-tech tag-r">R</span>
     </div>
   </div>
@@ -3048,12 +3092,12 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="viz" onclick="window.open('pages/google_play_analysis.html','_blank')">
+<article class="p-card" data-cat="interactive" onclick="window.open('pages/google_play_analysis.html','_blank')">
   <img src="assets/images/Distribution_of_App_Installs_by_Category.png" alt="Google Play Store Data Analysis" loading="lazy">
   <div class="p-body">
     <p class="p-title">Google Play Store Data Analysis</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Visualization</span>
+      <span class="p-cat-tag">Interactive</span>
       <span class="p-tech tag-py">Python</span>
     </div>
   </div>
@@ -3211,12 +3255,12 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="viz" onclick="window.open('pages/market_capitalization_analysis.html','_blank')">
+<article class="p-card" data-cat="interactive" onclick="window.open('pages/market_capitalization_analysis.html','_blank')">
   <img src="assets/images/Distribution_of_Market_Capitalization_by_Industry.png" alt="Market Capitalization Analysis" loading="lazy">
   <div class="p-body">
     <p class="p-title">Market Capitalization Analysis</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Visualization</span>
+      <span class="p-cat-tag">Interactive</span>
       <span class="p-tech tag-py">Python</span>
     </div>
   </div>
@@ -3246,12 +3290,12 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="viz" onclick="window.open('pages/paris_2024_medals_analysis.html','_blank')">
+<article class="p-card" data-cat="interactive" onclick="window.open('pages/paris_2024_medals_analysis.html','_blank')">
   <img src="assets/images/Medal_Count_by_Type_for_Top_30_Countries.png" alt="" loading="lazy">
   <div class="p-body">
     <p class="p-title"></p>
     <div class="p-meta">
-      <span class="p-cat-tag">Visualization</span>
+      <span class="p-cat-tag">Interactive</span>
       
     </div>
   </div>
@@ -3283,12 +3327,12 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="viz" onclick="window.open('pages/vegetables_market_analysis.html','_blank')">
+<article class="p-card" data-cat="interactive" onclick="window.open('pages/vegetables_market_analysis.html','_blank')">
   <img src="/assets/images/Price_per_kg_of_Vegetables.png" alt="" loading="lazy">
   <div class="p-body">
     <p class="p-title"></p>
     <div class="p-meta">
-      <span class="p-cat-tag">Visualization</span>
+      <span class="p-cat-tag">Interactive</span>
       
     </div>
   </div>
@@ -3518,7 +3562,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="viz" onclick="openModal('assets/images/Top 50 Largest Private Companies in Kazakhstan in 2024.jpeg', 'Top 50 Largest Private Companies in Kazakhstan (2024) 🇰🇿', `
+<article class="p-card" data-cat="economics" onclick="openModal('assets/images/Top 50 Largest Private Companies in Kazakhstan in 2024.jpeg', 'Top 50 Largest Private Companies in Kazakhstan (2024) 🇰🇿', `
     <div style='text-align: center;'>
         <p>I visualized the largest private companies in the country by their revenue, based on the latest <strong>Forbes Kazakhstan</strong> ranking.</p>
         <p><strong>Sector breakdown within the Top-50:</strong><br>
@@ -3540,7 +3584,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Top 50 Largest Private Companies in Kazakhstan (2024)</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Visualization</span>
+      <span class="p-cat-tag">Economics</span>
       <span class="p-tech tag-r">R</span>
     </div>
   </div>
@@ -3572,7 +3616,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="viz" onclick="openModal('assets/images/15-minute.jpeg', '15-Minute Mobility in Almaty 🚶‍♂️🚲🚗', `
+<article class="p-card" data-cat="maps" onclick="openModal('assets/images/15-minute.jpeg', '15-Minute Mobility in Almaty 🚶‍♂️🚲🚗', `
     <div style='text-align: center;'>
         <p>I recently decided to dive into <strong>urban studies</strong>.</p>
         <p>I compared three of the most common ways to move around the city:</p>
@@ -3596,7 +3640,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">15-Minute Mobility in Almaty</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Visualization</span>
+      <span class="p-cat-tag">Maps & GIS</span>
       <span class="p-tech tag-r">R</span>
     </div>
   </div>
@@ -4019,7 +4063,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="geopolitics" onclick="openModal('assets/images/Kazakhstan_Flight_network.jpg', 'Kazakhstan Flight Network', `
+<article class="p-card" data-cat="viz" onclick="openModal('assets/images/Kazakhstan_Flight_network.jpg', 'Kazakhstan Flight Network', `
     <p>I mapped the entire network of domestic passenger flights across Kazakhstan 🇰🇿</p>
     <p>Each curved arc represents a direct connection between airports</p>
 
@@ -4044,7 +4088,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Kazakhstan Flight Network</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Geopolitics</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">Air Connectivity</span>
     </div>
   </div>
@@ -4110,12 +4154,12 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="viz" onclick="window.open('pages/earthquake_analysis.html','_blank')">
+<article class="p-card" data-cat="interactive" onclick="window.open('pages/earthquake_analysis.html','_blank')">
   <img src="assets/images/KZ_earthquakes_1924-2024.jpeg" alt="" loading="lazy">
   <div class="p-body">
     <p class="p-title"></p>
     <div class="p-meta">
-      <span class="p-cat-tag">Visualization</span>
+      <span class="p-cat-tag">Interactive</span>
       
     </div>
   </div>
@@ -4130,12 +4174,12 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="viz" onclick="openModal('assets/images/national_composition_of_Kazakhstan.gif', 'Historical Change in the National Composition of Kazakhstan', 'This visualization chronicles the demographic evolution of Kazakhstan’s national composition from 1897 to 2021, using Python and libraries such as Matplotlib, NumPy, and Pandas. Based on population census data, the timeline reveals key historical events and trends:<br><ul><li>🇰🇿 Kazakhs: From 3.4M in 1897 to 13.5M in 2021, with declines during famines and recovery in the post-Soviet era.</li><li>🇷🇺 Russians: Peaking at 6.2M in 1989, with significant emigration reducing the population to under 3M by 2021.</li><li>🇺🇦 Ukrainians: From 80K in 1897 to a peak of 860K in 1926, now declining to 387K in 2021.</li><li>🇩🇪 Germans: A rise from 2.6K in 1897 to 659K in 1959 due to deportations, followed by emigration reducing numbers to 226K in 2021.</li><li>🇰🇷 Koreans: Emerging from deportations in 1937, growing steadily to 118K by 2021.</li></ul>This visualization provides insights into the interplay of migration, political events, and demographic shifts in Kazakhstan’s history.')">
+<article class="p-card" data-cat="demography" onclick="openModal('assets/images/national_composition_of_Kazakhstan.gif', 'Historical Change in the National Composition of Kazakhstan', 'This visualization chronicles the demographic evolution of Kazakhstan’s national composition from 1897 to 2021, using Python and libraries such as Matplotlib, NumPy, and Pandas. Based on population census data, the timeline reveals key historical events and trends:<br><ul><li>🇰🇿 Kazakhs: From 3.4M in 1897 to 13.5M in 2021, with declines during famines and recovery in the post-Soviet era.</li><li>🇷🇺 Russians: Peaking at 6.2M in 1989, with significant emigration reducing the population to under 3M by 2021.</li><li>🇺🇦 Ukrainians: From 80K in 1897 to a peak of 860K in 1926, now declining to 387K in 2021.</li><li>🇩🇪 Germans: A rise from 2.6K in 1897 to 659K in 1959 due to deportations, followed by emigration reducing numbers to 226K in 2021.</li><li>🇰🇷 Koreans: Emerging from deportations in 1937, growing steadily to 118K by 2021.</li></ul>This visualization provides insights into the interplay of migration, political events, and demographic shifts in Kazakhstan’s history.')">
   <img src="assets/images/national_composition_of_Kazakhstan.gif" alt="National Composition Timeline" loading="lazy">
   <div class="p-body">
     <p class="p-title">National Composition Timeline</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Visualization</span>
+      <span class="p-cat-tag">Demography</span>
       <span class="p-tech tag-py">Python</span>
     </div>
   </div>
@@ -4150,7 +4194,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal('assets/images/climate_change_Almaty.jpeg', 'Climate Change in Almaty (1875–2023)', `
+<article class="p-card" data-cat="viz" onclick="openModal('assets/images/climate_change_Almaty.jpeg', 'Climate Change in Almaty (1875–2023)', `
     <div style='text-align: center;'>
         
         <p>This visualization illustrates the annual average temperature anomalies in Almaty 🌡️ from 1875 to 2023, showcasing the deviation of each year's temperature from the historical norm.</p>
@@ -4166,7 +4210,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">The warming trend in Almaty is a clear indicator of climate change, with direct implications for local ecosystems, water resources, and the city's climate resilience.</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Visualization</span>
       
     </div>
   </div>
@@ -4212,7 +4256,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-<article class="p-card" data-cat="maps" onclick="openModal('assets/images/Snow_And_rain_Almaty.jpg', 'Snow and Rain in Almaty (2024)', `
+<article class="p-card" data-cat="viz" onclick="openModal('assets/images/Snow_And_rain_Almaty.jpg', 'Snow and Rain in Almaty (2024)', `
   <p>🌧️ I visualized daily precipitation in Almaty 🇰🇿 for the entire year of 2024.</p>
 
   <p>Each diagonal line = 1 day with measurable precipitation<br>
@@ -4234,7 +4278,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
   <div class="p-body">
     <p class="p-title">Snow and Rain in Almaty</p>
     <div class="p-meta">
-      <span class="p-cat-tag">Maps & GIS</span>
+      <span class="p-cat-tag">Visualization</span>
       <span class="p-tech tag-other">2024 Precipitation</span>
     </div>
   </div>
@@ -5054,7 +5098,7 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
     </div>
   </div>
 </article>
-  </div>
+  
 </div>
 </section>
 
@@ -5079,70 +5123,49 @@ footer{border-top:3px double var(--ink);padding:36px 20px}
       <a href="https://github.com/Nurasssyl" target="_blank"><i class="fab fa-github"></i></a>
       <a href="mailto:nurassyl.abdrazakuly@gmail.com"><i class="fas fa-envelope"></i></a>
     </div>
-    <p class="foot-copy">© 2026 Nurasyl Abdrazakuly — Data Science, Analytics &amp; Visualization · Almaty, Kazakhstan · Open to relocation to Europe</p>
+    <p class="foot-copy">© 2026 Nurasyl Abdrazakuly — Data Analytics &amp; Visualization &nbsp;·&nbsp; Almaty, Kazakhstan &nbsp;·&nbsp; Open to relocation (Europe) &amp; remote worldwide</p>
   </div>
 </footer>
 
 <script>
 (function(){
-  // ---- MODAL ----
+  /* MODAL */
   const bg = document.getElementById('modal-bg');
   const imgEl = document.getElementById('modal-img');
   const titleEl = document.getElementById('modal-title');
   const descEl = document.getElementById('modal-desc');
   const closeBtn = document.getElementById('modal-close');
-
-  window.openModal = function(src, title, desc){
-    imgEl.src = src;
-    titleEl.textContent = title || '';
-    descEl.innerHTML = desc || '';
-    bg.classList.add('open');
-    document.body.style.overflow = 'hidden';
+  window.openModal = function(src,title,desc){
+    imgEl.src = src; titleEl.textContent = title||''; descEl.innerHTML = desc||'';
+    bg.classList.add('open'); document.body.style.overflow='hidden';
   };
+  function closeModal(){ bg.classList.remove('open'); document.body.style.overflow=''; }
+  closeBtn.addEventListener('click',closeModal);
+  bg.addEventListener('click',function(e){ if(e.target===bg) closeModal(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
 
-  function closeModal(){
-    bg.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  closeBtn.addEventListener('click', closeModal);
-  bg.addEventListener('click', function(e){ if(e.target === bg) closeModal(); });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
-
-  // ---- FILTER ----
+  /* FILTER */
   const btns = document.querySelectorAll('.fb');
   const cards = document.querySelectorAll('.p-card');
+  const counts = {};
+  cards.forEach(c=>{ const cat=c.dataset.cat; counts[cat]=(counts[cat]||0)+1; });
 
-  btns.forEach(btn => {
-    btn.addEventListener('click', function(){
-      btns.forEach(b => b.classList.remove('active'));
+  btns.forEach(btn=>{
+    // set counts on filter buttons
+    const f = btn.dataset.filter;
+    if(f !== 'all'){
+      const n = counts[f]||0;
+      btn.innerHTML = btn.innerHTML + ' <span style="opacity:.55;font-size:9px">('+n+')</span>';
+    }
+    btn.addEventListener('click',function(){
+      btns.forEach(b=>b.classList.remove('active'));
       this.classList.add('active');
       const filter = this.dataset.filter;
-      let count = 0;
-      cards.forEach(card => {
-        if(filter === 'all' || card.dataset.cat === filter){
-          card.classList.remove('hidden');
-          count++;
-        } else {
-          card.classList.add('hidden');
-        }
+      cards.forEach(card=>{
+        card.classList.toggle('hidden', filter!=='all' && card.dataset.cat!==filter);
       });
     });
   });
-
-  // ---- NAV ACTIVE ----
-  const sections = document.querySelectorAll('section[id], header[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if(e.isIntersecting){
-        navLinks.forEach(a => {
-          a.style.color = a.getAttribute('href') === '#' + e.target.id ? 'var(--ink)' : '';
-        });
-      }
-    });
-  }, {threshold: 0.3});
-  sections.forEach(s => obs.observe(s));
 })();
 </script>
 </body>
