@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Men Who Own Kazakhstan — Forbes 2025</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&family=Source+Serif+4:wght@300;400;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f9f7f2;--ink:#1a1708;--ink2:#3d3b2f;--muted:#888776;--rule:#d4d0c4;--accent:#b5350a;--gold:#c8880a}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Source Serif 4',serif}
+#progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);z-index:300;width:0}
+
+/* HERO */
+#hero{min-height:100vh;background:#f0ede6;display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 80px;position:relative;overflow:hidden}
+.hero-inner{max-width:800px;padding:0 56px;position:relative;z-index:2}
+.hero-bg-num{position:absolute;right:-60px;top:50%;transform:translateY(-50%);font-family:'Playfair Display',serif;font-size:500px;font-weight:700;color:rgba(0,0,0,0.035);line-height:1;user-select:none;pointer-events:none}
+.kicker{font-family:'IBM Plex Sans',sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.kicker::before{content:'';width:32px;height:1px;background:var(--accent)}
+h1{font-family:'Playfair Display',serif;font-size:clamp(42px,8vw,88px);font-weight:700;line-height:1.0;color:var(--ink);margin-bottom:28px}
+.deck{font-family:'IBM Plex Sans',sans-serif;font-size:clamp(14px,2vw,18px);color:var(--muted);line-height:1.75;max-width:520px;margin-bottom:48px;font-weight:300}
+.scroll-cue{display:flex;align-items:center;gap:12px;font-family:'IBM Plex Sans',sans-serif;font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.cue-arr{width:20px;height:20px;border-right:1px solid var(--muted);border-bottom:1px solid var(--muted);transform:rotate(45deg);animation:bop 1.8s infinite}
+@keyframes bop{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
+
+/* ARTICLE */
+.article{max-width:700px;margin:0 auto;padding:0 32px}
+.bl{border-left:1px solid var(--rule)}
+.prose{padding:56px 0 0}
+.prose p{margin-bottom:1.4em;color:var(--ink2);font-size:17px;line-height:1.8}
+.prose p:first-child::first-letter{font-family:'Playfair Display',serif;font-size:4.4em;font-weight:700;float:left;line-height:.76;margin-right:10px;margin-top:8px;color:var(--ink)}
+h2.sh{font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,36px);font-weight:700;font-style:italic;line-height:1.15;color:var(--ink);margin:64px 0 16px}
+.pq{border-left:3px solid var(--accent);padding:20px 24px;margin:40px 0;background:rgba(181,53,10,.04)}
+.pq p{font-family:'Playfair Display',serif;font-size:clamp(16px,2.5vw,21px);font-style:italic;color:var(--ink);line-height:1.4;margin:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:40px 0}
+.sc{background:var(--bg);padding:20px 14px;text-align:center}
+.sv{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,42px);font-weight:700;color:var(--ink);line-height:1;margin-bottom:6px}
+.sl{font-family:'IBM Plex Sans',sans-serif;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;line-height:1.4}
+
+/* VIZ */
+.viz{max-width:1060px;margin:60px auto;padding:0 32px}
+.ve{font-family:'IBM Plex Sans',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.vt{font-family:'Playfair Display',serif;font-size:clamp(18px,2.8vw,28px);font-weight:700;color:var(--ink);margin-bottom:6px;line-height:1.2}
+.vs{font-family:'IBM Plex Sans',sans-serif;font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px}
+.li{display:flex;align-items:center;gap:7px;font-family:'IBM Plex Sans',sans-serif;font-size:12px;color:var(--ink2)}
+.ld{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.cw{position:relative;width:100%}
+svg.bs{display:block;width:100%;overflow:visible}
+.tt{position:absolute;background:#fff;border:1px solid var(--rule);border-radius:6px;padding:12px 16px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;pointer-events:none;opacity:0;transition:opacity .15s;z-index:30;max-width:210px;box-shadow:0 4px 20px rgba(0,0,0,.1);line-height:1.6}
+.tn{font-weight:500;font-size:14px;margin-bottom:2px;color:var(--ink)}
+.tw{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.tm{font-size:11px;color:var(--muted)}
+.vn{font-family:'IBM Plex Sans',sans-serif;font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5}
+
+/* CANVAS SECTION */
+#canvas-section{background:#f4f1eb;margin:80px 0 0;padding:56px 0 0;border-top:1px solid var(--rule)}
+.cs-intro{max-width:700px;margin:0 auto;padding:0 32px 48px}
+.cs-intro h2{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,52px);font-weight:700;line-height:1.1;color:var(--ink);margin-bottom:14px}
+.cs-intro p{font-family:'IBM Plex Sans',sans-serif;font-size:15px;color:var(--muted);line-height:1.75;max-width:500px}
+
+/* STAGE */
+#stage-outer{position:relative;width:100%}
+#stage{width:100%;height:100vh;min-height:500px;position:relative;overflow:hidden}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+/* HUD */
+#hud{position:absolute;inset:0;pointer-events:none;z-index:10}
+#hed-num{position:absolute;top:28px;left:32px;font-family:'IBM Plex Sans',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+#hed-name{position:absolute;top:46px;left:32px;font-family:'Playfair Display',serif;font-size:clamp(20px,3.5vw,38px);font-weight:700;line-height:1.1;color:var(--ink)}
+#hed-wealth{position:absolute;top:28px;right:32px;text-align:right}
+#hed-wval{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,46px);font-weight:700;color:var(--accent)}
+#hed-wlbl{font-family:'IBM Plex Sans',sans-serif;font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+
+/* PEOPLE PANEL */
+#ppl-panel{
+  position:absolute;bottom:0;left:0;right:0;
+  background:rgba(249,247,242,0.95);
+  border-top:1px solid var(--rule);
+  padding:14px 32px 16px;
+  display:flex;gap:0;overflow-x:auto;
+  pointer-events:all;
+}
+#ppl-panel::-webkit-scrollbar{height:2px}
+#ppl-panel::-webkit-scrollbar-thumb{background:var(--rule)}
+.pchip{
+  display:flex;flex-direction:column;padding-right:20px;margin-right:20px;
+  border-right:1px solid var(--rule);flex-shrink:0;
+  opacity:0;transform:translateY(5px);
+  transition:opacity .35s,transform .35s;
+}
+.pchip.on{opacity:1;transform:none}
+.pc-n{font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:500;color:var(--ink);white-space:nowrap}
+.pc-w{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--accent)}
+.pc-g{font-family:'IBM Plex Sans',sans-serif;font-size:10px;color:var(--muted);margin-top:1px}
+
+/* SECTOR DOTS */
+#sdots{position:absolute;bottom:80px;left:32px;display:flex;gap:6px;align-items:center;pointer-events:all}
+.sdot{width:5px;height:5px;border-radius:50%;background:rgba(0,0,0,0.15);cursor:pointer;transition:background .25s,transform .25s}
+.sdot.on{background:var(--accent);transform:scale(1.7)}
+
+/* SCROLL INDICATOR */
+#scind{position:absolute;bottom:88px;right:32px;font-family:'IBM Plex Sans',sans-serif;font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:7px;transition:opacity .4s}
+.si-arr{width:14px;height:14px;border-right:1px solid var(--muted);border-bottom:1px solid var(--muted);transform:rotate(45deg);animation:bop 1.8s infinite}
+
+/* ASSETS SECTION */
+#assets-section{max-width:960px;margin:0 auto;padding:80px 32px}
+#assets-section h2{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,44px);font-weight:700;line-height:1.15;margin-bottom:12px}
+#assets-section .sub{font-family:'IBM Plex Sans',sans-serif;font-size:15px;color:var(--muted);line-height:1.75;max-width:560px;margin-bottom:40px}
+#assets-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.asset-card{background:var(--bg);padding:24px 20px;cursor:pointer;transition:background .2s}
+.asset-card:hover{background:#f4f0e8}
+.ac-person{font-family:'IBM Plex Sans',sans-serif;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.ac-company{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:4px;line-height:1.2}
+.ac-type{display:inline-block;font-family:'IBM Plex Sans',sans-serif;font-size:10px;padding:2px 8px;background:rgba(181,53,10,.08);color:var(--accent);border-radius:2px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em}
+.ac-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--accent);margin-bottom:6px}
+.ac-desc{font-family:'IBM Plex Sans',sans-serif;font-size:12px;color:var(--muted);line-height:1.6}
+.ac-bar{height:3px;background:var(--rule);margin-top:12px;border-radius:2px;overflow:hidden}
+.ac-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 1.2s ease}
+
+/* CONCLUSION */
+#conclusion{background:#1a1708;color:#f9f7f2;padding:120px 48px;margin-top:0}
+.conc-inner{max-width:800px;margin:0 auto}
+.conc-kicker{font-family:'IBM Plex Sans',sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(200,136,10,0.8);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.conc-kicker::before{content:'';width:40px;height:1px;background:rgba(200,136,10,0.6)}
+#conclusion h2{font-family:'Playfair Display',serif;font-size:clamp(32px,6vw,68px);font-weight:700;line-height:1.05;color:#f9f7f2;margin-bottom:32px}
+.conc-body{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-bottom:60px}
+@media(max-width:640px){.conc-body{grid-template-columns:1fr}}
+.conc-p{font-family:'IBM Plex Sans',sans-serif;font-size:15px;color:rgba(249,247,242,0.6);line-height:1.85}
+.conc-p strong{color:#f9f7f2;font-weight:500}
+.conc-numbers{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.06);margin-bottom:60px}
+@media(max-width:500px){.conc-numbers{grid-template-columns:1fr 1fr}}
+.cn-item{padding:28px 20px;text-align:center}
+.cn-val{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);font-weight:700;color:rgba(200,136,10,0.9);line-height:1;margin-bottom:8px}
+.cn-lbl{font-family:'IBM Plex Sans',sans-serif;font-size:11px;color:rgba(249,247,242,0.4);text-transform:uppercase;letter-spacing:.08em;line-height:1.4}
+.conc-line{width:40px;height:1px;background:rgba(200,136,10,0.4);margin:0 0 24px}
+.conc-final{font-family:'Playfair Display',serif;font-size:clamp(18px,2.8vw,26px);font-style:italic;color:rgba(249,247,242,0.75);line-height:1.55;max-width:680px;margin-bottom:40px}
+.conc-source{font-family:'IBM Plex Sans',sans-serif;font-size:11px;color:rgba(249,247,242,0.25);line-height:1.7;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s}
+.reveal.on{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-num">$</div>
+  <div class="hero-inner">
+    <p class="kicker">Wealth · Power · Kazakhstan 2025</p>
+    <h1>The Men<br>Who Own<br>Kazakhstan</h1>
+    <p class="deck">75 people. $74.5 billion. A portrait of the elite that built — and profited from — post-Soviet Kazakhstan. Twelve industries. One class.</p>
+    <div class="scroll-cue"><div class="cue-arr"></div><span>Scroll to explore</span></div>
+  </div>
+</section>
+
+<!-- ARTICLE -->
+<div class="article bl reveal">
+  <div class="prose">
+    <p>When Forbes Kazakhstan published its 2025 ranking, the top line was staggering: 75 people collectively holding nearly <strong>$74.5 billion</strong> — roughly a quarter of Kazakhstan's entire GDP, concentrated in a group small enough to fit in a single conference room.</p>
+    <p>At the summit sits <strong>Vyacheslav Kim</strong>, 55, chairman of Kaspi.kz — Kazakhstan's largest fintech platform — with $7.1 billion. Just behind him: <strong>Timur Turlov</strong>, 37, who grew Freedom Holding Corp from a small brokerage into a $5.8 billion empire in under a decade. Two men who represent the two eras of Kazakh capitalism: the privatisation generation, and the digital one.</p>
+    <p>The rest of the list tells a more uniform story — of a particular kind of man, from a particular generation, who found opportunity in the wreckage of the Soviet Union and never looked back.</p>
+  </div>
+</div>
+
+<div class="article bl reveal">
+  <div class="stats">
+    <div class="sc"><div class="sv">$74.5B</div><div class="sl">Combined fortune</div></div>
+    <div class="sc"><div class="sv">54</div><div class="sl">Average age</div></div>
+    <div class="sc"><div class="sv">3</div><div class="sl">Women in top 75</div></div>
+    <div class="sc"><div class="sv">37</div><div class="sl">Youngest · Turlov</div></div>
+    <div class="sc"><div class="sv">79</div><div class="sl">Oldest · Buller</div></div>
+  </div>
+</div>
+
+<div class="article bl reveal">
+  <h2 class="sh">A generation that won the transition</h2>
+  <div class="prose">
+    <p>The dominant cohort is <strong>Gen X</strong> — born 1965–1980, young adults when the Soviet Union collapsed in 1991. They entered the post-independence economy with energy and ambition, and found extraordinary opportunity in the chaos of privatisation. Nearly 40 of the 75 belong to this generation.</p>
+    <p>Baby Boomers — those who held senior Soviet-era positions and converted them into private capital — form the second-largest group. Millennials are a growing but still minor presence, with Turlov as the most dramatic outlier: wealth built from code, not coal.</p>
+  </div>
+</div>
+
+<div class="viz reveal">
+  <p class="ve">Visualisation 1 · Wealth by generation</p>
+  <p class="vt">Every circle is a person. Size is wealth.</p>
+  <p class="vs">Position on X axis = net worth (log scale). Color = generation. Hover for details.</p>
+  <div class="legend">
+    <div class="li"><div class="ld" style="background:#b5350a"></div>Baby Boomer (1946–64)</div>
+    <div class="li"><div class="ld" style="background:#1a4d7a"></div>Gen X (1965–80)</div>
+    <div class="li"><div class="ld" style="background:#1a6b3a"></div>Millennial (1981–96)</div>
+    <div class="li"><div class="ld" style="background:#6b3a7a"></div>Silent</div>
+    <div class="li"><div class="ld" style="background:#b0ae9f"></div>Family</div>
+  </div>
+  <div class="cw"><svg class="bs" id="sv1"></svg><div class="tt" id="t1"></div></div>
+  <p class="vn">Source: Forbes Kazakhstan, 2025.</p>
+</div>
+
+<div class="article bl reveal">
+  <div class="pq"><p>"Of 75 names, only three are women. Not a coincidence — a structural feature of how wealth was created in post-Soviet Kazakhstan."</p></div>
+  <h2 class="sh">Where are the women?</h2>
+  <div class="prose">
+    <p>Only three women appear as named individuals: <strong>Dinara Kulibayeva</strong> ($5.3B, co-owner of Halyk Bank and Almex Group); <strong>Dariga Nazarbayeva</strong> ($571M, daughter of the former president); and <strong>Aizhan Yesim</strong> ($210M, phosphorites). That is 4% female representation among identified individuals.</p>
+    <p>The reasons are structural. Privatisation of state assets in the 1990s, capture of natural resource revenues, and formation of large financial-industrial groups all unfolded in environments where women had limited access to capital, political networks, and the informal power relationships that translated Soviet positions into capitalist fortunes.</p>
+  </div>
+</div>
+
+<div class="viz reveal">
+  <p class="ve">Visualisation 2 · Wealth by gender</p>
+  <p class="vt">The same 75, coloured by gender.</p>
+  <p class="vs">Three women individually identified. Thirteen family entries have no gender assigned.</p>
+  <div class="legend">
+    <div class="li"><div class="ld" style="background:#1a4d7a"></div>Male</div>
+    <div class="li"><div class="ld" style="background:#b5350a"></div>Female</div>
+    <div class="li"><div class="ld" style="background:#b0ae9f"></div>Family</div>
+  </div>
+  <div class="cw"><svg class="bs" id="sv2"></svg><div class="tt" id="t2"></div></div>
+  <p class="vn">Source: Forbes Kazakhstan, 2025.</p>
+</div>
+
+<!-- CANVAS SECTION -->
+<section id="canvas-section">
+  <div class="cs-intro reveal">
+    <p class="kicker">Industries · Scroll to explore</p>
+    <h2>12 industries.<br>One billionaire class.</h2>
+    <p>Scroll inside the scene to fly through Kazakhstan's economic landscape. Each sector morphs into the next. The billionaires behind each industry appear as you move through.</p>
+  </div>
+
+  <div id="stage-outer">
+    <div id="stage">
+      <canvas id="cv"></canvas>
+      <div id="hud">
+        <div id="hed-num">01 / 12</div>
+        <div id="hed-name">Construction<br>& Real Estate</div>
+        <div id="hed-wealth">
+          <div id="hed-wval">$2.7B</div>
+          <div id="hed-wlbl">combined wealth</div>
+        </div>
+        <div id="ppl-panel"></div>
+        <div id="sdots"></div>
+        <div id="scind"><div class="si-arr"></div>scroll</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ASSETS SECTION -->
+<section id="assets-section" class="reveal">
+  <p class="ve">What they own</p>
+  <h2>The companies<br>behind the fortunes</h2>
+  <p class="sub">Kazakhstan's billionaires built their wealth through specific, identifiable companies. Here are the key assets — publicly listed or privately held — that underpin the top fortunes.</p>
+  <div id="assets-grid"></div>
+  <p class="vn" style="margin-top:16px">Sources: Forbes Kazakhstan 2025, Forbes World Billionaires 2025, company filings, Kursiv Media.</p>
+</section>
+
+<!-- CONCLUSION -->
+<section id="conclusion">
+  <div class="conc-inner">
+    <p class="conc-kicker">Conclusion</p>
+    <h2>A country's wealth,<br>in very few hands.</h2>
+
+    <div class="conc-numbers">
+      <div class="cn-item"><div class="cn-val">75</div><div class="cn-lbl">People on the list</div></div>
+      <div class="cn-item"><div class="cn-val">$74.5B</div><div class="cn-lbl">Combined wealth</div></div>
+      <div class="cn-item"><div class="cn-val">28%</div><div class="cn-lbl">Share of Kazakhstan's GDP</div></div>
+      <div class="cn-item"><div class="cn-val">4%</div><div class="cn-lbl">Women represented</div></div>
+      <div class="cn-item"><div class="cn-val">Gen X</div><div class="cn-lbl">Dominant generation</div></div>
+      <div class="cn-item"><div class="cn-val">1991</div><div class="cn-lbl">The year it all began</div></div>
+    </div>
+
+    <div class="conc-body">
+      <div>
+        <p class="conc-p">Kazakhstan's billionaire class is not random. It was <strong>created by a specific historical moment</strong> — the collapse of the Soviet Union and the rapid, largely unregulated privatisation that followed. The men who stood closest to state assets in 1991–2000 are, with few exceptions, the men at the top of this list today.</p>
+        <p class="conc-p" style="margin-top:20px">The <strong>generation gap is striking</strong>: almost no one under 40, almost no one over 75. A narrow band of people, born into a specific window of Soviet history, who had the age, the access, and the ambition to capture what was on offer.</p>
+      </div>
+      <div>
+        <p class="conc-p">The <strong>gender gap is even starker</strong>. In a country of 19 million people, only three women appear in the top 75 — and two of them owe their positions largely to family ties to powerful men. This is not an accident. It reflects who had access to capital, political connections, and informal networks in the 1990s.</p>
+        <p class="conc-p" style="margin-top:20px">The <strong>new generation is beginning to appear</strong>: Turlov at 37, Aliyev at 40, Baytasov at 40. But for now, Kazakhstan's wealth remains concentrated in the hands of men who came of age before the internet, built their empires in the 1990s and 2000s, and show no signs of releasing their grip.</p>
+      </div>
+    </div>
+
+    <div class="conc-line"></div>
+    <p class="conc-final">"The question is not who made it onto this list — it is who was never given the chance."</p>
+    <p class="conc-source"><strong>Data:</strong> Forbes Kazakhstan 2025 (published May 2025). Forbes World Billionaires List 2025 (April 2025). Generation definitions standard demographic cohorts. Combined wealth total includes all 75 entries. Some individuals appear in multiple sectors. The 28% GDP figure uses IMF Kazakhstan GDP estimate for 2025.<br><br><strong>Analysis & visualisation:</strong> nurasyl.space · Part of the series <em>"Who Runs Kazakhstan"</em></p>
+  </div>
+</section>
+
+<script>
+/* ═══════════ DATA ═══════════ */
+const DATA=[
+  {n:"Vyacheslav Kim",w:7100,age:55,sex:"M",gen:"Millennial",s:["Diversified"]},
+  {n:"Timur Turlov",w:5800,age:37,sex:"M",gen:"Millennial",s:["Finance"]},
+  {n:"Vladimir Kim",w:5700,age:64,sex:"M",gen:"Baby Boomer",s:["Metals"]},
+  {n:"Timur Kulibayev",w:5300,age:58,sex:"M",gen:"Baby Boomer",s:["Diversified","Oil"]},
+  {n:"Dinara Kulibayeva",w:5300,age:57,sex:"F",gen:"Baby Boomer",s:["Diversified"]},
+  {n:"Bulat Utemuratov",w:3700,age:67,sex:"M",gen:"Baby Boomer",s:["Diversified"]},
+  {n:"Ibragimov Family",w:2060,age:null,sex:null,gen:"Family",s:["Diversified"]},
+  {n:"Nurlan Smagulov",w:990,age:59,sex:"M",gen:"Gen X",s:["Auto","Construction"]},
+  {n:"Sarsenov Family",w:980,age:null,sex:null,gen:"Family",s:["Diversified"]},
+  {n:"Aydin Rakhimbayev",w:967,age:52,sex:"M",gen:"Gen X",s:["Construction"]},
+  {n:"Arsen Tomsky",w:850,age:51,sex:"M",gen:"Gen X",s:["IT"]},
+  {n:"Andrey Lavrentyev",w:840,age:45,sex:"M",gen:"Gen X",s:["Auto","Metals"]},
+  {n:"Alexander Klebanov",w:828,age:62,sex:"M",gen:"Baby Boomer",s:["Diversified"]},
+  {n:"Eduard Ogay",w:761,age:55,sex:"M",gen:"Millennial",s:["Metals"]},
+  {n:"Belovich Family",w:681,age:null,sex:null,gen:"Family",s:["Construction"]},
+  {n:"Bakhytbek Bayseitov",w:580,age:66,sex:"M",gen:"Baby Boomer",s:["Finance","Oil"]},
+  {n:"Dariga Nazarbayeva",w:571,age:61,sex:"F",gen:"Baby Boomer",s:["Diversified"]},
+  {n:"Dinmukhamed Idrisov",w:563,age:60,sex:"M",gen:"Gen X",s:["Diversified"]},
+  {n:"Galimzhan Yesenov",w:560,age:43,sex:"M",gen:"Millennial",s:["Finance"]},
+  {n:"Oleg Novachuk",w:481,age:54,sex:"M",gen:"Millennial",s:["Metals"]},
+  {n:"Vladimir Dzhumanbayev",w:472,age:51,sex:"M",gen:"Gen X",s:["Metals"]},
+  {n:"Sergey Kan",w:470,age:57,sex:"M",gen:"Gen X",s:["Diversified"]},
+  {n:"Kenes Rakishev",w:435,age:45,sex:"M",gen:"Gen X",s:["Diversified","Finance"]},
+  {n:"Kayrat Itemgenov",w:404,age:54,sex:"M",gen:"Millennial",s:["Healthcare","Construction"]},
+  {n:"Daniyar Abulgazin",w:400,age:55,sex:"M",gen:"Millennial",s:["Diversified"]},
+  {n:"Yerlik Balfanbayev",w:400,age:61,sex:"M",gen:"Baby Boomer",s:["Auto"]},
+  {n:"Farrukh Makhmudov",w:388,age:49,sex:"M",gen:"Gen X",s:["Diversified"]},
+  {n:"Sukhrab Makhmudov",w:388,age:46,sex:"M",gen:"Gen X",s:["Diversified"]},
+  {n:"Alexander Chukreev",w:384,age:63,sex:"M",gen:"Baby Boomer",s:["FMCG","Construction"]},
+  {n:"Yerkin Tatishev",w:368,age:49,sex:"M",gen:"Gen X",s:["Diversified","Finance"]},
+  {n:"Seitzhanov Family",w:365,age:null,sex:null,gen:"Family",s:["Diversified"]},
+  {n:"Mukashev Family",w:363,age:null,sex:null,gen:"Family",s:["Metals","Construction"]},
+  {n:"Serik Tolukpayev",w:359,age:54,sex:"M",gen:"Millennial",s:["Agriculture"]},
+  {n:"Baurzhan Isabayev",w:323,age:52,sex:"M",gen:"Gen X",s:["Construction"]},
+  {n:"Alexander Garber",w:297,age:62,sex:"M",gen:"Baby Boomer",s:["FMCG"]},
+  {n:"Bakhariddin Ablazimov",w:295,age:56,sex:"M",gen:"Gen X",s:["Oil"]},
+  {n:"Marat Zhuman",w:293,age:48,sex:"M",gen:"Gen X",s:["Transport"]},
+  {n:"Almas Mynbayev",w:292,age:51,sex:"M",gen:"Gen X",s:["Finance","Agriculture"]},
+  {n:"Nurali Aliyev",w:289,age:40,sex:"M",gen:"Millennial",s:["Diversified"]},
+  {n:"Almas Sultangazin",w:285,age:60,sex:"M",gen:"Gen X",s:["FMCG","IT"]},
+  {n:"Aydan Karibzhanov",w:278,age:53,sex:"M",gen:"Gen X",s:["Finance"]},
+  {n:"Askhat Omarov",w:242,age:51,sex:"M",gen:"Gen X",s:["Construction"]},
+  {n:"Yakov Tskhai",w:236,age:74,sex:"M",gen:"Silent",s:["Diversified"]},
+  {n:"Nurlan Artykbayev",w:228,age:49,sex:"M",gen:"Gen X",s:["Construction"]},
+  {n:"Pavlinger Family",w:227,age:null,sex:null,gen:"Family",s:["Auto"]},
+  {n:"Serik Tolbasy",w:225,age:59,sex:"M",gen:"Gen X",s:["Construction"]},
+  {n:"Saidulla Kozhbayev",w:215,age:65,sex:"M",gen:"Baby Boomer",s:["Auto"]},
+  {n:"Marat Sarsenov",w:213,age:57,sex:"M",gen:"Gen X",s:["Transport"]},
+  {n:"Aizhan Yesim",w:210,age:43,sex:"F",gen:"Millennial",s:["Metals","Agriculture"]},
+  {n:"Kayrat Mazhibayev",w:190,age:57,sex:"M",gen:"Gen X",s:["FMCG"]},
+  {n:"Eduard Kim",w:190,age:59,sex:"M",gen:"Gen X",s:["FMCG"]},
+  {n:"Ibrahim Akdrashev",w:184,age:62,sex:"M",gen:"Baby Boomer",s:["Oil"]},
+  {n:"Kanat Kopbayev",w:184,age:48,sex:"M",gen:"Gen X",s:["Diversified"]},
+  {n:"Daulet Nurzhanov",w:184,age:53,sex:"M",gen:"Gen X",s:["Diversified"]},
+  {n:"Vladimir Denisov",w:181,age:64,sex:"M",gen:"Baby Boomer",s:["Transport"]},
+  {n:"Almaz Alsenov",w:180,age:43,sex:"M",gen:"Millennial",s:["Agriculture"]},
+  {n:"Nurbol Nazarbayev",w:179,age:41,sex:"M",gen:"Millennial",s:["Diversified"]},
+  {n:"Alimzhanov Family",w:176,age:null,sex:null,gen:"Family",s:["FMCG"]},
+  {n:"Alidar Utemuratov",w:161,age:46,sex:"M",gen:"Gen X",s:["IT"]},
+  {n:"Zhakulin Family",w:158,age:null,sex:null,gen:"Family",s:["Transport"]},
+  {n:"Tursenali Alaguzov",w:130,age:55,sex:"M",gen:"Millennial",s:["FMCG"]},
+  {n:"Seisembayev Family",w:129,age:null,sex:null,gen:"Family",s:["Finance"]},
+  {n:"Vladislav Li",w:125,age:68,sex:"M",gen:"Baby Boomer",s:["Finance"]},
+  {n:"Armanzan Baytasov",w:120,age:55,sex:"M",gen:"Millennial",s:["Media"]},
+  {n:"Ershat Salimov",w:115,age:63,sex:"M",gen:"Baby Boomer",s:["Diversified"]},
+  {n:"Vladimir Sidelkovsky",w:112,age:59,sex:"M",gen:"Gen X",s:["Diversified"]},
+  {n:"Askar Baytasov",w:110,age:40,sex:"M",gen:"Millennial",s:["IT"]},
+  {n:"Yerlan Baymuratov",w:108,age:65,sex:"M",gen:"Baby Boomer",s:["FMCG"]},
+  {n:"Viktor Buller",w:102,age:79,sex:"M",gen:"Silent",s:["Auto"]},
+  {n:"Yerem Arutyunyan",w:100,age:62,sex:"M",gen:"Baby Boomer",s:["FMCG"]},
+  {n:"Kanybek Family",w:95,age:null,sex:null,gen:"Family",s:["Oil","Transport"]},
+  {n:"Kapparov Family",w:94,age:null,sex:null,gen:"Family",s:["Diversified"]},
+  {n:"Serik Konakbayev",w:93,age:65,sex:"M",gen:"Baby Boomer",s:["Oil"]},
+  {n:"Alexander Deriglazov",w:92,age:55,sex:"M",gen:"Millennial",s:["FMCG"]},
+  {n:"Yerlan Suleimenov",w:90,age:50,sex:"M",gen:"Gen X",s:["Healthcare"]},
+];
+
+const SECTORS=[
+  {k:"Construction",n:"Construction\n& Real Estate",w:"$2.7B",col:"#5a8a40"},
+  {k:"Metals",n:"Metals\n& Mining",w:"$8.1B",col:"#c86020"},
+  {k:"Finance",n:"Finance\n& Banking",w:"$7.5B",col:"#2a5aaa"},
+  {k:"Oil",n:"Oil\n& Gas",w:"$1.8B",col:"#aa7810"},
+  {k:"Diversified",n:"Diversified\nHoldings",w:"$32B+",col:"#aa2a08"},
+  {k:"FMCG",n:"FMCG\n& Retail",w:"$1.9B",col:"#3a8a3a"},
+  {k:"IT",n:"IT\n& Telecom",w:"$1.3B",col:"#2080aa"},
+  {k:"Transport",n:"Transport\n& Aviation",w:"$0.8B",col:"#5060aa"},
+  {k:"Agriculture",n:"Agriculture",w:"$1.0B",col:"#608820"},
+  {k:"Auto",n:"Auto\n& Engineering",w:"$2.0B",col:"#aa4040"},
+  {k:"Media",n:"Media",w:"$120M",col:"#aa3070"},
+  {k:"Healthcare",n:"Healthcare",w:"$300M",col:"#208870"},
+];
+
+const ASSETS=[
+  {person:"Vyacheslav Kim",company:"Kaspi.kz",type:"Fintech / Bank",val:"$7.1B",desc:"Kazakhstan's largest payments, marketplace & fintech platform. Listed on NASDAQ & LSE. 14M+ users.",pct:100},
+  {person:"Timur Turlov",company:"Freedom Holding Corp",type:"Brokerage / Fintech",val:"$5.8B",desc:"Retail brokerage & financial services across CIS. Listed on NASDAQ (FRHC). Fastest-growing Kazakh company.",pct:82},
+  {person:"Vladimir Kim",company:"KAZ Minerals / Kazakhmys",type:"Copper Mining",val:"$5.7B",desc:"Major copper producer operating Bozshakol, Aktogay and other deposits. Formerly listed on LSE.",pct:80},
+  {person:"T. & D. Kulibayev",company:"Halyk Bank + Almex",type:"Banking / Diversified",val:"$5.3B ea.",desc:"Halyk Bank is Kazakhstan's largest bank by assets. Almex holds stakes in energy, telecoms, and media.",pct:75},
+  {person:"Bulat Utemuratov",company:"ForteBank + Rixos",type:"Banking / Hotels",val:"$3.7B",desc:"ForteBank ranked #3 in Kazakhstan. Also owns Rixos hotel chain and stakes in telecoms (Veon/Beeline KZ).",pct:52},
+  {person:"Aydin Rakhimbayev",company:"BI Group",type:"Construction",val:"$967M",desc:"Kazakhstan's largest construction company. Built over 30M m² of residential and commercial space. Expanding into Uzbekistan.",pct:14},
+  {person:"Arsen Tomsky",company:"InDrive",type:"IT / Ride-hailing",val:"$850M",desc:"Global ride-hailing and services app. Headquartered in Kazakhstan. Operates in 700+ cities across 47 countries.",pct:12},
+  {person:"Andrey Lavrentyev",company:"KarMet + Allur Group",type:"Metals / Auto",val:"$840M",desc:"KarMet (Karaganda steel plant) + Allur auto assembly. Debuted at #12 after consolidating both empires in 2024.",pct:12},
+  {person:"Nurlan Smagulov",company:"Astana Motors + Magnum",type:"Auto Retail / FMCG",val:"$990M",desc:"Astana Motors is KZ's largest auto dealer. Also a co-founder of Magnum Cash & Carry supermarket chain.",pct:14},
+  {person:"Galimzhan Yesenov",company:"Jusan Bank",type:"Banking",val:"$560M",desc:"Owner of Jusan Bank, formed from the merger of ATFBank and Bank CenterCredit assets. Strong retail presence.",pct:8},
+  {person:"Kenes Rakishev",company:"SAT & Company",type:"Mining / Finance",val:"$435M",desc:"Diversified holding with stakes in mining, fintech, and internet businesses. Known for cross-border deal-making.",pct:6},
+  {person:"T. Kulibayev",company:"KMG / KazTransOil",type:"Energy",val:"incl. above",desc:"Kulibayev's influence over KazMunayGas (national oil company) and pipeline assets is a defining feature of his wealth.",pct:5},
+];
+
+/* ═══════════ BEESWARM ═══════════ */
+const GC={"Baby Boomer":"#b5350a","Gen X":"#1a4d7a","Millennial":"#1a6b3a","Silent":"#6b3a7a","Family":"#b0ae9f"};
+const SC={"M":"#1a4d7a","F":"#b5350a",null:"#b0ae9f"};
+
+function makeBee(svgId,tipId,cfn){
+  const wrap=document.getElementById(svgId).parentElement;
+  const W=wrap.offsetWidth,H=Math.max(260,W*.36);
+  const svg=d3.select('#'+svgId).attr('height',H);svg.selectAll('*').remove();
+  const mW=d3.max(DATA,d=>d.w);
+  const rS=d3.scaleSqrt().domain([0,mW]).range([4,Math.min(32,W*.032)]);
+  const xS=d3.scaleLog().domain([80,mW*1.2]).range([45,W-30]);
+  [100,200,500,1000,2000,5000].forEach(v=>{
+    const x=xS(v);if(x<20||x>W-10)return;
+    svg.append('line').attr('x1',x).attr('y1',22).attr('x2',x).attr('y2',H-4).attr('stroke','#d4d0c4').attr('stroke-dasharray','2,4');
+    svg.append('text').attr('x',x).attr('y',14).attr('text-anchor','middle').attr('font-family','IBM Plex Sans,sans-serif').attr('font-size',10).attr('fill','#aaa').text(v>=1000?'$'+(v/1000)+'B':'$'+v+'M');
+  });
+  const nodes=DATA.map(d=>({...d,r:rS(d.w),tx:xS(d.w),x:xS(d.w)+(Math.random()-.5)*3,y:H/2+(Math.random()-.5)*3}));
+  const g=svg.append('g');
+  const els=g.selectAll('.nd').data(nodes).join('g').attr('class','nd').style('opacity',0)
+    .on('mouseover',function(e,d){
+      const t=document.getElementById(tipId);
+      t.innerHTML=`<div class="tn">${d.n}</div><div class="tw">$${d.w.toLocaleString()}M</div><div class="tm">${d.age?'Age '+d.age+' · '+d.gen:d.gen}</div>`;
+      const r=wrap.getBoundingClientRect();let lx=e.clientX-r.left+12,ly=e.clientY-r.top-40;
+      if(lx+220>W)lx=e.clientX-r.left-230;
+      t.style.cssText=`left:${lx}px;top:${Math.max(0,ly)}px;opacity:1`;
+      d3.select(this).select('circle').attr('stroke','#1a1708').attr('stroke-width',2);
+    })
+    .on('mousemove',function(e){
+      const r=wrap.getBoundingClientRect();let lx=e.clientX-r.left+12,ly=e.clientY-r.top-40;
+      if(lx+220>W)lx=e.clientX-r.left-230;
+      const t=document.getElementById(tipId);t.style.left=lx+'px';t.style.top=Math.max(0,ly)+'px';
+    })
+    .on('mouseleave',function(){document.getElementById(tipId).style.opacity='0';d3.select(this).select('circle').attr('stroke','#f9f7f2').attr('stroke-width',1.5);});
+  els.append('circle').attr('r',d=>d.r).attr('fill',d=>cfn(d)).attr('fill-opacity',.88).attr('stroke','#f9f7f2').attr('stroke-width',1.5);
+  els.filter(d=>d.r>17).append('text').attr('font-size',d=>Math.min(d.r*.27,9)).attr('fill','white').attr('fill-opacity',.85).attr('text-anchor','middle').attr('dominant-baseline','middle').attr('pointer-events','none').text(d=>d.n.split(' ').slice(-1)[0]);
+  d3.forceSimulation(nodes).force('x',d3.forceX(d=>d.tx).strength(.92)).force('y',d3.forceY(H/2).strength(.22)).force('collide',d3.forceCollide(d=>d.r+1.5).strength(.88)).alphaDecay(.025).on('tick',()=>{
+    els.attr('transform',d=>`translate(${Math.max(d.r+2,Math.min(W-d.r-2,d.x))},${Math.max(d.r+24,Math.min(H-d.r-4,d.y))})`);
+  });
+  setTimeout(()=>els.transition().duration(700).delay((_,i)=>i*6).style('opacity',1),200);
+}
+
+/* ═══════════ CANVAS ENGINE ═══════════ */
+const cv=document.getElementById('cv');
+const ctx=cv.getContext('2d');
+const stage=document.getElementById('stage');
+let W,H,CX,CY;
+
+function rsz(){W=cv.width=stage.offsetWidth;H=cv.height=stage.offsetHeight;CX=W/2;CY=H/2;}
+rsz();
+
+let sc=0,tsc=0,tm=0;
+const NS=12;
+let animId=null;
+
+// Only respond to wheel when stage is in viewport
+function inView(){
+  const r=stage.getBoundingClientRect();
+  return r.top<window.innerHeight&&r.bottom>0;
+}
+
+stage.addEventListener('wheel',e=>{
+  e.preventDefault();
+  tsc=Math.max(0,Math.min(NS-.001,tsc+e.deltaY*.004));
+},{passive:false});
+
+let ty0=0;
+stage.addEventListener('touchstart',e=>{ty0=e.touches[0].clientY;},{passive:true});
+stage.addEventListener('touchmove',e=>{
+  e.preventDefault();
+  const dy=ty0-e.touches[0].clientY;
+  tsc=Math.max(0,Math.min(NS-.001,tsc+dy*.012));
+  ty0=e.touches[0].clientY;
+},{passive:false});
+
+function lerp(a,b,t){return a+(b-a)*t}
+function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
+
+/* ── SHARED DRAW UTILS ── */
+function sky(c1,c2){
+  const g=ctx.createLinearGradient(0,0,0,H*.68);
+  g.addColorStop(0,c1);g.addColorStop(1,c2);
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+}
+function grid(vy,a){
+  ctx.save();ctx.globalAlpha=a*.3;ctx.strokeStyle='rgba(100,92,80,0.4)';ctx.lineWidth=.6;
+  for(let i=0;i<=14;i++){const t=i/14,y=vy+(H-vy)*(t*t),sp=W*1.1*t;ctx.beginPath();ctx.moveTo(CX-sp,y);ctx.lineTo(CX+sp,y);ctx.stroke();}
+  for(let i=-9;i<=9;i++){ctx.beginPath();ctx.moveTo(CX,vy);ctx.lineTo(CX+i*(W/8.5),H);ctx.stroke();}
+  ctx.restore();
+}
+function text(str,x,y,size,col,weight){
+  ctx.font=`${weight||'400'} ${size}px "IBM Plex Sans",sans-serif`;
+  ctx.fillStyle=col;ctx.textAlign='left';ctx.fillText(str,x,y);
+}
+function nameTag(name,wealth,x,y,col,a){
+  ctx.save();ctx.globalAlpha=a;
+  ctx.fillStyle='rgba(249,247,242,0.92)';
+  const nw=ctx.measureText(name).width+100;
+  ctx.fillRect(x,y-16,nw,34);
+  ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.strokeRect(x,y-16,nw,34);
+  ctx.font='500 11px "IBM Plex Sans",sans-serif';ctx.fillStyle='#1a1708';ctx.textAlign='left';ctx.fillText(name,x+8,y+1);
+  ctx.font=`700 13px "Playfair Display",serif`;ctx.fillStyle=col;ctx.fillText(wealth,x+8,y+14);
+  ctx.restore();
+}
+
+/* ── SCENES ── all take (progress 0-1, alpha 0-1) */
+function sConstruction(p,a){
+  ctx.save();ctx.globalAlpha=a;
+  sky('#dde8f4','#ede8de');grid(CY-50+p*50,.9);
+  // Sun
+  ctx.fillStyle='rgba(255,210,100,0.45)';ctx.beginPath();ctx.arc(W*.82-p*70,H*.13+p*8,24,0,Math.PI*2);ctx.fill();
+  // BG city
+  ctx.fillStyle='rgba(160,152,140,0.2)';
+  [[.06,.05,.26],[.13,.04,.20],[.18,.07,.33],[.62,.06,.28],[.70,.05,.38],[.76,.05,.24]].forEach(([x,w,h])=>ctx.fillRect((x-p*.02)*W,CY+22-h*H*.7,w*W,h*H*.7));
+  // Building
+  const bW=120+p*22,bH=180+p*95,bX=CX-185+p*45,bY=CY+55-p*25;
+  ctx.fillStyle='rgba(0,0,0,0.05)';ctx.beginPath();ctx.ellipse(bX+bW/2,bY+8,bW*.65,10,0,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#beb6a8';ctx.beginPath();ctx.moveTo(bX+bW,bY-bH);ctx.lineTo(bX+bW+44,bY-bH-24);ctx.lineTo(bX+bW+44,bY-24);ctx.lineTo(bX+bW,bY);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#dcd4c8';ctx.beginPath();ctx.moveTo(bX,bY-bH);ctx.lineTo(bX+bW,bY-bH);ctx.lineTo(bX+bW+44,bY-bH-24);ctx.lineTo(bX+44,bY-bH-24);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#d4ccc0';ctx.fillRect(bX,bY-bH,bW,bH);
+  const cols=5,rows=Math.min(Math.floor(4+p*6),10);
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){const wx=bX+14+c*22,wy=bY-bH+18+r*20;if(wy<bY-6){ctx.fillStyle=Math.sin(r*1.9+c*2.7+tm*.4)>.1?'rgba(90,160,220,0.5)':'rgba(70,80,100,0.18)';ctx.fillRect(wx,wy,15,12);}}
+  // Scaffolding
+  const sX=bX+bW+6;ctx.strokeStyle='#8a8070';ctx.lineWidth=1.3;
+  ctx.beginPath();ctx.moveTo(sX,bY-bH+8);ctx.lineTo(sX,bY);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(sX+24,bY-bH+8);ctx.lineTo(sX+24,bY);ctx.stroke();
+  for(let i=0;i<=8;i++){const ry=bY-bH+8+(bH-8)*i/8;ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(sX,ry);ctx.lineTo(sX+24,ry);ctx.stroke();}
+  // Crane
+  const crX=CX+65+p*18,crY=CY+60-p*22,crH=210+p*55;
+  ctx.strokeStyle='#7a8a5a';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(crX,crY);ctx.lineTo(crX,crY-crH);ctx.stroke();
+  ctx.lineWidth=.9;ctx.strokeStyle='#6a7a4a';
+  for(let i=0;i<10;i++){const y0=crY-i*(crH/10),y1=crY-(i+1)*(crH/10);ctx.beginPath();ctx.moveTo(crX-4,y0);ctx.lineTo(crX+4,y1);ctx.stroke();ctx.beginPath();ctx.moveTo(crX+4,y0);ctx.lineTo(crX-4,y1);ctx.stroke();}
+  const bo=Math.sin(tm*.44)*.05,bL=150+p*22;
+  const tX=crX+Math.sin(bo)*bL,tY=(crY-crH)+Math.cos(bo)*3;
+  const cX=crX-Math.sin(bo)*60,cY=(crY-crH)+Math.cos(bo)*2;
+  ctx.lineWidth=4;ctx.strokeStyle='#7a8a5a';ctx.beginPath();ctx.moveTo(crX,crY-crH);ctx.lineTo(tX,tY);ctx.stroke();
+  ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(crX,crY-crH);ctx.lineTo(cX,cY);ctx.stroke();
+  ctx.fillStyle='#5a6a4a';ctx.fillRect(cX-10,cY-6,20,12);
+  const hd=65+Math.sin(tm*.5+1)*26;
+  ctx.strokeStyle='rgba(80,80,80,0.4)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(tX-32,tY);ctx.lineTo(tX-32,tY+hd);ctx.stroke();
+  ctx.fillStyle='#c0b078';ctx.fillRect(tX-46,tY+hd,28,16);
+  // Name tags
+  if(p>.2)nameTag('Aydin Rakhimbayev','$967M',CX+120,CY-60,SECTORS[0].col,Math.min(1,(p-.2)*3));
+  if(p>.45)nameTag('Baurzhan Isabayev','$323M',CX+120,CY-18,SECTORS[0].col,Math.min(1,(p-.45)*3));
+  if(p>.65)nameTag('Askhat Omarov','$242M',CX+120,CY+24,SECTORS[0].col,Math.min(1,(p-.65)*4));
+  ctx.restore();
+}
+
+function sMetals(p,a){
+  ctx.save();ctx.globalAlpha=a;
+  sky('#dcd4c8','#e8e0d4');grid(CY-15+p*45,.7);
+  const fX=CX-190+p*35,fY=CY+58,fW=220,fH=185+p*35;
+  ctx.fillStyle='#c0b8a8';ctx.fillRect(fX,fY-fH,fW,fH);ctx.fillStyle='#b8b0a0';ctx.fillRect(fX,fY-fH,fW,11);
+  [[fX+38,90+p*25],[fX+105,110+p*35],[fX+170,80+p*18]].forEach(([x,h])=>{
+    ctx.fillStyle='#b0a898';ctx.fillRect(x-11,fY-fH-h,22,h);
+    for(let s=0;s<3;s++){const sy=fY-fH-h-s*20+Math.sin(tm*.3+x)*5,sr=12+s*7;ctx.fillStyle=`rgba(170,162,150,${.2-s*.05})`;ctx.beginPath();ctx.arc(x,sy,sr,0,Math.PI*2);ctx.fill();}
+  });
+  ctx.fillStyle='rgba(200,110,28,0.35)';ctx.beginPath();ctx.ellipse(fX+65,fY-fH+fH*.52,32,12,0,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='rgba(240,150,40,0.18)';ctx.beginPath();ctx.ellipse(fX+65,fY-fH+fH*.52,48,18,0,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#9a8868';ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(fX+fW,fY-45);ctx.lineTo(CX+195+p*25,CY-8);ctx.stroke();
+  ctx.strokeStyle='#8a7858';ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(fX+fW,fY-34);ctx.lineTo(CX+195+p*25,CY+3);ctx.stroke();
+  for(let i=0;i<3;i++){ctx.fillStyle=['#8a9a80','#9aaa90','#7a8a70'][i];ctx.fillRect(CX+155+p*18+i*2,CY+18-i*17,52,14);}
+  if(p>.15)nameTag('Vladimir Kim','$5.7B',CX+60,CY-70,SECTORS[1].col,Math.min(1,(p-.15)*3));
+  if(p>.4)nameTag('Eduard Ogay','$761M',CX+60,CY-26,SECTORS[1].col,Math.min(1,(p-.4)*3));
+  if(p>.6)nameTag('Oleg Novachuk','$481M',CX+60,CY+18,SECTORS[1].col,Math.min(1,(p-.6)*4));
+  ctx.restore();
+}
+
+function sFinance(p,a){
+  ctx.save();ctx.globalAlpha=a;
+  sky('#d8e4f4','#e4eef8');grid(CY-15+p*35,.5);
+  const tX=CX-52+p*8,tW=104+p*8,tH=260+p*55,tY=CY+55-p*18;
+  ctx.fillStyle='#b0c4dc';ctx.beginPath();ctx.moveTo(tX+tW,tY-tH);ctx.lineTo(tX+tW+33,tY-tH-18);ctx.lineTo(tX+tW+33,tY-18);ctx.lineTo(tX+tW,tY);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#c8d8ec';ctx.beginPath();ctx.moveTo(tX,tY-tH);ctx.lineTo(tX+tW,tY-tH);ctx.lineTo(tX+tW+33,tY-tH-18);ctx.lineTo(tX+33,tY-tH-18);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#c0d0e8';ctx.fillRect(tX,tY-tH,tW,tH);
+  const rows=Math.min(Math.floor(8+p*5),14);
+  for(let r=0;r<rows;r++)for(let c=0;c<4;c++){const wx=tX+10+c*23,wy=tY-tH+16+r*22;if(wy<tY-6){const lit=Math.sin(r*2.1+c*3.1+tm*.3)>.05;ctx.fillStyle=lit?'rgba(70,140,230,0.45)':'rgba(50,70,110,0.18)';ctx.fillRect(wx,wy,17,14);}}
+  ctx.strokeStyle='#98a8c0';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(CX+p*6,tY-tH);ctx.lineTo(CX+p*6,tY-tH-36);ctx.stroke();
+  ctx.fillStyle='rgba(80,150,240,0.35)';ctx.beginPath();ctx.arc(CX+p*6,tY-tH-38,4,0,Math.PI*2);ctx.fill();
+  [[CX-175,CY+45],[CX+182,CY+52],[CX-130,CY+22]].forEach(([x,y],i)=>{
+    const pu=.35+Math.sin(tm*.7+i)*.12;ctx.strokeStyle=`rgba(160,120,20,${pu})`;ctx.lineWidth=1.3;ctx.beginPath();ctx.arc(x+Math.sin(tm*.3+i)*7,y+Math.cos(tm*.4+i)*4,14,0,Math.PI*2);ctx.stroke();
+    ctx.font='11px Georgia,serif';ctx.fillStyle=`rgba(160,120,20,${pu})`;ctx.textAlign='center';ctx.fillText('$',x+Math.sin(tm*.3+i)*7,y+Math.cos(tm*.4+i)*4+4);
+  });
+  if(p>.15)nameTag('Timur Turlov','$5.8B',CX+125,CY-75,SECTORS[2].col,Math.min(1,(p-.15)*3));
+  if(p>.4)nameTag('Galimzhan Yesenov','$560M',CX+125,CY-31,SECTORS[2].col,Math.min(1,(p-.4)*3));
+  if(p>.6)nameTag('B. Bayseitov','$580M',CX+125,CY+13,SECTORS[2].col,Math.min(1,(p-.6)*4));
+  ctx.restore();
+}
+
+function sOil(p,a){
+  ctx.save();ctx.globalAlpha=a;
+  sky('#e0d8c8','#ece4d4');grid(CY+12+p*38,.7);
+  ctx.fillStyle='#c8bc9c';ctx.fillRect(0,CY+60-p*8,W,H);
+  ctx.fillStyle='#d0c8a8';ctx.beginPath();ctx.ellipse(CX,CY+62-p*8,W*.55,14,0,0,Math.PI*2);ctx.fill();
+  const pX=CX-28+p*18,pY=CY+60-p*12;
+  ctx.fillStyle='#a09070';ctx.fillRect(pX-38,pY-56,76,56);ctx.fillRect(pX-56,pY-10,112,10);
+  ctx.strokeStyle='#887850';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(pX,pY-56);ctx.lineTo(pX,pY-56-170-p*28);ctx.stroke();
+  ctx.lineWidth=1;ctx.strokeStyle='#786840';
+  for(let i=0;i<9;i++){const y0=pY-56-i*21,y1=pY-56-(i+1)*21;ctx.beginPath();ctx.moveTo(pX-5,y0);ctx.lineTo(pX+5,y1);ctx.stroke();ctx.beginPath();ctx.moveTo(pX+5,y0);ctx.lineTo(pX-5,y1);ctx.stroke();}
+  const ag=Math.sin(tm*.54)*.20,bTopY=pY-56-170-p*28,bLen=125+p*14;
+  const bTX=pX+Math.sin(ag)*bLen,bTY=bTopY+Math.cos(ag)*3;
+  const bCX=pX-Math.sin(ag)*52,bCY=bTopY+Math.cos(ag)*2;
+  ctx.lineWidth=5;ctx.strokeStyle='#9a8860';ctx.beginPath();ctx.moveTo(pX,bTopY);ctx.lineTo(bTX,bTY);ctx.stroke();
+  ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(pX,bTopY);ctx.lineTo(bCX,bCY);ctx.stroke();
+  ctx.fillStyle='#786840';ctx.fillRect(bCX-14,bCY-8,28,16);
+  ctx.strokeStyle='#988870';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(bTX,bTY);ctx.lineTo(bTX,pY);ctx.stroke();
+  const fX=CX+178+p*18,fY=pY-8;
+  ctx.strokeStyle='#887050';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(fX,fY);ctx.lineTo(fX,pY+4);ctx.stroke();
+  const fa=.48+Math.sin(tm*2)*.18;ctx.fillStyle=`rgba(210,110,18,${fa})`;ctx.beginPath();ctx.arc(fX,fY-9,9,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle=`rgba(250,170,28,${fa*.85})`;ctx.beginPath();ctx.arc(fX,fY-17,6,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle=`rgba(255,210,70,${fa*.65})`;ctx.beginPath();ctx.arc(fX,fY-24,3.5,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#888060';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(pX-98,pY+4);ctx.lineTo(pX+236+p*18,pY+4);ctx.stroke();
+  if(p>.2)nameTag('Timur Kulibayev','$5.3B',CX-200,CY-90,SECTORS[3].col,Math.min(1,(p-.2)*3));
+  if(p>.45)nameTag('B. Ablazimov','$295M',CX-200,CY-46,SECTORS[3].col,Math.min(1,(p-.45)*3));
+  if(p>.65)nameTag('Serik Konakbayev','$93M',CX-200,CY-2,SECTORS[3].col,Math.min(1,(p-.65)*4));
+  ctx.restore();
+}
+
+function sDiversified(p,a){
+  ctx.save();ctx.globalAlpha=a;
+  sky('#ede8e0','#e8e2da');grid(CY+p*28,.35);
+  const nodes=[
+    {x:CX,y:CY-12,r:36+p*7,name:"V. Kim",w:"$7.1B",main:true},
+    {x:CX-155,y:CY-95,r:24,name:"Kulibayev",w:"$5.3B",m:false},
+    {x:CX+155,y:CY-95,r:24,name:"Utemuratov",w:"$3.7B",m:false},
+    {x:CX-135,y:CY+86,r:18,name:"Rakishev",w:"$435M",m:false},
+    {x:CX+135,y:CY+86,r:18,name:"Tatishev",w:"$368M",m:false},
+    {x:CX,y:CY-155+p*10,r:17,name:"Aliyev",w:"$289M",m:false},
+    {x:CX-212,y:CY+8,r:14,name:"Idrisov",w:"$563M",m:false},
+    {x:CX+212,y:CY+8,r:14,name:"Kan",w:"$470M",m:false},
+  ];
+  // Lines first
+  ctx.strokeStyle='rgba(181,53,10,0.1)';ctx.lineWidth=1;
+  for(let i=1;i<nodes.length;i++){ctx.beginPath();ctx.moveTo(nodes[0].x,nodes[0].y);ctx.lineTo(nodes[i].x,nodes[i].y);ctx.stroke();}
+  ctx.strokeStyle='rgba(100,90,70,0.07)';ctx.lineWidth=.6;
+  [[1,5],[2,5],[1,3],[2,4]].forEach(([a2,b])=>{if(nodes[b]){ctx.beginPath();ctx.moveTo(nodes[a2].x,nodes[a2].y);ctx.lineTo(nodes[b].x,nodes[b].y);ctx.stroke();}});
+  // Nodes
+  nodes.forEach(nd=>{
+    const c=nd.main?'#b5350a':'rgba(181,53,10,0.45)';
+    ctx.fillStyle=nd.main?'rgba(249,247,242,0.96)':'rgba(240,236,228,0.9)';ctx.strokeStyle=c;ctx.lineWidth=nd.main?2:1;
+    ctx.beginPath();ctx.arc(nd.x,nd.y,nd.r,0,Math.PI*2);ctx.fill();ctx.stroke();
+    ctx.font=`${nd.main?'500 10':'400 9'}px "IBM Plex Sans",sans-serif`;ctx.fillStyle=c;ctx.textAlign='center';
+    ctx.fillText(nd.name,nd.x,nd.y-1);
+    ctx.font=`${nd.main?9:8}px "IBM Plex Sans",sans-serif`;ctx.fillStyle='rgba(181,53,10,0.5)';
+    ctx.fillText(nd.w,nd.x,nd.y+11);
+  });
+  ctx.restore();
+}
+
+function sFMCG(p,a){
+  ctx.save();ctx.globalAlpha=a;
+  sky('#dce8dc','#e8f0e8');grid(CY+p*28,.5);
+  const sX=CX-215+p*18,sW=430-p*10,sH=150+p*18,sY=CY+55;
+  ctx.fillStyle='#c4d0c0';ctx.fillRect(sX,sY-sH,sW,sH);ctx.fillStyle='#b8c4b4';ctx.fillRect(sX,sY-sH,sW,11);
+  ctx.fillStyle='#cce0cc';ctx.fillRect(sX+38,sY-sH-28,sW-76,26);
+  ctx.font='italic 13px "Playfair Display",serif';ctx.fillStyle='#3a7a3a';ctx.textAlign='center';ctx.fillText('Kazakhstan Market',CX+p*18-8,sY-sH-10);
+  for(let i=0;i<5;i++){ctx.fillStyle='rgba(170,200,170,0.25)';ctx.fillRect(sX+8+i*82,sY-sH+15,68,sH-23);}
+  [.38,.52,.66].forEach(t=>{ctx.fillStyle='#a8b8a4';ctx.fillRect(sX+8,sY-sH+t*sH,sW-16,5);});
+  const cols2=['#486a30','#6a481a','#2a5878','#8a4a1e','#2e6848','#7a3858'];
+  for(let r=0;r<3;r++)for(let c=0;c<22;c++){const px=sX+12+c*18,py=sY-sH+(r*.13+.26)*sH;if(px<sX+sW-18){ctx.fillStyle=cols2[(r*7+c)%cols2.length];ctx.fillStyle=cols2[(r*7+c)%cols2.length];ctx.globalAlpha=a*(.45+.25*((r*7+c)%3/3));ctx.fillRect(px,py-11,15,12);}}
+  ctx.globalAlpha=a;
+  if(p>.2)nameTag('Nurlan Smagulov','$990M',CX+135,CY-60,SECTORS[5].col,Math.min(1,(p-.2)*3));
+  if(p>.45)nameTag('Alexander Garber','$297M',CX+135,CY-16,SECTORS[5].col,Math.min(1,(p-.45)*3));
+  if(p>.65)nameTag('Eduard Kim','$190M',CX+135,CY+28,SECTORS[5].col,Math.min(1,(p-.65)*4));
+  ctx.restore();
+}
+
+function sIT(p,a){
+  ctx.save();ctx.globalAlpha=a;
+  sky('#d8e4f0','#e4eef8');grid(CY-18+p*28,.4);
+  const rX=CX-48+p*12,rW=96,rY=CY+55,rH=170+p*28;
+  ctx.fillStyle='#bcccd8';ctx.fillRect(rX,rY-rH,rW,rH);ctx.strokeStyle='#a8bccA';ctx.lineWidth=.8;ctx.strokeRect(rX,rY-rH,rW,rH);
+  for(let i=0;i<8;i++){const sy=rY-rH+14+i*20;ctx.fillStyle='#ccdae6';ctx.fillRect(rX+5,sy,rW-10,14);ctx.strokeStyle='#b0c4d4';ctx.lineWidth=.4;ctx.strokeRect(rX+5,sy,rW-10,14);const lit=Math.sin(tm*.6+i*1.3)>.0;ctx.fillStyle=lit?'rgba(50,150,220,0.7)':'rgba(30,170,70,0.5)';ctx.beginPath();ctx.arc(rX+rW-12,sy+7,2.5,0,Math.PI*2);ctx.fill();}
+  // Data streams
+  for(let i=0;i<5;i++){const x2=rX+(i%2===0?0:rW),y2=rY-rH+28+i*26,ex=i%2===0?CX-195:CX+195,ey=CY+i*12-28;
+    const t2=(tm*.45+i)%1,px2=lerp(x2,ex,t2),py2=lerp(y2,ey,t2);
+    ctx.strokeStyle='rgba(50,120,210,0.1)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(ex,ey);ctx.stroke();
+    ctx.fillStyle='rgba(50,120,210,0.65)';ctx.beginPath();ctx.arc(px2,py2,2.5,0,Math.PI*2);ctx.fill();}
+  for(let i=1;i<=4;i++){ctx.strokeStyle=`rgba(50,130,220,${.13/i})`;ctx.lineWidth=1.3;ctx.beginPath();ctx.arc(CX+p*12,CY-rH*.28,i*48,0,Math.PI*2);ctx.stroke();}
+  if(p>.15)nameTag('Arsen Tomsky','$850M',CX+130,CY-65,SECTORS[6].col,Math.min(1,(p-.15)*3));
+  if(p>.4)nameTag('Alidar Utemuratov','$161M',CX+130,CY-21,SECTORS[6].col,Math.min(1,(p-.4)*3));
+  if(p>.6)nameTag('Askar Baytasov','$110M',CX+130,CY+23,SECTORS[6].col,Math.min(1,(p-.6)*4));
+  ctx.restore();
+}
+
+function sTransport(p,a){
+  ctx.save();ctx.globalAlpha=a;
+  sky('#d4dced','#dde4f2');grid(CY+32+p*18,.5);
+  ctx.fillStyle='#c0c8bc';ctx.fillRect(0,CY+40,W,58);ctx.fillStyle='#b6beb2';ctx.fillRect(0,CY+40,W,7);
+  for(let i=0;i<14;i++){ctx.fillStyle=`rgba(230,210,75,${.45+Math.sin(tm*3+i)*.18})`;ctx.fillRect(28+i*W/14,CY+80,4,9);}
+  for(let i=0;i<9;i++){ctx.fillStyle='rgba(255,255,255,0.22)';ctx.fillRect(18+i*W/9,CY+63,38,4);}
+  // Plane
+  const airX=W*.14+p*W*.56,airY=CY-58+p*18;
+  ctx.save();ctx.translate(airX,airY);ctx.rotate(-.055+p*.035);
+  ctx.fillStyle='#c4ccdc';ctx.beginPath();ctx.ellipse(0,0,96,14,0,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#b4bcd0';ctx.beginPath();ctx.moveTo(-28,0);ctx.lineTo(-9,46);ctx.lineTo(38,0);ctx.closePath();ctx.fill();
+  ctx.beginPath();ctx.moveTo(-28,0);ctx.lineTo(-9,-36);ctx.lineTo(28,0);ctx.closePath();ctx.fill();
+  ctx.beginPath();ctx.moveTo(-91,0);ctx.lineTo(-77,-24);ctx.lineTo(-63,0);ctx.closePath();ctx.fill();
+  for(let i=0;i<6;i++){ctx.fillStyle='rgba(70,120,190,0.45)';ctx.beginPath();ctx.arc(-52+i*15,-4,3.5,0,Math.PI*2);ctx.fill();}
+  ctx.fillStyle='#aabcd0';ctx.beginPath();ctx.ellipse(-10,40,14,5,0,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+  ctx.fillStyle='#b0bab0';ctx.fillRect(W*.76,CY-65,16,105);ctx.fillRect(W*.76-9,CY-71,34,18);
+  ctx.fillStyle='rgba(90,150,195,0.45)';ctx.fillRect(W*.76-7,CY-67,30,14);
+  ctx.fillStyle=`rgba(50,150,225,${.65+Math.sin(tm*3)*.28})`;ctx.beginPath();ctx.arc(W*.76+8,CY-74,3.5,0,Math.PI*2);ctx.fill();
+  if(p>.2)nameTag('Marat Zhuman','$293M',CX-225,CY-80,SECTORS[7].col,Math.min(1,(p-.2)*3));
+  if(p>.5)nameTag('Vladimir Denisov','$181M',CX-225,CY-36,SECTORS[7].col,Math.min(1,(p-.5)*3));
+  ctx.restore();
+}
+
+function sAgriculture(p,a){
+  ctx.save();ctx.globalAlpha=a;
+  sky('#dce8d4','#eaf0e4');grid(CY+38+p*18,.5);
+  ctx.fillStyle='#c4d0a4';ctx.fillRect(0,CY+42+p*8,W,H);
+  for(let i=0;i<15;i++){ctx.fillStyle=`rgba(130,150,75,${.14+i*.014})`;ctx.fillRect(0,CY+52+i*11+p*6,W,7);}
+  for(let i=0;i<26;i++){const wx=i*25+6,wh=32+Math.sin(i*.7)*10;ctx.strokeStyle='#80903c';ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(wx,CY+128+p*6);ctx.bezierCurveTo(wx+3,CY+108+p*6,wx+5,CY+98+p*6,wx+2,CY+98-wh+p*6);ctx.stroke();ctx.fillStyle='#6e8028';ctx.beginPath();ctx.ellipse(wx+2,CY+98-wh+p*6,3,7,-.18+Math.sin(i)*.1,0,Math.PI*2);ctx.fill();}
+  ctx.fillStyle='#b4c098';ctx.fillRect(CX+158+p*18,CY-56,52,96);ctx.fillStyle='#c0cc9c';ctx.beginPath();ctx.arc(CX+184+p*18,CY-56,26,Math.PI,0);ctx.closePath();ctx.fill();
+  const hx=CX-175+p*W*.28;
+  ctx.fillStyle='#a0b068';ctx.fillRect(hx,CY+16,124,38);ctx.beginPath();ctx.arc(hx+62,CY+54,19,0,Math.PI);ctx.fill();
+  ctx.fillStyle='#88984e';ctx.fillRect(hx-18,CY+24,24,24);
+  ctx.fillStyle='#585e38';ctx.beginPath();ctx.arc(hx+18,CY+57,11,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(hx+96,CY+57,11,0,Math.PI*2);ctx.fill();
+  if(p>.2)nameTag('Serik Tolukpayev','$359M',CX+100,CY-60,SECTORS[8].col,Math.min(1,(p-.2)*3));
+  if(p>.5)nameTag('Aizhan Yesim','$210M',CX+100,CY-16,SECTORS[8].col,Math.min(1,(p-.5)*3));
+  if(p>.7)nameTag('Almaz Alsenov','$180M',CX+100,CY+28,SECTORS[8].col,Math.min(1,(p-.7)*4));
+  ctx.restore();
+}
+
+function sAuto(p,a){
+  ctx.save();ctx.globalAlpha=a;
+  sky('#ece4de','#f0e8e4');grid(CY+p*28,.4);
+  const sX=CX-215+p*18,sW=430-p*8,sH=148+p*16,sY=CY+55;
+  ctx.fillStyle='#d4ccc4';ctx.fillRect(sX,sY-sH,sW,sH);ctx.fillStyle='#ccc4b8';ctx.fillRect(sX,sY-sH,sW,11);
+  for(let i=0;i<5;i++){ctx.fillStyle='rgba(168,158,148,0.18)';ctx.strokeStyle='rgba(140,130,120,0.28)';ctx.lineWidth=.8;ctx.fillRect(sX+7+i*82,sY-sH+14,70,sH-22);ctx.strokeRect(sX+7+i*82,sY-sH+14,70,sH-22);}
+  ctx.fillStyle='#dcd0c4';ctx.fillRect(sX+55,sY-sH-24,sW-110,21);
+  ctx.font='10px "IBM Plex Sans",sans-serif';ctx.fillStyle='#786858';ctx.textAlign='center';ctx.letterSpacing='3px';ctx.fillText('AUTO RETAIL',CX+p*18-4,sY-sH-10);
+  const cc=['#8a3020','#204878','#304820','#706020','#603040'];
+  for(let i=0;i<5;i++){const cx3=sX+36+i*82,cy3=sY-sH*.44;ctx.fillStyle=cc[i];ctx.fillRect(cx3,cy3-13,52,24);ctx.fillRect(cx3+5,cy3-21,40,10);ctx.fillStyle='rgba(40,40,40,0.38)';ctx.beginPath();ctx.arc(cx3+9,cy3+13,6,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(cx3+43,cy3+13,6,0,Math.PI*2);ctx.fill();}
+  const carX=CX-195+p*W*.38;
+  ctx.fillStyle='#6a3828';ctx.fillRect(carX,CY+28,76,20);ctx.fillRect(carX+9,CY+18,58,11);
+  ctx.fillStyle='rgba(45,45,45,0.48)';ctx.beginPath();ctx.arc(carX+13,CY+50,7.5,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(carX+63,CY+50,7.5,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='rgba(195,155,78,0.55)';ctx.beginPath();ctx.arc(carX+74,CY+37,4.5,0,Math.PI*2);ctx.fill();
+  if(p>.2)nameTag('Nurlan Smagulov','$990M',CX-220,CY-80,SECTORS[9].col,Math.min(1,(p-.2)*3));
+  if(p>.5)nameTag('Andrey Lavrentyev','$840M',CX-220,CY-36,SECTORS[9].col,Math.min(1,(p-.5)*3));
+  ctx.restore();
+}
+
+function sMedia(p,a){
+  ctx.save();ctx.globalAlpha=a;
+  sky('#ece0e8','#f0e8ec');grid(CY-8+p*28,.35);
+  const tX=CX+p*18,tY=CY+60;
+  ctx.strokeStyle='#c0a8b8';ctx.lineWidth=3.5;ctx.beginPath();ctx.moveTo(tX,tY);ctx.lineTo(tX,tY-268-p*38);ctx.stroke();
+  for(let i=0;i<9;i++){const y=tY-i*30,w=5.5+i*2.8;ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(tX-w,y);ctx.lineTo(tX,y-30);ctx.stroke();ctx.beginPath();ctx.moveTo(tX+w,y);ctx.lineTo(tX,y-30);ctx.stroke();}
+  for(let i=1;i<=5;i++){const pu=.28+Math.sin(tm*.8-i*.5)*.13;ctx.strokeStyle=`rgba(170,72,132,${pu})`;ctx.lineWidth=1.3;ctx.beginPath();ctx.arc(tX,tY-268-p*38,i*52,0,Math.PI*2);ctx.stroke();}
+  ctx.fillStyle=`rgba(190,72,142,${.65+Math.sin(tm*3)*.28})`;ctx.beginPath();ctx.arc(tX,tY-268-p*38,5.5,0,Math.PI*2);ctx.fill();
+  [[CX-175,CY-28],[CX+88,CY-18]].forEach(([sx,sy],i)=>{
+    ctx.fillStyle='#d4c4d0';ctx.fillRect(sx,sy,116,76);ctx.fillRect(sx+4,sy+4,108,68);
+    ctx.fillStyle='rgba(160,90,132,0.28)';ctx.fillRect(sx+4,sy+54,108,18);
+    ctx.font='8px "IBM Plex Sans",sans-serif';ctx.fillStyle='rgba(150,72,122,0.65)';ctx.textAlign='left';ctx.fillText(i===0?'BREAKING NEWS':'LIVE',sx+9,sy+66);
+    ctx.fillStyle='rgba(170,78,140,0.13)';ctx.beginPath();ctx.arc(sx+58,sy+30,20,0,Math.PI*2);ctx.fill();
+  });
+  if(p>.2)nameTag('Armanzan Baytasov','$120M',CX+105,CY-65,SECTORS[10].col,Math.min(1,(p-.2)*3));
+  ctx.restore();
+}
+
+function sHealthcare(p,a){
+  ctx.save();ctx.globalAlpha=a;
+  sky('#d8eeec','#e8f4f0');grid(CY+p*18,.4);
+  const hX=CX-128+p*14,hW=256,hH=150+p*18,hY=CY+55;
+  ctx.fillStyle='#c4d8d4';ctx.fillRect(hX,hY-hH,hW,hH);ctx.fillRect(hX,hY-hH,hW,11);
+  ctx.fillStyle='rgba(40,172,132,0.55)';ctx.fillRect(hX+hW/2-18,hY-hH+16,36,7);ctx.fillRect(hX+hW/2-3.5,hY-hH+9,7,21);
+  for(let r=0;r<4;r++)for(let c=0;c<5;c++){const wx=hX+16+c*46,wy=hY-hH+28+r*28;if(wy<hY-6){const lit=Math.sin(r*2.2+c*3.1+tm*.3)>.0;ctx.fillStyle=lit?'rgba(40,172,132,0.42)':'rgba(50,95,85,0.14)';ctx.fillRect(wx,wy,28,18);}}
+  const hbp=[0,0,58,0,76,-28,96,28,116,0,172,0,190,-19,208,23,226,0,W,0];
+  ctx.strokeStyle='rgba(40,172,132,0.38)';ctx.lineWidth=1.8;ctx.beginPath();
+  for(let i=0;i<hbp.length;i+=2){i===0?ctx.moveTo(hbp[i],hbp[i+1]+CY+18):ctx.lineTo(hbp[i]+p*38,hbp[i+1]+CY+18);}
+  ctx.stroke();
+  const aX=CX+128+p*58;
+  ctx.fillStyle='#c0d4cc';ctx.fillRect(aX,CY+22,96,38);ctx.fillRect(aX+28,CY+12,62,12);
+  ctx.fillStyle='rgba(40,172,132,0.48)';ctx.fillRect(aX+7,CY+34,18,5);ctx.fillRect(aX+13,CY+28,6,17);
+  ctx.fillStyle='rgba(40,40,40,0.38)';ctx.beginPath();ctx.arc(aX+15,CY+62,8,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(aX+77,CY+62,8,0,Math.PI*2);ctx.fill();
+  if(p>.2)nameTag('Kayrat Itemgenov','$404M',CX-240,CY-70,SECTORS[11].col,Math.min(1,(p-.2)*3));
+  if(p>.55)nameTag('Yerlan Suleimenov','$90M',CX-240,CY-26,SECTORS[11].col,Math.min(1,(p-.55)*3));
+  ctx.restore();
+}
+
+const DRAWS=[sConstruction,sMetals,sFinance,sOil,sDiversified,sFMCG,sIT,sTransport,sAgriculture,sAuto,sMedia,sHealthcare];
+
+/* ═══════════ RENDER ═══════════ */
+let curS=-1;
+const TRANS=0.28;
+
+function render(){
+  tm+=0.016;
+  sc+=(tsc-sc)*.075;
+  ctx.clearRect(0,0,W,H);
+
+  const si=Math.min(Math.floor(sc),NS-1);
+  const sp=sc-Math.floor(sc);
+
+  if(sp<TRANS&&si>0){
+    const t=ease(sp/TRANS);
+    DRAWS[si-1](1,1-t);
+    DRAWS[si](sp/TRANS,t);
+  } else if(sp>1-TRANS&&si<NS-1){
+    const t=ease((sp-(1-TRANS))/TRANS);
+    DRAWS[si](1,1-t);
+    DRAWS[si+1](0,t);
+  } else {
+    DRAWS[si](sp,1);
+  }
+
+  // HUD update
+  if(si!==curS){
+    curS=si;
+    const s=SECTORS[si];
+    document.getElementById('hed-num').textContent=s.n.split('\n')[0]===s.n?`${String(si+1).padStart(2,'0')} / 12`:`${String(si+1).padStart(2,'0')} / 12`;
+    document.getElementById('hed-num').textContent=(si+1<10?'0':'')+(si+1)+' / 12';
+    document.getElementById('hed-name').innerHTML=s.n.replace('\n','<br>');
+    document.getElementById('hed-wval').textContent=s.w;
+
+    const panel=document.getElementById('ppl-panel');
+    const people=DATA.filter(d=>d.s.includes(s.k)).sort((a2,b)=>b.w-a2.w).slice(0,8);
+    panel.innerHTML=people.map((pp,i)=>`<div class="pchip" style="transition-delay:${i*55}ms"><div class="pc-n">${pp.n}</div><div class="pc-w">$${pp.w>=1000?(pp.w/1000).toFixed(1)+'B':pp.w+'M'}</div><div class="pc-g">${pp.gen}${pp.age?' · '+pp.age:''}</div></div>`).join('');
+    setTimeout(()=>panel.querySelectorAll('.pchip').forEach(c=>c.classList.add('on')),40);
+    document.querySelectorAll('.sdot').forEach((d,i)=>d.classList.toggle('on',i===si));
+  }
+
+  document.getElementById('scind').style.opacity=sc>.4?'0':'1';
+  animId=requestAnimationFrame(render);
+}
+
+/* ═══════════ SECTOR DOTS ═══════════ */
+const sdots=document.getElementById('sdots');
+SECTORS.forEach((_,i)=>{
+  const d=document.createElement('div');d.className='sdot';if(i===0)d.classList.add('on');
+  d.addEventListener('click',()=>{tsc=i+.01;});
+  sdots.appendChild(d);
+});
+
+/* ═══════════ ASSETS GRID ═══════════ */
+const maxW2=Math.max(...ASSETS.map(a=>a.pct));
+document.getElementById('assets-grid').innerHTML=ASSETS.map(a=>`
+  <div class="asset-card">
+    <div class="ac-person">${a.person}</div>
+    <div class="ac-company">${a.company}</div>
+    <div><span class="ac-type">${a.type}</span></div>
+    <div class="ac-val">${a.val}</div>
+    <div class="ac-desc">${a.desc}</div>
+    <div class="ac-bar"><div class="ac-fill" style="width:0%" data-w="${(a.pct/maxW2*100).toFixed(0)}"></div></div>
+  </div>`).join('');
+
+// Animate bars when visible
+const barObs=new IntersectionObserver(en=>{
+  en.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.ac-fill').forEach(f=>{f.style.width=f.dataset.w+'%';});barObs.disconnect();}});
+},{threshold:.2});
+barObs.observe(document.getElementById('assets-grid'));
+
+/* ═══════════ INIT ═══════════ */
+function init(){
+  rsz();
+  makeBee('sv1','t1',d=>GC[d.gen]||'#b0ae9f');
+  makeBee('sv2','t2',d=>SC[d.sex]||'#b0ae9f');
+  render();
+}
+
+window.addEventListener('resize',()=>{rsz();makeBee('sv1','t1',d=>GC[d.gen]||'#b0ae9f');makeBee('sv2','t2',d=>SC[d.sex]||'#b0ae9f');});
+
+const ro=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+window.addEventListener('scroll',()=>{
+  const t=document.body.scrollHeight-window.innerHeight;
+  document.getElementById('progress').style.width=Math.min(100,(window.scrollY/t)*100)+'%';
+},{passive:true});
+
+init();
+</script>
+</body>
+</html>
