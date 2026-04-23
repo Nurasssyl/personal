@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script type="text/javascript" src="https://gc.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=3BZzh3LLMrCmFGFRZg0yxEKrEb06BIyWxkWvA1kRqqTPRM5I9vJI5_EcQkwEApqbKuZTIaTRR22xftaWOsA1C5G7DGholS56hhGgVkbzk6KxPHk4XgLlqAZJ3v7EHSK7qoqNWCfFW8n7pEZpERz5lFKooiFWRBHrPmkmj5NlwRfulOtmPAWfuN86MAe7K1BosraXCVgkU1943Pxc8q_MgOjQpr2lnxkqqIKSF52rd3NRyxZ0QJ605rqQsklptpfaD0XWaSNLlBmDacFk8ORpuA" charset="UTF-8"></script><script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <style>
@@ -421,9 +421,9 @@
           <p data-i18n="scatterDesc">Каждая точка - регион. По горизонтали - участие в рабочей силе, по вертикали - безработица. Размер круга показывает масштаб рабочей силы. Цвет переключается.</p>
         </div>
         <div class="controls" id="scatter-controls">
-          <button class="control-btn active" data-color="youth_unemployment_rate" data-label-ru="Молодежная безработица" data-label-en="Youth unemployment">Молодежная безработица</button>
+          <button class="control-btn active" data-color="youth_unemployment_rate" data-label-ru="Молодежная безработица" data-label-kk="Жастар жұмыссыздығы" data-label-en="Youth unemployment">Молодежная безработица</button>
           <button class="control-btn" data-color="self_employed_share" data-label-ru="Доля самозанятых" data-label-en="Self-employed share">Доля самозанятых</button>
-          <button class="control-btn" data-color="outside_rate" data-label-ru="Вне рабочей силы" data-label-en="Outside labor force">Вне рабочей силы</button>
+          <button class="control-btn" data-color="outside_rate" data-label-ru="Вне рабочей силы" data-label-kk="Жұмыс күшінен тыс" data-label-en="Outside labor force">Вне рабочей силы</button>
         </div>
       </div>
       <svg id="scatter-svg" width="100%" height="560"></svg>
@@ -446,9 +446,9 @@
             <p data-i18n="mapDesc">Переключатель меняет один показатель за раз - так легче читать разброс между регионами без перегруза.</p>
           </div>
           <div class="controls" id="tile-controls">
-            <button class="control-btn active" data-metric="participation_rate" data-label-ru="Участие" data-label-en="Participation">Участие</button>
-            <button class="control-btn" data-metric="self_employed_share" data-label-ru="Самозанятые" data-label-en="Self-employed">Самозанятые</button>
-            <button class="control-btn" data-metric="turnover_rate" data-label-ru="Текучесть" data-label-en="Turnover">Текучесть</button>
+            <button class="control-btn active" data-metric="participation_rate" data-label-ru="Участие" data-label-kk="Қатысу" data-label-en="Participation">Участие</button>
+            <button class="control-btn" data-metric="self_employed_share" data-label-ru="Самозанятые" data-label-kk="Өзін-өзі жұмыспен қамту" data-label-en="Self-employed">Самозанятые</button>
+            <button class="control-btn" data-metric="turnover_rate" data-label-ru="Текучесть" data-label-kk="Кадр ағымы" data-label-en="Turnover">Текучесть</button>
           </div>
         </div>
         <div class="regional-svg-wrap">
@@ -468,8 +468,8 @@
             <p data-i18n="flowDesc">Линия показывает разницу между приемом и выбытием. Чем сильнее правый конец выше левого, тем активнее кадры уходили относительно найма.</p>
           </div>
           <div class="controls" id="flow-controls">
-            <button class="control-btn active" data-mode="absolute" data-label-ru="Человек" data-label-en="People">Человек</button>
-            <button class="control-btn" data-mode="rate" data-label-ru="Процент" data-label-en="Rate">Процент</button>
+            <button class="control-btn active" data-mode="absolute" data-label-ru="Человек" data-label-kk="Адам" data-label-en="People">Человек</button>
+            <button class="control-btn" data-mode="rate" data-label-ru="Процент" data-label-kk="Үлес" data-label-en="Rate">Процент</button>
           </div>
         </div>
         <svg id="flow-svg" width="100%" height="720"></svg>
@@ -525,8 +525,8 @@
             <p data-i18n="reasonsDesc">Переключатель разделяет две разные логики: причины безработицы и причины экономической неактивности.</p>
           </div>
           <div class="controls" id="reason-controls">
-            <button class="control-btn active" data-view="unemployment" data-label-ru="Безработица" data-label-en="Unemployment">Безработица</button>
-            <button class="control-btn" data-view="inactivity" data-label-ru="Вне рабочей силы" data-label-en="Outside labor force">Вне рабочей силы</button>
+            <button class="control-btn active" data-view="unemployment" data-label-ru="Безработица" data-label-kk="Жұмыссыздық" data-label-en="Unemployment">Безработица</button>
+            <button class="control-btn" data-view="inactivity" data-label-ru="Вне рабочей силы" data-label-kk="Жұмыс күшінен тыс" data-label-en="Outside labor force">Вне рабочей силы</button>
           </div>
         </div>
         <svg id="reason-svg" width="100%" height="420"></svg>
@@ -604,6 +604,7 @@ const regionNames = {
   "Северо-Казахстанская": {ru:"СКО", kk:"СҚО", en:"North Kazakhstan"},
   "Туркестанская": {ru:"Туркестанская", kk:"Түркістан", en:"Turkistan"},
   "Улытау": {ru:"Улытау", kk:"Ұлытау", en:"Ulytau"},
+  "Ұлытау": {ru:"Улытау", kk:"Ұлытау", en:"Ulytau"},
   "Восточно-Казахстанская": {ru:"ВКО", kk:"ШҚО", en:"East Kazakhstan"},
   "г. Астана": {ru:"Астана", kk:"Астана", en:"Astana"},
   "г. Алматы": {ru:"Алматы", kk:"Алматы", en:"Almaty"},
@@ -711,7 +712,7 @@ const translations = {
     flowDesc:"The line shows the gap between hiring and exits. The stronger the right end rises above the left, the more active separations were relative to hiring.",
     flowInsight:"Almaty, Pavlodar and Atyrau stand out with more intense labor movement - this is also about job stability.",
     sectorTitle:"Turnover by sector",
-    sectorDesc:"Instead of a dense bubble field, this ranking with icons is easier to read and faster to scan.",
+    sectorDesc:"This icon-based ranking is easier to read than a dense bubble field and makes sector differences clearer at a glance.",
     sectorInsight:"High turnover is not limited to niche segments: trade, construction and parts of services are both large and highly mobile.",
     hoursTitle:"How many hours Kazakhstan works",
     hoursDesc:"The histogram shows the distribution of employed people by weekly hours worked. Below are compact cards for the main groups.",
@@ -790,6 +791,9 @@ const translations = {
 function formatNumber(v) {
   return fmtInt(v).replace(/,/g, " ");
 }
+function tr(ru, kk, en) {
+  return currentLang === "ru" ? ru : currentLang === "kk" ? kk : en;
+}
 function showTip(event, title, lines) {
   tooltip.style("opacity", 1).style("left", event.clientX + "px").style("top", event.clientY + "px")
     .html(`<h4>${title}</h4>${lines.map(l => `<p><span>${l[0]}:</span> ${l[1]}</p>`).join("")}`);
@@ -798,21 +802,12 @@ function hideTip() { tooltip.style("opacity", 0); }
 
 function controlLabel(btn, lang) {
   if (lang === "kk") {
-    const kkMap = {
-      "Молодежная безработица":"Жастар жұмыссыздығы",
-      "Доля самозанятых":"Өзін-өзі жұмыспен қамту үлесі",
-      "Вне рабочей силы":"Жұмыс күшінен тыс",
-      "Участие":"Қатысу",
-      "Самозанятые":"Өзін-өзі жұмыспен қамту",
-      "Текучесть":"Кадр ағымы",
-      "Абсолютные числа":"Абсолют мәндер",
-      "В % к средней численности":"Орташа санға %-бен",
-      "Причины безработицы":"Жұмыссыздық себептері",
-      "Причины вне рабочей силы":"Жұмыс күшінен тыс қалу себептері"
-    };
-    return kkMap[btn.dataset.labelRu] || btn.dataset.labelEn || btn.dataset.labelRu;
+    return btn.dataset.labelKk || btn.dataset.labelRu || btn.dataset.labelEn || btn.textContent;
   }
-  return lang === "ru" ? btn.dataset.labelRu : btn.dataset.labelEn;
+  if (lang === "en") {
+    return btn.dataset.labelEn || btn.dataset.labelRu || btn.dataset.labelKk || btn.textContent;
+  }
+  return btn.dataset.labelRu || btn.dataset.labelKk || btn.dataset.labelEn || btn.textContent;
 }
 function localizeStaticNames() {
   const calloutNames = ["Атырауская","г. Алматы","Туркестанская","г. Алматы"];
@@ -928,9 +923,9 @@ function renderWaffle() {
   grid.innerHTML = "";
   const total15plus = DATA.national.labor_force + DATA.national.outside_labor_force;
   const shares = [
-    {key:"employed", label: currentLang==="ru" ? "Занятые" : "Employed", color:"var(--blue)", count: Math.round(DATA.national.employed / total15plus * 100)},
-    {key:"unemployed", label: currentLang==="ru" ? "Безработные" : "Unemployed", color:"var(--pink)", count: Math.round(DATA.national.unemployed / total15plus * 100)},
-    {key:"outside", label: currentLang==="ru" ? "Вне рабочей силы" : "Outside labor force", color:"var(--violet)", count: 100 - Math.round(DATA.national.employed / total15plus * 100) - Math.round(DATA.national.unemployed / total15plus * 100)}
+    {key:"employed", label: tr("Занятые", "Жұмыспен қамтылғандар", "Employed"), color:"var(--blue)", count: Math.round(DATA.national.employed / total15plus * 100)},
+    {key:"unemployed", label: tr("Безработные", "Жұмыссыздар", "Unemployed"), color:"var(--pink)", count: Math.round(DATA.national.unemployed / total15plus * 100)},
+    {key:"outside", label: tr("Вне рабочей силы", "Жұмыс күшінен тыс", "Outside labor force"), color:"var(--violet)", count: 100 - Math.round(DATA.national.employed / total15plus * 100) - Math.round(DATA.national.unemployed / total15plus * 100)}
   ];
   const cells = [];
   shares.forEach(s => { for (let i=0;i<s.count;i++) cells.push(s); });
@@ -1010,7 +1005,7 @@ renderScatter();
 document.querySelectorAll("#scatter-controls .control-btn").forEach(btn => btn.addEventListener("click", () => {
   document.querySelectorAll("#scatter-controls .control-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
-  renderScatter(btn.dataset.color, currentLang==="ru" ? btn.dataset.labelRu : btn.dataset.labelEn);
+  renderScatter(btn.dataset.color, controlLabel(btn, currentLang));
 }));
 
 function renderTileMap(metric="participation_rate", metricLabel=currentTileLabel) {
@@ -1070,7 +1065,7 @@ function renderTileMap(metric="participation_rate", metricLabel=currentTileLabel
 document.querySelectorAll("#tile-controls .control-btn").forEach(btn => btn.addEventListener("click", () => {
   document.querySelectorAll("#tile-controls .control-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
-  renderTileMap(btn.dataset.metric, currentLang==="ru" ? btn.dataset.labelRu : btn.dataset.labelEn);
+  renderTileMap(btn.dataset.metric, controlLabel(btn, currentLang));
 }));
 
 function renderFlow(mode="absolute") {
@@ -1186,7 +1181,7 @@ function renderHeat() {
     part_time: currentLang==="ru" ? "Неполный день" : currentLang==="kk" ? "Толық емес күн" : "Part-time",
     downtime: currentLang==="ru" ? "Временно незанятые" : currentLang==="kk" ? "Уақытша жұмыспен қамтылмағандар" : "Temporarily inactive",
     moonlighting: currentLang==="ru" ? "Совмести-<br>тельство" : currentLang==="kk" ? "Қосымша<br>жұмыс" : "Secondary<br>jobs",
-    civil_contracts: currentLang==="ru" ? "ГПХ" : currentLang==="kk" ? "АҚШ" : "Civil<br>contracts",
+    civil_contracts: currentLang==="ru" ? "ГПХ" : currentLang==="kk" ? "АҚ<br>шарт" : "Civil<br>contracts",
     remote: currentLang==="ru" ? "Дистанционно" : currentLang==="kk" ? "Қашықтан" : "Remote"
   };
   const rows = DATA.regions.slice().sort((a,b) => b.remote - a.remote).slice(0,6);
