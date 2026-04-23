@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Обзор рынка труда Казахстана</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="https://gc.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=3BZzh3LLMrCmFGFRZg0yxEKrEb06BIyWxkWvA1kRqqTPRM5I9vJI5_EcQkwEApqbKuZTIaTRR22xftaWOsA1C5G7DGholS56hhGgVkbzk6KxPHk4XgLlqAZJ3v7EHSK7qoqNWCfFW8n7pEZpERz5lFKooiFWRBHrPmkmj5NlwRfulOtmPAWfuN86MAe7K1BosraXCVgkU1943Pxc8q_MgOjQpr2lnxkqqIKSF52rd3NRyxZ0QJ605rqQsklptpfaD0XWaSNLlBmDacFk8ORpuA" charset="UTF-8"></script><script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <style>
+    :root {
+      --bg:#f7f8fc;
+      --bg-soft:#eef2fa;
+      --card:#ffffff;
+      --line:#dbe3f0;
+      --text:#0d1b2a;
+      --muted:#5f6f86;
+      --blue:#2f6bff;
+      --cyan:#24b6d8;
+      --violet:#785ef0;
+      --pink:#ee5aa6;
+      --gold:#f4b740;
+      --green:#26b36a;
+      --red:#ea5b5b;
+      --ink:#0b1220;
+      --shadow:0 16px 40px rgba(18,33,63,.08);
+      --radius:24px;
+      --max:1280px;
+    }
+    * { box-sizing:border-box; }
+    html, body { margin:0; padding:0; font-family:Inter,system-ui,sans-serif; background:linear-gradient(180deg,#fafbff 0%,#f6f8fc 40%,#f2f5fb 100%); color:var(--text); overflow-x:hidden; }
+    body::before {
+      content:""; position:fixed; inset:0; pointer-events:none;
+      background:
+        radial-gradient(circle at 15% 8%, rgba(47,107,255,.08), transparent 24%),
+        radial-gradient(circle at 85% 2%, rgba(120,94,240,.07), transparent 22%),
+        linear-gradient(rgba(16,25,40,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,25,40,.03) 1px, transparent 1px);
+      background-size:auto, auto, 48px 48px, 48px 48px;
+      mask-image: radial-gradient(circle at center, black 70%, transparent 100%);
+      opacity:.7;
+    }
+    a { color:inherit; }
+    .page { position:relative; z-index:1; }
+    .container { width:min(var(--max), calc(100vw - 32px)); margin:0 auto; }
+    .section { padding:72px 0; }
+    .eyebrow {
+      display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px;
+      background:rgba(255,255,255,.78); border:1px solid var(--line); color:var(--muted);
+      font-size:12px; text-transform:uppercase; letter-spacing:.12em; font-weight:700;
+      box-shadow:0 6px 20px rgba(18,33,63,.05);
+      backdrop-filter:blur(10px);
+    }
+    .topbar {
+      position:sticky; top:0; z-index:20; backdrop-filter:blur(16px);
+      background:rgba(247,248,252,.72); border-bottom:1px solid rgba(219,227,240,.85);
+    }
+    .topbar-inner { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 0; }
+    .brand { font-weight:800; letter-spacing:-.03em; }
+    .lang-switch { display:flex; gap:8px; }
+    .lang-btn {
+      border:none; cursor:pointer; padding:10px 14px; border-radius:999px; font-weight:700;
+      background:#fff; color:var(--muted); border:1px solid var(--line);
+    }
+    .lang-btn.active { background:var(--ink); color:#fff; border-color:var(--ink); }
+    .hero { padding:56px 0 30px; }
+    .hero-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:24px; align-items:stretch; }
+    .title { font-size:clamp(38px,6vw,76px); line-height:.94; letter-spacing:-.055em; margin:18px 0 16px; max-width:860px; }
+    .subtitle { max-width:760px; color:var(--muted); font-size:clamp(16px,2vw,21px); line-height:1.68; }
+    .panel {
+      background:rgba(255,255,255,.84); border:1px solid var(--line); border-radius:var(--radius);
+      box-shadow:var(--shadow); overflow:hidden;
+    }
+    .hero-panel { min-height:590px; position:relative; padding:26px; }
+    .hero-panel::before {
+      content:""; position:absolute; inset:0;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(47,107,255,.12), transparent 24%),
+        radial-gradient(circle at 76% 12%, rgba(120,94,240,.11), transparent 22%),
+        radial-gradient(circle at 62% 70%, rgba(36,182,216,.10), transparent 24%);
+      pointer-events:none;
+    }
+    .stats-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:26px; }
+    .stat {
+      background:linear-gradient(180deg, rgba(247,250,255,.95), rgba(240,244,252,.9)); border:1px solid var(--line);
+      border-radius:22px; padding:18px; min-height:132px;
+    }
+    .stat small { display:block; color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; margin-bottom:10px; }
+    .stat strong { display:block; font-size:clamp(26px,4vw,42px); letter-spacing:-.05em; line-height:1; }
+    .stat span { display:block; margin-top:8px; font-size:13px; line-height:1.5; color:var(--muted); }
+    .hero-svg { width:100%; height:100%; min-height:520px; display:block; }
+    .hero-callouts { position:absolute; inset:0; pointer-events:none; }
+    .callout {
+      position:absolute; max-width:190px; background:rgba(255,255,255,.92); border:1px solid var(--line);
+      box-shadow:0 10px 30px rgba(18,33,63,.08); border-radius:18px; padding:12px 14px;
+      backdrop-filter:blur(10px);
+    }
+    .callout strong { display:block; font-size:15px; margin-bottom:5px; }
+    .callout span { color:var(--muted); font-size:12px; line-height:1.4; }
+    .c1 { left:20px; top:20px; }
+    .c2 { right:20px; top:72px; }
+    .c3 { left:34px; bottom:36px; }
+    .c4 { right:28px; bottom:34px; }
+    .highlights { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-top:18px; }
+    .highlight { padding:18px; border-radius:22px; background:#fff; border:1px solid var(--line); box-shadow:var(--shadow); }
+    .highlight h4 { margin:0 0 8px; font-size:14px; color:var(--muted); }
+    .highlight strong { display:block; font-size:32px; letter-spacing:-.05em; margin-bottom:8px; }
+    .highlight p { margin:0; color:var(--muted); font-size:14px; line-height:1.55; }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:20px; margin-bottom:16px; }
+    .section-head h2 { margin:0; font-size:clamp(28px,4.2vw,46px); letter-spacing:-.045em; line-height:1; }
+    .section-head p { margin:8px 0 0; max-width:760px; color:var(--muted); line-height:1.65; }
+    .controls { display:flex; flex-wrap:wrap; gap:10px; }
+    .control-btn {
+      border:none; background:#fff; border:1px solid var(--line); color:var(--muted); border-radius:999px;
+      padding:10px 14px; font-weight:700; cursor:pointer;
+    }
+    .control-btn.active { background:var(--ink); border-color:var(--ink); color:#fff; }
+    .chart-box { padding:22px; background:rgba(255,255,255,.84); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); }
+    .chart-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .insight {
+      margin-top:14px; padding:16px 18px; border-radius:18px; background:#fff; border:1px solid var(--line); color:var(--muted);
+      font-size:15px; line-height:1.6;
+    }
+    .insight strong { color:var(--text); }
+    .stack-rows { display:grid; gap:18px; }
+    .regional-meta { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:14px; }
+    .regional-svg-wrap { overflow:hidden; }
+    .heat-head { line-height:1.25; min-height:42px; display:flex; align-items:flex-end; }
+
+    .legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:12px; color:var(--muted); font-size:12px; }
+    .legend .dot { width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:7px; }
+    .tooltip {
+      position:fixed; z-index:60; pointer-events:none; opacity:0; transform:translate(-50%,-110%);
+      background:rgba(11,18,32,.96); color:#fff; min-width:230px; border-radius:18px; padding:12px 14px;
+      box-shadow:0 16px 40px rgba(11,18,32,.24); transition:opacity .12s ease;
+    }
+    .tooltip h4 { margin:0 0 8px; font-size:15px; }
+    .tooltip p { margin:4px 0; font-size:13px; color:#dce5f7; }
+    .tooltip span { color:#99accb; }
+    .axis text { fill:var(--muted); font-size:12px; }
+    .axis path, .axis line { stroke:#cdd8e8; }
+    .grid line { stroke:#e8eef8; stroke-dasharray:2 6; }
+    .grid path { stroke:none; }
+    .cards-row { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:14px; }
+    .mini-card { background:#fff; border:1px solid var(--line); border-radius:18px; padding:16px; }
+    .mini-card strong { display:block; font-size:18px; margin-bottom:4px; }
+    .mini-card span { color:var(--muted); font-size:13px; line-height:1.45; }
+    .icon-head { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+    .icon-badge {
+      width:42px; height:42px; border-radius:14px; display:grid; place-items:center; background:var(--bg-soft);
+      border:1px solid var(--line); font-size:20px;
+    }
+    .waffle-wrap { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; align-items:center; }
+    .waffle-grid {
+      display:grid; grid-template-columns:repeat(20, minmax(0,1fr)); gap:6px;
+      padding:4px 0 10px;
+    }
+    .waffle-cell {
+      aspect-ratio:1; border-radius:8px; background:#dfe7f4; position:relative; overflow:hidden;
+      border:1px solid rgba(255,255,255,.5);
+    }
+    .waffle-side p { margin:0 0 16px; color:var(--muted); line-height:1.7; }
+    .person-panel { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .person-card { background:#fff; border:1px solid var(--line); border-radius:22px; padding:18px; }
+    .person-card h3 { margin:0 0 10px; font-size:18px; }
+    .person-stats { display:grid; gap:10px; }
+    .metric-line { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:14px; color:var(--muted); }
+    .metric-line strong { color:var(--text); font-size:16px; }
+    .bar { height:10px; border-radius:999px; background:#e9eff8; overflow:hidden; margin-top:6px; }
+    .bar > span { display:block; height:100%; border-radius:999px; }
+    .map-wrap { display:grid; grid-template-columns:1.05fr .95fr; gap:18px; }
+    .tile-legend-scale {
+      height:12px; border-radius:999px; margin:10px 0 6px;
+      background:linear-gradient(90deg, #d9e8ff 0%, #8eb7ff 35%, #537bf7 65%, #173da8 100%);
+      border:1px solid var(--line);
+    }
+    /* legacy tile-grid */
+    .tile-grid {
+      display:grid; grid-template-columns:repeat(6, minmax(0,1fr)); gap:10px; align-items:stretch;
+      min-height:420px;
+    }
+    .tile {
+      border-radius:18px; padding:12px; min-height:86px; color:#fff; position:relative;
+      display:flex; flex-direction:column; justify-content:space-between; cursor:pointer;
+      box-shadow:0 10px 24px rgba(20,37,69,.14); transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .tile:hover { transform:translateY(-3px); box-shadow:0 14px 30px rgba(20,37,69,.18); }
+    .tile.blank { visibility:hidden; pointer-events:none; }
+    .tile small { font-size:11px; opacity:.84; text-transform:uppercase; letter-spacing:.06em; }
+    .tile strong { font-size:14px; line-height:1.15; }
+    .tile span { font-size:12px; opacity:.95; }
+    .sector-list { display:grid; gap:12px; }
+    .sector-row {
+      display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:center;
+      padding:14px; border-radius:18px; background:#fff; border:1px solid var(--line);
+    }
+    .sector-ico {
+      width:44px; height:44px; border-radius:14px; display:grid; place-items:center; font-size:22px;
+      background:var(--bg-soft); border:1px solid var(--line);
+    }
+    .sector-row h4 { margin:0 0 6px; font-size:15px; }
+    .sector-row p { margin:0; color:var(--muted); font-size:13px; line-height:1.45; }
+    .sector-val { font-size:26px; font-weight:800; letter-spacing:-.04em; }
+    .heat-wrap { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .heat-grid {
+      display:grid; grid-template-columns: 150px repeat(5, minmax(0,1fr));
+      gap:8px; align-items:center;
+    }
+    .heat-head, .heat-label {
+      font-size:12px; color:var(--muted); font-weight:700;
+    }
+    .heat-label { padding-right:8px; }
+    .heat-cell {
+      height:52px; border-radius:16px; display:grid; place-items:center; font-size:13px; font-weight:700;
+      color:#fff; border:1px solid rgba(255,255,255,.3);
+    }
+    .hours-grid {
+      display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:10px; margin-top:12px;
+    }
+    .hours-card { background:#fff; border:1px solid var(--line); border-radius:18px; padding:14px; }
+    .hours-card strong { display:block; font-size:18px; margin-bottom:4px; }
+    .hours-card span { color:var(--muted); font-size:13px; }
+    .conclusion {
+      padding:22px; border-radius:24px; background:linear-gradient(135deg, #ffffff 0%, #f2f6ff 100%);
+      border:1px solid var(--line); box-shadow:var(--shadow);
+    }
+    .conclusion h2 { margin:0 0 12px; font-size:36px; letter-spacing:-.04em; }
+    .conclusion p { margin:0 0 10px; color:var(--muted); line-height:1.7; font-size:16px; }
+    footer { padding:28px 0 60px; color:var(--muted); font-size:14px; }
+    .footer-box { border-top:1px solid var(--line); padding-top:18px; display:grid; gap:8px; }
+    .home-link-wrap { margin-top:18px; display:flex; }
+    .home-link {
+      display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 18px; border-radius:999px;
+      border:1px solid var(--line); background:#fff; box-shadow:var(--shadow); font-weight:800; text-decoration:none;
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .home-link:hover { transform:translateY(-2px); box-shadow:0 18px 36px rgba(18,33,63,.10); border-color:#b8c8e4; }
+    @media (max-width:1100px) {
+      .hero-grid, .chart-grid-2, .waffle-wrap, .person-panel, .map-wrap, .heat-wrap { grid-template-columns:1fr; }
+      .highlights, .cards-row { grid-template-columns:repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width:760px) {
+      .container { width:min(var(--max), calc(100vw - 20px)); }
+      .section { padding:58px 0; }
+      .hero { padding-top:34px; }
+      .stats-grid, .highlights, .cards-row, .hours-grid, .regional-meta { grid-template-columns:1fr; }
+      .hero-panel { min-height:auto; }
+      .hero-svg { min-height:420px; }
+      /* legacy tile-grid */
+    .tile-grid { grid-template-columns:repeat(2, minmax(0,1fr)); }
+      .heat-grid { grid-template-columns: 1fr 1fr; }
+      .heat-head:first-child, .heat-label { grid-column:1/-1; }
+      .heat-head { padding-top:8px; }
+      .section-head { flex-direction:column; align-items:flex-start; }
+      .controls { width:100%; }
+      .control-btn, .lang-btn { flex:1 1 auto; text-align:center; }
+      .callout { max-width:150px; padding:10px 12px; }
+      .title { font-size:42px; }
+      .waffle-grid { gap:5px; }
+    }
+  </style>
+</head>
+<body>
+<div class="tooltip" id="tooltip"></div>
+<div class="page">
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand" data-i18n="brand">Kazakhstan Labor Review</div>
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="ru">RU</button>
+        <button class="lang-btn" data-lang="kk">KZ</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow" data-i18n="eyebrow">Рынок труда Казахстана 2025 - интерактивный обзор</div>
+      <div class="hero-grid">
+        <div>
+          <h1 class="title" data-i18n="heroTitle">Обзор рынка труда Казахстана</h1>
+          <div class="subtitle" data-i18n="heroSubtitle">
+            Рынок труда страны выглядит цельным только на первом взгляде. На деле регионы сильно отличаются по участию в рабочей силе, масштабу самозанятости, текучести кадров и режимам работы.
+          </div>
+          <div class="stats-grid">
+            <div class="stat">
+              <small data-i18n="kpi1">Рабочая сила</small>
+              <strong class="counter" data-value="9769536">0</strong>
+              <span data-i18n="kpi1d">Столько людей входит в рынок труда в 2025 году.</span>
+            </div>
+            <div class="stat">
+              <small data-i18n="kpi2">Занятые</small>
+              <strong class="counter" data-value="9320639">0</strong>
+              <span data-i18n="kpi2d">76.9% занятых - наемные работники.</span>
+            </div>
+            <div class="stat">
+              <small data-i18n="kpi3">Безработица</small>
+              <strong>4.6%</strong>
+              <span data-i18n="kpi3d">448 897 человек. Молодежная безработица - 3.1%.</span>
+            </div>
+            <div class="stat">
+              <small data-i18n="kpi4">Вне рабочей силы</small>
+              <strong class="counter" data-value="4645249">0</strong>
+              <span data-i18n="kpi4d">32.2% населения 15+ не входит в рабочую силу.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel hero-panel">
+          <svg class="hero-svg" id="hero-svg" viewBox="0 0 680 560"></svg>
+          <div class="hero-callouts">
+            <div class="callout c1"><strong>Атырауская</strong><span data-i18n="callout1">максимальное участие в рабочей силе - 78.1%</span></div>
+            <div class="callout c2"><strong>Алматы</strong><span data-i18n="callout2">самая высокая текучесть на предприятиях - 37.9%</span></div>
+            <div class="callout c3"><strong>Туркестанская</strong><span data-i18n="callout3">максимальная доля самозанятых - 46.2%</span></div>
+            <div class="callout c4"><strong>Алматы</strong><span data-i18n="callout4">больше всего дистанционных работников - 3 334</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlights">
+        <div class="highlight">
+          <h4 data-i18n="h1">Главный факт</h4>
+          <strong>67.8%</strong>
+          <p data-i18n="h1d">Участие в рабочей силе по стране. Но разброс по регионам идет от 58.4% до 78.1%.</p>
+        </div>
+        <div class="highlight">
+          <h4 data-i18n="h2">Структура занятости</h4>
+          <strong>76.9%</strong>
+          <p data-i18n="h2d">Доля наемных работников среди занятых. Остальные 23.1% - самозанятые.</p>
+        </div>
+        <div class="highlight">
+          <h4 data-i18n="h3">Режим работы</h4>
+          <strong>81.3%</strong>
+          <p data-i18n="h3d">Большинство занятых работает стандартные 36-40 часов в неделю.</p>
+        </div>
+        <div class="highlight">
+          <h4 data-i18n="h4">Движение кадров</h4>
+          <strong>80.2%</strong>
+          <p data-i18n="h4d">Среди выбывших работников доминируют увольнения по собственному желанию.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container chart-grid-2">
+      <div class="chart-box">
+        <div class="section-head">
+          <div>
+            <h2 data-i18n="waffleTitle">Из чего состоит рынок труда</h2>
+            <p data-i18n="waffleDesc">100 ячеек = все население 15+. Здесь сразу видно, что рынок труда - это не только занятые и безработные, но и очень большой массив людей вне рабочей силы.</p>
+          </div>
+        </div>
+        <div class="waffle-wrap">
+          <div class="waffle-grid" id="waffle-grid"></div>
+          <div class="waffle-side">
+            <div class="legend" id="waffle-legend"></div>
+            <p data-i18n="waffleText">На каждые 100 человек 15+ приходится примерно 65 занятых, 3 безработных и 32 человека вне рабочей силы.</p>
+          </div>
+        </div>
+        <div class="insight" data-i18n="waffleInsight">Даже при низкой безработице огромная часть взрослого населения остается вне рынка труда - это отдельный слой рынка, который нельзя смешивать с безработицей.</div>
+      </div>
+
+      <div class="chart-box">
+        <div class="section-head">
+          <div>
+            <h2 data-i18n="genderTitle">Женщины и мужчины в рынке труда</h2>
+            <p data-i18n="genderDesc">Здесь важнее не лозунги, а структура входа и выхода. В рабочей силе мужчин немного больше, но разрыв объясняется прежде всего разной вовлеченностью.</p>
+          </div>
+        </div>
+        <div class="person-panel">
+          <div class="person-card">
+            <div class="icon-head"><div class="icon-badge">♂</div><h3 data-i18n="men">Мужчины</h3></div>
+            <div class="person-stats">
+              <div>
+                <div class="metric-line"><span data-i18n="lf">В рабочей силе</span><strong id="men-lf"></strong></div>
+                <div class="bar"><span style="background:var(--blue); width:72.8%"></span></div>
+              </div>
+              <div>
+                <div class="metric-line"><span data-i18n="unemp">Безработица</span><strong>4.2%</strong></div>
+                <div class="bar"><span style="background:var(--pink); width:42%"></span></div>
+              </div>
+              <div>
+                <div class="metric-line"><span data-i18n="outside">Вне рабочей силы</span><strong>27.2%</strong></div>
+                <div class="bar"><span style="background:var(--violet); width:27.2%"></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="person-card">
+            <div class="icon-head"><div class="icon-badge">♀</div><h3 data-i18n="women">Женщины</h3></div>
+            <div class="person-stats">
+              <div>
+                <div class="metric-line"><span data-i18n="lf">В рабочей силе</span><strong id="women-lf"></strong></div>
+                <div class="bar"><span style="background:var(--blue); width:63.1%"></span></div>
+              </div>
+              <div>
+                <div class="metric-line"><span data-i18n="unemp">Безработица</span><strong>5.0%</strong></div>
+                <div class="bar"><span style="background:var(--pink); width:50%"></span></div>
+              </div>
+              <div>
+                <div class="metric-line"><span data-i18n="outside">Вне рабочей силы</span><strong>36.9%</strong></div>
+                <div class="bar"><span style="background:var(--violet); width:36.9%"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="insight" data-i18n="genderInsight">Различия заметнее не в самой безработице, а в том, как мужчины и женщины входят в рабочую силу и остаются вне нее.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container chart-box">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="scatterTitle">Регионы идут по разным траекториям</h2>
+          <p data-i18n="scatterDesc">Каждая точка - регион. По горизонтали - участие в рабочей силе, по вертикали - безработица. Размер круга показывает масштаб рабочей силы. Цвет переключается.</p>
+        </div>
+        <div class="controls" id="scatter-controls">
+          <button class="control-btn active" data-color="youth_unemployment_rate" data-label-ru="Молодежная безработица" data-label-en="Youth unemployment">Молодежная безработица</button>
+          <button class="control-btn" data-color="self_employed_share" data-label-ru="Доля самозанятых" data-label-en="Self-employed share">Доля самозанятых</button>
+          <button class="control-btn" data-color="outside_rate" data-label-ru="Вне рабочей силы" data-label-en="Outside labor force">Вне рабочей силы</button>
+        </div>
+      </div>
+      <svg id="scatter-svg" width="100%" height="560"></svg>
+      <div class="cards-row">
+        <div class="mini-card"><strong>Атырауская</strong><span data-i18n="sCard1">максимальное участие в рабочей силе - 78.1%</span></div>
+        <div class="mini-card"><strong>Шымкент</strong><span data-i18n="sCard2">минимальное участие - 58.4%</span></div>
+        <div class="mini-card"><strong>Алматы</strong><span data-i18n="sCard3">самая высокая молодежная безработица - 4.1%</span></div>
+        <div class="mini-card"><strong>Туркестанская</strong><span data-i18n="sCard4">максимальная доля самозанятых - 46.2%</span></div>
+      </div>
+      <div class="insight" data-i18n="scatterInsight">Региональные модели сильно различаются: нефтяные регионы тянут участие вверх, а юг сохраняет более высокую роль самозанятости.</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container stack-rows">
+      <div class="chart-box">
+        <div class="section-head">
+          <div>
+            <h2 data-i18n="mapTitle">Региональные различия по ключевым показателям</h2>
+            <p data-i18n="mapDesc">Переключатель меняет один показатель за раз - так легче читать разброс между регионами без перегруза.</p>
+          </div>
+          <div class="controls" id="tile-controls">
+            <button class="control-btn active" data-metric="participation_rate" data-label-ru="Участие" data-label-en="Participation">Участие</button>
+            <button class="control-btn" data-metric="self_employed_share" data-label-ru="Самозанятые" data-label-en="Self-employed">Самозанятые</button>
+            <button class="control-btn" data-metric="turnover_rate" data-label-ru="Текучесть" data-label-en="Turnover">Текучесть</button>
+          </div>
+        </div>
+        <div class="regional-svg-wrap">
+          <svg id="regional-svg" width="100%" height="880"></svg>
+        </div>
+        <div class="regional-meta">
+          <div class="mini-card"><strong id="tile-top-region">-</strong><span id="tile-top-value">-</span></div>
+          <div class="mini-card"><strong id="tile-low-region">-</strong><span id="tile-low-value">-</span></div>
+          <div class="mini-card"><strong id="tile-metric-name">-</strong><span id="tile-insight">-</span></div>
+        </div>
+      </div>
+
+      <div class="chart-box">
+        <div class="section-head">
+          <div>
+            <h2 data-i18n="flowTitle">Наем и выбытие на предприятиях</h2>
+            <p data-i18n="flowDesc">Линия показывает разницу между приемом и выбытием. Чем сильнее правый конец выше левого, тем активнее кадры уходили относительно найма.</p>
+          </div>
+          <div class="controls" id="flow-controls">
+            <button class="control-btn active" data-mode="absolute" data-label-ru="Человек" data-label-en="People">Человек</button>
+            <button class="control-btn" data-mode="rate" data-label-ru="Процент" data-label-en="Rate">Процент</button>
+          </div>
+        </div>
+        <svg id="flow-svg" width="100%" height="720"></svg>
+        <div class="insight" data-i18n="flowInsight">Алматы, Павлодарская и Атырауская выделяются более высокой интенсивностью движения кадров - это уже вопрос не только занятости, но и устойчивости рабочих мест.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container chart-grid-2">
+      <div class="chart-box">
+        <div class="section-head">
+          <div>
+            <h2 data-i18n="sectorTitle">Текучесть по секторам</h2>
+            <p data-i18n="sectorDesc">Здесь вместо сложного пузырькового поля - короткий визуальный рейтинг с иконками. Так быстрее считывается, где движение кадров наиболее интенсивно.</p>
+          </div>
+        </div>
+        <div class="sector-list" id="sector-list"></div>
+        <div class="insight" data-i18n="sectorInsight">Высокая текучесть концентрируется не только в малых сегментах: торговля, строительство и часть сервисных отраслей одновременно крупные и подвижные.</div>
+      </div>
+
+      <div class="chart-box">
+        <div class="section-head">
+          <div>
+            <h2 data-i18n="hoursTitle">Сколько часов работает Казахстан</h2>
+            <p data-i18n="hoursDesc">Гистограмма показывает распределение занятых по продолжительности рабочей недели. Ниже - компактные карточки с основными группами.</p>
+          </div>
+        </div>
+        <svg id="hours-svg" width="100%" height="360"></svg>
+        <div class="hours-grid" id="hours-cards"></div>
+        <div class="insight" data-i18n="hoursInsight">Нормальная рабочая неделя по-прежнему доминирует, но длинные часы тоже заметны: более 1.3 млн занятых работают 41 час и более.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container chart-grid-2">
+      <div class="chart-box">
+        <div class="section-head">
+          <div>
+            <h2 data-i18n="flexTitle">Гибкие и нестандартные форматы занятости</h2>
+            <p data-i18n="flexDesc">В таблице сразу видно, что разные форматы распределены по стране неравномерно. Особенно выделяются крупные города и регионы с более развитым корпоративным сектором.</p>
+          </div>
+        </div>
+        <div class="heat-grid" id="heat-grid"></div>
+        <div class="insight" data-i18n="flexInsight">Дистанционная работа и совместительство концентрируются в крупнейших городах, а не распределяются равномерно по стране.</div>
+      </div>
+
+      <div class="chart-box">
+        <div class="section-head">
+          <div>
+            <h2 data-i18n="reasonsTitle">Почему люди остаются без работы или вне рынка труда</h2>
+            <p data-i18n="reasonsDesc">Переключатель разделяет две разные логики: причины безработицы и причины экономической неактивности.</p>
+          </div>
+          <div class="controls" id="reason-controls">
+            <button class="control-btn active" data-view="unemployment" data-label-ru="Безработица" data-label-en="Unemployment">Безработица</button>
+            <button class="control-btn" data-view="inactivity" data-label-ru="Вне рабочей силы" data-label-en="Outside labor force">Вне рабочей силы</button>
+          </div>
+        </div>
+        <svg id="reason-svg" width="100%" height="420"></svg>
+        <div class="insight" data-i18n="reasonsInsight">Безработица и неучастие - не одно и то же. В первом случае доминирует поиск работы, во втором - учеба, пенсия, домашние обязанности и другие причины невовлеченности.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="conclusion">
+        <h2 data-i18n="conclusionTitle">Заключение</h2>
+        <p data-i18n="conclusion1">Рынок труда Казахстана нельзя читать по одной цифре безработицы. Внутри одной страны сосуществуют разные модели занятости - от регионов с высокой вовлеченностью и корпоративной занятостью до территорий, где самозанятость и выход за пределы рынка труда играют гораздо большую роль.</p>
+        <p data-i18n="conclusion2">Для обзорной картины важны не только занятые и безработные, но и структура входа в рабочую силу, интенсивность движения кадров, режимы работы и география нестандартных форм занятости.</p>
+        <p data-i18n="conclusion3">Именно поэтому рынок труда Казахстана лучше рассматривать как набор разных региональных и отраслевых режимов, а не как одну усредненную систему.</p>
+        <div class="home-link-wrap">
+          <a class="home-link" href="https://nurasyl.space/" target="_blank" rel="noopener" data-i18n="homeLink">Перейти на главную страницу</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-box">
+      <div data-i18n="source1">Источники данных: Бюро национальной статистики Агентства по стратегическому планированию и реформам Республики Казахстан.</div>
+          </div>
+  </footer>
+</div>
+
+<script>
+const DATA = {"national": {"labor_force": 9769536, "participation_rate": 67.8, "employed": 9320639, "employment_rate_population": 64.7, "employment_rate_labor_force": 95.4, "employees": 7169107, "employee_share": 76.9164753618287, "self_employed": 2151532, "self_employed_share": 23.1, "unemployed": 448897, "unemployment_rate": 4.6, "youth_unemployment_rate": 3.1, "long_term_unemployment_rate": 1.6, "outside_labor_force": 4645249, "outside_rate": 32.2, "men_labor_force": 5019729, "women_labor_force": 4749807, "men_participation_rate": 72.8, "women_participation_rate": 63.1, "men_unemployment_rate": 4.2, "women_unemployment_rate": 5.0, "men_outside_rate": 27.2, "women_outside_rate": 36.9, "hours_standard_share": 81.3, "hours_41plus_share": 14.1}, "regions": [{"region": "Абай", "labor_force": 310587, "participation_rate": 69.5, "employed": 295870, "employees": 190379, "self_employed": 105491, "unemployed": 14717, "unemployment_rate": 4.7, "youth_unemployment_rate": 2.5, "outside_labor_force": 136428, "outside_rate": 30.5, "employee_share": 64.3, "self_employed_share": 35.7, "avg_employees_enterprise": 128569, "hired": 31498, "left": 29398, "quit": 23092, "turnover_rate": 18.9, "replacement_rate": 107.1, "hiring_rate": 25.5, "separation_rate": 23.8, "part_time": 723, "downtime": 660, "moonlighting": 1415, "civil_contracts": 1361, "remote": 14, "remote_rate": 0.011}, {"region": "Акмолинская", "labor_force": 419103, "participation_rate": 69.5, "employed": 400109, "employees": 302063, "self_employed": 98046, "unemployed": 18994, "unemployment_rate": 4.5, "youth_unemployment_rate": 3.0, "outside_labor_force": 183647, "outside_rate": 30.5, "employee_share": 75.5, "self_employed_share": 24.5, "avg_employees_enterprise": 160145, "hired": 44781, "left": 42399, "quit": 33619, "turnover_rate": 22.7, "replacement_rate": 105.6, "hiring_rate": 29.8, "separation_rate": 28.2, "part_time": 1576, "downtime": 440, "moonlighting": 2598, "civil_contracts": 1743, "remote": 43, "remote_rate": 0.027}, {"region": "Актюбинская", "labor_force": 485484, "participation_rate": 73.2, "employed": 462617, "employees": 386154, "self_employed": 76463, "unemployed": 22867, "unemployment_rate": 4.7, "youth_unemployment_rate": 2.6, "outside_labor_force": 178021, "outside_rate": 26.8, "employee_share": 83.5, "self_employed_share": 16.5, "avg_employees_enterprise": 198115, "hired": 43763, "left": 43423, "quit": 34962, "turnover_rate": 18.9, "replacement_rate": 100.8, "hiring_rate": 23.4, "separation_rate": 23.2, "part_time": 709, "downtime": 169, "moonlighting": 2783, "civil_contracts": 1684, "remote": 18, "remote_rate": 0.009}, {"region": "Алматинская", "labor_force": 774128, "participation_rate": 71.5, "employed": 738714, "employees": 513495, "self_employed": 225219, "unemployed": 35414, "unemployment_rate": 4.6, "youth_unemployment_rate": 3.0, "outside_labor_force": 309197, "outside_rate": 28.5, "employee_share": 69.5, "self_employed_share": 30.5, "avg_employees_enterprise": 184781, "hired": 43430, "left": 40270, "quit": 35999, "turnover_rate": 20.7, "replacement_rate": 107.8, "hiring_rate": 24.8, "separation_rate": 23, "part_time": 982, "downtime": 221, "moonlighting": 2050, "civil_contracts": 1857, "remote": 176, "remote_rate": 0.095}, {"region": "Атырауская", "labor_force": 369911, "participation_rate": 78.1, "employed": 351970, "employees": 292657, "self_employed": 59313, "unemployed": 17941, "unemployment_rate": 4.9, "youth_unemployment_rate": 2.5, "outside_labor_force": 103679, "outside_rate": 21.9, "employee_share": 83.1, "self_employed_share": 16.9, "avg_employees_enterprise": 183383, "hired": 55337, "left": 68104, "quit": 44008, "turnover_rate": 25, "replacement_rate": 81.3, "hiring_rate": 31.3, "separation_rate": 38.6, "part_time": 342, "downtime": 116, "moonlighting": 1195, "civil_contracts": 1555, "remote": 328, "remote_rate": 0.179}, {"region": "Западно-Казахстанская", "labor_force": 357116, "participation_rate": 70.0, "employed": 340153, "employees": 251209, "self_employed": 88944, "unemployed": 16963, "unemployment_rate": 4.7, "youth_unemployment_rate": 3.6, "outside_labor_force": 153305, "outside_rate": 30.0, "employee_share": 73.9, "self_employed_share": 26.1, "avg_employees_enterprise": 147184, "hired": 40507, "left": 40103, "quit": 29677, "turnover_rate": 21.5, "replacement_rate": 101, "hiring_rate": 29.2, "separation_rate": 28.9, "part_time": 660, "downtime": 128, "moonlighting": 1696, "civil_contracts": 1629, "remote": 75, "remote_rate": 0.051}, {"region": "Жамбылская", "labor_force": 543083, "participation_rate": 65.0, "employed": 517145, "employees": 363246, "self_employed": 153899, "unemployed": 25938, "unemployment_rate": 4.8, "youth_unemployment_rate": 3.0, "outside_labor_force": 292733, "outside_rate": 35.0, "employee_share": 70.2, "self_employed_share": 29.8, "avg_employees_enterprise": 188606, "hired": 30492, "left": 32549, "quit": 24491, "turnover_rate": 13.9, "replacement_rate": 93.7, "hiring_rate": 17.3, "separation_rate": 18.5, "part_time": 540, "downtime": 163, "moonlighting": 1754, "civil_contracts": 952, "remote": 10, "remote_rate": 0.005}, {"region": "Жетісу", "labor_force": 308641, "participation_rate": 63.4, "employed": 294093, "employees": 217130, "self_employed": 76963, "unemployed": 14548, "unemployment_rate": 4.7, "youth_unemployment_rate": 2.3, "outside_labor_force": 177997, "outside_rate": 36.6, "employee_share": 73.8, "self_employed_share": 26.2, "avg_employees_enterprise": 109326, "hired": 21464, "left": 22308, "quit": 17530, "turnover_rate": 17, "replacement_rate": 96.2, "hiring_rate": 20.8, "separation_rate": 21.6, "part_time": 185, "downtime": 202, "moonlighting": 579, "civil_contracts": 1199, "remote": 3, "remote_rate": 0.003}, {"region": "Карагандинская", "labor_force": 535033, "participation_rate": 61.5, "employed": 513380, "employees": 465879, "self_employed": 47501, "unemployed": 21653, "unemployment_rate": 4.0, "youth_unemployment_rate": 3.0, "outside_labor_force": 334973, "outside_rate": 38.5, "employee_share": 90.7, "self_employed_share": 9.3, "avg_employees_enterprise": 272227, "hired": 91680, "left": 91308, "quit": 62338, "turnover_rate": 24.4, "replacement_rate": 100.4, "hiring_rate": 35.2, "separation_rate": 35.1, "part_time": 1676, "downtime": 58, "moonlighting": 5115, "civil_contracts": 4399, "remote": 115, "remote_rate": 0.042}, {"region": "Костанайская", "labor_force": 451703, "participation_rate": 68.9, "employed": 430714, "employees": 328949, "self_employed": 101765, "unemployed": 20989, "unemployment_rate": 4.6, "youth_unemployment_rate": 2.4, "outside_labor_force": 203499, "outside_rate": 31.1, "employee_share": 76.4, "self_employed_share": 23.6, "avg_employees_enterprise": 177026, "hired": 51989, "left": 52484, "quit": 42551, "turnover_rate": 25.9, "replacement_rate": 99.1, "hiring_rate": 31.2, "separation_rate": 31.5, "part_time": 1961, "downtime": 64, "moonlighting": 4091, "civil_contracts": 2227, "remote": 63, "remote_rate": 0.036}, {"region": "Кызылординская", "labor_force": 352242, "participation_rate": 62.8, "employed": 336050, "employees": 226630, "self_employed": 109420, "unemployed": 16192, "unemployment_rate": 4.6, "youth_unemployment_rate": 3.4, "outside_labor_force": 208379, "outside_rate": 37.2, "employee_share": 67.4, "self_employed_share": 32.6, "avg_employees_enterprise": 157641, "hired": 19240, "left": 21093, "quit": 15790, "turnover_rate": 10.6, "replacement_rate": 91.2, "hiring_rate": 12.8, "separation_rate": 14.1, "part_time": 953, "downtime": 7, "moonlighting": 484, "civil_contracts": 2354, "remote": 137, "remote_rate": 0.087}, {"region": "Мангистауская", "labor_force": 391961, "participation_rate": 76.3, "employed": 372084, "employees": 327485, "self_employed": 44599, "unemployed": 19877, "unemployment_rate": 5.1, "youth_unemployment_rate": 3.1, "outside_labor_force": 121748, "outside_rate": 23.7, "employee_share": 88.0, "self_employed_share": 12.0, "avg_employees_enterprise": 172037, "hired": 36389, "left": 33594, "quit": 25691, "turnover_rate": 15.7, "replacement_rate": 108.3, "hiring_rate": 22.2, "separation_rate": 20.5, "part_time": 703, "downtime": 608, "moonlighting": 1414, "civil_contracts": 2238, "remote": 40, "remote_rate": 0.023}, {"region": "Павлодарская", "labor_force": 402749, "participation_rate": 69.4, "employed": 383059, "employees": 323822, "self_employed": 59237, "unemployed": 19690, "unemployment_rate": 4.9, "youth_unemployment_rate": 3.0, "outside_labor_force": 177936, "outside_rate": 30.6, "employee_share": 84.5, "self_employed_share": 15.5, "avg_employees_enterprise": 193738, "hired": 52554, "left": 55827, "quit": 44766, "turnover_rate": 24.6, "replacement_rate": 94.1, "hiring_rate": 28.4, "separation_rate": 30.2, "part_time": 141, "downtime": 391, "moonlighting": 2304, "civil_contracts": 2518, "remote": 34, "remote_rate": 0.018}, {"region": "Северо-Казахстанская", "labor_force": 266739, "participation_rate": 63.4, "employed": 254945, "employees": 196655, "self_employed": 58290, "unemployed": 11794, "unemployment_rate": 4.4, "youth_unemployment_rate": 3.6, "outside_labor_force": 153676, "outside_rate": 36.6, "employee_share": 77.1, "self_employed_share": 22.9, "avg_employees_enterprise": 113668, "hired": 25496, "left": 25374, "quit": 21853, "turnover_rate": 20.5, "replacement_rate": 100.5, "hiring_rate": 23.8, "separation_rate": 23.7, "part_time": 1444, "downtime": 17, "moonlighting": 2038, "civil_contracts": 2186, "remote": 30, "remote_rate": 0.026}, {"region": "Туркестанская", "labor_force": 871114, "participation_rate": 63.5, "employed": 830550, "employees": 446876, "self_employed": 383674, "unemployed": 40564, "unemployment_rate": 4.7, "youth_unemployment_rate": 2.0, "outside_labor_force": 500255, "outside_rate": 36.5, "employee_share": 53.8, "self_employed_share": 46.2, "avg_employees_enterprise": 273506, "hired": 32295, "left": 24762, "quit": 23750, "turnover_rate": 9.2, "replacement_rate": 130.4, "hiring_rate": 12.5, "separation_rate": 9.6, "part_time": 145, "downtime": 921, "moonlighting": 350, "civil_contracts": 944, "remote": 44, "remote_rate": 0.016}, {"region": "Ұлытау", "labor_force": 99590, "participation_rate": 63.4, "employed": 95502, "employees": 88591, "self_employed": 6911, "unemployed": 4088, "unemployment_rate": 4.1, "youth_unemployment_rate": 3.3, "outside_labor_force": 57505, "outside_rate": 36.6, "employee_share": 92.8, "self_employed_share": 7.2, "avg_employees_enterprise": 66451, "hired": 14797, "left": 13649, "quit": 8241, "turnover_rate": 13.3, "replacement_rate": 108.4, "hiring_rate": 23.5, "separation_rate": 21.7, "part_time": 212, "downtime": 390, "moonlighting": 551, "civil_contracts": 230, "remote": 6, "remote_rate": 0.009}, {"region": "Восточно-Казахстанская", "labor_force": 381903, "participation_rate": 66.7, "employed": 364493, "employees": 301334, "self_employed": 63159, "unemployed": 17410, "unemployment_rate": 4.6, "youth_unemployment_rate": 3.2, "outside_labor_force": 190629, "outside_rate": 33.3, "employee_share": 82.7, "self_employed_share": 17.3, "avg_employees_enterprise": 169450, "hired": 44581, "left": 44540, "quit": 36069, "turnover_rate": 22.7, "replacement_rate": 100.1, "hiring_rate": 27.6, "separation_rate": 27.6, "part_time": 1449, "downtime": 1050, "moonlighting": 3363, "civil_contracts": 9274, "remote": 157, "remote_rate": 0.093}, {"region": "г. Астана", "labor_force": 799084, "participation_rate": 73.6, "employed": 764860, "employees": 658919, "self_employed": 105941, "unemployed": 34224, "unemployment_rate": 4.3, "youth_unemployment_rate": 3.8, "outside_labor_force": 286963, "outside_rate": 26.4, "employee_share": 86.1, "self_employed_share": 13.9, "avg_employees_enterprise": 362188, "hired": 127038, "left": 119174, "quit": 91443, "turnover_rate": 28.1, "replacement_rate": 106.6, "hiring_rate": 38.9, "separation_rate": 36.4, "part_time": 6097, "downtime": 217, "moonlighting": 9288, "civil_contracts": 16829, "remote": 1640, "remote_rate": 0.453}, {"region": "г. Алматы", "labor_force": 1173572, "participation_rate": 68.6, "employed": 1120925, "employees": 985521, "self_employed": 135404, "unemployed": 52647, "unemployment_rate": 4.5, "youth_unemployment_rate": 4.1, "outside_labor_force": 536443, "outside_rate": 31.4, "employee_share": 87.9, "self_employed_share": 12.1, "avg_employees_enterprise": 564450, "hired": 226419, "left": 220509, "quit": 199342, "turnover_rate": 37.9, "replacement_rate": 102.7, "hiring_rate": 42.8, "separation_rate": 41.7, "part_time": 6481, "downtime": 774, "moonlighting": 12592, "civil_contracts": 26996, "remote": 3334, "remote_rate": 0.591}, {"region": "г. Шымкент", "labor_force": 475793, "participation_rate": 58.4, "employed": 453406, "employees": 302113, "self_employed": 151293, "unemployed": 22387, "unemployment_rate": 4.7, "youth_unemployment_rate": 2.8, "outside_labor_force": 338236, "outside_rate": 41.6, "employee_share": 66.6, "self_employed_share": 33.4, "avg_employees_enterprise": 196086, "hired": 45837, "left": 43430, "quit": 38372, "turnover_rate": 21.2, "replacement_rate": 105.5, "hiring_rate": 25.2, "separation_rate": 23.8, "part_time": 244, "downtime": 47, "moonlighting": 1895, "civil_contracts": 1190, "remote": 18, "remote_rate": 0.009}], "hours": [{"bucket": "5 и менее", "count": 4216}, {"bucket": "6-10", "count": 45358}, {"bucket": "11-15", "count": 61466}, {"bucket": "16-20", "count": 52584}, {"bucket": "21-25", "count": 59504}, {"bucket": "26-30", "count": 52059}, {"bucket": "31-35", "count": 67207}, {"bucket": "36-40", "count": 7573326}, {"bucket": "41 и более", "count": 1317286}, {"bucket": "временно незанятые", "count": 87633}], "unemploymentReasons": [{"reason": "нет возможности найти работу", "total": 115461, "men": 53267, "women": 62194, "short": "Не могут найти работу"}, {"reason": "увольнение по собственному желанию", "total": 113405, "men": 55243, "women": 58162, "short": "Уволились сами"}, {"reason": "ведение домашнего хозяйства", "total": 49023, "men": 16276, "women": 32747, "short": "Домашнее хозяйство"}, {"reason": "увольнение в связи с ликвидацией (банкротством) организации, сокращением штата", "total": 36430, "men": 18665, "women": 17765, "short": "Сокращение / ликвидация"}, {"reason": "увольнение в связи с окончанием срока договора (соглашения, контракта)", "total": 18163, "men": 11660, "women": 6503, "short": "Истек срок договора"}, {"reason": "отсутствие работы после окончания учебного  заведения", "total": 17592, "men": 9285, "women": 8307, "short": "После учебы нет работы"}, {"reason": "по состоянию здоровья", "total": 11662, "men": 6723, "women": 4939, "short": "Состояние здоровья"}, {"reason": "завершения предпринимательской деятельности", "total": 11351, "men": 5866, "women": 5485, "short": "Закрыли свое дело"}, {"reason": "работа носит сезонный характер (не сезон)", "total": 10789, "men": 5491, "women": 5298, "short": "Несезон"}, {"reason": "нет необходимости работать", "total": 1814, "men": 834, "women": 980, "short": "Нет необходимости работать"}], "inactivityReasons": [{"reason": "На пенсии", "total": 2351744}, {"reason": "Учеба", "total": 1503195}, {"reason": "Состояние здоровья", "total": 306895}, {"reason": "Другое", "total": 249633}, {"reason": "Домашнее хозяйство", "total": 233782}], "sectors": [{"sector": "Сельское, лесное и рыбное хозяйство", "avg_employees": 64893, "hired": 22712, "left": 22914, "quit": 20826, "turnover_rate": 32.7, "replacement_rate": 99.1, "hiring_rate": 35.1, "separation_rate": 35.4}, {"sector": "Промышленность", "avg_employees": 671730, "hired": 194994, "left": 191485, "quit": 142561, "turnover_rate": 21.7, "replacement_rate": 101.8, "hiring_rate": 29.1, "separation_rate": 28.6}, {"sector": "Строительство", "avg_employees": 113247, "hired": 66692, "left": 77637, "quit": 61136, "turnover_rate": 55.3, "replacement_rate": 85.9, "hiring_rate": 59.9, "separation_rate": 69.7}, {"sector": "Оптовая и розничная торговля; ремонт автомобилей и мотоциклов", "avg_employees": 239777, "hired": 150839, "left": 153130, "quit": 145095, "turnover_rate": 61.8, "replacement_rate": 98.5, "hiring_rate": 63.8, "separation_rate": 64.8}, {"sector": "Транспорт и складирование", "avg_employees": 239971, "hired": 88208, "left": 82467, "quit": 47762, "turnover_rate": 20.4, "replacement_rate": 107, "hiring_rate": 37, "separation_rate": 34.6}, {"sector": "Предоставление услуг по проживанию и питанию", "avg_employees": 37627, "hired": 26731, "left": 28906, "quit": 24563, "turnover_rate": 65.7, "replacement_rate": 92.5, "hiring_rate": 71.4, "separation_rate": 77.2}, {"sector": "Информация и связь", "avg_employees": 71872, "hired": 21605, "left": 20838, "quit": 16794, "turnover_rate": 23.9, "replacement_rate": 103.7, "hiring_rate": 30.6, "separation_rate": 29.5}, {"sector": "Финансовая и страховая деятельность", "avg_employees": 105003, "hired": 31743, "left": 30582, "quit": 28421, "turnover_rate": 28.7, "replacement_rate": 103.8, "hiring_rate": 32, "separation_rate": 30.9}, {"sector": "Операции с недвижимым имуществом", "avg_employees": 20544, "hired": 4404, "left": 4870, "quit": 4199, "turnover_rate": 42.5, "replacement_rate": 90.4, "hiring_rate": 44.4, "separation_rate": 49.1}, {"sector": "Операции с недвижимым имуществом", "avg_employees": 20544, "hired": 4404, "left": 4870, "quit": 4199, "turnover_rate": 42.5, "replacement_rate": 90.4, "hiring_rate": 44.4, "separation_rate": 49.1}, {"sector": "Профессиональная, научная и техническая деятельность", "avg_employees": 76320, "hired": 19794, "left": 20564, "quit": 16879, "turnover_rate": 24.7, "replacement_rate": 96.3, "hiring_rate": 28.9, "separation_rate": 30}, {"sector": "Государственное управление и оборона; обязательное социальное обеспечение", "avg_employees": 433289, "hired": 113905, "left": 97810, "quit": 58546, "turnover_rate": 14.9, "replacement_rate": 116.5, "hiring_rate": 28.5, "separation_rate": 24.5}, {"sector": "Государственное управление и оборона; обязательное социальное обеспечение", "avg_employees": 433289, "hired": 113905, "left": 97810, "quit": 58546, "turnover_rate": 14.9, "replacement_rate": 116.5, "hiring_rate": 28.5, "separation_rate": 24.5}, {"sector": "Здравоохранение и социальное обслуживание населения", "avg_employees": 511745, "hired": 100562, "left": 97957, "quit": 90261, "turnover_rate": 19.1, "replacement_rate": 102.7, "hiring_rate": 21.2, "separation_rate": 20.7}, {"sector": "Искусство, развлечения и отдых", "avg_employees": 85313, "hired": 17413, "left": 16699, "quit": 14610, "turnover_rate": 20, "replacement_rate": 104.3, "hiring_rate": 23.8, "separation_rate": 22.8}, {"sector": "Предоставление прочих видов услуг", "avg_employees": 54470, "hired": 242, "left": 198, "quit": 198, "turnover_rate": 35.9, "replacement_rate": 122.2, "hiring_rate": 43.8, "separation_rate": 35.9}], "nationalEnterprise": {"hired": 1079587, "left": 1064298, "quit": 853584, "turnover_rate": 22.7, "replacement_rate": 101.4, "hiring_rate": 28.5, "separation_rate": 28.1}, "nationalFlex": {"part_time": 27223, "downtime": 6643, "moonlighting": 57555, "civil_contracts": 83365, "remote": 6285}, "insights": {"highestParticipation": {"region": "Атырауская", "labor_force": 369911, "participation_rate": 78.1, "employed": 351970, "employees": 292657, "self_employed": 59313, "unemployed": 17941, "unemployment_rate": 4.9, "youth_unemployment_rate": 2.5, "outside_labor_force": 103679, "outside_rate": 21.9, "employee_share": 83.1, "self_employed_share": 16.9, "avg_employees_enterprise": 183383, "hired": 55337, "left": 68104, "quit": 44008, "turnover_rate": 25, "replacement_rate": 81.3, "hiring_rate": 31.3, "separation_rate": 38.6, "part_time": 342, "downtime": 116, "moonlighting": 1195, "civil_contracts": 1555, "remote": 328, "remote_rate": 0.179}, "lowestParticipation": {"region": "г. Шымкент", "labor_force": 475793, "participation_rate": 58.4, "employed": 453406, "employees": 302113, "self_employed": 151293, "unemployed": 22387, "unemployment_rate": 4.7, "youth_unemployment_rate": 2.8, "outside_labor_force": 338236, "outside_rate": 41.6, "employee_share": 66.6, "self_employed_share": 33.4, "avg_employees_enterprise": 196086, "hired": 45837, "left": 43430, "quit": 38372, "turnover_rate": 21.2, "replacement_rate": 105.5, "hiring_rate": 25.2, "separation_rate": 23.8, "part_time": 244, "downtime": 47, "moonlighting": 1895, "civil_contracts": 1190, "remote": 18, "remote_rate": 0.009}, "highestUnemployment": {"region": "Мангистауская", "labor_force": 391961, "participation_rate": 76.3, "employed": 372084, "employees": 327485, "self_employed": 44599, "unemployed": 19877, "unemployment_rate": 5.1, "youth_unemployment_rate": 3.1, "outside_labor_force": 121748, "outside_rate": 23.7, "employee_share": 88.0, "self_employed_share": 12.0, "avg_employees_enterprise": 172037, "hired": 36389, "left": 33594, "quit": 25691, "turnover_rate": 15.7, "replacement_rate": 108.3, "hiring_rate": 22.2, "separation_rate": 20.5, "part_time": 703, "downtime": 608, "moonlighting": 1414, "civil_contracts": 2238, "remote": 40, "remote_rate": 0.023}, "highestYouthUnemployment": {"region": "г. Алматы", "labor_force": 1173572, "participation_rate": 68.6, "employed": 1120925, "employees": 985521, "self_employed": 135404, "unemployed": 52647, "unemployment_rate": 4.5, "youth_unemployment_rate": 4.1, "outside_labor_force": 536443, "outside_rate": 31.4, "employee_share": 87.9, "self_employed_share": 12.1, "avg_employees_enterprise": 564450, "hired": 226419, "left": 220509, "quit": 199342, "turnover_rate": 37.9, "replacement_rate": 102.7, "hiring_rate": 42.8, "separation_rate": 41.7, "part_time": 6481, "downtime": 774, "moonlighting": 12592, "civil_contracts": 26996, "remote": 3334, "remote_rate": 0.591}, "highestSelfEmployment": {"region": "Туркестанская", "labor_force": 871114, "participation_rate": 63.5, "employed": 830550, "employees": 446876, "self_employed": 383674, "unemployed": 40564, "unemployment_rate": 4.7, "youth_unemployment_rate": 2.0, "outside_labor_force": 500255, "outside_rate": 36.5, "employee_share": 53.8, "self_employed_share": 46.2, "avg_employees_enterprise": 273506, "hired": 32295, "left": 24762, "quit": 23750, "turnover_rate": 9.2, "replacement_rate": 130.4, "hiring_rate": 12.5, "separation_rate": 9.6, "part_time": 145, "downtime": 921, "moonlighting": 350, "civil_contracts": 944, "remote": 44, "remote_rate": 0.016}, "highestTurnover": {"region": "г. Алматы", "labor_force": 1173572, "participation_rate": 68.6, "employed": 1120925, "employees": 985521, "self_employed": 135404, "unemployed": 52647, "unemployment_rate": 4.5, "youth_unemployment_rate": 4.1, "outside_labor_force": 536443, "outside_rate": 31.4, "employee_share": 87.9, "self_employed_share": 12.1, "avg_employees_enterprise": 564450, "hired": 226419, "left": 220509, "quit": 199342, "turnover_rate": 37.9, "replacement_rate": 102.7, "hiring_rate": 42.8, "separation_rate": 41.7, "part_time": 6481, "downtime": 774, "moonlighting": 12592, "civil_contracts": 26996, "remote": 3334, "remote_rate": 0.591}, "highestRemote": {"region": "г. Алматы", "labor_force": 1173572, "participation_rate": 68.6, "employed": 1120925, "employees": 985521, "self_employed": 135404, "unemployed": 52647, "unemployment_rate": 4.5, "youth_unemployment_rate": 4.1, "outside_labor_force": 536443, "outside_rate": 31.4, "employee_share": 87.9, "self_employed_share": 12.1, "avg_employees_enterprise": 564450, "hired": 226419, "left": 220509, "quit": 199342, "turnover_rate": 37.9, "replacement_rate": 102.7, "hiring_rate": 42.8, "separation_rate": 41.7, "part_time": 6481, "downtime": 774, "moonlighting": 12592, "civil_contracts": 26996, "remote": 3334, "remote_rate": 0.591}}};
+gsap.registerPlugin(ScrollTrigger);
+
+const fmtInt = d3.format(",.0f");
+const fmt1 = d3.format(".1f");
+const tooltip = d3.select("#tooltip");
+let currentLang = "ru";
+let currentScatterMetric = "youth_unemployment_rate";
+let currentScatterLabel = "Молодежная безработица";
+let currentTileMetric = "participation_rate";
+let currentTileLabel = "Участие";
+
+const regionAbbr = {
+  "Восточно-Казахстанская":"ВКО",
+  "Западно-Казахстанская":"ЗКО",
+  "Северо-Казахстанская":"СКО",
+  "г. Алматы":"Алматы",
+  "г. Астана":"Астана",
+  "г. Шымкент":"Шымкент"
+};
+
+const tileLayout = [
+  [null, "ЗКО", "Костанайская", "СКО", "Павлодарская", "ВКО"],
+  ["Атырауская", "Актюбинская", "Акмолинская", "Астана", "Абай", null],
+  [null, "Мангистауская", "Улытау", "Карагандинская", "Жетісу", "ВКО"],
+  [null, "Кызылординская", "Туркестанская", "Жамбылская", "Алматинская", "Алматы"],
+  [null, null, "Шымкент", null, null, null]
+];
+
+
+const regionNames = {
+  "Абай": {ru:"Абай", kk:"Абай", en:"Abay"},
+  "Акмолинская": {ru:"Акмолинская", kk:"Ақмола", en:"Akmola"},
+  "Актюбинская": {ru:"Актюбинская", kk:"Ақтөбе", en:"Aktobe"},
+  "Алматинская": {ru:"Алматинская", kk:"Алматы", en:"Almaty Region"},
+  "Атырауская": {ru:"Атырауская", kk:"Атырау", en:"Atyrau"},
+  "Западно-Казахстанская": {ru:"ЗКО", kk:"БҚО", en:"West Kazakhstan"},
+  "Жамбылская": {ru:"Жамбылская", kk:"Жамбыл", en:"Zhambyl"},
+  "Жетісу": {ru:"Жетісу", kk:"Жетісу", en:"Zhetysu"},
+  "Карагандинская": {ru:"Карагандинская", kk:"Қарағанды", en:"Karagandy"},
+  "Костанайская": {ru:"Костанайская", kk:"Қостанай", en:"Kostanay"},
+  "Кызылординская": {ru:"Кызылординская", kk:"Қызылорда", en:"Kyzylorda"},
+  "Мангистауская": {ru:"Мангистауская", kk:"Маңғыстау", en:"Mangystau"},
+  "Павлодарская": {ru:"Павлодарская", kk:"Павлодар", en:"Pavlodar"},
+  "Северо-Казахстанская": {ru:"СКО", kk:"СҚО", en:"North Kazakhstan"},
+  "Туркестанская": {ru:"Туркестанская", kk:"Түркістан", en:"Turkistan"},
+  "Улытау": {ru:"Улытау", kk:"Ұлытау", en:"Ulytau"},
+  "Восточно-Казахстанская": {ru:"ВКО", kk:"ШҚО", en:"East Kazakhstan"},
+  "г. Астана": {ru:"Астана", kk:"Астана", en:"Astana"},
+  "г. Алматы": {ru:"Алматы", kk:"Алматы", en:"Almaty"},
+  "г. Шымкент": {ru:"Шымкент", kk:"Шымкент", en:"Shymkent"}
+};
+
+const sectorNames = {
+  "Сельское, лесное и рыбное хозяйство": {ru:"Сельское, лесное и рыбное хозяйство", kk:"Ауыл, орман және балық шаруашылығы", en:"Agriculture, forestry and fishing"},
+  "Промышленность": {ru:"Промышленность", kk:"Өнеркәсіп", en:"Industry"},
+  "Строительство": {ru:"Строительство", kk:"Құрылыс", en:"Construction"},
+  "Оптовая и розничная торговля; ремонт автомобилей и мотоциклов": {ru:"Торговля и ремонт", kk:"Сауда және жөндеу", en:"Trade and repair"},
+  "Транспорт и складирование": {ru:"Транспорт и складирование", kk:"Көлік және қоймалау", en:"Transport and storage"},
+  "Предоставление услуг по проживанию и питанию": {ru:"Предоставление услуг по проживанию и питанию", kk:"Орналастыру және тамақтандыру қызметтері", en:"Accommodation and food services"},
+  "Информация и связь": {ru:"Информация и связь", kk:"Ақпарат және байланыс", en:"Information and communication"},
+  "Финансовая и страховая деятельность": {ru:"Финансовая и страховая деятельность", kk:"Қаржы және сақтандыру қызметі", en:"Financial and insurance activities"},
+  "Операции с недвижимым имуществом": {ru:"Операции с недвижимым имуществом", kk:"Жылжымайтын мүлікпен операциялар", en:"Real estate activities"},
+  "Профессиональная, научная и техническая деятельность": {ru:"Профессиональная и научная деятельность", kk:"Кәсіби және ғылыми қызмет", en:"Professional and scientific activities"},
+  "Государственное управление и оборона; обязательное социальное обеспечение": {ru:"Госуправление и оборона", kk:"Мемлекеттік басқару және қорғаныс", en:"Public administration and defence"},
+  "Здравоохранение и социальное обслуживание населения": {ru:"Здравоохранение и соцуслуги", kk:"Денсаулық сақтау және әлеуметтік қызметтер", en:"Health and social work"},
+  "Искусство, развлечения и отдых": {ru:"Искусство, развлечения и отдых", kk:"Өнер, ойын-сауық және демалыс", en:"Arts, entertainment and recreation"},
+  "Предоставление прочих видов услуг": {ru:"Предоставление прочих видов услуг", kk:"Өзге қызмет түрлері", en:"Other service activities"}
+};
+
+const unemploymentReasonNames = {
+  "Нет работы": {ru:"Нет работы", kk:"Жұмыс табылмады", en:"No jobs available"},
+  "Семейные обстоятельства": {ru:"Семейные обстоятельства", kk:"Отбасылық жағдай", en:"Family reasons"},
+  "Домашнее хозяйство": {ru:"Домашнее хозяйство", kk:"Үй шаруашылығы", en:"Household duties"},
+  "Сокращение / ликвидация": {ru:"Сокращение / ликвидация", kk:"Қысқарту / тарату", en:"Layoff / closure"},
+  "Истек срок договора": {ru:"Истек срок договора", kk:"Келісімшарт мерзімі бітті", en:"Contract ended"},
+  "После учебы нет работы": {ru:"После учебы нет работы", kk:"Оқудан кейін жұмыс жоқ", en:"No job after graduation"},
+  "Состояние здоровья": {ru:"Состояние здоровья", kk:"Денсаулық жағдайы", en:"Health reasons"},
+  "Закрыли свое дело": {ru:"Закрыли свое дело", kk:"Өз ісін жапты", en:"Business closed"},
+  "Несезон": {ru:"Несезон", kk:"Маусымнан тыс кезең", en:"Off-season"},
+  "Нет необходимости работать": {ru:"Нет необходимости работать", kk:"Жұмыс істеу қажет емес", en:"No need to work"}
+};
+
+const inactivityReasonNames = {
+  "На пенсии": {ru:"На пенсии", kk:"Зейнетте", en:"Retired"},
+  "Учеба": {ru:"Учеба", kk:"Оқу", en:"Study"},
+  "Состояние здоровья": {ru:"Состояние здоровья", kk:"Денсаулық жағдайы", en:"Health reasons"},
+  "Другое": {ru:"Другое", kk:"Басқа", en:"Other"},
+  "Домашнее хозяйство": {ru:"Домашнее хозяйство", kk:"Үй шаруашылығы", en:"Household duties"}
+};
+
+const hourBucketNames = {
+  "0-5": {ru:"<5", kk:"<5", en:"<5"},
+  "6-10": {ru:"6-10", kk:"6-10", en:"6-10"},
+  "11-15": {ru:"11-15", kk:"11-15", en:"11-15"},
+  "16-20": {ru:"16-20", kk:"16-20", en:"16-20"},
+  "21-25": {ru:"21-25", kk:"21-25", en:"21-25"},
+  "26-30": {ru:"26-30", kk:"26-30", en:"26-30"},
+  "31-35": {ru:"31-35", kk:"31-35", en:"31-35"},
+  "36-40": {ru:"36-40", kk:"36-40", en:"36-40"},
+  "41+": {ru:"41+", kk:"41+", en:"41+"}
+};
+
+function tName(map, key) {
+  return (map[key] && map[key][currentLang]) || (map[key] && map[key].ru) || key;
+}
+function normalizeBucket(bucket) {
+  if (bucket === "5 и менее" || bucket === "5 и меньше" || bucket === "0-5") return "0-5";
+  if (bucket === "41 и более" || bucket === "41+") return "41+";
+  return bucket;
+}
+function bucketLabel(bucket) {
+  return tName(hourBucketNames, normalizeBucket(bucket));
+}
+
+const translations = {
+  en: {
+    brand:"Kazakhstan Labor Review",
+    eyebrow:"Kazakhstan labor market 2025 - interactive overview",
+    heroTitle:"Kazakhstan labor market overview",
+    heroSubtitle:"The labor market looks unified only at first glance. In reality, regions differ sharply by labor force participation, self-employment, staff turnover and working schedules.",
+    kpi1:"Labor force", kpi1d:"People inside the labor market in 2025.",
+    kpi2:"Employed", kpi2d:"76.9% of the employed are wage workers.",
+    kpi3:"Unemployment", kpi3d:"448,897 people. Youth unemployment - 3.1%.",
+    kpi4:"Outside labor force", kpi4d:"32.2% of population 15+ stays outside the labor force.",
+    callout1:"highest labor force participation - 78.1%",
+    callout2:"highest enterprise turnover - 37.9%",
+    callout3:"highest self-employment share - 46.2%",
+    callout4:"largest number of remote workers - 3,334",
+    h1:"Main fact", h1d:"National labor force participation. Regional range goes from 58.4% to 78.1%.",
+    h2:"Employment structure", h2d:"Share of wage workers among the employed. The remaining 23.1% are self-employed.",
+    h3:"Working schedule", h3d:"Most employed people work a standard 36-40 hour week.",
+    h4:"Staff movement", h4d:"Among all separations, resignations dominate.",
+    waffleTitle:"What the labor market is made of",
+    waffleDesc:"100 cells = all population aged 15+. The chart shows that the labor market is not only the employed and the unemployed, but also a very large group outside the labor force.",
+    waffleText:"Per 100 people aged 15+, there are roughly 65 employed, 3 unemployed and 32 people outside the labor force.",
+    waffleInsight:"Even with low unemployment, a huge share of the adult population remains outside the labor market - this should not be confused with unemployment.",
+    genderTitle:"Women and men in the labor market",
+    genderDesc:"Differences matter not only in unemployment itself but also in how women and men enter the labor force and remain outside it.",
+    men:"Men", women:"Women", lf:"In labor force", unemp:"Unemployment", outside:"Outside labor force",
+    genderInsight:"The main difference appears not in unemployment alone, but in labor force entry and non-participation.",
+    scatterTitle:"Regions follow different trajectories",
+    scatterDesc:"Each dot is a region. Horizontal axis - labor force participation, vertical axis - unemployment. Circle size shows labor force scale. Color can be switched.",
+    sCard1:"highest labor force participation - 78.1%",
+    sCard2:"lowest participation - 58.4%",
+    sCard3:"highest youth unemployment - 4.1%",
+    sCard4:"highest self-employment share - 46.2%",
+    scatterInsight:"Regional models differ sharply: oil regions push participation up, while the south preserves a larger role for self-employment.",
+    mapTitle:"Regional differences in key indicators",
+    mapDesc:"The switch shows one metric at a time, making regional gaps easier to read without overload.",
+    flowTitle:"Hiring and separations at enterprises",
+    flowDesc:"The line shows the gap between hiring and exits. The stronger the right end rises above the left, the more active separations were relative to hiring.",
+    flowInsight:"Almaty, Pavlodar and Atyrau stand out with more intense labor movement - this is also about job stability.",
+    sectorTitle:"Turnover by sector",
+    sectorDesc:"Instead of a dense bubble field, this ranking with icons is easier to read and faster to scan.",
+    sectorInsight:"High turnover is not limited to niche segments: trade, construction and parts of services are both large and highly mobile.",
+    hoursTitle:"How many hours Kazakhstan works",
+    hoursDesc:"The histogram shows the distribution of employed people by weekly hours worked. Below are compact cards for the main groups.",
+    hoursInsight:"A standard workweek still dominates, but long hours are also substantial: more than 1.3 million employed people work 41 hours or more.",
+    flexTitle:"Flexible and non-standard employment formats",
+    flexDesc:"The table shows that different formats are distributed unevenly across the country. Large cities and stronger corporate regions stand out.",
+    flexInsight:"Remote work and secondary jobs are concentrated in the largest cities rather than spread evenly across the country.",
+    reasonsTitle:"Why people stay jobless or outside the labor market",
+    reasonsDesc:"The switch separates two different logics: reasons for unemployment and reasons for economic inactivity.",
+    reasonsInsight:"Unemployment and non-participation are not the same. In the first case, job search dominates; in the second, study, retirement, household duties and other reasons.",
+    conclusionTitle:"Conclusion",
+    conclusion1:"Kazakhstan's labor market cannot be read through one unemployment number. Different models coexist inside one country - from regions with high participation and corporate jobs to territories where self-employment and non-participation play a much larger role.",
+    conclusion2:"A full overview requires more than employed and unemployed counts. It needs labor force entry, staff movement intensity, working schedules and the geography of non-standard employment.",
+    conclusion3:"That is why Kazakhstan's labor market is better understood as a set of regional and sectoral regimes rather than one average system.",
+    source1:"Data sources: Bureau of National Statistics of the Agency for Strategic Planning and Reforms of the Republic of Kazakhstan.",
+    homeLink:"Go to homepage"
+  },
+  kk: {
+    brand:"Қазақстанның еңбек нарығына шолу",
+    eyebrow:"Қазақстанның еңбек нарығы 2025 - интерактивті шолу",
+    heroTitle:"Қазақстанның еңбек нарығына шолу",
+    heroSubtitle:"Еңбек нарығы алғаш қарағанда ғана біртұтас көрінеді. Іс жүзінде өңірлер жұмыс күшіне қатысу, өзін-өзі жұмыспен қамту, кадр ағымы және жұмыс режимі бойынша қатты ерекшеленеді.",
+    kpi1:"Жұмыс күші", kpi1d:"2025 жылы еңбек нарығына кіретін адамдар саны.",
+    kpi2:"Жұмыспен қамтылғандар", kpi2d:"Жұмыспен қамтылғандардың 76.9%-ы - жалдамалы қызметкерлер.",
+    kpi3:"Жұмыссыздық", kpi3d:"448 897 адам. Жастар жұмыссыздығы - 3.1%.",
+    kpi4:"Жұмыс күшінен тыс", kpi4d:"15+ жастағы халықтың 32.2%-ы жұмыс күшіне кірмейді.",
+    callout1:"жұмыс күшіне қатысудың ең жоғары деңгейі - 78.1%",
+    callout2:"кәсіпорындардағы ең жоғары кадр ағымы - 37.9%",
+    callout3:"өзін-өзі жұмыспен қамтудың ең жоғары үлесі - 46.2%",
+    callout4:"қашықтан істейтіндер ең көп - 3 334",
+    h1:"Негізгі факт", h1d:"Ел бойынша жұмыс күшіне қатысу. Өңірлер арасындағы ауқым 58.4%-дан 78.1%-ға дейін.",
+    h2:"Жұмыспен қамту құрылымы", h2d:"Жұмыспен қамтылғандар ішіндегі жалдамалы қызметкерлердің үлесі. Қалған 23.1%-ы - өзін-өзі жұмыспен қамтығандар.",
+    h3:"Жұмыс режимі", h3d:"Жұмыспен қамтылғандардың басым бөлігі аптасына стандартты 36-40 сағат жұмыс істейді.",
+    h4:"Кадр қозғалысы", h4d:"Шыққандар арасында өз еркімен кету басым.",
+    waffleTitle:"Еңбек нарығы неден тұрады",
+    waffleDesc:"100 ұяшық = 15+ жастағы барлық халық. Мұнда еңбек нарығы тек жұмыспен қамтылғандар мен жұмыссыздардан ғана емес, жұмыс күшінен тыс үлкен топтан да тұратыны бірден көрінеді.",
+    waffleText:"15+ жастағы әр 100 адамның шамамен 65-і жұмыспен қамтылған, 3-і жұмыссыз және 32-сі жұмыс күшінен тыс.",
+    waffleInsight:"Жұмыссыздық төмен болғанның өзінде ересек халықтың үлкен бөлігі еңбек нарығынан тыс қалады - мұны жұмыссыздықпен шатастыруға болмайды.",
+    genderTitle:"Еңбек нарығындағы әйелдер мен ерлер",
+    genderDesc:"Мұнда ұран емес, кіру және шығу құрылымы маңызды. Жұмыс күшінде ерлер сәл көбірек, бірақ айырмашылық ең алдымен қатысу деңгейінен туындайды.",
+    men:"Ерлер", women:"Әйелдер", lf:"Жұмыс күшінде", unemp:"Жұмыссыздық", outside:"Жұмыс күшінен тыс",
+    genderInsight:"Айырмашылықтың негізгі бөлігі жұмыссыздықтың өзінде емес, жұмыс күшіне кіру мен одан тыс қалуда байқалады.",
+    scatterTitle:"Өңірлер әртүрлі траекториямен қозғалады",
+    scatterDesc:"Әр нүкте - бір өңір. Көлденең ось - жұмыс күшіне қатысу, тік ось - жұмыссыздық. Шеңбер өлшемі жұмыс күшінің ауқымын көрсетеді. Түсін ауыстыруға болады.",
+    sCard1:"жұмыс күшіне қатысудың ең жоғары деңгейі - 78.1%",
+    sCard2:"ең төмен қатысу - 58.4%",
+    sCard3:"жастар жұмыссыздығы ең жоғары - 4.1%",
+    sCard4:"өзін-өзі жұмыспен қамту үлесі ең жоғары - 46.2%",
+    scatterInsight:"Өңірлік модельдер айқын ерекшеленеді: мұнайлы өңірлер қатысуды жоғары тартады, ал оңтүстікте өзін-өзі жұмыспен қамтудың рөлі жоғары.",
+    mapTitle:"Негізгі көрсеткіштер бойынша өңірлік айырмашылықтар",
+    mapDesc:"Ауыстырғыш бір уақытта бір көрсеткішті ғана көрсетеді - сол арқылы өңірлік алшақтықты артық жүктемесіз оқу жеңілдейді.",
+    flowTitle:"Кәсіпорындардағы қабылдау және шығу",
+    flowDesc:"Сызық қабылдау мен шығу арасындағы айырманы көрсетеді. Оң жақ ұшы сол жақтан неғұрлым жоғары болса, шығу қарқыны соғұрлым күшті.",
+    flowInsight:"Алматы, Павлодар және Атырау өңірлерінде еңбек қозғалысы қарқындырақ - бұл жұмыс тұрақтылығы туралы да айтады.",
+    sectorTitle:"Салалар бойынша кадр ағымы",
+    sectorDesc:"Тығыз bubble-field орнына иконкалары бар осы рейтинг оқуға жеңіл және жылдам сканерленеді.",
+    sectorInsight:"Жоғары кадр ағымы тек шағын сегменттерде емес: сауда, құрылыс және қызметтердің бір бөлігі ірі әрі мобильді сегменттер.",
+    hoursTitle:"Қазақстан қанша сағат жұмыс істейді",
+    hoursDesc:"Гистограмма жұмыспен қамтылғандардың апталық жұмыс уақыты бойынша бөлінісін көрсетеді. Төменде негізгі топтар карточка түрінде берілген.",
+    hoursInsight:"Стандартты жұмыс аптасы басым, бірақ ұзақ сағаттар да айтарлықтай: 1.3 млн-нан астам адам 41+ сағат жұмыс істейді.",
+    flexTitle:"Икемді және стандартты емес жұмыспен қамту форматтары",
+    flexDesc:"Кесте әртүрлі форматтардың ел аумағында біркелкі таралмағанын көрсетеді. Ірі қалалар мен корпоративтік өңірлер анық көрінеді.",
+    flexInsight:"Қашықтан жұмыс пен қосымша жұмыс орындары ел бойынша біркелкі таралмай, негізінен ең ірі қалаларда шоғырланған.",
+    reasonsTitle:"Адамдар неге жұмыссыз немесе жұмыс күшінен тыс қалады",
+    reasonsDesc:"Ауыстырғыш екі түрлі логиканы бөледі: жұмыссыздық себептері және экономикалық белсенді еместік себептері.",
+    reasonsInsight:"Жұмыссыздық пен жұмыс күшінен тыс болу - бір нәрсе емес. Бір жағдайда жұмыс іздеу басым, екіншісінде оқу, зейнет, үй шаруасы және басқа себептер.",
+    conclusionTitle:"Қорытынды",
+    conclusion1:"Қазақстанның еңбек нарығын бір ғана жұмыссыздық көрсеткішімен оқу жеткіліксіз. Бір елдің ішінде қатысуы жоғары және корпоративтік жұмысы басым өңірлерден бастап, өзін-өзі жұмыспен қамту мен нарықтан тыс қалу көбірек рөл атқаратын аумақтарға дейін әртүрлі модельдер қатар өмір сүреді.",
+    conclusion2:"Жалпы көрініс үшін тек жұмыспен қамтылғандар мен жұмыссыздар саны аз. Жұмыс күшіне кіру, кадр қозғалысының қарқыны, жұмыс режимі және стандартты емес жұмыспен қамтудың географиясы да маңызды.",
+    conclusion3:"Сондықтан Қазақстанның еңбек нарығын бір орташа жүйе емес, әртүрлі өңірлік және салалық режимдер жиынтығы ретінде қарастырған дұрыс.",
+    source1:"Дереккөздер: Қазақстан Республикасы Стратегиялық жоспарлау және реформалар агенттігінің Ұлттық статистика бюросы.",
+    homeLink:"Басты бетке өту"
+  }
+};
+
+function formatNumber(v) {
+  return fmtInt(v).replace(/,/g, " ");
+}
+function showTip(event, title, lines) {
+  tooltip.style("opacity", 1).style("left", event.clientX + "px").style("top", event.clientY + "px")
+    .html(`<h4>${title}</h4>${lines.map(l => `<p><span>${l[0]}:</span> ${l[1]}</p>`).join("")}`);
+}
+function hideTip() { tooltip.style("opacity", 0); }
+
+function controlLabel(btn, lang) {
+  if (lang === "kk") {
+    const kkMap = {
+      "Молодежная безработица":"Жастар жұмыссыздығы",
+      "Доля самозанятых":"Өзін-өзі жұмыспен қамту үлесі",
+      "Вне рабочей силы":"Жұмыс күшінен тыс",
+      "Участие":"Қатысу",
+      "Самозанятые":"Өзін-өзі жұмыспен қамту",
+      "Текучесть":"Кадр ағымы",
+      "Абсолютные числа":"Абсолют мәндер",
+      "В % к средней численности":"Орташа санға %-бен",
+      "Причины безработицы":"Жұмыссыздық себептері",
+      "Причины вне рабочей силы":"Жұмыс күшінен тыс қалу себептері"
+    };
+    return kkMap[btn.dataset.labelRu] || btn.dataset.labelEn || btn.dataset.labelRu;
+  }
+  return lang === "ru" ? btn.dataset.labelRu : btn.dataset.labelEn;
+}
+function localizeStaticNames() {
+  const calloutNames = ["Атырауская","г. Алматы","Туркестанская","г. Алматы"];
+  document.querySelectorAll(".hero-callouts .callout strong").forEach((el, i) => {
+    el.textContent = tName(regionNames, calloutNames[i]);
+  });
+  const miniNames = ["Атырауская","г. Шымкент","г. Алматы","Туркестанская"];
+  document.querySelectorAll(".cards-row .mini-card strong").forEach((el, i) => {
+    el.textContent = tName(regionNames, miniNames[i]);
+  });
+}
+function applyTranslations(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll(".lang-btn").forEach(btn => btn.classList.toggle("active", btn.dataset.lang === lang));
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (lang === "ru") return;
+    const dict = translations[lang];
+    if (dict && dict[key]) el.innerHTML = dict[key];
+  });
+  if (lang === "ru") restoreRussian();
+  localizeStaticNames();
+  updateControlLabels();
+  renderWaffle();
+  renderSectors();
+  renderHeat();
+  renderFlow(document.querySelector("#flow-controls .control-btn.active").dataset.mode);
+  renderHours();
+  renderReasons(document.querySelector("#reason-controls .control-btn.active").dataset.view);
+}
+const russianSnapshot = {};
+document.querySelectorAll("[data-i18n]").forEach(el => russianSnapshot[el.dataset.i18n] = el.innerHTML);
+function restoreRussian() {
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (russianSnapshot[key]) el.innerHTML = russianSnapshot[key];
+  });
+}
+function updateControlLabels() {
+  document.querySelectorAll("[data-label-ru]").forEach(btn => {
+    btn.textContent = controlLabel(btn, currentLang);
+  });
+  const activeScatter = document.querySelector("#scatter-controls .control-btn.active");
+  const activeTile = document.querySelector("#tile-controls .control-btn.active");
+  currentScatterLabel = controlLabel(activeScatter, currentLang);
+  currentTileLabel = controlLabel(activeTile, currentLang);
+  renderScatter(currentScatterMetric, currentScatterLabel);
+  renderTileMap(currentTileMetric, currentTileLabel);
+}
+document.querySelectorAll(".lang-btn").forEach(btn => btn.addEventListener("click", () => applyTranslations(btn.dataset.lang)));
+
+function animateOnScroll() {
+  document.querySelectorAll(".panel, .stat, .highlight, .chart-box, .mini-card, .person-card, .conclusion").forEach((el, i) => {
+    gsap.from(el, {
+      opacity:0, y:20, duration:.7, delay:i*0.015, ease:"power3.out",
+      scrollTrigger: { trigger: el, start:"top 90%" }
+    });
+  });
+}
+
+document.querySelectorAll(".counter").forEach(el => {
+  const value = +el.dataset.value;
+  gsap.fromTo(el, {innerText:0}, {
+    innerText:value, duration:1.7, ease:"power2.out",
+    snap:{innerText:1},
+    scrollTrigger:{trigger:el,start:"top 88%"},
+    onUpdate() { el.innerText = formatNumber(+el.innerText); }
+  });
+});
+
+function renderHero() {
+  const svg = d3.select("#hero-svg");
+  svg.selectAll("*").remove();
+  const w = 680, h = 560;
+  svg.attr("viewBox", `0 0 ${w} ${h}`);
+  svg.append("circle").attr("cx",160).attr("cy",130).attr("r",88).attr("fill","rgba(47,107,255,.08)");
+  svg.append("circle").attr("cx",520).attr("cy",120).attr("r",74).attr("fill","rgba(120,94,240,.08)");
+  svg.append("circle").attr("cx",468).attr("cy",410).attr("r",96).attr("fill","rgba(36,182,216,.08)");
+  const g = svg.append("g").attr("transform","translate(340,300)");
+  function person(x, y, color, scale=1) {
+    const p = g.append("g").attr("transform",`translate(${x},${y}) scale(${scale})`);
+    p.append("circle").attr("cx",0).attr("cy",-58).attr("r",24).attr("fill",color).attr("opacity",.95);
+    p.append("rect").attr("x",-18).attr("y",-28).attr("width",36).attr("height",78).attr("rx",18).attr("fill",color).attr("opacity",.88);
+    p.append("rect").attr("x",-46).attr("y",-12).attr("width",28).attr("height",14).attr("rx",7).attr("fill",color).attr("opacity",.78);
+    p.append("rect").attr("x",18).attr("y",-12).attr("width",28).attr("height",14).attr("rx",7).attr("fill",color).attr("opacity",.78);
+    p.append("rect").attr("x",-18).attr("y",48).attr("width",14).attr("height",58).attr("rx",7).attr("fill",color).attr("opacity",.78);
+    p.append("rect").attr("x",4).attr("y",48).attr("width",14).attr("height",58).attr("rx",7).attr("fill",color).attr("opacity",.78);
+  }
+  person(-130, -30, "#2f6bff", 1.12);
+  person(0, -8, "#785ef0", 1.35);
+  person(128, -26, "#24b6d8", 1.06);
+
+  const rings = g.append("g");
+  [165, 205, 245].forEach(r => rings.append("circle")
+    .attr("r", r).attr("fill","none").attr("stroke","rgba(11,18,32,.08)").attr("stroke-width",1));
+  g.append("path")
+    .attr("d", d3.arc()({innerRadius:214, outerRadius:226, startAngle:-Math.PI/2, endAngle:Math.PI/2.1}))
+    .attr("fill","#2f6bff").attr("opacity",.75);
+  g.append("path")
+    .attr("d", d3.arc()({innerRadius:186, outerRadius:196, startAngle:Math.PI/8, endAngle:Math.PI*1.12}))
+    .attr("fill","#785ef0").attr("opacity",.68);
+  g.append("path")
+    .attr("d", d3.arc()({innerRadius:156, outerRadius:166, startAngle:-Math.PI*.05, endAngle:Math.PI*.63}))
+    .attr("fill","#24b6d8").attr("opacity",.58);
+
+  gsap.to("#hero-svg g", { y:-8, repeat:-1, yoyo:true, duration:3.4, ease:"sine.inOut" });
+}
+renderHero();
+
+function renderWaffle() {
+  const grid = document.getElementById("waffle-grid");
+  grid.innerHTML = "";
+  const total15plus = DATA.national.labor_force + DATA.national.outside_labor_force;
+  const shares = [
+    {key:"employed", label: currentLang==="ru" ? "Занятые" : "Employed", color:"var(--blue)", count: Math.round(DATA.national.employed / total15plus * 100)},
+    {key:"unemployed", label: currentLang==="ru" ? "Безработные" : "Unemployed", color:"var(--pink)", count: Math.round(DATA.national.unemployed / total15plus * 100)},
+    {key:"outside", label: currentLang==="ru" ? "Вне рабочей силы" : "Outside labor force", color:"var(--violet)", count: 100 - Math.round(DATA.national.employed / total15plus * 100) - Math.round(DATA.national.unemployed / total15plus * 100)}
+  ];
+  const cells = [];
+  shares.forEach(s => { for (let i=0;i<s.count;i++) cells.push(s); });
+  cells.forEach(c => {
+    const d = document.createElement("div");
+    d.className = "waffle-cell";
+    d.style.background = c.color;
+    d.title = c.label;
+    grid.appendChild(d);
+  });
+  document.getElementById("waffle-legend").innerHTML = shares.map(s => `<span><span class="dot" style="background:${s.color}"></span>${s.label} - ${s.count}%</span>`).join("");
+}
+renderWaffle();
+
+document.getElementById("men-lf").textContent = formatNumber(DATA.national.men_labor_force);
+document.getElementById("women-lf").textContent = formatNumber(DATA.national.women_labor_force);
+localizeStaticNames();
+
+function displayName(region) {
+  return tName(regionNames, region);
+}
+function fullNameFromTile(label) {
+  const map = {
+    "ЗКО":"Западно-Казахстанская",
+    "СКО":"Северо-Казахстанская",
+    "ВКО":"Восточно-Казахстанская",
+    "Астана":"г. Астана",
+    "Алматы":"г. Алматы",
+    "Шымкент":"г. Шымкент"
+  };
+  return map[label] || label;
+}
+
+function renderScatter(metric="youth_unemployment_rate", metricLabel=currentScatterLabel) {
+  currentScatterMetric = metric;
+  currentScatterLabel = metricLabel;
+  const svg = d3.select("#scatter-svg");
+  svg.selectAll("*").remove();
+  const width = svg.node().getBoundingClientRect().width || 960;
+  const height = +svg.attr("height");
+  svg.attr("viewBox", `0 0 ${width} ${height}`);
+  const margin = {top:24,right:24,bottom:56,left:64};
+  const innerW = width - margin.left - margin.right;
+  const innerH = height - margin.top - margin.bottom;
+  const g = svg.append("g").attr("transform",`translate(${margin.left},${margin.top})`);
+  const x = d3.scaleLinear().domain(d3.extent(DATA.regions, d => d.participation_rate)).nice().range([0, innerW]);
+  const y = d3.scaleLinear().domain([d3.min(DATA.regions, d => d.unemployment_rate)-.25, d3.max(DATA.regions, d => d.unemployment_rate)+.25]).nice().range([innerH, 0]);
+  const r = d3.scaleSqrt().domain(d3.extent(DATA.regions, d => d.labor_force)).range([9, 34]);
+  const c = d3.scaleSequential().domain(d3.extent(DATA.regions, d => d[metric])).interpolator(d3.interpolateRgbBasis(["#d8e7ff","#6a95ff","#173da8"]));
+  g.append("g").attr("class","grid").attr("transform",`translate(0,${innerH})`).call(d3.axisBottom(x).tickSize(-innerH).tickFormat(""));
+  g.append("g").attr("class","grid").call(d3.axisLeft(y).tickSize(-innerW).tickFormat(""));
+  g.append("g").attr("class","axis").attr("transform",`translate(0,${innerH})`).call(d3.axisBottom(x).ticks(7).tickFormat(d => fmt1(d) + "%"));
+  g.append("g").attr("class","axis").call(d3.axisLeft(y).ticks(6).tickFormat(d => fmt1(d) + "%"));
+  g.append("text").attr("x", innerW/2).attr("y", innerH+42).attr("text-anchor","middle").style("fill","var(--muted)").style("font-size","13px")
+    .text(currentLang==="ru" ? "Участие в рабочей силе" : currentLang==="kk" ? "Жұмыс күшіне қатысу" : "Labor force participation");
+  g.append("text").attr("transform","rotate(-90)").attr("x",-innerH/2).attr("y",-44).attr("text-anchor","middle").style("fill","var(--muted)").style("font-size","13px")
+    .text(currentLang==="ru" ? "Безработица" : currentLang==="kk" ? "Жұмыссыздық" : "Unemployment");
+  const nodes = g.selectAll("g.node").data(DATA.regions).join("g").attr("transform", d => `translate(${x(d.participation_rate)},${y(d.unemployment_rate)})`);
+  nodes.append("circle")
+    .attr("r", d => r(d.labor_force)).attr("fill", d => c(d[metric])).attr("fill-opacity", .92)
+    .attr("stroke", "#fff").attr("stroke-width", 1.8)
+    .on("mousemove", (event,d) => {
+      const metricValue = metric === "outside_rate" || metric.includes("rate") || metric.includes("share") ? fmt1(d[metric])+"%" : formatNumber(d[metric]);
+      showTip(event, displayName(d.region), [
+        [currentLang==="ru" ? "Участие" : currentLang==="kk" ? "Қатысу" : "Participation", fmt1(d.participation_rate)+"%"],
+        [currentLang==="ru" ? "Безработица" : currentLang==="kk" ? "Жұмыссыздық" : "Unemployment", fmt1(d.unemployment_rate)+"%"],
+        [currentLang==="ru" ? metricLabel : metricLabel, metricValue]
+      ]);
+    })
+    .on("mouseleave", hideTip);
+  nodes.filter(d => ["Атырауская","Туркестанская","г. Алматы","г. Шымкент"].includes(d.region))
+    .append("text").attr("y", d => -r(d.labor_force)-7).attr("text-anchor","middle")
+    .style("font-size","11px").style("fill","var(--muted)").text(d => displayName(d.region));
+}
+renderScatter();
+
+document.querySelectorAll("#scatter-controls .control-btn").forEach(btn => btn.addEventListener("click", () => {
+  document.querySelectorAll("#scatter-controls .control-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderScatter(btn.dataset.color, currentLang==="ru" ? btn.dataset.labelRu : btn.dataset.labelEn);
+}));
+
+function renderTileMap(metric="participation_rate", metricLabel=currentTileLabel) {
+  currentTileMetric = metric;
+  currentTileLabel = metricLabel;
+  const svg = d3.select("#regional-svg");
+  svg.selectAll("*").remove();
+  const width = svg.node().getBoundingClientRect().width || 1100;
+  const height = +svg.attr("height");
+  svg.attr("viewBox", `0 0 ${width} ${height}`);
+  const margin = {top:22,right:70,bottom:24,left:180};
+  const innerW = width - margin.left - margin.right;
+  const data = DATA.regions.slice().sort((a,b) => b[metric] - a[metric]);
+  const rowH = 34;
+  const innerH = rowH * data.length;
+  svg.attr("height", innerH + margin.top + margin.bottom + 20);
+  svg.attr("viewBox", `0 0 ${width} ${innerH + margin.top + margin.bottom + 20}`);
+  const g = svg.append("g").attr("transform",`translate(${margin.left},${margin.top})`);
+  const values = data.map(d => d[metric]);
+  const x = d3.scaleLinear().domain([d3.min(values)*0.95, d3.max(values)*1.02]).range([0, innerW]);
+  const y = d3.scaleBand().domain(data.map(d => displayName(d.region))).range([0, innerH]).padding(0.34);
+  const c = d3.scaleSequential().domain([d3.min(values), d3.max(values)]).interpolator(d3.interpolateRgbBasis(["#d9e8ff","#8eb7ff","#537bf7","#173da8"]));
+  g.append("g").attr("class","grid").attr("transform",`translate(0,${innerH})`).call(d3.axisBottom(x).tickSize(-innerH).tickFormat(""));
+  g.append("g").attr("class","axis").call(d3.axisLeft(y).tickSize(0));
+  g.append("g").attr("class","axis").attr("transform",`translate(0,${innerH})`)
+    .call(d3.axisBottom(x).ticks(6).tickFormat(d => fmt1(d) + "%"));
+  const rows = g.selectAll("g.r").data(data).join("g").attr("transform", d => `translate(0,${y(displayName(d.region))})`);
+  rows.append("rect")
+    .attr("x", x(d3.min(values)*0.95))
+    .attr("y", 0)
+    .attr("height", y.bandwidth())
+    .attr("width", d => x(d[metric]) - x(d3.min(values)*0.95))
+    .attr("rx", y.bandwidth()/2)
+    .attr("fill", d => c(d[metric]))
+    .on("mousemove", (event,d) => showTip(event, displayName(d.region), [[metricLabel, fmt1(d[metric]) + "%"]]))
+    .on("mouseleave", hideTip);
+  rows.append("text")
+    .attr("x", d => x(d[metric]) + 8)
+    .attr("y", y.bandwidth()/2 + 4)
+    .style("fill","var(--muted)")
+    .style("font-size","12px")
+    .text(d => fmt1(d[metric]) + "%");
+
+  const top = data[0], low = data[data.length-1];
+  document.getElementById("tile-metric-name").textContent = metricLabel;
+  document.getElementById("tile-top-region").textContent = displayName(top.region);
+  document.getElementById("tile-low-region").textContent = displayName(low.region);
+  document.getElementById("tile-top-value").textContent = (currentLang==="ru" ? "Максимум - " : currentLang==="kk" ? "Максимум - " : "Maximum - ") + fmt1(top[metric]) + "%";
+  document.getElementById("tile-low-value").textContent = (currentLang==="ru" ? "Минимум - " : currentLang==="kk" ? "Минимум - " : "Minimum - ") + fmt1(low[metric]) + "%";
+  document.getElementById("tile-insight").textContent =
+    metric === "participation_rate"
+      ? (currentLang==="ru" ? "По участию лидируют Атырауская и Мангистауская, а ниже всего показатель в Шымкенте и части южных регионов." : currentLang==="kk" ? "Қатысу деңгейі Атырау мен Маңғыстауда жоғары, ал Шымкентте және оңтүстіктің бір бөлігінде төмен." : "Atyrau and Mangystau lead in participation, while Shymkent and parts of the south remain lower.")
+    : metric === "self_employed_share"
+      ? (currentLang==="ru" ? "Самозанятость особенно высока на юге - прежде всего в Туркестанской, где она почти сопоставима с наемным трудом." : currentLang==="kk" ? "Өзін-өзі жұмыспен қамту оңтүстікте, әсіресе Түркістанда өте жоғары - ол мұнда жалдамалы еңбекке жақын." : "Self-employment is especially high in the south, above all in Turkistan.")
+      : (currentLang==="ru" ? "Текучесть заметно выше в Алматы и ряде индустриальных регионов, а ниже - в южных аграрных областях." : currentLang==="kk" ? "Кадр ағымы Алматыда және бірқатар индустриялық өңірде жоғары, ал оңтүстіктің аграрлық облыстарында төмен." : "Turnover is higher in Almaty and several industrial regions, and lower in southern agrarian areas.");
+}
+document.querySelectorAll("#tile-controls .control-btn").forEach(btn => btn.addEventListener("click", () => {
+  document.querySelectorAll("#tile-controls .control-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderTileMap(btn.dataset.metric, currentLang==="ru" ? btn.dataset.labelRu : btn.dataset.labelEn);
+}));
+
+function renderFlow(mode="absolute") {
+  const svg = d3.select("#flow-svg");
+  svg.selectAll("*").remove();
+  const width = svg.node().getBoundingClientRect().width || 760;
+  const height = +svg.attr("height");
+  svg.attr("viewBox", `0 0 ${width} ${height}`);
+  const margin = {top:18,right:26,bottom:20,left:154};
+  const innerW = width - margin.left - margin.right;
+  const innerH = height - margin.top - margin.bottom;
+  const g = svg.append("g").attr("transform",`translate(${margin.left},${margin.top})`);
+  const data = DATA.regions.slice().sort((a,b) => (mode==="absolute" ? (b.left+b.hired) - (a.left+a.hired) : b.turnover_rate - a.turnover_rate)).slice(0, 12);
+  const y = d3.scaleBand().domain(data.map(d => displayName(d.region))).range([0, innerH]).padding(.38);
+  const valA = d => mode==="absolute" ? d.hired : d.hiring_rate;
+  const valB = d => mode==="absolute" ? d.left : d.separation_rate;
+  const x = d3.scaleLinear().domain([0, d3.max(data, d => Math.max(valA(d), valB(d)))]).nice().range([0, innerW]);
+  g.append("g").attr("class","grid").attr("transform",`translate(0,${innerH})`).call(d3.axisBottom(x).tickSize(-innerH).tickFormat(""));
+  g.append("g").attr("class","axis").call(d3.axisLeft(y));
+  g.append("g").attr("class","axis").attr("transform",`translate(0,${innerH})`).call(d3.axisBottom(x).ticks(5).tickFormat(d => mode==="absolute" ? formatNumber(d) : fmt1(d)+"%"));
+  const rows = g.selectAll("g.row").data(data).join("g").attr("transform", d => `translate(0,${y(displayName(d.region)) + y.bandwidth()/2})`);
+  rows.append("line").attr("x1", d => x(valA(d))).attr("x2", d => x(valB(d))).attr("y1",0).attr("y2",0)
+    .attr("stroke","#c0cfeb").attr("stroke-width",3).attr("stroke-linecap","round");
+  rows.append("circle").attr("cx", d => x(valA(d))).attr("cy",0).attr("r",6.5).attr("fill","var(--blue)")
+    .on("mousemove", (event,d) => showTip(event, displayName(d.region), [
+      [currentLang==="ru" ? "Принято" : currentLang==="kk" ? "Қабылданды" : "Hired", mode==="absolute" ? formatNumber(d.hired) : fmt1(d.hiring_rate)+"%"],
+      [currentLang==="ru" ? "Выбыло" : currentLang==="kk" ? "Шықты" : "Left", mode==="absolute" ? formatNumber(d.left) : fmt1(d.separation_rate)+"%"],
+      [currentLang==="ru" ? "Текучесть" : currentLang==="kk" ? "Кадр ағымы" : "Turnover", fmt1(d.turnover_rate)+"%"]
+    ]))
+    .on("mouseleave", hideTip);
+  rows.append("circle").attr("cx", d => x(valB(d))).attr("cy",0).attr("r",6.5).attr("fill","var(--pink)")
+    .on("mousemove", (event,d) => showTip(event, displayName(d.region), [
+      [currentLang==="ru" ? "Принято" : currentLang==="kk" ? "Қабылданды" : "Hired", mode==="absolute" ? formatNumber(d.hired) : fmt1(d.hiring_rate)+"%"],
+      [currentLang==="ru" ? "Выбыло" : currentLang==="kk" ? "Шықты" : "Left", mode==="absolute" ? formatNumber(d.left) : fmt1(d.separation_rate)+"%"],
+      [currentLang==="ru" ? "Уволились сами" : currentLang==="kk" ? "Өз еркімен кеткендер" : "Quit", formatNumber(d.quit)]
+    ]))
+    .on("mouseleave", hideTip);
+}
+renderFlow();
+document.querySelectorAll("#flow-controls .control-btn").forEach(btn => btn.addEventListener("click", () => {
+  document.querySelectorAll("#flow-controls .control-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderFlow(btn.dataset.mode);
+}));
+
+function sectorIcon(name) {
+  const s = name.toLowerCase();
+  if (s.includes("торгов")) return "🛒";
+  if (s.includes("строитель")) return "🏗️";
+  if (s.includes("промышлен")) return "🏭";
+  if (s.includes("транспорт")) return "🚚";
+  if (s.includes("здрав")) return "🩺";
+  if (s.includes("гос")) return "🏛️";
+  if (s.includes("сель")) return "🌾";
+  if (s.includes("прожив") || s.includes("питан")) return "🛏️";
+  if (s.includes("недвиж")) return "🏠";
+  if (s.includes("прочих")) return "🔧";
+  if (s.includes("информац")) return "💻";
+  if (s.includes("финансов")) return "💳";
+  if (s.includes("профес")) return "🧪";
+  if (s.includes("искусство")) return "🎭";
+  return "💼";
+}
+function shortSector(name) {
+  return tName(sectorNames, name);
+}
+function renderSectors() {
+  const list = document.getElementById("sector-list");
+  const deduped = Array.from(new Map(DATA.sectors.map(d => [d.sector, d])).values());
+  const top = deduped.slice().sort((a,b) => b.turnover_rate - a.turnover_rate).slice(0, 6);
+  list.innerHTML = top.map(d => `
+    <div class="sector-row">
+      <div class="sector-ico">${sectorIcon(d.sector)}</div>
+      <div>
+        <h4>${shortSector(d.sector)}</h4>
+        <p>${currentLang==="ru" ? "Наем" : currentLang==="kk" ? "Қабылдау" : "Hiring"} - ${fmt1(d.hiring_rate)}% · ${currentLang==="ru" ? "Выбытие" : currentLang==="kk" ? "Шығу" : "Separations"} - ${fmt1(d.separation_rate)}% · ${currentLang==="ru" ? "Средняя численность" : currentLang==="kk" ? "Орташа саны" : "Average employees"} - ${formatNumber(d.avg_employees)}</p>
+      </div>
+      <div class="sector-val">${fmt1(d.turnover_rate)}%</div>
+    </div>
+  `).join("");
+}
+renderSectors();
+
+function renderHours() {
+  const svg = d3.select("#hours-svg");
+  svg.selectAll("*").remove();
+  const width = svg.node().getBoundingClientRect().width || 600;
+  const height = +svg.attr("height");
+  svg.attr("viewBox", `0 0 ${width} ${height}`);
+  const margin = {top:18,right:16,bottom:54,left:54};
+  const innerW = width - margin.left - margin.right;
+  const innerH = height - margin.top - margin.bottom;
+  const g = svg.append("g").attr("transform",`translate(${margin.left},${margin.top})`);
+  const hoursData = DATA.hours.map(d => ({...d, bucketNorm: normalizeBucket(d.bucket), bucketLabel: bucketLabel(d.bucket)}));
+  const x = d3.scaleBand().domain(hoursData.map(d => d.bucketLabel)).range([0, innerW]).padding(.18);
+  const y = d3.scaleLinear().domain([0, d3.max(DATA.hours, d => d.count)]).nice().range([innerH,0]);
+  g.append("g").attr("class","grid").call(d3.axisLeft(y).tickSize(-innerW).tickFormat(""));
+  g.append("g").attr("class","axis").call(d3.axisLeft(y).ticks(5).tickFormat(d => formatNumber(d)));
+  g.append("g").attr("class","axis").attr("transform",`translate(0,${innerH})`).call(d3.axisBottom(x));
+  g.selectAll("rect.bar").data(hoursData).join("rect")
+    .attr("x", d => x(d.bucketLabel)).attr("y", d => y(d.count)).attr("width", x.bandwidth()).attr("height", d => innerH - y(d.count))
+    .attr("rx", 16)
+    .attr("fill", d => d.bucketNorm==="36-40" ? "var(--blue)" : d.bucketNorm==="41+" ? "var(--gold)" : "#bdd2ff")
+    .on("mousemove", (event,d) => showTip(event, d.bucketLabel, [[currentLang==="ru" ? "Занятые" : currentLang==="kk" ? "Жұмыспен қамтылғандар" : "Employed", formatNumber(d.count)]]))
+    .on("mouseleave", hideTip);
+  document.getElementById("hours-cards").innerHTML = hoursData.map(d => `<div class="hours-card"><strong>${d.bucketLabel}</strong><span>${formatNumber(d.count)} · ${fmt1(d.count / DATA.national.employed * 100)}%</span></div>`).join("");
+}
+renderHours();
+
+function renderHeat() {
+  const headers = ["part_time","downtime","moonlighting","civil_contracts","remote"];
+  const labels = {
+    part_time: currentLang==="ru" ? "Неполный день" : currentLang==="kk" ? "Толық емес күн" : "Part-time",
+    downtime: currentLang==="ru" ? "Временно незанятые" : currentLang==="kk" ? "Уақытша жұмыспен қамтылмағандар" : "Temporarily inactive",
+    moonlighting: currentLang==="ru" ? "Совмести-<br>тельство" : currentLang==="kk" ? "Қосымша<br>жұмыс" : "Secondary<br>jobs",
+    civil_contracts: currentLang==="ru" ? "ГПХ" : currentLang==="kk" ? "АҚШ" : "Civil<br>contracts",
+    remote: currentLang==="ru" ? "Дистанционно" : currentLang==="kk" ? "Қашықтан" : "Remote"
+  };
+  const rows = DATA.regions.slice().sort((a,b) => b.remote - a.remote).slice(0,6);
+  const maxByMetric = Object.fromEntries(headers.map(h => [h, d3.max(rows, d => d[h])]));
+  const grid = document.getElementById("heat-grid");
+  grid.innerHTML = "";
+  const headBlank = document.createElement("div"); headBlank.className = "heat-head"; headBlank.textContent = currentLang==="ru" ? "Регион" : currentLang==="kk" ? "Өңір" : "Region"; grid.appendChild(headBlank);
+  headers.forEach(h => { const el = document.createElement("div"); el.className = "heat-head"; el.innerHTML = labels[h]; grid.appendChild(el); });
+  rows.forEach(r => {
+    const name = document.createElement("div");
+    name.className = "heat-label";
+    name.textContent = displayName(r.region);
+    grid.appendChild(name);
+    headers.forEach(h => {
+      const cell = document.createElement("div");
+      const alpha = 0.25 + 0.75 * (r[h] / (maxByMetric[h] || 1));
+      const color = h==="remote" ? `rgba(47,107,255,${alpha})` : h==="moonlighting" ? `rgba(120,94,240,${alpha})` : h==="civil_contracts" ? `rgba(238,90,166,${alpha})` : h==="part_time" ? `rgba(36,182,216,${alpha})` : `rgba(38,179,106,${alpha})`;
+      cell.className = "heat-cell";
+      cell.style.background = color;
+      cell.textContent = formatNumber(r[h]);
+      cell.addEventListener("mousemove", (event) => showTip(event, displayName(r.region), [[labels[h].replace(/<br>/g," "), formatNumber(r[h])]]));
+      cell.addEventListener("mouseleave", hideTip);
+      grid.appendChild(cell);
+    });
+  });
+}
+renderHeat();
+
+function renderReasons(view="unemployment") {
+  const svg = d3.select("#reason-svg");
+  svg.selectAll("*").remove();
+  const width = svg.node().getBoundingClientRect().width || 600;
+  const height = +svg.attr("height");
+  svg.attr("viewBox", `0 0 ${width} ${height}`);
+  const margin = {top:12,right:16,bottom:36,left:190};
+  const innerW = width - margin.left - margin.right;
+  const innerH = height - margin.top - margin.bottom;
+  const g = svg.append("g").attr("transform",`translate(${margin.left},${margin.top})`);
+  const data = (view==="unemployment" ? DATA.unemploymentReasons : DATA.inactivityReasons).slice().sort((a,b)=>b.total-a.total).slice(0,6);
+  const label = d => view==="unemployment" ? tName(unemploymentReasonNames, d.short) : tName(inactivityReasonNames, d.reason);
+  const x = d3.scaleLinear().domain([0,d3.max(data,d=>d.total)]).nice().range([0,innerW]);
+  const y = d3.scaleBand().domain(data.map(label)).range([0,innerH]).padding(.22);
+  const fill = view==="unemployment" ? "var(--blue)" : "var(--violet)";
+  g.append("g").attr("class","grid").attr("transform",`translate(0,${innerH})`).call(d3.axisBottom(x).tickSize(-innerH).tickFormat(""));
+  g.append("g").attr("class","axis").call(d3.axisLeft(y).tickSize(0));
+  g.append("g").attr("class","axis").attr("transform",`translate(0,${innerH})`).call(d3.axisBottom(x).ticks(5).tickFormat(d => formatNumber(d)));
+  g.selectAll("rect").data(data).join("rect")
+    .attr("x",0).attr("y", d=>y(label(d))).attr("height",y.bandwidth()).attr("width", d=>x(d.total)).attr("rx", y.bandwidth()/2)
+    .attr("fill", fill).attr("opacity", .9)
+    .on("mousemove", (event,d)=>showTip(event, label(d), [[currentLang==="ru" ? "Численность" : currentLang==="kk" ? "Саны" : "People", formatNumber(d.total)]]))
+    .on("mouseleave", hideTip);
+  g.selectAll("text.v").data(data).join("text")
+    .attr("x", d=>x(d.total)+8).attr("y", d=>y(label(d))+y.bandwidth()/2+4).style("fill","var(--muted)").style("font-size","12px")
+    .text(d=>formatNumber(d.total));
+}
+renderReasons();
+document.querySelectorAll("#reason-controls .control-btn").forEach(btn => btn.addEventListener("click", () => {
+  document.querySelectorAll("#reason-controls .control-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderReasons(btn.dataset.view);
+}));
+
+animateOnScroll();
+</script>
+</body>
+</html>
