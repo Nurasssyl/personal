@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dope Soz - Guest Analytics</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+/* THEMES */
+body{font-family:'IBM Plex Sans',sans-serif;overflow-x:hidden;transition:background .35s,color .35s}
+body.light{--bg:#f7f4ee;--paper:#ffffff;--card:#f0ede6;--ink:#18160e;--ink2:#3d3b2f;--muted:#7a7868;--rule:#ddd9cc;--gold:#9a6208;--goldl:#b8780a;--red:#8a2010;--blue:#0f3460;--accent:#0f3460}
+body.dark{--bg:#111;--paper:#191919;--card:#1e1e1e;--ink:#f0ede6;--ink2:#c8c4b8;--muted:#666;--rule:#282828;--gold:#e8b030;--goldl:#f0c040;--red:#e05050;--blue:#4a8fd4;--accent:#4a8fd4}
+body{background:var(--bg);color:var(--ink)}
+
+/* PROGRESS + THEME TOGGLE */
+#prog{position:fixed;top:0;left:0;height:3px;background:var(--gold);z-index:999;width:0}
+#tbtn{position:fixed;top:20px;right:24px;z-index:500;width:44px;height:24px;border-radius:12px;border:1px solid var(--rule);background:var(--card);cursor:pointer;padding:0}
+#tbtn::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--gold);transition:transform .3s}
+body.dark #tbtn::after{transform:translateX(20px)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 80px;position:relative;overflow:hidden}
+#hero-cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hi{position:relative;z-index:2;padding:0 64px;max-width:960px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:'';width:36px;height:1px;background:var(--gold)}
+#hero h1{font-family:'Playfair Display',serif;font-size:min(8.5vw,86px);font-weight:700;line-height:1.0;color:var(--ink);margin-bottom:18px}
+#hero h1 em{font-style:normal;color:var(--gold)}
+.hsub{font-size:clamp(14px,1.7vw,18px);color:var(--ink2);line-height:1.8;max-width:560px;margin-bottom:32px;font-weight:300}
+.scue{display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.sa{width:16px;height:16px;border-right:1px solid var(--muted);border-bottom:1px solid var(--muted);transform:rotate(45deg);animation:bop 2s infinite}
+@keyframes bop{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(5px)}}
+
+/* LAYOUT */
+.sec{padding:96px 0}
+.in{max-width:1100px;margin:0 auto;padding:0 56px}
+.in-n{max-width:760px;margin:0 auto;padding:0 56px}
+
+/* LABELS + HEADINGS */
+.slbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.slbl::before{content:'';width:20px;height:1px;background:var(--gold)}
+h2.sh{font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,44px);font-weight:700;line-height:1.1;color:var(--ink);margin-bottom:8px}
+.sh-sub{font-size:15px;color:var(--ink2);line-height:1.75;max-width:560px;margin-bottom:32px}
+
+/* PROSE */
+.prose{border-left:2px solid var(--rule);padding:0 0 0 28px;margin:36px 0}
+.prose p{font-size:17px;line-height:1.88;color:var(--ink2);margin-bottom:1.2em}
+.prose p:first-child::first-letter{font-family:'Playfair Display',serif;font-size:3.8em;font-weight:700;float:left;line-height:.78;margin-right:10px;margin-top:8px;color:var(--ink)}
+.pq{border-left:3px solid var(--gold);padding:16px 22px;margin:32px 0;background:rgba(184,120,10,.06)}
+.pq p{font-family:'Playfair Display',serif;font-size:clamp(15px,2vw,18px);font-style:italic;color:var(--ink);line-height:1.45;margin:0}
+.note{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink2);padding:10px 16px;border:1px solid var(--rule);background:var(--card);display:flex;align-items:flex-start;gap:10px;margin-bottom:32px;line-height:1.6}
+.note::before{content:'↳';color:var(--gold);flex-shrink:0;margin-top:1px}
+
+/* VIZ WRAPPERS */
+.vbox{background:var(--paper);border:1px solid var(--rule);overflow:hidden;position:relative}
+.vbox svg,.vbox canvas{display:block;width:100%}
+.tip{position:absolute;background:var(--paper);border:1px solid var(--rule);padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink);pointer-events:none;opacity:0;z-index:50;line-height:1.65;max-width:240px;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+
+/* TOP GUESTS GRID */
+#top-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.gc{background:var(--paper);padding:20px 16px}
+.gc-photo{width:78px;height:78px;border-radius:50%;margin:0 auto 12px;overflow:hidden;background:var(--card);display:flex;align-items:center;justify-content:center;position:relative}
+.gc-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(100%);display:block}
+.gc-init{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--muted)}
+.gc-rank{position:absolute;top:0;right:0;width:20px;height:20px;border-radius:50%;background:var(--gold);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:500}
+.gc-name{font-size:13px;font-weight:500;color:var(--ink);text-align:center;margin-bottom:3px;line-height:1.3}
+.gc-role{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.gc-bar-wrap{height:3px;background:var(--rule);border-radius:1px;overflow:hidden}
+.gc-bar{height:100%;background:var(--gold);border-radius:1px;width:0}
+.gc-views{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--gold);text-align:center;margin-top:6px}
+
+/* YEAR CHART */
+.yr-legend{display:flex;gap:20px;margin-bottom:14px;flex-wrap:wrap}
+.yr-li{display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
+.yr-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* ROLES GRID */
+#roles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.rc{background:var(--paper);padding:20px 18px;position:relative;overflow:hidden}
+.rc-em{font-size:28px;margin-bottom:8px;display:block;line-height:1.1}
+.rc-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.rc-cnt{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.rc-bar-bg{height:2px;background:var(--rule);border-radius:1px}
+.rc-bar{height:100%;background:var(--gold);border-radius:1px;width:0}
+.rc-views{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--gold);margin-top:5px}
+
+/* REPEAT GUESTS */
+#rg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.rg{background:var(--paper);padding:20px 18px}
+.rg-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.rg-meta{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+.rg-trend{display:flex;gap:5px;align-items:flex-end;height:64px}
+.rg-col{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+.rg-bar-v{background:var(--gold);border-radius:1px 1px 0 0;width:100%;min-height:2px;height:0}
+.rg-yr{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--muted)}
+.rg-peak{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-top:10px}
+.rg-pl{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+/* CHRONO */
+.cf-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.cf{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:5px 14px;border:1px solid var(--rule);background:transparent;color:var(--muted);cursor:pointer;letter-spacing:.06em;text-transform:uppercase}
+.cf.on{border-color:var(--gold);color:var(--gold)}
+.ct-head{display:grid;grid-template-columns:40px 1fr 130px 50px 56px 110px 72px;font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:8px 0;border-bottom:2px solid var(--rule)}
+.ct-head > div{padding:0 12px}
+.ct-row{display:grid;grid-template-columns:40px 1fr 130px 50px 56px 110px 72px;border-bottom:1px solid var(--rule);align-items:center}
+.ct-row:hover{background:var(--card)}
+.ct-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);padding:10px 12px;text-align:center}
+.ct-name{font-size:13px;font-weight:500;color:var(--ink);padding:10px 12px}
+.ct-role{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);padding:0 12px;text-transform:uppercase;letter-spacing:.04em}
+.ct-yr{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);padding:0 12px;text-align:center}
+.ct-dur{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);padding:0 12px;text-align:center}
+.ct-bar-wrap{padding:0 12px}
+.ct-bar-bg{height:4px;background:var(--rule);border-radius:2px}
+.ct-bar-fill{height:100%;border-radius:2px;background:var(--gold)}
+.ct-views{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--gold);padding:0 14px;text-align:right}
+@media(max-width:640px){.ct-head,.ct-row{grid-template-columns:32px 1fr 72px}.ct-role,.ct-yr,.ct-dur,.ct-bar-wrap{display:none}}
+
+/* CONCLUSION */
+#conc{padding:80px 0;background:var(--card);border-top:3px solid var(--gold)}
+.co-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin:36px 0}
+@media(max-width:500px){.co-grid{grid-template-columns:1fr 1fr}}
+.co-n{padding:28px 16px;background:var(--paper);text-align:center}
+.co-v{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,52px);font-weight:700;color:var(--gold);line-height:1;margin-bottom:6px}
+.co-l{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;line-height:1.4}
+.co-q{font-family:'Playfair Display',serif;font-size:clamp(15px,2.2vw,20px);font-style:italic;color:var(--ink2);line-height:1.55;border-left:3px solid var(--gold);padding:18px 24px;background:rgba(184,120,10,.05);margin:0 0 28px}
+.cta{display:inline-block;margin-top:32px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--paper);background:var(--accent);padding:14px 32px;text-decoration:none;transition:opacity .2s}
+.cta:hover{opacity:.85}
+.src{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:24px;line-height:1.7;padding-top:20px;border-top:1px solid var(--rule)}
+
+.reveal{opacity:0;transform:translateY(22px)}
+.bg-alt{background:var(--card);border-top:1px solid var(--rule)}
+</style>
+</head>
+<body class="light">
+<div id="prog"></div>
+<button id="tbtn" title="Toggle theme"></button>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-cv"></canvas>
+  <div class="hi">
+    <p class="eyebrow">Podcast Analytics - Kazakhstan</p>
+    <h1>Dope Soz —<br><em>guests of a beloved<br>podcast</em></h1>
+    <p class="hsub">This is my personal analysis of Dope Soz - a Kazakhstani podcast I follow closely. Hosted by Zhomart Aralbaiuly and Arsen Tusipbek, it has been running for 6 years and covers history, culture, politics, science, and whatever else matters in Kazakhstan right now.</p>
+    <div class="scue"><div class="sa"></div>Scroll to explore the data</div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="sec" style="padding-bottom:0">
+  <div class="in-n">
+    <div class="note">This analysis covers only guest episodes. Documentary and host-only episodes are not included.</div>
+    <div class="prose reveal">
+      <p>Dope Soz started as a modest Kazakh-language podcast and grew into one of the most-watched intellectual shows in Central Asia. Over 6 years, the show hosted 163 guests across 46 professions - historians, comedians, lawyers, doctors, musicians, and scientists all sitting across from the same two hosts.</p>
+      <p>What makes Dope Soz unusual is its range. One week it is a medieval historian tracing the origins of the Kazakh steppe; the next it is a comedian breaking down why Kazakhstani humor hits differently. The data behind this analysis was compiled manually from YouTube. 163 rows, 7 columns, 10.8 million views total.</p>
+      <p>One note on the "Year" column: 6 means the episode was published 6 years ago, 0.5 means half a year ago. Not a season number - a time-ago value.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VIZ 1: TOP GUESTS -->
+<section class="sec">
+  <div class="in">
+    <div class="reveal">
+      <p class="slbl">Views ranking</p>
+      <h2 class="sh">Top 10 guests by peak episode</h2>
+      <p class="sh-sub">Each card shows the guest's single most-viewed appearance. Add photo URLs directly in the PHOTO_URLS array in the code below.</p>
+    </div>
+    <div id="top-grid" class="reveal"></div>
+    <div class="prose reveal" style="margin-top:36px">
+      <p>The top spot belongs to Zhanna Urazbakhova with 545K views - nearly double the second place. This episode, published in April 2024, rode one of the biggest waves of public attention in Kazakhstan in years: the Bishimbayev trial. Urazbakhova was the lawyer representing the family of Saltanat Nukeyanova, the woman killed by former minister Kuandyk Bishimbayev. The trial was broadcast live and followed by millions. Her Dope Soz appearance broke far beyond the podcast's usual audience.</p>
+      <p>Zhaksylyk Sabitov, a historian who appears 6 times in the dataset, holds second place with 440K views for a single episode. His total views across all appearances likely exceed anyone else's on the show. Comedians, writers, and the occasional breakout figure (a lawyer, a psychologist) produce the biggest single-episode spikes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VIZ 2: YEAR BREAKDOWN -->
+<section class="sec bg-alt">
+  <div class="in">
+    <div class="reveal">
+      <p class="slbl">Year by year</p>
+      <h2 class="sh">How the show evolved</h2>
+      <p class="sh-sub">Total views and episode count per year. Year 6 = 6 years ago, Year 1 = most recent full year. Hover a bar to see the breakdown.</p>
+    </div>
+    <div class="vbox reveal" style="position:relative">
+      <svg id="yr-svg" style="width:100%;display:block"></svg>
+      <div class="tip" id="yr-tip"></div>
+    </div>
+    <div class="prose reveal" style="margin-top:36px">
+      <p>The most recent full years (Year 1 and 2) generated the most total views - 3.4M and 2.8M respectively. This is partly because older episodes have had more time to accumulate views, but also reflects genuine growth. The show started slowly, built a loyal audience, then began consistently breaking into mainstream attention around Year 2.</p>
+      <p>Years 4 and 5 show a dip - fewer episodes, lower total views. This is a pattern common in long-running podcasts: the initial sprint gives way to a more sustainable rhythm. Year 6 (earliest) has the fewest episodes but still shows strong per-episode performance, suggesting the early audience was highly engaged even when the show was small.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VIZ 3: PROFESSIONS RANKED -->
+<section class="sec">
+  <div class="in">
+    <div class="reveal">
+      <p class="slbl">46 professions invited</p>
+      <h2 class="sh">What do Dope Soz guests do?</h2>
+      <p class="sh-sub">Ranked by total views. Below are the 12 most-watched professions. The bar shows total views generated by all episodes from that profession.</p>
+    </div>
+    <div id="roles-grid" class="reveal"></div>
+    <div class="pq reveal" style="margin-top:32px"><p>"Historians appeared 19 times - more than any other profession. But a single lawyer episode outperformed the entire IT, ecologist, and diplomat categories combined. Frequency does not equal impact."</p></div>
+    <div class="prose reveal">
+      <p>The show's identity is anchored in history and culture. Of 46 professions represented, historians appear almost twice as often as the next group. But the average-views-per-episode picture is different: comedians, writers, and lawyers punch far above their frequency. The audience wants intellectual depth, but also entertainment - and the guests who deliver both drive the biggest numbers.</p>
+      <p>46 unique professions across 163 episodes is genuinely impressive. Very few podcasts in this region have hosted an agronomist, a demographer, a linguist, a philosopher, and a diplomat in the same archive.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VIZ 4: BUBBLE CHART -->
+<section class="sec bg-alt">
+  <div class="in">
+    <div class="reveal">
+      <p class="slbl">Professional universe</p>
+      <h2 class="sh">Views by profession - drag to explore</h2>
+      <p class="sh-sub">Bubble size = total views from that profession. Drag to rearrange. Hover for details including average views per episode.</p>
+    </div>
+    <div class="vbox reveal" style="position:relative">
+      <svg id="bub-svg" style="width:100%;display:block"></svg>
+      <div class="tip" id="bub-tip"></div>
+    </div>
+    <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);text-align:center;margin-top:10px" class="reveal">drag - hover - explore all 46 professions</p>
+  </div>
+</section>
+
+<!-- VIZ 5: SCATTER -->
+<section class="sec">
+  <div class="in">
+    <div class="reveal">
+      <p class="slbl">Does longer mean more views?</p>
+      <h2 class="sh">Duration vs views</h2>
+      <p class="sh-sub">Each dot is one episode. Blue = male guest, red = female guest. Hover any dot to identify them.</p>
+    </div>
+    <div class="vbox reveal" style="position:relative">
+      <svg id="scat-svg" style="width:100%;display:block"></svg>
+      <div class="tip" id="scat-tip"></div>
+    </div>
+    <div class="prose reveal" style="margin-top:32px">
+      <p>Based on the scatter plot, there is a weak positive correlation between duration and views - the trend line slopes upward, but the data is scattered widely. The correlation is real but not strong. What the chart reveals more clearly is the outlier cluster in the upper-left: short episodes (under 70 minutes) that still broke 200K views. These are almost always guests who came with existing public attention - the Bishimbayev episode, the writer Darkhan Abdik, the comedian Nyurgyn Atakov.</p>
+      <p>The longest episode in the dataset - Qanat Beissekeyev's documentary film discussion at 149 minutes - pulled 98K views. Strong performance, but not top-10. The 545K episode ran 99 minutes. Duration is not the variable that moves the needle.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VIZ 6: GENDER -->
+<section class="sec bg-alt">
+  <div class="in">
+    <div class="reveal">
+      <p class="slbl">Gender balance</p>
+      <h2 class="sh">Who gets invited to Dope Soz?</h2>
+      <p class="sh-sub">Female vs male guest share per year. The percentage label shows female share for each year.</p>
+    </div>
+    <div class="vbox reveal" style="position:relative">
+      <svg id="gend-svg" style="width:100%;display:block"></svg>
+      <div class="tip" id="gend-tip"></div>
+    </div>
+    <div class="prose reveal" style="margin-top:32px">
+      <p>Across all 163 episodes, 33% of guests are women. That ratio has held roughly stable across all 6 years, with Year 5 briefly approaching near-parity. What is striking is the performance data: the #1 episode by views is a female guest. The #4 spot (Aigerim Turekulova, doctor, 249K) is also female. Female guests represent 33% of invitations but a disproportionately large share of top-performing episodes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VIZ 7: REPEAT GUESTS -->
+<section class="sec">
+  <div class="in">
+    <div class="reveal">
+      <p class="slbl">Returning guests</p>
+      <h2 class="sh">Guests who kept coming back</h2>
+      <p class="sh-sub">Each bar represents one appearance. Height = views for that episode. Did views go up or down across return visits?</p>
+    </div>
+    <div id="rg-grid" class="reveal"></div>
+    <div class="pq reveal" style="margin-top:32px"><p>"Zhaksylyk Sabitov appeared 6 times. His first episode (6 years ago) pulled 440K. His most recent pulled 102K. First appearances almost always outperform returns - but even the lowest Sabitov episode beats the average guest's best."</p></div>
+  </div>
+</section>
+
+<!-- VIZ 8: AVG VIEWS PER ROLE -->
+<section class="sec bg-alt">
+  <div class="in">
+    <div class="reveal">
+      <p class="slbl">Efficiency by profession</p>
+      <h2 class="sh">Average views per episode by profession</h2>
+      <p class="sh-sub">Only professions with 2+ episodes. This separates frequency from impact - which professions punch above their weight?</p>
+    </div>
+    <div class="vbox reveal" style="position:relative">
+      <svg id="avg-svg" style="width:100%;display:block"></svg>
+      <div class="tip" id="avg-tip"></div>
+    </div>
+    <div class="prose reveal" style="margin-top:32px">
+      <p>Psychologists average 80K per episode - a higher return per invite than historians (107K average but high because of Sabitov's outsized episodes). Writers average 215K per episode across 4 appearances. Comedians average 119K. The pattern is clear: the show built its identity on historians, but earns its biggest numbers from entertainers and controversy-adjacent guests.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VIZ 9: CHRONOLOGICAL TABLE -->
+<section class="sec">
+  <div class="in">
+    <div class="reveal">
+      <p class="slbl">Full archive</p>
+      <h2 class="sh">All 163 episodes in dataset order</h2>
+      <p class="sh-sub">From the first recorded episode (top) to the most recent (bottom). Filter by gender or sort by views.</p>
+    </div>
+    <div class="cf-row reveal" id="cf-row"></div>
+    <div class="vbox reveal" style="overflow-y:auto;max-height:520px">
+      <div class="ct-head">
+        <div>#</div><div>Name</div><div>Role</div><div>Year ago</div><div>Duration</div><div>Views bar</div><div>Views</div>
+      </div>
+      <div id="chrono-body"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section id="conc">
+  <div class="in-n">
+    <div class="reveal">
+      <p class="slbl">Findings</p>
+      <h2 class="sh">What 163 conversations reveal</h2>
+    </div>
+    <div class="co-grid reveal">
+      <div class="co-n"><div class="co-v" data-t="10.8" data-s="M">-</div><div class="co-l">Total views</div></div>
+      <div class="co-n"><div class="co-v" data-t="163" data-s="">-</div><div class="co-l">Episodes</div></div>
+      <div class="co-n"><div class="co-v" data-t="46" data-s="">-</div><div class="co-l">Unique professions</div></div>
+      <div class="co-n"><div class="co-v" data-t="545" data-s="K">-</div><div class="co-l">Peak episode</div></div>
+      <div class="co-n"><div class="co-v" data-t="77" data-s="min">-</div><div class="co-l">Average duration</div></div>
+      <div class="co-n"><div class="co-v" data-t="33" data-s="%">-</div><div class="co-l">Female guests</div></div>
+    </div>
+    <div class="co-q reveal">Dope Soz is a genuine reflection of Kazakhstani intellectual life. It documents who Kazakhstan thinks about, argues about, and watches. The data shows a show that built its foundation on history, grew through entertainment, and peaked when it was brave enough to invite a lawyer at the centre of the country's most-watched trial.</div>
+    <a href="https://www.nurasyl.space/" class="cta reveal">Back to nurasyl.space</a>
+    <p class="src reveal">Data compiled manually from YouTube analytics. Guest episodes only. Views as of export date. Analysis: nurasyl.space by Nurasyl Abdrazakuly.</p>
+  </div>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ═══ THEME ═══ */
+document.getElementById('tbtn').addEventListener('click',()=>{
+  document.body.classList.toggle('light');
+  document.body.classList.toggle('dark');
+  setTimeout(()=>{buildYr();buildScat();buildGend();buildAvg();},60);
+});
+
+/* ═══ DATA ═══ */
+// years = how many years ago published (6 = oldest, 0.03 = most recent)
+const D=[
+  {n:"Rinat Balgabayev",v:14000,y:6,d:58.3,r:"Documentarist",g:"M"},
+  {n:"Olzhas Satiyev",v:4600,y:6,d:30.4,r:"IT",g:"M"},
+  {n:"Radik Temirgaziev",v:61000,y:6,d:45.7,r:"Historian",g:"M"},
+  {n:"Zhaksylyk Sabitov",v:440000,y:6,d:45.9,r:"Historian",g:"M"},
+  {n:"Gabit Konusov",v:14000,y:6,d:52.1,r:"Theologian",g:"M"},
+  {n:"Dana Akilbekova",v:6900,y:6,d:57.6,r:"Scientist",g:"F"},
+  {n:"Sultan Akimbekov",v:51000,y:6,d:59.6,r:"Historian",g:"M"},
+  {n:"Aida Sagintayeva",v:5100,y:6,d:46.9,r:"Economist",g:"F"},
+  {n:"Aiym Qaiyrlyqyzy",v:2500,y:6,d:50.5,r:"Doctor",g:"F"},
+  {n:"Almas Zhunisbai",v:29000,y:5,d:58.8,r:"Historian",g:"M"},
+  {n:"Alima Bisenova",v:12000,y:5,d:50.2,r:"Sociologist",g:"F"},
+  {n:"Elena Khegai",v:1500,y:5,d:43.7,r:"Doctor",g:"F"},
+  {n:"Yerkebulan Daiyrov",v:58000,y:4,d:58.8,r:"Actor",g:"M"},
+  {n:"Zira Nauryzbayeva",v:84000,y:4,d:61.7,r:"Culturologist",g:"F"},
+  {n:"Rinat Balgabayev",v:13000,y:4,d:43.4,r:"Documentarist",g:"M"},
+  {n:"Yerlan Karin",v:20000,y:4,d:64.6,r:"Political scientist",g:"M"},
+  {n:"Dinara Satzhan",v:20000,y:4,d:50.9,r:"Journalist",g:"F"},
+  {n:"Alima Bisenova",v:10000,y:4,d:44,r:"Sociologist",g:"F"},
+  {n:"Aizatulla Hussein",v:16000,y:4,d:59,r:"Musician",g:"M"},
+  {n:"ZURA",v:5000,y:4,d:44,r:"Blogger",g:"F"},
+  {n:"Askhat Saduov",v:5300,y:4,d:45.9,r:"Urbanist",g:"M"},
+  {n:"Qurmash Makhan",v:23000,y:4,d:55.4,r:"Musician",g:"M"},
+  {n:"Qaliyolla Akhmetjan",v:16000,y:4,d:62.8,r:"Historian",g:"M"},
+  {n:"Radik Temirgaziev",v:56000,y:4,d:57.1,r:"Historian",g:"M"},
+  {n:"Zira Nauryzbayeva",v:49000,y:4,d:72.3,r:"Culturologist",g:"F"},
+  {n:"Daniyar Alshinov",v:27000,y:4,d:51.5,r:"Actor",g:"M"},
+  {n:"Gleb Ponomarev",v:24000,y:4,d:61.9,r:"Journalist",g:"M"},
+  {n:"Asem Zhapisheva",v:22000,y:4,d:57.2,r:"Journalist",g:"F"},
+  {n:"Qazaq Grammar",v:44000,y:4,d:56.3,r:"Media",g:"M"},
+  {n:"Nurzhan Yerkinuly",v:19000,y:4,d:55.5,r:"Screenwriter",g:"M"},
+  {n:"Kamila Smagulova",v:23000,y:3,d:48.7,r:"Sociologist",g:"F"},
+  {n:"Sabina Sadiyeva",v:7600,y:3,d:74.6,r:"Scientist",g:"F"},
+  {n:"Daniyar Alshinov",v:37000,y:3,d:81.3,r:"Actor",g:"M"},
+  {n:"Vyacheslav Abramov",v:12000,y:3,d:72.8,r:"Journalist",g:"M"},
+  {n:"Timur Balymbetov",v:42000,y:3,d:57.8,r:"Journalist",g:"M"},
+  {n:"Jeltoksan",v:23000,y:3,d:56,r:"Musician",g:"M"},
+  {n:"Abilmansur Serikov",v:20000,y:3,d:61.4,r:"Actor",g:"M"},
+  {n:"Zhaksylyk Sabitov",v:302000,y:3,d:84,r:"Historian",g:"M"},
+  {n:"Andrei Elbayev",v:23000,y:3,d:67.4,r:"Urbanist",g:"M"},
+  {n:"Galymzhan Zhakiyanov",v:44000,y:3,d:68.4,r:"Politician",g:"M"},
+  {n:"Zhar Zardykhan",v:32000,y:3,d:57.5,r:"Political scientist",g:"M"},
+  {n:"Darkhan Zhagipanov",v:13000,y:3,d:59.5,r:"Photographer",g:"M"},
+  {n:"ZaQ",v:62000,y:3,d:70.6,r:"Musician",g:"M"},
+  {n:"Aisultan Seitov",v:171000,y:3,d:106.8,r:"Director",g:"M"},
+  {n:"Daniyar Alshinov",v:52000,y:3,d:73.3,r:"Actor",g:"M"},
+  {n:"Qumash",v:59000,y:3,d:66.9,r:"Media",g:"M"},
+  {n:"Aiko Token",v:41000,y:3,d:72.6,r:"Theologian",g:"F"},
+  {n:"Perizat Myrzakhmet",v:148000,y:3,d:96.1,r:"Writer",g:"F"},
+  {n:"Kulshat Medeyeva",v:58000,y:3,d:72.5,r:"Philosopher",g:"F"},
+  {n:"Aigerim Turekulova",v:249000,y:3,d:63.3,r:"Doctor",g:"F"},
+  {n:"Nazgul Kozhybek",v:42000,y:3,d:64.9,r:"Linguist",g:"F"},
+  {n:"Quralai Zharqymbayeva",v:51000,y:3,d:71.8,r:"Teacher",g:"F"},
+  {n:"Darkhan Abdik",v:232000,y:3,d:76.9,r:"Writer",g:"M"},
+  {n:"Galym Zhusipbek",v:43000,y:3,d:57,r:"Sociologist",g:"M"},
+  {n:"Sadyq Sherimbek",v:30000,y:3,d:74.6,r:"Blogger",g:"M"},
+  {n:"Quralai Atageldieva",v:35000,y:3,d:68.2,r:"Doctor",g:"F"},
+  {n:"Aighanym Mukhamedzhan",v:23000,y:3,d:85.3,r:"Director",g:"F"},
+  {n:"Zhaksylyk Sabitov",v:194000,y:3,d:107.3,r:"Historian",g:"M"},
+  {n:"Yevgeny Yan",v:46000,y:2,d:83.4,r:"Psychologist",g:"M"},
+  {n:"Kamila Smagulova",v:36000,y:2,d:70.2,r:"Sociologist",g:"F"},
+  {n:"Daniel Rosenblum",v:40000,y:2,d:74.3,r:"Diplomat",g:"M"},
+  {n:"KALIFARNIYA",v:21000,y:2,d:70.6,r:"Musician",g:"M"},
+  {n:"Tusip Nukenov",v:24000,y:2,d:73.1,r:"Financier",g:"M"},
+  {n:"Arman Nurmukhanbetov",v:100000,y:2,d:93.6,r:"Publicist",g:"M"},
+  {n:"JURTTYN BALASY",v:84000,y:2,d:88.9,r:"Media",g:"M"},
+  {n:"Aida Adilbek",v:18000,y:2,d:80,r:"Art historian",g:"F"},
+  {n:"Sultan Akimbekov",v:70000,y:2,d:77.4,r:"Political scientist",g:"M"},
+  {n:"Zhansaya Muratbekova",v:30000,y:2,d:65.6,r:"Comedian",g:"F"},
+  {n:"Nurzhan Nurgaliyev",v:29000,y:2,d:66.9,r:"Doctor",g:"M"},
+  {n:"Zhaniya Khaibullina",v:12000,y:2,d:61.1,r:"Scientist",g:"F"},
+  {n:"Ainur Abiyeva",v:17000,y:2,d:44.4,r:"Doctor",g:"F"},
+  {n:"Yerzhan Myrzabayev",v:214000,y:2,d:97.4,r:"Psychologist",g:"M"},
+  {n:"Zhanibek Arynov",v:25000,y:2,d:72.9,r:"Political scientist",g:"M"},
+  {n:"Saltanat Satzhan",v:19000,y:2,d:66.6,r:"Economist",g:"F"},
+  {n:"Daulet Zhanaіdarov",v:28000,y:2,d:87.3,r:"Editor",g:"M"},
+  {n:"Radik Temirgaziev",v:98000,y:2,d:73.9,r:"Historian",g:"M"},
+  {n:"Zhaksylyk Sabitov",v:175000,y:2,d:92,r:"Historian",g:"M"},
+  {n:"Asel Baimukhanova",v:8400,y:2,d:79.4,r:"Ecologist",g:"F"},
+  {n:"Askhat Niyazov",v:230000,y:2,d:103.1,r:"Journalist",g:"M"},
+  {n:"Qanat Beissekeyev",v:98000,y:2,d:149.6,r:"Documentarist",g:"M"},
+  {n:"Aiya Shalqar",v:211000,y:2,d:83.5,r:"Designer",g:"F"},
+  {n:"Aliya Bolatkhan",v:19000,y:2,d:72.9,r:"Historian",g:"F"},
+  {n:"Aliya Ashim",v:82185,y:2,d:88,r:"Documentarist",g:"F"},
+  {n:"Zhandos Qusainov",v:21000,y:2,d:86.2,r:"Director",g:"M"},
+  {n:"Ratbai Myrzaqulov",v:20000,y:2,d:65.9,r:"Scientist",g:"M"},
+  {n:"Adilbek Tazhibayev",v:9700,y:2,d:57.2,r:"Engineer",g:"M"},
+  {n:"Nyurgyn Atakov",v:224000,y:2,d:107.7,r:"Comedian",g:"M"},
+  {n:"Tusip Nukenov",v:15000,y:2,d:59.4,r:"Investor",g:"M"},
+  {n:"Zira Nauryzbayeva",v:55000,y:2,d:81.6,r:"Culturologist",g:"F"},
+  {n:"Zhanna Urazbakhova",v:545000,y:2,d:99.1,r:"Lawyer",g:"F"},
+  {n:"Galymzhan Moldanazar",v:73000,y:2,d:97.9,r:"Musician",g:"M"},
+  {n:"Rocky Journeys",v:64000,y:2,d:93.1,r:"Blogger",g:"F"},
+  {n:"Sanzhar Kerimbai",v:247000,y:1,d:113.9,r:"Writer",g:"M"},
+  {n:"Radik Temirgaziev",v:100000,y:1,d:79.5,r:"Historian",g:"M"},
+  {n:"Alexander Merkul",v:137000,y:1,d:91.1,r:"Comedian",g:"M"},
+  {n:"Galym Zhusipbek",v:26000,y:1,d:67.9,r:"Sociologist",g:"M"},
+  {n:"Naguima",v:72000,y:1,d:94.6,r:"Blogger",g:"F"},
+  {n:"Dzhamila Maricheva",v:22000,y:1,d:60.4,r:"Journalist",g:"F"},
+  {n:"Albina Yost",v:32000,y:1,d:89.5,r:"Doctor",g:"F"},
+  {n:"Ivan Dorn",v:129000,y:1,d:59.8,r:"Musician",g:"M"},
+  {n:"Almaz Merzhakypov",v:227000,y:1,d:75.1,r:"Actor",g:"M"},
+  {n:"Sayat Abdrakhmanov",v:65000,y:1,d:101.9,r:"Athlete",g:"M"},
+  {n:"Bakhtyiyar Albani",v:141000,y:1,d:79.8,r:"Historian",g:"M"},
+  {n:"Inkarim Kabakova",v:55000,y:1,d:95.7,r:"Doctor",g:"F"},
+  {n:"Zhubanysh Zheksenuly",v:26000,y:1,d:75.4,r:"Musician",g:"M"},
+  {n:"Aisulu Nurtayeva",v:30000,y:1,d:63.5,r:"Blogger",g:"F"},
+  {n:"Ayaulym Sagynbayeva",v:75000,y:1,d:105.5,r:"Demographer",g:"F"},
+  {n:"Assel Aulbekova",v:146000,y:1,d:92.8,r:"Financier",g:"F"},
+  {n:"Ruslan Tai",v:208000,y:1,d:87.5,r:"Comedian",g:"M"},
+  {n:"ZaQ",v:159000,y:1,d:102.3,r:"Musician",g:"M"},
+  {n:"Moldyr Ryssaliyeva",v:11000,y:1,d:66.3,r:"Business",g:"F"},
+  {n:"Narikbi Maqsut",v:46000,y:1,d:86.7,r:"IT",g:"M"},
+  {n:"Asel Mussabekova",v:53000,y:1,d:87.6,r:"Scientist",g:"F"},
+  {n:"Timur Kozyrev",v:96000,y:1,d:90.1,r:"Historian",g:"M"},
+  {n:"Yermukhamet Maulen",v:63000,y:1,d:87.2,r:"Journalist",g:"M"},
+  {n:"Nygmetjan Abilkhanuly",v:26000,y:1,d:60.4,r:"Economist",g:"M"},
+  {n:"Rinat Balgabayev",v:54000,y:1,d:86.8,r:"Documentarist",g:"M"},
+  {n:"Ainur Tumysheva",v:15000,y:1,d:71.9,r:"Energy specialist",g:"F"},
+  {n:"Daniyar Alshinov",v:56000,y:1,d:79.6,r:"Actor",g:"M"},
+  {n:"Aiko Token",v:38000,y:1,d:93.6,r:"Scientist",g:"F"},
+  {n:"Aisultan Seitov",v:104000,y:1,d:77.8,r:"Director",g:"M"},
+  {n:"Anoir",v:74000,y:1,d:134.9,r:"Screenwriter",g:"M"},
+  {n:"Darkhan Abdik",v:232000,y:1,d:89.5,r:"Writer",g:"M"},
+  {n:"Bibarys Seitak",v:51000,y:1,d:110.9,r:"Linguist",g:"M"},
+  {n:"Askar Sabdin",v:65000,y:1,d:80.2,r:"Theologian",g:"M"},
+  {n:"Aigerim Turekulova",v:38000,y:1,d:71.4,r:"Doctor",g:"F"},
+  {n:"Rasul Rysmambetov",v:65000,y:1,d:93.8,r:"Financier",g:"M"},
+  {n:"Emin Jabbarov",v:82000,y:1,d:111.1,r:"Political scientist",g:"M"},
+  {n:"Andrei Chebotarev",v:136000,y:1,d:126.1,r:"Financier",g:"M"},
+  {n:"Zhaksylyk Sabitov",v:102000,y:1,d:90.5,r:"Historian",g:"M"},
+  {n:"Tilegen Yerkinbek",v:102000,y:1,d:96.7,r:"Comedian",g:"M"},
+  {n:"Alexander Vinokurov",v:34000,y:1,d:77.4,r:"Athlete",g:"M"},
+  {n:"Almas Ordabayev",v:39000,y:0.9,d:106,r:"Teacher",g:"M"},
+  {n:"Nariman Zharkinbayev",v:32000,y:0.9,d:77.1,r:"Financier",g:"M"},
+  {n:"DASHXX",v:39000,y:0.9,d:96.4,r:"Musician",g:"M"},
+  {n:"Madi Fazyl",v:36000,y:0.8,d:101.7,r:"Linguist",g:"M"},
+  {n:"Aighanym Toleulieva",v:23000,y:0.8,d:90.5,r:"Blogger",g:"F"},
+  {n:"Meruyert Kamalidienova",v:14000,y:0.8,d:74.9,r:"Athlete",g:"F"},
+  {n:"Almaz Merzhakypov",v:130000,y:0.75,d:114.6,r:"Actor",g:"M"},
+  {n:"Sunflower",v:41000,y:0.75,d:95.8,r:"Scientist",g:"F"},
+  {n:"Ulzhan Roik",v:9300,y:0.6,d:60.8,r:"Historian",g:"F"},
+  {n:"Bakhtyiyar Albani",v:41000,y:0.6,d:55,r:"Publicist",g:"M"},
+  {n:"Bibars Bekzatuly",v:16000,y:0.6,d:90.8,r:"Psychologist",g:"M"},
+  {n:"Galymzhan Issabekov",v:13000,y:0.6,d:75.2,r:"Scientist",g:"M"},
+  {n:"Ruslan Tai",v:70000,y:0.5,d:74.9,r:"Comedian",g:"M"},
+  {n:"Yenlik",v:50000,y:0.5,d:77.6,r:"Musician",g:"F"},
+  {n:"Aighanym Mussagazhinova",v:21000,y:0.5,d:89.5,r:"Ethnographer",g:"F"},
+  {n:"Zhaksylyk Sabitov",v:105000,y:0.4,d:99.8,r:"Historian",g:"M"},
+  {n:"Aldiyar Zhaparkhan",v:103000,y:0.4,d:78.8,r:"Screenwriter",g:"M"},
+  {n:"Zarina Baibolova",v:65000,y:0.4,d:90.1,r:"Comedian",g:"F"},
+  {n:"Yerkebulan Daiyrov",v:104000,y:0.4,d:109.4,r:"Actor",g:"M"},
+  {n:"Timur Kozyrev",v:73000,y:0.3,d:116.3,r:"Political scientist",g:"M"},
+  {n:"Arsen Islamov",v:22000,y:0.3,d:99.1,r:"Agronomist",g:"M"},
+  {n:"Alisher Utev",v:48000,y:0.3,d:135,r:"Director",g:"M"},
+  {n:"Nari Shelekpayev",v:18000,y:0.25,d:80.3,r:"Historian",g:"M"},
+  {n:"Aibolat Kushkumbayev",v:21000,y:0.25,d:103.3,r:"Historian",g:"M"},
+  {n:"Zhazira Yerkin",v:27000,y:0.15,d:77,r:"Actress",g:"F"},
+  {n:"Yeraly Ospanuly",v:14000,y:0.15,d:53.2,r:"Artist",g:"M"},
+  {n:"Zhanbolat Ussanov",v:39000,y:0.05,d:75.3,r:"Diplomat",g:"M"},
+  {n:"Khakim Mukaram",v:66000,y:0.03,d:95.9,r:"Blogger",g:"M"},
+];
+
+const maxV=d3.max(D,d=>d.v);
+
+/* helpers */
+function G(sel){return document.getElementById(sel)}
+function isDark(){return document.body.classList.contains('dark')}
+function ink(){return isDark()?'#c8c4b8':'#3d3b2f'}
+function muted(){return isDark()?'#555':'#aaa'}
+function gold(){return isDark()?'#e8b030':'#9a6208'}
+function rule(){return isDark()?'rgba(255,255,255,.06)':'rgba(0,0,0,.05)'}
+function fml(){return isDark()?'rgba(224,80,80,.75)':'rgba(138,32,16,.7)'}
+function mal(){return isDark()?'rgba(74,143,212,.75)':'rgba(15,52,96,.65)'}
+
+/* ═══ HERO CANVAS ═══ */
+(function(){
+  const cv=G('hero-cv'),ctx=cv.getContext('2d');
+  let W,H;
+  function rsz(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight}
+  rsz();window.addEventListener('resize',rsz);
+  const pts=D.slice(0,72).map(d=>({
+    x:Math.random()*2000,y:Math.random()*1000,
+    vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.2,
+    r:Math.pow(d.v/545000,.42)*20+2,g:d.g,op:Math.random()*.22+.05
+  }));
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    const dk=isDark();
+    ctx.strokeStyle=dk?'rgba(255,255,255,0.025)':'rgba(15,52,96,0.04)';
+    ctx.lineWidth=.7;
+    for(let x=0;x<W;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+    for(let y=0;y<H;y+=80){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+    for(let i=0;i<pts.length;i++){
+      const pi=pts[i];pi.x=(pi.x+pi.vx+W)%W;pi.y=(pi.y+pi.vy+H)%H;
+      for(let j=i+1;j<pts.length;j++){
+        const pj=pts[j],dx=pi.x-pj.x,dy=pi.y-pj.y,dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<100){ctx.strokeStyle=dk?`rgba(232,176,48,${.04*(1-dist/100)})`:`rgba(15,52,96,${.05*(1-dist/100)})`;ctx.lineWidth=.4;ctx.beginPath();ctx.moveTo(pi.x,pi.y);ctx.lineTo(pj.x,pj.y);ctx.stroke()}
+      }
+    }
+    pts.forEach(p=>{
+      const c=p.g==='F'?(dk?`rgba(224,80,80,${p.op})`:`rgba(138,32,16,${p.op})`):(dk?`rgba(74,143,212,${p.op})`:`rgba(15,52,96,${p.op})`);
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=c;ctx.fill();
+    });
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ═══ TOP 10 GUESTS ═══ */
+(function(){
+  const seen={},top=[];
+  [...D].sort((a,b)=>b.v-a.v).forEach(d=>{if(!seen[d.n]&&top.length<10){seen[d.n]=true;top.push(d)}});
+  const maxLocal=top[0].v;
+  const PHOTOS=Array(10).fill(''); // put real URLs here
+  const grid=G('top-grid');
+  top.forEach((d,i)=>{
+    const initials=d.n.split(' ').map(w=>w[0]).filter((_,j)=>j<2).join('');
+    const ph=PHOTOS[i]?`<img src="${PHOTOS[i]}" alt="${d.n}">`:`<span class="gc-init">${initials}</span>`;
+    const el=document.createElement('div');el.className='gc';
+    el.innerHTML=`<div class="gc-photo">${ph}<span class="gc-rank">${i+1}</span></div><div class="gc-name">${d.n}</div><div class="gc-role">${d.r}</div><div class="gc-bar-wrap"><div class="gc-bar" data-w="${d.v/maxLocal*100}"></div></div><div class="gc-views">${d.v>=1000?(d.v/1000).toFixed(0)+'K':d.v}</div>`;
+    grid.appendChild(el);
+  });
+  ScrollTrigger.create({trigger:'#top-grid',start:'top 70%',once:true,onEnter:()=>
+    document.querySelectorAll('.gc-bar').forEach((b,i)=>setTimeout(()=>gsap.to(b,{width:b.dataset.w+'%',duration:.85,ease:'power2.out'}),i*55))
+  });
+})();
+
+/* ═══ YEAR CHART ═══ */
+function buildYr(){
+  const yrD=[6,5,4,3,2,1].map(y=>{
+    const eps=D.filter(d=>Math.round(d.y)===y);
+    return{y,eps:eps.length,views:d3.sum(eps,d=>d.v),m:eps.filter(d=>d.g==='M').length,f:eps.filter(d=>d.g==='F').length};
+  });
+  const W=G('yr-svg').parentElement.offsetWidth,H=280;
+  const m={t:28,r:28,b:52,l:70};const iW=W-m.l-m.r,iH=H-m.t-m.b;
+  const svg=d3.select('#yr-svg').attr('height',H);svg.selectAll('*').remove();
+  const tt=G('yr-tip');
+  const xS=d3.scaleBand().domain([6,5,4,3,2,1]).range([0,iW]).padding(.32);
+  const yS=d3.scaleLinear().domain([0,d3.max(yrD,d=>d.views)*1.12]).range([iH,0]);
+  const g=svg.append('g').attr('transform',`translate(${m.l},${m.t})`);
+  yS.ticks(4).forEach(v=>{
+    g.append('line').attr('x1',0).attr('y1',yS(v)).attr('x2',iW).attr('y2',yS(v)).attr('stroke',rule()).attr('stroke-dasharray','3,5');
+    g.append('text').attr('x',-8).attr('y',yS(v)+4).attr('text-anchor','end').attr('font-family','IBM Plex Mono,monospace').attr('font-size',10).attr('fill',muted()).text(v>=1e6?(v/1e6).toFixed(1)+'M':v>=1000?(v/1000)+'K':v);
+  });
+  const bars=g.selectAll('.b').data(yrD).join('rect').attr('class','b')
+    .attr('x',d=>xS(d.y)).attr('width',xS.bandwidth()).attr('y',iH).attr('height',0)
+    .attr('fill',gold()).attr('fill-opacity',.82).attr('rx',1).style('cursor','pointer')
+    .on('mouseover',(ev,d)=>{
+      tt.innerHTML=`<div style="color:${gold()};font-weight:500">${d.y} year${d.y>1?'s':''} ago</div><div>${d.eps} episodes</div><div>${(d.views/1000).toFixed(0)}K total views</div><div>Male ${d.m} - Female ${d.f}</div>`;
+      const r=tt.parentElement.getBoundingClientRect();tt.style.cssText=`left:${ev.clientX-r.left+12}px;top:${ev.clientY-r.top-44}px;opacity:1`;
+    }).on('mouseleave',()=>tt.style.opacity='0');
+  yrD.forEach(d=>{
+    g.append('text').attr('x',xS(d.y)+xS.bandwidth()/2).attr('y',iH+22).attr('text-anchor','middle').attr('font-family','IBM Plex Mono,monospace').attr('font-size',10).attr('fill',muted()).text(d.y+'yr ago');
+    g.append('text').attr('x',xS(d.y)+xS.bandwidth()/2).attr('y',iH+36).attr('text-anchor','middle').attr('font-family','IBM Plex Mono,monospace').attr('font-size',9).attr('fill',muted()).attr('opacity',.6).text(d.eps+' eps');
+  });
+  ScrollTrigger.create({trigger:'#yr-svg',start:'top 65%',once:true,onEnter:()=>{
+    bars.transition().duration(800).delay((_,i)=>i*90).attr('y',d=>yS(d.views)).attr('height',d=>iH-yS(d.views));
+    yrD.forEach((d,i)=>setTimeout(()=>g.append('text').attr('x',xS(d.y)+xS.bandwidth()/2).attr('y',yS(d.views)-7).attr('text-anchor','middle').attr('font-family','IBM Plex Mono,monospace').attr('font-size',9).attr('fill',muted()).text((d.views/1000).toFixed(0)+'K'),800+i*90));
+  }});
+}
+buildYr();window.addEventListener('resize',buildYr);
+
+/* ═══ ROLES GRID ═══ */
+(function(){
+  const EM={Historian:'📜',Comedian:'😂',Writer:'✍️',Actor:'🎭',Musician:'🎵',Doctor:'🩺',Journalist:'📰',Financier:'💰',Director:'🎬',Sociologist:'🔬','Political scientist':'🏛️',Lawyer:'⚖️',Designer:'🎨',Psychologist:'🧠',Blogger:'📱',Scientist:'🔭',Publicist:'🗣️',Documentarist:'🎥',Theologian:'🕌',Screenwriter:'📝',Linguist:'🗺️',Culturologist:'🏺',Philosopher:'💭',Teacher:'📚',Economist:'📊',Diplomat:'🌐',Athlete:'🏆',IT:'💻',Urbanist:'🏙️',Engineer:'⚙️',Politician:'🗳️',Demographer:'📈',Photographer:'📷',default:'👤'};
+  const rm={};D.forEach(d=>{if(!rm[d.r])rm[d.r]={r:d.r,c:0,t:0};rm[d.r].c++;rm[d.r].t+=d.v});
+  const sorted=Object.values(rm).sort((a,b)=>b.t-a.t).slice(0,12);
+  const maxT=sorted[0].t;
+  const grid=G('roles-grid');
+  sorted.forEach(r=>{
+    const el=document.createElement('div');el.className='rc';
+    el.innerHTML=`<span class="rc-em">${EM[r.r]||EM.default}</span><div class="rc-name">${r.r}</div><div class="rc-cnt">${r.c} episode${r.c>1?'s':''}</div><div class="rc-bar-bg"><div class="rc-bar" data-w="${r.t/maxT*100}"></div></div><div class="rc-views">${(r.t/1000).toFixed(0)}K total views</div>`;
+    grid.appendChild(el);
+  });
+  ScrollTrigger.create({trigger:'#roles-grid',start:'top 70%',once:true,onEnter:()=>
+    document.querySelectorAll('.rc-bar').forEach((b,i)=>setTimeout(()=>gsap.to(b,{width:b.dataset.w+'%',duration:.8,ease:'power2.out'}),i*40))
+  });
+})();
+
+/* ═══ BUBBLE CHART ═══ */
+function buildBub(){
+  const rm={};D.forEach(d=>{if(!rm[d.r])rm[d.r]={r:d.r,c:0,t:0};rm[d.r].c++;rm[d.r].t+=d.v});
+  const roles=Object.values(rm);
+  const wrap=G('bub-svg').parentElement;
+  const W=wrap.offsetWidth,H=Math.max(380,W*.52);
+  const svg=d3.select('#bub-svg').attr('height',H);svg.selectAll('*').remove();
+  const tt=G('bub-tip');
+  const rS=d3.scaleSqrt().domain([0,d3.max(roles,r=>r.t)]).range([11,Math.min(70,W*.08)]);
+  const COLS=['#9a6208','#0f3460','#8a2010','#1a6b3a','#6a3a8a','#2a7aaa','#aa6020','#3a6a9a','#8a4060','#4a8a40','#9a7a20','#3a4a8a','#2a8a6a','#aa5030'];
+  const nodes=roles.map((r,i)=>({...r,r:rS(r.t),col:COLS[i%COLS.length],x:W/2+(Math.random()-.5)*80,y:H/2+(Math.random()-.5)*80}));
+  const sim=d3.forceSimulation(nodes).force('charge',d3.forceManyBody().strength(-50)).force('center',d3.forceCenter(W/2,H/2)).force('collide',d3.forceCollide(d=>d.r+3).strength(.9));
+  const g=svg.append('g');
+  const nG=g.selectAll('.bn').data(nodes).join('g').attr('class','bn').style('cursor','grab')
+    .call(d3.drag().on('start',(ev,d)=>{if(!ev.active)sim.alphaTarget(.3).restart();d.fx=d.x;d.fy=d.y}).on('drag',(ev,d)=>{d.fx=ev.x;d.fy=ev.y}).on('end',(ev,d)=>{if(!ev.active)sim.alphaTarget(0);d.fx=null;d.fy=null}))
+    .on('mouseover',(ev,d)=>{
+      tt.innerHTML=`<div style="color:${d.col};font-weight:500">${d.r}</div><div>${d.c} episodes</div><div>${(d.t/1000).toFixed(0)}K total views</div><div>Avg ${(d.t/d.c/1000).toFixed(0)}K per episode</div>`;
+      const r=wrap.getBoundingClientRect();let lx=ev.clientX-r.left+12,ly=ev.clientY-r.top-44;
+      if(lx+230>W)lx=ev.clientX-r.left-240;
+      tt.style.cssText=`left:${lx}px;top:${Math.max(0,ly)}px;opacity:1`;
+    }).on('mouseleave',()=>tt.style.opacity='0');
+  nG.append('circle').attr('r',d=>d.r).attr('fill',d=>d.col).attr('fill-opacity',.82).attr('stroke','rgba(255,255,255,.2)').attr('stroke-width',1.5);
+  nG.filter(d=>d.r>19).append('text').attr('text-anchor','middle').attr('dominant-baseline','middle').attr('fill','white').attr('fill-opacity',.92).attr('font-family','IBM Plex Sans,sans-serif').attr('font-size',d=>Math.min(d.r*.3,13)).attr('pointer-events','none').text(d=>d.r);
+  nG.filter(d=>d.r>32).append('text').attr('y','1.4em').attr('text-anchor','middle').attr('fill','rgba(255,255,255,.55)').attr('font-family','IBM Plex Mono,monospace').attr('font-size',d=>Math.min(d.r*.22,10)).attr('pointer-events','none').text(d=>(d.t/1000).toFixed(0)+'K');
+  sim.on('tick',()=>nG.attr('transform',d=>`translate(${Math.max(d.r,Math.min(W-d.r,d.x))},${Math.max(d.r,Math.min(H-d.r,d.y))})`));
+  ScrollTrigger.create({trigger:'#bub-svg',start:'top 65%',once:true,onEnter:()=>nG.style('opacity',0).transition().duration(500).delay((_,i)=>i*22).style('opacity',1)});
+}
+buildBub();
+
+/* ═══ SCATTER ═══ */
+function buildScat(){
+  const wrap=G('scat-svg').parentElement;
+  const W=wrap.offsetWidth,H=Math.max(290,W*.36);
+  const m={t:24,r:36,b:52,l:68};const iW=W-m.l-m.r,iH=H-m.t-m.b;
+  const svg=d3.select('#scat-svg').attr('height',H);svg.selectAll('*').remove();
+  const tt=G('scat-tip');
+  const xS=d3.scaleLinear().domain([25,155]).range([0,iW]);
+  const yS=d3.scaleLinear().domain([0,maxV*1.05]).range([iH,0]);
+  const g=svg.append('g').attr('transform',`translate(${m.l},${m.t})`);
+  xS.ticks(6).forEach(v=>{g.append('line').attr('x1',xS(v)).attr('y1',0).attr('x2',xS(v)).attr('y2',iH).attr('stroke',rule());g.append('text').attr('x',xS(v)).attr('y',iH+18).attr('text-anchor','middle').attr('font-family','IBM Plex Mono,monospace').attr('font-size',9).attr('fill',muted()).text(v+'m')});
+  yS.ticks(4).forEach(v=>{g.append('line').attr('x1',0).attr('y1',yS(v)).attr('x2',iW).attr('y2',yS(v)).attr('stroke',rule());g.append('text').attr('x',-8).attr('y',yS(v)+4).attr('text-anchor','end').attr('font-family','IBM Plex Mono,monospace').attr('font-size',9).attr('fill',muted()).text(v>=1000?(v/1000)+'K':v)});
+  const n=D.length,sx=d3.sum(D,d=>d.d),sy=d3.sum(D,d=>d.v),sxy=d3.sum(D,d=>d.d*d.v),sx2=d3.sum(D,d=>d.d*d.d),sl=(n*sxy-sx*sy)/(n*sx2-sx*sx),int=(sy-sl*sx)/n;
+  g.append('line').attr('x1',xS(30)).attr('y1',yS(sl*30+int)).attr('x2',xS(150)).attr('y2',yS(sl*150+int)).attr('stroke',isDark()?'rgba(232,176,48,.25)':'rgba(154,98,8,.3)').attr('stroke-dasharray','5,4').attr('stroke-width',1.5);
+  const dots=g.selectAll('.d').data(D).join('circle').attr('class','d').attr('cx',d=>xS(d.d)).attr('cy',d=>yS(d.v)).attr('r',4).attr('fill',d=>d.g==='F'?fml():mal()).attr('stroke','rgba(255,255,255,.15)').attr('stroke-width',.4).style('cursor','pointer').style('opacity',0)
+    .on('mouseover',function(ev,d){
+      d3.select(this).attr('r',7).attr('fill-opacity',1);
+      tt.innerHTML=`<div style="color:${d.g==='F'?fml():mal()};font-weight:500">${d.n}</div><div>${(d.v/1000).toFixed(0)}K views</div><div>${d.d.toFixed(0)} min</div><div>${d.r}</div>`;
+      const r=wrap.getBoundingClientRect();let lx=ev.clientX-r.left+12,ly=ev.clientY-r.top-44;
+      if(lx+220>W)lx=ev.clientX-r.left-230;
+      tt.style.cssText=`left:${lx}px;top:${Math.max(0,ly)}px;opacity:1`;
+    }).on('mouseleave',function(ev,d){d3.select(this).attr('r',4).attr('fill-opacity',1);tt.style.opacity='0'});
+  [{c:fml(),l:'Female'},{c:mal(),l:'Male'}].forEach((l,i)=>{g.append('circle').attr('cx',iW-90+i*56).attr('cy',iH+38).attr('r',5).attr('fill',l.c);g.append('text').attr('x',iW-82+i*56).attr('y',iH+42).attr('font-family','IBM Plex Mono,monospace').attr('font-size',10).attr('fill',muted()).text(l.l)});
+  ScrollTrigger.create({trigger:'#scat-svg',start:'top 65%',once:true,onEnter:()=>dots.transition().duration(600).delay((_,i)=>i*4).style('opacity',1)});
+}
+buildScat();window.addEventListener('resize',buildScat);
+
+/* ═══ GENDER ═══ */
+function buildGend(){
+  const yrD=[6,5,4,3,2,1].map(y=>{const eps=D.filter(d=>Math.round(d.y)===y);const f=eps.filter(d=>d.g==='F').length,m=eps.filter(d=>d.g==='M').length;return{y,f,m,tot:f+m,fp:f/(f+m||1)*100}});
+  const W=G('gend-svg').parentElement.offsetWidth,H=240;
+  const m={t:28,r:24,b:48,l:56};const iW=W-m.l-m.r,iH=H-m.t-m.b;
+  const svg=d3.select('#gend-svg').attr('height',H);svg.selectAll('*').remove();
+  const tt=G('gend-tip');
+  const g=svg.append('g').attr('transform',`translate(${m.l},${m.t})`);
+  const xS=d3.scaleBand().domain([6,5,4,3,2,1]).range([0,iW]).padding(.3);
+  const yS=d3.scaleLinear().domain([0,100]).range([iH,0]);
+  [0,25,50,75,100].forEach(v=>{g.append('line').attr('x1',0).attr('y1',yS(v)).attr('x2',iW).attr('y2',yS(v)).attr('stroke',v===50?isDark()?'rgba(255,255,255,.12)':'rgba(0,0,0,.1)':rule()).attr('stroke-dasharray',v===50?'0':'3,4');g.append('text').attr('x',-8).attr('y',yS(v)+4).attr('text-anchor','end').attr('font-family','IBM Plex Mono,monospace').attr('font-size',9).attr('fill',muted()).text(v+'%')});
+  [{c:mal(),cl:'gm'},{c:fml(),cl:'gf'}].forEach(({c,cl})=>
+    g.selectAll('.'+cl).data(yrD).join('rect').attr('class',cl).attr('x',d=>xS(d.y)).attr('width',xS.bandwidth()).attr('y',iH).attr('height',0).attr('fill',c).attr('fill-opacity',.8).attr('rx',1)
+      .on('mouseover',(ev,d)=>{tt.innerHTML=`<div style="font-weight:500">${d.y} year${d.y>1?'s':''} ago</div><div>Male ${d.m} (${(100-d.fp).toFixed(0)}%)</div><div>Female ${d.f} (${d.fp.toFixed(0)}%)</div>`;const r=tt.parentElement.getBoundingClientRect();tt.style.cssText=`left:${ev.clientX-r.left+12}px;top:${ev.clientY-r.top-44}px;opacity:1`}).on('mouseleave',()=>tt.style.opacity='0')
+  );
+  yrD.forEach(d=>g.append('text').attr('x',xS(d.y)+xS.bandwidth()/2).attr('y',iH+22).attr('text-anchor','middle').attr('font-family','IBM Plex Mono,monospace').attr('font-size',10).attr('fill',muted()).text(d.y+'yr'));
+  [{c:fml(),l:'Female'},{c:mal(),l:'Male'}].forEach((l,i)=>{g.append('rect').attr('x',iW-100+i*58).attr('y',-20).attr('width',10).attr('height',10).attr('fill',l.c);g.append('text').attr('x',iW-86+i*58).attr('y',-11).attr('font-family','IBM Plex Mono,monospace').attr('font-size',10).attr('fill',ink()).text(l.l)});
+  ScrollTrigger.create({trigger:'#gend-svg',start:'top 65%',once:true,onEnter:()=>{
+    g.selectAll('.gm').each(function(d){gsap.to(this,{attr:{y:yS(100),height:iH},duration:.7,delay:d.y*.06,ease:'power2.out'})});
+    g.selectAll('.gf').each(function(d){gsap.to(this,{attr:{y:yS(d.fp),height:iH-yS(d.fp)},duration:.7,delay:d.y*.06,ease:'power2.out'});
+    setTimeout(()=>g.append('text').attr('x',xS(d.y)+xS.bandwidth()/2).attr('y',yS(d.fp)-7).attr('text-anchor','middle').attr('font-family','IBM Plex Mono,monospace').attr('font-size',9).attr('fill',fml()).text(d.fp.toFixed(0)+'%'),700+d.y*60)});
+  }});
+}
+ScrollTrigger.create({trigger:'#gend-svg',start:'top 80%',once:true,onEnter:buildGend});
+
+/* ═══ REPEAT GUESTS ═══ */
+(function(){
+  const apps={};D.forEach(d=>{if(!apps[d.n])apps[d.n]=[];apps[d.n].push({y:d.y,v:d.v,r:d.r})});
+  const repeats=Object.entries(apps).filter(([,a])=>a.length>1).map(([n,a])=>({n,r:a[0].r,a:a.sort((x,y)=>y.y-x.y)})).sort((a,b)=>b.a.length-a.a.length).slice(0,8);
+  const grid=G('rg-grid');
+  repeats.forEach(d=>{
+    const mx=Math.max(...d.a.map(a=>a.v));
+    const el=document.createElement('div');el.className='rg';
+    el.innerHTML=`<div class="rg-name">${d.n}</div><div class="rg-meta">${d.r} - ${d.a.length} appearances</div><div class="rg-trend">${d.a.map(a=>`<div class="rg-col"><div class="rg-bar-v" data-h="${a.v/mx*56}"></div><div class="rg-yr">${a.y<1?(a.y*12).toFixed(0)+'mo':Math.round(a.y)+'yr'}</div></div>`).join('')}<div style="margin-left:auto;flex-shrink:0;padding-left:10px;text-align:right"><div class="rg-peak">${(mx/1000).toFixed(0)}K</div><div class="rg-pl">peak views</div></div></div>`;
+    grid.appendChild(el);
+  });
+  ScrollTrigger.create({trigger:'#rg-grid',start:'top 65%',once:true,onEnter:()=>
+    document.querySelectorAll('.rg-bar-v').forEach((b,i)=>setTimeout(()=>gsap.to(b,{height:b.dataset.h+'px',duration:.65,ease:'power2.out'}),i*28))
+  });
+})();
+
+/* ═══ AVG VIEWS ═══ */
+function buildAvg(){
+  const rm={};D.forEach(d=>{if(!rm[d.r])rm[d.r]={c:0,t:0};rm[d.r].c++;rm[d.r].t+=d.v});
+  const sorted=Object.entries(rm).map(([r,v])=>({r,avg:v.t/v.c,c:v.c})).filter(d=>d.c>=2).sort((a,b)=>b.avg-a.avg).slice(0,13);
+  const W=G('avg-svg').parentElement.offsetWidth,H=Math.max(280,sorted.length*27+60);
+  const m={t:20,r:72,b:20,l:Math.min(178,W*.22)};const iW=W-m.l-m.r,iH=H-m.t-m.b;
+  const svg=d3.select('#avg-svg').attr('height',H);svg.selectAll('*').remove();
+  const tt=G('avg-tip');
+  const xS=d3.scaleLinear().domain([0,d3.max(sorted,d=>d.avg)*1.1]).range([0,iW]);
+  const yS=d3.scaleBand().domain(sorted.map(d=>d.r)).range([0,iH]).padding(.28);
+  const g=svg.append('g').attr('transform',`translate(${m.l},${m.t})`);
+  const bars=g.selectAll('.ab').data(sorted).join('rect').attr('class','ab')
+    .attr('x',0).attr('y',d=>yS(d.r)).attr('height',yS.bandwidth()).attr('width',0)
+    .attr('fill',gold()).attr('fill-opacity',.82).attr('rx',1).style('cursor','pointer')
+    .on('mouseover',(ev,d)=>{
+      tt.innerHTML=`<div style="color:${gold()};font-weight:500">${d.r}</div><div>Avg ${(d.avg/1000).toFixed(0)}K views</div><div>${d.c} episodes</div>`;
+      const r=G('avg-tip').parentElement.getBoundingClientRect();tt.style.cssText=`left:${ev.clientX-r.left+12}px;top:${ev.clientY-r.top-44}px;opacity:1`;
+    }).on('mouseleave',()=>G('avg-tip').style.opacity='0');
+  g.selectAll('.al').data(sorted).join('text').attr('class','al').attr('x',-8).attr('y',d=>yS(d.r)+yS.bandwidth()/2+4).attr('text-anchor','end').attr('font-family','IBM Plex Sans,sans-serif').attr('font-size',12).attr('fill',ink()).text(d=>d.r);
+  const vLbls=g.selectAll('.av').data(sorted).join('text').attr('class','av').attr('x',4).attr('y',d=>yS(d.r)+yS.bandwidth()/2+4).attr('font-family','IBM Plex Mono,monospace').attr('font-size',10).attr('fill',muted()).text(d=>(d.avg/1000).toFixed(0)+'K');
+  ScrollTrigger.create({trigger:'#avg-svg',start:'top 65%',once:true,onEnter:()=>{
+    bars.each(function(d,i){gsap.to(this,{attr:{width:xS(d.avg)},duration:.75,delay:i*.04,ease:'power2.out'})});
+    vLbls.each(function(d,i){setTimeout(()=>gsap.to(this,{attr:{x:xS(d.avg)+8},duration:.3}),750+i*40)});
+  }});
+}
+buildAvg();window.addEventListener('resize',buildAvg);
+
+/* ═══ CHRONOLOGICAL TABLE ═══ */
+(function(){
+  const cf=G('cf-row');
+  let curFilter='all',sortByViews=false;
+  [{l:'All',v:'all'},{l:'Male',v:'M'},{l:'Female',v:'F'}].forEach(b=>{
+    const btn=document.createElement('button');btn.className='cf'+(b.v==='all'?' on':'');btn.textContent=b.l;
+    btn.onclick=()=>{document.querySelectorAll('.cf').forEach(x=>x.classList.remove('on'));btn.classList.add('on');curFilter=b.v;render()};
+    cf.appendChild(btn);
+  });
+  const sb=document.createElement('button');sb.className='cf';sb.textContent='Sort by views';
+  sb.onclick=()=>{sortByViews=!sortByViews;sb.classList.toggle('on',sortByViews);sb.textContent=sortByViews?'Sorted by views':'Sort by views';render()};
+  cf.appendChild(sb);
+  function render(){
+    let rows=curFilter==='all'?[...D]:D.filter(d=>d.g===curFilter);
+    if(sortByViews)rows=[...rows].sort((a,b)=>b.v-a.v);
+    const body=G('chrono-body');body.innerHTML='';
+    rows.forEach((d,i)=>{
+      const yr=d.y<1?`${(d.y*12).toFixed(0)}mo`:d.y===1?'1yr':`${Math.round(d.y)}yr`;
+      const row=document.createElement('div');row.className='ct-row';
+      row.innerHTML=`<div class="ct-num">${i+1}</div><div class="ct-name">${d.n}</div><div class="ct-role">${d.r}</div><div class="ct-yr">${yr}</div><div class="ct-dur">${d.d.toFixed(0)}m</div><div class="ct-bar-wrap"><div class="ct-bar-bg"><div class="ct-bar-fill" style="width:${d.v/maxV*100}%"></div></div></div><div class="ct-views">${d.v>=1000?(d.v/1000).toFixed(0)+'K':d.v}</div>`;
+      body.appendChild(row);
+    });
+  }
+  render();
+})();
+
+/* ═══ CONCLUSION COUNTERS ═══ */
+ScrollTrigger.create({trigger:'#conc',start:'top 65%',once:true,onEnter:()=>
+  document.querySelectorAll('.co-v[data-t]').forEach(el=>{
+    const t=+el.dataset.t,s=el.dataset.s||'';
+    gsap.to({v:0},{v:t,duration:1.8,ease:'power2.out',onUpdate:function(){
+      const v=this.targets()[0].v;
+      if(s==='M')el.textContent=v.toFixed(1)+'M';
+      else if(s==='K')el.textContent=Math.round(v)+'K';
+      else if(s==='%')el.textContent=Math.round(v)+'%';
+      else if(s==='min')el.textContent=Math.round(v)+'min';
+      else el.textContent=Math.round(v).toLocaleString();
+    }});
+  })
+});
+
+/* ═══ REVEALS ═══ */
+gsap.utils.toArray('.reveal').forEach(el=>
+  gsap.to(el,{opacity:1,y:0,duration:.7,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 86%',once:true}})
+);
+
+/* ═══ PROGRESS ═══ */
+window.addEventListener('scroll',()=>{G('prog').style.width=Math.min(100,scrollY/(document.body.scrollHeight-innerHeight)*100)+'%'},{passive:true});
+</script>
+</body>
+</html>
