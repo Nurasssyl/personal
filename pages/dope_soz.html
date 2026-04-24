@@ -159,7 +159,7 @@ h2.sh{font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,44px);font
     <div class="prose reveal">
       <p>Dope Soz started as a modest Kazakh-language podcast and grew into one of the most-watched intellectual shows in Central Asia. Over 6 years, the show hosted 163 guests across 46 professions - historians, comedians, lawyers, doctors, musicians, and scientists all sitting across from the same two hosts.</p>
       <p>What makes Dope Soz unusual is its range. One week it is a medieval historian tracing the origins of the Kazakh steppe; the next it is a comedian breaking down why Kazakhstani humor hits differently. The data behind this analysis was compiled manually from YouTube. 163 rows, 7 columns, 10.8 million views total.</p>
-      <p>One note on the "Year" column: 6 means the episode was published 6 years ago, 0.5 means half a year ago. Not a season number - a time-ago value.</p>
+      <p></p>
     </div>
   </div>
 </section>
@@ -170,7 +170,7 @@ h2.sh{font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,44px);font
     <div class="reveal">
       <p class="slbl">Views ranking</p>
       <h2 class="sh">Top 10 guests by peak episode</h2>
-      <p class="sh-sub">Each card shows the guest's single most-viewed appearance. Add photo URLs directly in the PHOTO_URLS array in the code below.</p>
+      <p class="sh-sub">Each card shows the guest's single most-viewed appearance.</p>
     </div>
     <div id="top-grid" class="reveal"></div>
     <div class="prose reveal" style="margin-top:36px">
@@ -565,7 +565,18 @@ function mal(){return isDark()?'rgba(74,143,212,.75)':'rgba(15,52,96,.65)'}
   const seen={},top=[];
   [...D].sort((a,b)=>b.v-a.v).forEach(d=>{if(!seen[d.n]&&top.length<10){seen[d.n]=true;top.push(d)}});
   const maxLocal=top[0].v;
-  const PHOTOS=Array(10).fill(''); // put real URLs here
+  const PHOTOS=[
+  'assets/images/новая_папка/Zhanna_Urazbakhova.jpeg',  // 1. Zhanna Urazbakhova — 545K
+  'assets/images/новая_папка/Zhaksylyk_Sabitov.jpg',    // 2. Zhaksylyk Sabitov — 440K
+  'assets/images/новая_папка/Aigerim_Turekulova.jpeg',  // 3. Aigerim Turekulova — 249K
+  'assets/images/новая_папка/Sanzhar_Kerimbai.png',     // 4. Sanzhar Kerimbai — 247K
+  'assets/images/новая_папка/Darkhan_Abdik.jpeg',       // 5. Darkhan Abdik — 232K
+  'assets/images/новая_папка/Askhat_Niyazov.jpg',       // 6. Askhat Niyazov — 230K
+  'assets/images/новая_папка/Almaz_Merzhakypov.jpg',    // 7. Almaz Merzhakypov — 227K
+  'assets/images/новая_папка/Nyurgyn_Atakov.jpg',       // 8. Nyurgyn Atakov — 224K
+  'assets/images/новая_папка/Yerzhan_Myrzabayev.jpg',   // 9. Yerzhan Myrzabayev — 214K
+  'assets/images/новая_папка/Aiya_Shalqar.jpg',         // 10. Aiya Shalqar — 211K
+];
   const grid=G('top-grid');
   top.forEach((d,i)=>{
     const initials=d.n.split(' ').map(w=>w[0]).filter((_,j)=>j<2).join('');
