@@ -566,16 +566,16 @@ function mal(){return isDark()?'rgba(74,143,212,.75)':'rgba(15,52,96,.65)'}
   [...D].sort((a,b)=>b.v-a.v).forEach(d=>{if(!seen[d.n]&&top.length<10){seen[d.n]=true;top.push(d)}});
   const maxLocal=top[0].v;
   const PHOTOS=[
-  'assets/images/новая_папка/Zhanna_Urazbakhova.jpeg',  // 1. Zhanna Urazbakhova — 545K
-  'assets/images/новая_папка/Zhaksylyk_Sabitov.jpg',    // 2. Zhaksylyk Sabitov — 440K
-  'assets/images/новая_папка/Aigerim_Turekulova.jpeg',  // 3. Aigerim Turekulova — 249K
-  'assets/images/новая_папка/Sanzhar_Kerimbai.png',     // 4. Sanzhar Kerimbai — 247K
-  'assets/images/новая_папка/Darkhan_Abdik.jpeg',       // 5. Darkhan Abdik — 232K
-  'assets/images/новая_папка/Askhat_Niyazov.jpg',       // 6. Askhat Niyazov — 230K
-  'assets/images/новая_папка/Almaz_Merzhakypov.jpg',    // 7. Almaz Merzhakypov — 227K
-  'assets/images/новая_папка/Nyurgyn_Atakov.jpg',       // 8. Nyurgyn Atakov — 224K
-  'assets/images/новая_папка/Yerzhan_Myrzabayev.jpg',   // 9. Yerzhan Myrzabayev — 214K
-  'assets/images/новая_папка/Aiya_Shalqar.jpg',         // 10. Aiya Shalqar — 211K
+  '../assets/images/новая_папка/Zhanna_Urazbakhova.jpeg',  // 1. Zhanna Urazbakhova — 545K
+  '../assets/images/новая_папка/Zhaksylyk_Sabitov.jpg',    // 2. Zhaksylyk Sabitov — 440K
+  '../assets/images/новая_папка/Aigerim_Turekulova.jpeg',  // 3. Aigerim Turekulova — 249K
+  '../assets/images/новая_папка/Sanzhar_Kerimbai.png',     // 4. Sanzhar Kerimbai — 247K
+  '../assets/images/новая_папка/Darkhan_Abdik.jpeg',       // 5. Darkhan Abdik — 232K
+  '../assets/images/новая_папка/Askhat_Niyazov.jpg',       // 6. Askhat Niyazov — 230K
+  '../assets/images/новая_папка/Almaz_Merzhakypov.jpg',    // 7. Almaz Merzhakypov — 227K
+  '../assets/images/новая_папка/Nyurgyn_Atakov.jpg',       // 8. Nyurgyn Atakov — 224K
+  '../assets/images/новая_папка/Yerzhan_Myrzabayev.jpg',   // 9. Yerzhan Myrzabayev — 214K
+  '../assets/images/новая_папка/Aiya_Shalqar.jpg',         // 10. Aiya Shalqar — 211K
 ];
   const grid=G('top-grid');
   top.forEach((d,i)=>{
