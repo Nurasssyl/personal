@@ -216,21 +216,233 @@ h2.sh{font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,44px);font
   </div>
 </section>
 
-<!-- VIZ 4: BUBBLE CHART -->
+<!-- VIZ 4: PROFESSION ORBIT -->
 <section class="sec bg-alt">
   <div class="in">
     <div class="reveal">
       <p class="slbl">Professional universe</p>
-      <h2 class="sh">Views by profession - drag to explore</h2>
-      <p class="sh-sub">Bubble size = total views from that profession. Drag to rearrange. Hover for details including average views per episode.</p>
+      <h2 class="sh">Professions orbiting the views</h2>
+      <p class="sh-sub">Circle size = total views. Click a profession to reveal its strongest guests.</p>
     </div>
-    <div class="vbox reveal" style="position:relative">
-      <svg id="bub-svg" style="width:100%;display:block"></svg>
-      <div class="tip" id="bub-tip"></div>
+
+    <div class="orbit-box reveal">
+      <svg id="orbit-svg"></svg>
+      <div id="orbit-panel">
+        <div class="op-small">Click any circle</div>
+        <h3>Explore professions</h3>
+        <p>Each orbit shows who brings the most views inside that profession.</p>
+      </div>
     </div>
-    <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);text-align:center;margin-top:10px" class="reveal">drag - hover - explore all 46 professions</p>
   </div>
 </section>
+
+<style>
+.orbit-box{
+  position:relative;
+  height:620px;
+  margin-top:34px;
+  background:#f8f5ee;
+  border:1px solid rgba(20,30,45,.15);
+  overflow:hidden;
+}
+#orbit-svg{width:100%;height:100%;display:block}
+.orbit-role{
+  cursor:pointer;
+  transition:.25s;
+}
+.orbit-role:hover{filter:brightness(1.12)}
+.orbit-label{
+  font-size:12px;
+  font-weight:700;
+  pointer-events:none;
+  fill:#111;
+  text-anchor:middle;
+}
+.orbit-val{
+  font-size:10px;
+  font-family:'IBM Plex Mono',monospace;
+  fill:#8b5a0a;
+  text-anchor:middle;
+  pointer-events:none;
+}
+#orbit-panel{
+  position:absolute;
+  right:24px;
+  top:24px;
+  width:280px;
+  background:rgba(255,255,255,.88);
+  border:1px solid rgba(20,30,45,.15);
+  padding:18px;
+  backdrop-filter:blur(8px);
+}
+#orbit-panel h3{
+  margin:4px 0 10px;
+  font-family:'Playfair Display',serif;
+  font-size:28px;
+}
+#orbit-panel p{margin:0;color:var(--muted);font-size:14px}
+.op-small{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  text-transform:uppercase;
+  color:#9b650d;
+  letter-spacing:.12em;
+}
+.guest-line{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  border-top:1px solid #e5ddcf;
+  padding:8px 0;
+  font-size:13px;
+}
+.guest-line b{font-weight:700}
+.guest-line span{
+  font-family:'IBM Plex Mono',monospace;
+  color:#9b650d;
+}
+</style>
+
+<script>
+(function(){
+  const svg = d3.select("#orbit-svg");
+  const box = document.querySelector(".orbit-box");
+  const W = box.clientWidth, H = box.clientHeight;
+  svg.attr("viewBox", `0 0 ${W} ${H}`);
+
+  const roles = d3.rollups(
+    D,
+    v => ({
+      total:d3.sum(v,d=>d.v),
+      avg:d3.mean(v,d=>d.v),
+      n:v.length,
+      guests:[...v].sort((a,b)=>b.v-a.v).slice(0,5)
+    }),
+    d=>d.r
+  ).map(([role,x])=>({role,...x}))
+   .sort((a,b)=>b.total-a.total)
+   .slice(0,18);
+
+  const color = d3.scaleOrdinal()
+    .domain(roles.map(d=>d.role))
+    .range(["#9b5a44","#24527a","#b8862f","#4f8f7a","#7d5a9b","#a84632","#6074a8","#d18b49"]);
+
+  const r = d3.scaleSqrt()
+    .domain([0,d3.max(roles,d=>d.total)])
+    .range([24,78]);
+
+  const cx=W*0.42, cy=H*0.52;
+  const orbitR=Math.min(W,H)*0.34;
+
+  roles.forEach((d,i)=>{
+    const a = (i/roles.length)*Math.PI*2 - Math.PI/2;
+    d.x = cx + Math.cos(a)*orbitR*(i%2?1:.72);
+    d.y = cy + Math.sin(a)*orbitR*(i%2?1:.72);
+  });
+
+  svg.append("circle")
+    .attr("cx",cx).attr("cy",cy).attr("r",orbitR)
+    .attr("fill","none")
+    .attr("stroke","#d8cdbb")
+    .attr("stroke-dasharray","3 6");
+
+  svg.append("text")
+    .attr("x",cx).attr("y",cy-8)
+    .attr("text-anchor","middle")
+    .attr("font-family","Playfair Display")
+    .attr("font-size",42)
+    .attr("font-weight",800)
+    .attr("fill","#111")
+    .text("46");
+
+  svg.append("text")
+    .attr("x",cx).attr("y",cy+22)
+    .attr("text-anchor","middle")
+    .attr("font-size",13)
+    .attr("fill","#777")
+    .text("professions");
+
+  const g = svg.selectAll(".role")
+    .data(roles)
+    .enter()
+    .append("g")
+    .attr("class","orbit-role")
+    .attr("transform",d=>`translate(${d.x},${d.y})`)
+    .on("click",showRole);
+
+  g.append("circle")
+    .attr("r",0)
+    .attr("fill",d=>color(d.role))
+    .attr("fill-opacity",".9")
+    .attr("stroke","#fff")
+    .attr("stroke-width",2)
+    .transition()
+    .duration(900)
+    .delay((d,i)=>i*45)
+    .attr("r",d=>r(d.total));
+
+  g.append("text")
+    .attr("class","orbit-label")
+    .attr("y",4)
+    .text(d=>d.role);
+
+  g.append("text")
+    .attr("class","orbit-val")
+    .attr("y",22)
+    .text(d=>Math.round(d.total/1000)+"K");
+
+  function showRole(_,d){
+    svg.selectAll(".satellite").remove();
+
+    const panel = document.getElementById("orbit-panel");
+    panel.innerHTML = `
+      <div class="op-small">${d.n} episodes</div>
+      <h3>${d.role}</h3>
+      <p>Total: ${Math.round(d.total/1000)}K views<br>Avg: ${Math.round(d.avg/1000)}K per episode</p>
+      <br>
+      ${d.guests.map(x=>`
+        <div class="guest-line">
+          <b>${x.n}</b>
+          <span>${Math.round(x.v/1000)}K</span>
+        </div>
+      `).join("")}
+    `;
+
+    const sat = svg.append("g").attr("class","satellite");
+
+    d.guests.forEach((x,i)=>{
+      const a = -Math.PI/2 + i*(Math.PI*2/d.guests.length);
+      const rr = r(d.total)+62;
+      const sx = d.x + Math.cos(a)*rr;
+      const sy = d.y + Math.sin(a)*rr;
+
+      sat.append("line")
+        .attr("x1",d.x).attr("y1",d.y)
+        .attr("x2",d.x).attr("y2",d.y)
+        .attr("stroke",color(d.role))
+        .attr("stroke-opacity",".35")
+        .transition().duration(500)
+        .attr("x2",sx).attr("y2",sy);
+
+      sat.append("circle")
+        .attr("cx",sx).attr("cy",sy).attr("r",0)
+        .attr("fill","#fff")
+        .attr("stroke",color(d.role))
+        .attr("stroke-width",2)
+        .transition().duration(500)
+        .attr("r",Math.max(12,Math.sqrt(x.v)/38));
+
+      sat.append("text")
+        .attr("x",sx).attr("y",sy+34)
+        .attr("text-anchor","middle")
+        .attr("font-size",11)
+        .attr("font-weight",700)
+        .attr("fill","#111")
+        .text(x.n.split(" ")[0]);
+    });
+  }
+})();
+</script>
 
 <!-- VIZ 5: SCATTER -->
 <section class="sec">
