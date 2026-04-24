@@ -11,6 +11,73 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
+<style>
+.orbit-box{
+  position:relative;
+  height:620px;
+  margin-top:34px;
+  background:#f8f5ee;
+  border:1px solid rgba(20,30,45,.15);
+  overflow:hidden;
+}
+#orbit-svg{width:100%;height:100%;display:block}
+.orbit-role{
+  cursor:pointer;
+  transition:.25s;
+}
+.orbit-role:hover{filter:brightness(1.12)}
+.orbit-label{
+  font-size:12px;
+  font-weight:700;
+  pointer-events:none;
+  fill:#111;
+  text-anchor:middle;
+}
+.orbit-val{
+  font-size:10px;
+  font-family:'IBM Plex Mono',monospace;
+  fill:#8b5a0a;
+  text-anchor:middle;
+  pointer-events:none;
+}
+#orbit-panel{
+  position:absolute;
+  right:24px;
+  top:24px;
+  width:280px;
+  background:rgba(255,255,255,.88);
+  border:1px solid rgba(20,30,45,.15);
+  padding:18px;
+  backdrop-filter:blur(8px);
+}
+#orbit-panel h3{
+  margin:4px 0 10px;
+  font-family:'Playfair Display',serif;
+  font-size:28px;
+}
+#orbit-panel p{margin:0;color:var(--muted);font-size:14px}
+.op-small{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  text-transform:uppercase;
+  color:#9b650d;
+  letter-spacing:.12em;
+}
+.guest-line{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  border-top:1px solid #e5ddcf;
+  padding:8px 0;
+  font-size:13px;
+}
+.guest-line b{font-weight:700}
+.guest-line span{
+  font-family:'IBM Plex Mono',monospace;
+  color:#9b650d;
+}
+</style>
+
 
 /* THEMES */
 body{font-family:'IBM Plex Sans',sans-serif;overflow-x:hidden;transition:background .35s,color .35s}
@@ -236,74 +303,116 @@ h2.sh{font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,44px);font
   </div>
 </section>
 
-<style>
-.orbit-box{
-  position:relative;
-  height:620px;
-  margin-top:34px;
-  background:#f8f5ee;
-  border:1px solid rgba(20,30,45,.15);
-  overflow:hidden;
-}
-#orbit-svg{width:100%;height:100%;display:block}
-.orbit-role{
-  cursor:pointer;
-  transition:.25s;
-}
-.orbit-role:hover{filter:brightness(1.12)}
-.orbit-label{
-  font-size:12px;
-  font-weight:700;
-  pointer-events:none;
-  fill:#111;
-  text-anchor:middle;
-}
-.orbit-val{
-  font-size:10px;
-  font-family:'IBM Plex Mono',monospace;
-  fill:#8b5a0a;
-  text-anchor:middle;
-  pointer-events:none;
-}
-#orbit-panel{
-  position:absolute;
-  right:24px;
-  top:24px;
-  width:280px;
-  background:rgba(255,255,255,.88);
-  border:1px solid rgba(20,30,45,.15);
-  padding:18px;
-  backdrop-filter:blur(8px);
-}
-#orbit-panel h3{
-  margin:4px 0 10px;
-  font-family:'Playfair Display',serif;
-  font-size:28px;
-}
-#orbit-panel p{margin:0;color:var(--muted);font-size:14px}
-.op-small{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;
-  text-transform:uppercase;
-  color:#9b650d;
-  letter-spacing:.12em;
-}
-.guest-line{
-  display:flex;
-  justify-content:space-between;
-  gap:14px;
-  border-top:1px solid #e5ddcf;
-  padding:8px 0;
-  font-size:13px;
-}
-.guest-line b{font-weight:700}
-.guest-line span{
-  font-family:'IBM Plex Mono',monospace;
-  color:#9b650d;
-}
-</style>
+
+<!-- VIZ 5: SCATTER -->
+<section class="sec">
+  <div class="in">
+    <div class="reveal">
+      <p class="slbl">Does longer mean more views?</p>
+      <h2 class="sh">Duration vs views</h2>
+      <p class="sh-sub">Each dot is one episode. Blue = male guest, red = female guest. Hover any dot to identify them.</p>
+    </div>
+    <div class="vbox reveal" style="position:relative">
+      <svg id="scat-svg" style="width:100%;display:block"></svg>
+      <div class="tip" id="scat-tip"></div>
+    </div>
+    <div class="prose reveal" style="margin-top:32px">
+      <p>Based on the scatter plot, there is a weak positive correlation between duration and views - the trend line slopes upward, but the data is scattered widely. The correlation is real but not strong. What the chart reveals more clearly is the outlier cluster in the upper-left: short episodes (under 70 minutes) that still broke 200K views.</p>
+      <p>The longest episode in the dataset - Qanat Beissekeyev's documentary film discussion at 149 minutes - pulled 98K views. Strong performance, but not top-10. The 545K episode ran 99 minutes. Duration is not the variable that moves the needle.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VIZ 6: GENDER -->
+<section class="sec bg-alt">
+  <div class="in">
+    <div class="reveal">
+      <p class="slbl">Gender balance</p>
+      <h2 class="sh">Who gets invited to Dope Soz?</h2>
+      <p class="sh-sub">Female vs male guest share per year. The percentage label shows female share for each year.</p>
+    </div>
+    <div class="vbox reveal" style="position:relative">
+      <svg id="gend-svg" style="width:100%;display:block"></svg>
+      <div class="tip" id="gend-tip"></div>
+    </div>
+    <div class="prose reveal" style="margin-top:32px">
+      <p>Across all 163 episodes, 33% of guests are women. That ratio has held roughly stable across all 6 years, with Year 5 briefly approaching near-parity. What is striking is the performance data: the #1 episode by views is a female guest. The #4 spot (Aigerim Turekulova, doctor, 249K) is also female. Female guests represent 33% of invitations but a disproportionately large share of top-performing episodes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VIZ 7: REPEAT GUESTS -->
+<section class="sec">
+  <div class="in">
+    <div class="reveal">
+      <p class="slbl">Returning guests</p>
+      <h2 class="sh">Guests who kept coming back</h2>
+      <p class="sh-sub">Each bar represents one appearance. Height = views for that episode. Did views go up or down across return visits?</p>
+    </div>
+    <div id="rg-grid" class="reveal"></div>
+    <div class="pq reveal" style="margin-top:32px"><p>"Zhaksylyk Sabitov appeared 6 times. His first episode (6 years ago) pulled 440K. His most recent pulled 102K. First appearances almost always outperform returns - but even the lowest Sabitov episode beats the average guest's best."</p></div>
+  </div>
+</section>
+
+<!-- VIZ 8: AVG VIEWS PER ROLE -->
+<section class="sec bg-alt">
+  <div class="in">
+    <div class="reveal">
+      <p class="slbl">Efficiency by profession</p>
+      <h2 class="sh">Average views per episode by profession</h2>
+      <p class="sh-sub">Only professions with 2+ episodes. This separates frequency from impact - which professions punch above their weight?</p>
+    </div>
+    <div class="vbox reveal" style="position:relative">
+      <svg id="avg-svg" style="width:100%;display:block"></svg>
+      <div class="tip" id="avg-tip"></div>
+    </div>
+    <div class="prose reveal" style="margin-top:32px">
+      <p>Psychologists average 80K per episode - a higher return per invite than historians (107K average but high because of Sabitov's outsized episodes). Writers average 215K per episode across 4 appearances. Comedians average 119K. The pattern is clear: the show built its identity on historians, but earns its biggest numbers from entertainers and controversy-adjacent guests.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VIZ 9: CHRONOLOGICAL TABLE -->
+<section class="sec">
+  <div class="in">
+    <div class="reveal">
+      <p class="slbl">Full archive</p>
+      <h2 class="sh">All 163 episodes in dataset order</h2>
+      <p class="sh-sub">From the first recorded episode (top) to the most recent (bottom). Filter by gender or sort by views.</p>
+    </div>
+    <div class="cf-row reveal" id="cf-row"></div>
+    <div class="vbox reveal" style="overflow-y:auto;max-height:520px">
+      <div class="ct-head">
+        <div>#</div><div>Name</div><div>Role</div><div>Year ago</div><div>Duration</div><div>Views bar</div><div>Views</div>
+      </div>
+      <div id="chrono-body"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section id="conc">
+  <div class="in-n">
+    <div class="reveal">
+      <p class="slbl">Findings</p>
+      <h2 class="sh">What 163 conversations reveal</h2>
+    </div>
+    <div class="co-grid reveal">
+      <div class="co-n"><div class="co-v" data-t="10.8" data-s="M">-</div><div class="co-l">Total views</div></div>
+      <div class="co-n"><div class="co-v" data-t="163" data-s="">-</div><div class="co-l">Episodes</div></div>
+      <div class="co-n"><div class="co-v" data-t="46" data-s="">-</div><div class="co-l">Unique professions</div></div>
+      <div class="co-n"><div class="co-v" data-t="545" data-s="K">-</div><div class="co-l">Peak episode</div></div>
+      <div class="co-n"><div class="co-v" data-t="77" data-s="min">-</div><div class="co-l">Average duration</div></div>
+      <div class="co-n"><div class="co-v" data-t="33" data-s="%">-</div><div class="co-l">Female guests</div></div>
+    </div>
+    <div class="co-q reveal">Dope Soz is a genuine reflection of Kazakhstani intellectual life. It documents who Kazakhstan thinks about, argues about, and watches. The data shows a show that built its foundation on history, grew through entertainment, and peaked when it was brave enough to invite a lawyer at the centre of the country's most-watched trial.</div>
+    <a href="https://www.nurasyl.space/" class="cta reveal">Back to nurasyl.space</a>
+    <p class="src reveal">Data compiled manually from YouTube analytics. Guest episodes only. Views as of export date. Analysis: nurasyl.space by Nurasyl Abdrazakuly.</p>
+  </div>
+</section>
 
 <script>
+
 (function(){
   const svg = d3.select("#orbit-svg");
   const box = document.querySelector(".orbit-box");
@@ -442,116 +551,7 @@ h2.sh{font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,44px);font
     });
   }
 })();
-</script>
 
-<!-- VIZ 5: SCATTER -->
-<section class="sec">
-  <div class="in">
-    <div class="reveal">
-      <p class="slbl">Does longer mean more views?</p>
-      <h2 class="sh">Duration vs views</h2>
-      <p class="sh-sub">Each dot is one episode. Blue = male guest, red = female guest. Hover any dot to identify them.</p>
-    </div>
-    <div class="vbox reveal" style="position:relative">
-      <svg id="scat-svg" style="width:100%;display:block"></svg>
-      <div class="tip" id="scat-tip"></div>
-    </div>
-    <div class="prose reveal" style="margin-top:32px">
-      <p>Based on the scatter plot, there is a weak positive correlation between duration and views - the trend line slopes upward, but the data is scattered widely. The correlation is real but not strong. What the chart reveals more clearly is the outlier cluster in the upper-left: short episodes (under 70 minutes) that still broke 200K views.</p>
-      <p>The longest episode in the dataset - Qanat Beissekeyev's documentary film discussion at 149 minutes - pulled 98K views. Strong performance, but not top-10. The 545K episode ran 99 minutes. Duration is not the variable that moves the needle.</p>
-    </div>
-  </div>
-</section>
-
-<!-- VIZ 6: GENDER -->
-<section class="sec bg-alt">
-  <div class="in">
-    <div class="reveal">
-      <p class="slbl">Gender balance</p>
-      <h2 class="sh">Who gets invited to Dope Soz?</h2>
-      <p class="sh-sub">Female vs male guest share per year. The percentage label shows female share for each year.</p>
-    </div>
-    <div class="vbox reveal" style="position:relative">
-      <svg id="gend-svg" style="width:100%;display:block"></svg>
-      <div class="tip" id="gend-tip"></div>
-    </div>
-    <div class="prose reveal" style="margin-top:32px">
-      <p>Across all 163 episodes, 33% of guests are women. That ratio has held roughly stable across all 6 years, with Year 5 briefly approaching near-parity. What is striking is the performance data: the #1 episode by views is a female guest. The #4 spot (Aigerim Turekulova, doctor, 249K) is also female. Female guests represent 33% of invitations but a disproportionately large share of top-performing episodes.</p>
-    </div>
-  </div>
-</section>
-
-<!-- VIZ 7: REPEAT GUESTS -->
-<section class="sec">
-  <div class="in">
-    <div class="reveal">
-      <p class="slbl">Returning guests</p>
-      <h2 class="sh">Guests who kept coming back</h2>
-      <p class="sh-sub">Each bar represents one appearance. Height = views for that episode. Did views go up or down across return visits?</p>
-    </div>
-    <div id="rg-grid" class="reveal"></div>
-    <div class="pq reveal" style="margin-top:32px"><p>"Zhaksylyk Sabitov appeared 6 times. His first episode (6 years ago) pulled 440K. His most recent pulled 102K. First appearances almost always outperform returns - but even the lowest Sabitov episode beats the average guest's best."</p></div>
-  </div>
-</section>
-
-<!-- VIZ 8: AVG VIEWS PER ROLE -->
-<section class="sec bg-alt">
-  <div class="in">
-    <div class="reveal">
-      <p class="slbl">Efficiency by profession</p>
-      <h2 class="sh">Average views per episode by profession</h2>
-      <p class="sh-sub">Only professions with 2+ episodes. This separates frequency from impact - which professions punch above their weight?</p>
-    </div>
-    <div class="vbox reveal" style="position:relative">
-      <svg id="avg-svg" style="width:100%;display:block"></svg>
-      <div class="tip" id="avg-tip"></div>
-    </div>
-    <div class="prose reveal" style="margin-top:32px">
-      <p>Psychologists average 80K per episode - a higher return per invite than historians (107K average but high because of Sabitov's outsized episodes). Writers average 215K per episode across 4 appearances. Comedians average 119K. The pattern is clear: the show built its identity on historians, but earns its biggest numbers from entertainers and controversy-adjacent guests.</p>
-    </div>
-  </div>
-</section>
-
-<!-- VIZ 9: CHRONOLOGICAL TABLE -->
-<section class="sec">
-  <div class="in">
-    <div class="reveal">
-      <p class="slbl">Full archive</p>
-      <h2 class="sh">All 163 episodes in dataset order</h2>
-      <p class="sh-sub">From the first recorded episode (top) to the most recent (bottom). Filter by gender or sort by views.</p>
-    </div>
-    <div class="cf-row reveal" id="cf-row"></div>
-    <div class="vbox reveal" style="overflow-y:auto;max-height:520px">
-      <div class="ct-head">
-        <div>#</div><div>Name</div><div>Role</div><div>Year ago</div><div>Duration</div><div>Views bar</div><div>Views</div>
-      </div>
-      <div id="chrono-body"></div>
-    </div>
-  </div>
-</section>
-
-<!-- CONCLUSION -->
-<section id="conc">
-  <div class="in-n">
-    <div class="reveal">
-      <p class="slbl">Findings</p>
-      <h2 class="sh">What 163 conversations reveal</h2>
-    </div>
-    <div class="co-grid reveal">
-      <div class="co-n"><div class="co-v" data-t="10.8" data-s="M">-</div><div class="co-l">Total views</div></div>
-      <div class="co-n"><div class="co-v" data-t="163" data-s="">-</div><div class="co-l">Episodes</div></div>
-      <div class="co-n"><div class="co-v" data-t="46" data-s="">-</div><div class="co-l">Unique professions</div></div>
-      <div class="co-n"><div class="co-v" data-t="545" data-s="K">-</div><div class="co-l">Peak episode</div></div>
-      <div class="co-n"><div class="co-v" data-t="77" data-s="min">-</div><div class="co-l">Average duration</div></div>
-      <div class="co-n"><div class="co-v" data-t="33" data-s="%">-</div><div class="co-l">Female guests</div></div>
-    </div>
-    <div class="co-q reveal">Dope Soz is a genuine reflection of Kazakhstani intellectual life. It documents who Kazakhstan thinks about, argues about, and watches. The data shows a show that built its foundation on history, grew through entertainment, and peaked when it was brave enough to invite a lawyer at the centre of the country's most-watched trial.</div>
-    <a href="https://www.nurasyl.space/" class="cta reveal">Back to nurasyl.space</a>
-    <p class="src reveal">Data compiled manually from YouTube analytics. Guest episodes only. Views as of export date. Analysis: nurasyl.space by Nurasyl Abdrazakuly.</p>
-  </div>
-</section>
-
-<script>
 gsap.registerPlugin(ScrollTrigger);
 
 /* ═══ THEME ═══ */
