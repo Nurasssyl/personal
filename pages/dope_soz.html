@@ -11,7 +11,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-<style>
+
 .orbit-box{
   position:relative;
   height:620px;
@@ -76,7 +76,7 @@ html{scroll-behavior:smooth}
   font-family:'IBM Plex Mono',monospace;
   color:#9b650d;
 }
-</style>
+
 
 
 /* THEMES */
@@ -200,7 +200,7 @@ h2.sh{font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,44px);font
 .cta:hover{opacity:.85}
 .src{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:24px;line-height:1.7;padding-top:20px;border-top:1px solid var(--rule)}
 
-.reveal{opacity:0;transform:translateY(22px)}
+.reveal{opacity:1;transform:none}
 .bg-alt{background:var(--card);border-top:1px solid var(--rule)}
 </style>
 </head>
@@ -413,144 +413,7 @@ h2.sh{font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,44px);font
 
 <script>
 
-(function(){
-  const svg = d3.select("#orbit-svg");
-  const box = document.querySelector(".orbit-box");
-  const W = box.clientWidth, H = box.clientHeight;
-  svg.attr("viewBox", `0 0 ${W} ${H}`);
 
-  const roles = d3.rollups(
-    D,
-    v => ({
-      total:d3.sum(v,d=>d.v),
-      avg:d3.mean(v,d=>d.v),
-      n:v.length,
-      guests:[...v].sort((a,b)=>b.v-a.v).slice(0,5)
-    }),
-    d=>d.r
-  ).map(([role,x])=>({role,...x}))
-   .sort((a,b)=>b.total-a.total)
-   .slice(0,18);
-
-  const color = d3.scaleOrdinal()
-    .domain(roles.map(d=>d.role))
-    .range(["#9b5a44","#24527a","#b8862f","#4f8f7a","#7d5a9b","#a84632","#6074a8","#d18b49"]);
-
-  const r = d3.scaleSqrt()
-    .domain([0,d3.max(roles,d=>d.total)])
-    .range([24,78]);
-
-  const cx=W*0.42, cy=H*0.52;
-  const orbitR=Math.min(W,H)*0.34;
-
-  roles.forEach((d,i)=>{
-    const a = (i/roles.length)*Math.PI*2 - Math.PI/2;
-    d.x = cx + Math.cos(a)*orbitR*(i%2?1:.72);
-    d.y = cy + Math.sin(a)*orbitR*(i%2?1:.72);
-  });
-
-  svg.append("circle")
-    .attr("cx",cx).attr("cy",cy).attr("r",orbitR)
-    .attr("fill","none")
-    .attr("stroke","#d8cdbb")
-    .attr("stroke-dasharray","3 6");
-
-  svg.append("text")
-    .attr("x",cx).attr("y",cy-8)
-    .attr("text-anchor","middle")
-    .attr("font-family","Playfair Display")
-    .attr("font-size",42)
-    .attr("font-weight",800)
-    .attr("fill","#111")
-    .text("46");
-
-  svg.append("text")
-    .attr("x",cx).attr("y",cy+22)
-    .attr("text-anchor","middle")
-    .attr("font-size",13)
-    .attr("fill","#777")
-    .text("professions");
-
-  const g = svg.selectAll(".role")
-    .data(roles)
-    .enter()
-    .append("g")
-    .attr("class","orbit-role")
-    .attr("transform",d=>`translate(${d.x},${d.y})`)
-    .on("click",showRole);
-
-  g.append("circle")
-    .attr("r",0)
-    .attr("fill",d=>color(d.role))
-    .attr("fill-opacity",".9")
-    .attr("stroke","#fff")
-    .attr("stroke-width",2)
-    .transition()
-    .duration(900)
-    .delay((d,i)=>i*45)
-    .attr("r",d=>r(d.total));
-
-  g.append("text")
-    .attr("class","orbit-label")
-    .attr("y",4)
-    .text(d=>d.role);
-
-  g.append("text")
-    .attr("class","orbit-val")
-    .attr("y",22)
-    .text(d=>Math.round(d.total/1000)+"K");
-
-  function showRole(_,d){
-    svg.selectAll(".satellite").remove();
-
-    const panel = document.getElementById("orbit-panel");
-    panel.innerHTML = `
-      <div class="op-small">${d.n} episodes</div>
-      <h3>${d.role}</h3>
-      <p>Total: ${Math.round(d.total/1000)}K views<br>Avg: ${Math.round(d.avg/1000)}K per episode</p>
-      <br>
-      ${d.guests.map(x=>`
-        <div class="guest-line">
-          <b>${x.n}</b>
-          <span>${Math.round(x.v/1000)}K</span>
-        </div>
-      `).join("")}
-    `;
-
-    const sat = svg.append("g").attr("class","satellite");
-
-    d.guests.forEach((x,i)=>{
-      const a = -Math.PI/2 + i*(Math.PI*2/d.guests.length);
-      const rr = r(d.total)+62;
-      const sx = d.x + Math.cos(a)*rr;
-      const sy = d.y + Math.sin(a)*rr;
-
-      sat.append("line")
-        .attr("x1",d.x).attr("y1",d.y)
-        .attr("x2",d.x).attr("y2",d.y)
-        .attr("stroke",color(d.role))
-        .attr("stroke-opacity",".35")
-        .transition().duration(500)
-        .attr("x2",sx).attr("y2",sy);
-
-      sat.append("circle")
-        .attr("cx",sx).attr("cy",sy).attr("r",0)
-        .attr("fill","#fff")
-        .attr("stroke",color(d.role))
-        .attr("stroke-width",2)
-        .transition().duration(500)
-        .attr("r",Math.max(12,Math.sqrt(x.v)/38));
-
-      sat.append("text")
-        .attr("x",sx).attr("y",sy+34)
-        .attr("text-anchor","middle")
-        .attr("font-size",11)
-        .attr("font-weight",700)
-        .attr("fill","#111")
-        .text(x.n.split(" ")[0]);
-    });
-  }
-})();
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -738,6 +601,146 @@ function rule(){return isDark()?'rgba(255,255,255,.06)':'rgba(0,0,0,.05)'}
 function fml(){return isDark()?'rgba(224,80,80,.75)':'rgba(138,32,16,.7)'}
 function mal(){return isDark()?'rgba(74,143,212,.75)':'rgba(15,52,96,.65)'}
 
+/* ═══ PROFESSION ORBIT ═══ */
+(function(){
+  const svg = d3.select("#orbit-svg");
+  const box = document.querySelector(".orbit-box");
+  const W = box.clientWidth, H = box.clientHeight;
+  svg.attr("viewBox", `0 0 ${W} ${H}`);
+
+  const roles = d3.rollups(
+    D,
+    v => ({
+      total:d3.sum(v,d=>d.v),
+      avg:d3.mean(v,d=>d.v),
+      n:v.length,
+      guests:[...v].sort((a,b)=>b.v-a.v).slice(0,5)
+    }),
+    d=>d.r
+  ).map(([role,x])=>({role,...x}))
+   .sort((a,b)=>b.total-a.total)
+   .slice(0,18);
+
+  const color = d3.scaleOrdinal()
+    .domain(roles.map(d=>d.role))
+    .range(["#9b5a44","#24527a","#b8862f","#4f8f7a","#7d5a9b","#a84632","#6074a8","#d18b49"]);
+
+  const r = d3.scaleSqrt()
+    .domain([0,d3.max(roles,d=>d.total)])
+    .range([24,78]);
+
+  const cx=W*0.42, cy=H*0.52;
+  const orbitR=Math.min(W,H)*0.34;
+
+  roles.forEach((d,i)=>{
+    const a = (i/roles.length)*Math.PI*2 - Math.PI/2;
+    d.x = cx + Math.cos(a)*orbitR*(i%2?1:.72);
+    d.y = cy + Math.sin(a)*orbitR*(i%2?1:.72);
+  });
+
+  svg.append("circle")
+    .attr("cx",cx).attr("cy",cy).attr("r",orbitR)
+    .attr("fill","none")
+    .attr("stroke","#d8cdbb")
+    .attr("stroke-dasharray","3 6");
+
+  svg.append("text")
+    .attr("x",cx).attr("y",cy-8)
+    .attr("text-anchor","middle")
+    .attr("font-family","Playfair Display")
+    .attr("font-size",42)
+    .attr("font-weight",800)
+    .attr("fill","#111")
+    .text("46");
+
+  svg.append("text")
+    .attr("x",cx).attr("y",cy+22)
+    .attr("text-anchor","middle")
+    .attr("font-size",13)
+    .attr("fill","#777")
+    .text("professions");
+
+  const g = svg.selectAll(".role")
+    .data(roles)
+    .enter()
+    .append("g")
+    .attr("class","orbit-role")
+    .attr("transform",d=>`translate(${d.x},${d.y})`)
+    .on("click",showRole);
+
+  g.append("circle")
+    .attr("r",0)
+    .attr("fill",d=>color(d.role))
+    .attr("fill-opacity",".9")
+    .attr("stroke","#fff")
+    .attr("stroke-width",2)
+    .transition()
+    .duration(900)
+    .delay((d,i)=>i*45)
+    .attr("r",d=>r(d.total));
+
+  g.append("text")
+    .attr("class","orbit-label")
+    .attr("y",4)
+    .text(d=>d.role);
+
+  g.append("text")
+    .attr("class","orbit-val")
+    .attr("y",22)
+    .text(d=>Math.round(d.total/1000)+"K");
+
+  function showRole(_,d){
+    svg.selectAll(".satellite").remove();
+
+    const panel = document.getElementById("orbit-panel");
+    panel.innerHTML = `
+      <div class="op-small">${d.n} episodes</div>
+      <h3>${d.role}</h3>
+      <p>Total: ${Math.round(d.total/1000)}K views<br>Avg: ${Math.round(d.avg/1000)}K per episode</p>
+      <br>
+      ${d.guests.map(x=>`
+        <div class="guest-line">
+          <b>${x.n}</b>
+          <span>${Math.round(x.v/1000)}K</span>
+        </div>
+      `).join("")}
+    `;
+
+    const sat = svg.append("g").attr("class","satellite");
+
+    d.guests.forEach((x,i)=>{
+      const a = -Math.PI/2 + i*(Math.PI*2/d.guests.length);
+      const rr = r(d.total)+62;
+      const sx = d.x + Math.cos(a)*rr;
+      const sy = d.y + Math.sin(a)*rr;
+
+      sat.append("line")
+        .attr("x1",d.x).attr("y1",d.y)
+        .attr("x2",d.x).attr("y2",d.y)
+        .attr("stroke",color(d.role))
+        .attr("stroke-opacity",".35")
+        .transition().duration(500)
+        .attr("x2",sx).attr("y2",sy);
+
+      sat.append("circle")
+        .attr("cx",sx).attr("cy",sy).attr("r",0)
+        .attr("fill","#fff")
+        .attr("stroke",color(d.role))
+        .attr("stroke-width",2)
+        .transition().duration(500)
+        .attr("r",Math.max(12,Math.sqrt(x.v)/38));
+
+      sat.append("text")
+        .attr("x",sx).attr("y",sy+34)
+        .attr("text-anchor","middle")
+        .attr("font-size",11)
+        .attr("font-weight",700)
+        .attr("fill","#111")
+        .text(x.n.split(" ")[0]);
+    });
+  }
+})();
+
 /* ═══ HERO CANVAS ═══ */
 (function(){
   const cv=G('hero-cv'),ctx=cv.getContext('2d');
@@ -853,35 +856,6 @@ buildYr();window.addEventListener('resize',buildYr);
     document.querySelectorAll('.rc-bar').forEach((b,i)=>setTimeout(()=>gsap.to(b,{width:b.dataset.w+'%',duration:.8,ease:'power2.out'}),i*40))
   });
 })();
-
-/* ═══ BUBBLE CHART ═══ */
-function buildBub(){
-  const rm={};D.forEach(d=>{if(!rm[d.r])rm[d.r]={r:d.r,c:0,t:0};rm[d.r].c++;rm[d.r].t+=d.v});
-  const roles=Object.values(rm);
-  const wrap=G('bub-svg').parentElement;
-  const W=wrap.offsetWidth,H=Math.max(380,W*.52);
-  const svg=d3.select('#bub-svg').attr('height',H);svg.selectAll('*').remove();
-  const tt=G('bub-tip');
-  const rS=d3.scaleSqrt().domain([0,d3.max(roles,r=>r.t)]).range([11,Math.min(70,W*.08)]);
-  const COLS=['#9a6208','#0f3460','#8a2010','#1a6b3a','#6a3a8a','#2a7aaa','#aa6020','#3a6a9a','#8a4060','#4a8a40','#9a7a20','#3a4a8a','#2a8a6a','#aa5030'];
-  const nodes=roles.map((r,i)=>({...r,r:rS(r.t),col:COLS[i%COLS.length],x:W/2+(Math.random()-.5)*80,y:H/2+(Math.random()-.5)*80}));
-  const sim=d3.forceSimulation(nodes).force('charge',d3.forceManyBody().strength(-50)).force('center',d3.forceCenter(W/2,H/2)).force('collide',d3.forceCollide(d=>d.r+3).strength(.9));
-  const g=svg.append('g');
-  const nG=g.selectAll('.bn').data(nodes).join('g').attr('class','bn').style('cursor','grab')
-    .call(d3.drag().on('start',(ev,d)=>{if(!ev.active)sim.alphaTarget(.3).restart();d.fx=d.x;d.fy=d.y}).on('drag',(ev,d)=>{d.fx=ev.x;d.fy=ev.y}).on('end',(ev,d)=>{if(!ev.active)sim.alphaTarget(0);d.fx=null;d.fy=null}))
-    .on('mouseover',(ev,d)=>{
-      tt.innerHTML=`<div style="color:${d.col};font-weight:500">${d.r}</div><div>${d.c} episodes</div><div>${(d.t/1000).toFixed(0)}K total views</div><div>Avg ${(d.t/d.c/1000).toFixed(0)}K per episode</div>`;
-      const r=wrap.getBoundingClientRect();let lx=ev.clientX-r.left+12,ly=ev.clientY-r.top-44;
-      if(lx+230>W)lx=ev.clientX-r.left-240;
-      tt.style.cssText=`left:${lx}px;top:${Math.max(0,ly)}px;opacity:1`;
-    }).on('mouseleave',()=>tt.style.opacity='0');
-  nG.append('circle').attr('r',d=>d.r).attr('fill',d=>d.col).attr('fill-opacity',.82).attr('stroke','rgba(255,255,255,.2)').attr('stroke-width',1.5);
-  nG.filter(d=>d.r>19).append('text').attr('text-anchor','middle').attr('dominant-baseline','middle').attr('fill','white').attr('fill-opacity',.92).attr('font-family','IBM Plex Sans,sans-serif').attr('font-size',d=>Math.min(d.r*.3,13)).attr('pointer-events','none').text(d=>d.r);
-  nG.filter(d=>d.r>32).append('text').attr('y','1.4em').attr('text-anchor','middle').attr('fill','rgba(255,255,255,.55)').attr('font-family','IBM Plex Mono,monospace').attr('font-size',d=>Math.min(d.r*.22,10)).attr('pointer-events','none').text(d=>(d.t/1000).toFixed(0)+'K');
-  sim.on('tick',()=>nG.attr('transform',d=>`translate(${Math.max(d.r,Math.min(W-d.r,d.x))},${Math.max(d.r,Math.min(H-d.r,d.y))})`));
-  ScrollTrigger.create({trigger:'#bub-svg',start:'top 65%',once:true,onEnter:()=>nG.style('opacity',0).transition().duration(500).delay((_,i)=>i*22).style('opacity',1)});
-}
-buildBub();
 
 /* ═══ SCATTER ═══ */
 function buildScat(){
@@ -1020,9 +994,11 @@ ScrollTrigger.create({trigger:'#conc',start:'top 65%',once:true,onEnter:()=>
 });
 
 /* ═══ REVEALS ═══ */
-gsap.utils.toArray('.reveal').forEach(el=>
-  gsap.to(el,{opacity:1,y:0,duration:.7,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 86%',once:true}})
-);
+// Simple IntersectionObserver - no CDN dependency
+const _ro = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='none'; } });
+},{threshold:0.05});
+document.querySelectorAll('.reveal').forEach(el=>_ro.observe(el));
 
 /* ═══ PROGRESS ═══ */
 window.addEventListener('scroll',()=>{G('prog').style.width=Math.min(100,scrollY/(document.body.scrollHeight-innerHeight)*100)+'%'},{passive:true});
