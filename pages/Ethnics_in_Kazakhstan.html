@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>72 народа Казахстана · 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script type="text/javascript" src="https://gc.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=BiHCVHaeUltsky0kWrkDeM-xKREJ_fsR_j64mg9cbzx_DystJ__aKBjVdmQbwq2Tl3Eu95e3ek9htxnWI9EPvBiw7zF7fzBc5J_At59VeuUivklvZHS5O3RGyNnV0e4I1PJbivTQjx4fPJpUp8CqyZ2_c2HLFkPabtnlKmXLR7yPmuY8XQNgRWqWsCHfjlAvv_hcMtV2cN7kdXvFDs6oLI_8GTvFREeY7RYJOXDF1hNHJUJm4xoaafy7Ww45kXb-rm8Pc0I9xgNQhghAsbmi6A" charset="UTF-8"></script><style>
+:root{
+  --ink:#1a1209;--paper:#f8f5ef;--cream:#f0ead8;
+  --rule:#d4c9b0;--ghost:#e8e0cc;
+  --red:#9b2020;--blue:#1a3d6b;--gold:#8b5e0a;
+  --green:#1a4d2e;--purple:#4a1e6b;
+  --mono:'JetBrains Mono',monospace;
+  --serif:'Source Serif 4',Georgia,serif;
+  --display:'Playfair Display',Georgia,serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--serif);
+  max-width:900px;margin:0 auto;
+  padding:0 24px;
+  border-left:1px solid var(--rule);
+  border-right:1px solid var(--rule);
+}
+
+
+/* LANG SWITCHER */
+.lang-bar{display:flex;justify-content:center;gap:0;padding:8px 0;background:var(--cream);border-bottom:1px solid var(--rule);}
+.lbtn{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink);opacity:.5;padding:6px 14px;cursor:pointer;border:none;background:none;
+  border-bottom:2px solid transparent;transition:all .2s;}
+.lbtn:hover{opacity:.8;}
+.lbtn.active{opacity:1;color:var(--red);border-bottom-color:var(--red);}
+/* PROGRESS */
+#prog{position:fixed;top:0;left:0;right:0;height:2px;background:var(--red);z-index:200;width:0;}
+
+/* ─── NEWSPAPER HEADER ─── */
+.masthead{
+  text-align:center;
+  padding:32px 0 16px;
+  border-bottom:3px double var(--ink);
+  margin-bottom:0;
+}
+.masthead-flag{
+  font-family:var(--display);font-size:11px;font-style:italic;
+  letter-spacing:3px;color:var(--ink);opacity:.5;margin-bottom:8px;
+  text-transform:uppercase;
+}
+.masthead-title{
+  font-family:var(--display);font-size:clamp(42px,7vw,80px);
+  font-weight:900;line-height:.9;letter-spacing:-1px;
+  margin-bottom:12px;
+}
+.masthead-rule{display:flex;align-items:center;gap:12px;margin:12px 0;}
+.masthead-rule::before,.masthead-rule::after{content:'';flex:1;height:1px;background:var(--ink);}
+.masthead-meta{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ink);opacity:.6;}
+.masthead-deck{
+  font-family:var(--serif);font-size:14px;font-style:italic;
+  color:var(--ink);opacity:.7;max-width:600px;margin:16px auto 0;
+  line-height:1.6;
+}
+
+/* ─── ORNAMENT ─── */
+.orn{
+  height:20px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='20'%3E%3Cpath d='M0 10 L7 3 L14 10 L21 3 L28 10 L35 3 L42 10 L49 3 L56 10 L63 3' fill='none' stroke='%239b2020' stroke-width='1'/%3E%3Cpath d='M0 10 L7 17 L14 10 L21 17 L28 10 L35 17 L42 10 L49 17 L56 10 L63 17' fill='none' stroke='%238b5e0a' stroke-width='1'/%3E%3Ccircle cx='7' cy='3' r='1.2' fill='%239b2020'/%3E%3Ccircle cx='21' cy='3' r='1.2' fill='%239b2020'/%3E%3Ccircle cx='35' cy='3' r='1.2' fill='%239b2020'/%3E%3Ccircle cx='49' cy='3' r='1.2' fill='%239b2020'/%3E%3Ccircle cx='7' cy='17' r='1.2' fill='%238b5e0a'/%3E%3Ccircle cx='21' cy='17' r='1.2' fill='%238b5e0a'/%3E%3Ccircle cx='35' cy='17' r='1.2' fill='%238b5e0a'/%3E%3Ccircle cx='49' cy='17' r='1.2' fill='%238b5e0a'/%3E%3C/svg%3E");
+  background-repeat:repeat-x;background-size:60px 20px;
+  margin:0;opacity:.8;
+}
+
+/* ─── ARTICLE LAYOUT ─── */
+.lede{
+  font-family:var(--serif);font-size:20px;font-weight:400;
+  line-height:1.5;color:var(--ink);
+  padding:32px 0 24px;
+  border-bottom:1px solid var(--rule);
+  margin-bottom:40px;
+}
+.lede em{font-style:italic;color:var(--red);}
+
+/* BODY TEXT */
+.body-text{
+  font-family:var(--serif);font-size:16px;line-height:1.8;
+  color:var(--ink);margin-bottom:20px;
+  max-width:680px;
+}
+.body-text strong{font-weight:600;}
+
+/* SECTION HEADER */
+.sec-header{
+  margin:60px 0 8px;
+  padding-top:32px;
+  border-top:2px solid var(--ink);
+}
+.sec-num{font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.sec-title{font-family:var(--display);font-size:clamp(28px,4.5vw,44px);font-weight:700;line-height:1;letter-spacing:-.5px;margin-bottom:20px;}
+.sec-title em{font-style:italic;color:var(--red);}
+
+/* PULLQUOTE */
+.pullquote{
+  border-left:4px solid var(--red);
+  padding:16px 24px;
+  margin:32px 0;
+  background:var(--cream);
+}
+.pullquote p{font-family:var(--display);font-size:18px;font-style:italic;line-height:1.5;color:var(--ink);}
+.pullquote cite{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--red);display:block;margin-top:8px;}
+
+/* ANNOTATION */
+.anno{
+  font-family:var(--mono);font-size:10px;color:var(--ink);opacity:.5;
+  text-align:right;margin-top:4px;letter-spacing:.5px;
+}
+
+/* VIZ FRAME */
+.viz{
+  margin:24px 0 16px;
+  background:white;
+  border:1px solid var(--rule);
+  padding:20px;
+  position:relative;
+}
+.viz-title{
+  font-family:var(--mono);font-size:9px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--ink);opacity:.5;
+  margin-bottom:16px;border-bottom:1px solid var(--ghost);padding-bottom:8px;
+}
+
+/* TOOLTIP */
+.tt{
+  position:fixed;background:var(--ink);color:var(--paper);
+  padding:8px 12px;font-family:var(--mono);font-size:10px;
+  pointer-events:none;z-index:999;display:none;
+  max-width:220px;line-height:1.6;
+}
+
+/* ─── VIZ 1: STACKED AREA HISTORY ─── */
+#hist-svg{width:100%;display:block;}
+
+/* ─── VIZ 2: PROPORTIONAL CIRCLES ─── */
+#prop-svg{width:100%;display:block;}
+
+/* ─── VIZ 3: WAFFLE ─── */
+.waffle-wrap{display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;}
+#wf-grid{display:grid;grid-template-columns:repeat(20,1fr);gap:2px;flex-shrink:0;width:min(400px,100%);}
+.wf-c{aspect-ratio:1;border-radius:1px;cursor:pointer;transition:transform .1s;}
+.wf-c:hover{transform:scale(1.6);z-index:5;position:relative;}
+#wf-leg{flex:1;min-width:200px;}
+.wl-r{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.wl-dot{width:14px;height:14px;border-radius:2px;flex-shrink:0;}
+.wl-name{font-family:var(--serif);font-size:13px;flex:1;}
+.wl-pct{font-family:var(--mono);font-size:10px;color:var(--ink);opacity:.6;}
+
+/* ─── VIZ 4: GENDER BARS ─── */
+#gen-svg{width:100%;display:block;}
+
+/* ─── VIZ 5: SLOPE CHART URBAN ─── */
+#urban-svg{width:100%;display:block;}
+
+/* ─── VIZ 6: REGION STRIP ─── */
+#reg-svg{width:100%;display:block;}
+
+/* ─── VIZ 7: CONCENTRATION DOTS ─── */
+#conc-svg{width:100%;display:block;}
+
+/* ─── VIZ 8: DISTRICT MATRIX ─── */
+.dm-wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.dm-col-title{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ink);opacity:.5;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--rule);}
+.dm-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.dm-rank{font-family:var(--mono);font-size:9px;color:var(--ink);opacity:.4;width:16px;flex-shrink:0;}
+.dm-info{flex:1;}
+.dm-name{font-family:var(--serif);font-size:11px;line-height:1.2;}
+.dm-reg{font-family:var(--mono);font-size:9px;color:var(--ink);opacity:.45;}
+.dm-bar-bg{height:6px;background:var(--ghost);overflow:hidden;margin-top:3px;}
+.dm-bar-fg{height:100%;transition:width 1.2s cubic-bezier(.16,1,.3,1);}
+.dm-pct{font-family:var(--mono);font-size:10px;font-weight:500;flex-shrink:0;width:38px;text-align:right;}
+
+/* ─── VIZ 9: SMALL MULTIPLES ─── */
+.sm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.sm-cell{padding:14px 12px;background:white;border:1px solid var(--rule);}
+.sm-eth{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--ink);opacity:.6;margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.sm-bar-bg{height:4px;background:var(--ghost);overflow:hidden;margin-bottom:6px;}
+.sm-bar-fg{height:100%;}
+.sm-n{font-family:var(--display);font-size:22px;font-weight:700;line-height:1;}
+.sm-tag{font-family:var(--mono);font-size:8px;color:var(--ink);opacity:.45;}
+
+/* ─── VIZ 10: BUBBLE ALL ETHNICITIES ─── */
+#bubble-svg{width:100%;display:block;}
+.bleg{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;}
+.bl-i{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9px;color:var(--ink);opacity:.7;}
+.bl-d{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* ─── CONCLUSION ─── */
+.conclusion{
+  margin:60px 0 0;
+  padding:40px 0 60px;
+  border-top:3px double var(--ink);
+}
+.conc-title{
+  font-family:var(--display);font-size:clamp(28px,4vw,42px);
+  font-weight:700;font-style:italic;
+  line-height:1.1;margin-bottom:24px;
+}
+.conc-body{
+  font-family:var(--serif);font-size:15px;
+  line-height:1.8;color:var(--ink);
+  column-count:2;column-gap:40px;
+  margin-bottom:40px;
+}
+.conc-body p{margin-bottom:16px;}
+
+/* HOME BUTTON */
+.home-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:10px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--paper);
+  background:var(--ink);padding:14px 24px;
+  text-decoration:none;
+  border:2px solid var(--ink);
+  transition:all .2s;
+  margin-top:8px;
+}
+.home-btn:hover{background:var(--red);border-color:var(--red);}
+
+/* FOOTER */
+.ft{
+  border-top:1px solid var(--rule);margin-top:40px;
+  padding:20px 0;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:12px;
+}
+.ft-src{font-family:var(--mono);font-size:9px;color:var(--ink);opacity:.5;line-height:1.8;}
+
+/* REVEAL */
+.rev{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+.rev.in{opacity:1;transform:none;}
+
+/* SMALL CAPS LABEL */
+.sc{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--red);}
+
+/* FIXED TOP NAV */
+.nav{
+  position:sticky;top:2px;z-index:120;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  margin:0 -24px;padding:10px 24px;
+  background:rgba(248,245,239,.94);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+}
+.nav-logo{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink);white-space:nowrap;}
+.nav-pills{display:flex;align-items:center;justify-content:flex-end;gap:4px;flex-wrap:wrap;}
+.npill{font-family:var(--mono);font-size:9px;letter-spacing:.7px;text-transform:uppercase;color:var(--ink);opacity:.62;padding:5px 7px;cursor:pointer;border:1px solid transparent;transition:all .18s;}
+.npill:hover{opacity:1;color:var(--red);border-color:var(--rule);background:var(--cream);}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;text-align:center;padding:58px 0 54px;border-bottom:1px solid var(--rule);background:linear-gradient(180deg,#fbf8f1 0%,var(--paper) 72%);}
+.hero-bg-pattern{position:absolute;inset:0;opacity:.08;background-image:radial-gradient(circle at 1px 1px,var(--ink) 1px,transparent 0);background-size:18px 18px;pointer-events:none;}
+.hero-ornament{position:absolute;left:50%;top:18px;transform:translateX(-50%);width:72px;height:1px;background:var(--red);opacity:.6;}
+.tag{position:relative;font-family:var(--mono);font-size:10px;letter-spacing:2.2px;text-transform:uppercase;color:var(--red);margin-bottom:16px;}
+.hero h1{position:relative;font-family:var(--display);font-size:clamp(54px,10vw,116px);font-weight:900;line-height:.82;letter-spacing:-2.5px;color:var(--ink);margin:0 auto 26px;}
+.hero h1 em{font-style:italic;color:var(--red);}
+.kpis{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 auto 24px;max-width:760px;border-top:3px double var(--ink);border-bottom:3px double var(--ink);padding:18px 0;}
+.kpis>div{border-right:1px solid var(--rule);padding:0 8px;}
+.kpis>div:last-child{border-right:0;}
+.kpi-n{font-family:var(--display);font-size:clamp(30px,5vw,54px);font-weight:900;line-height:1;color:var(--ink);}
+.kpi-l{font-family:var(--mono);font-size:9px;letter-spacing:1.7px;text-transform:uppercase;color:var(--ink);opacity:.58;margin-top:5px;}
+.hero-desc{position:relative;font-size:18px;line-height:1.55;max-width:650px;margin:0 auto;color:var(--ink);opacity:.78;}
+.scroll-cue{position:relative;margin-top:22px;font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ink);opacity:.42;}
+.ins{font-family:var(--serif);font-size:15px;line-height:1.6;margin:12px 0;padding:14px 18px;background:white;border-left:4px solid var(--gold);border-top:1px solid var(--rule);border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);}
+.ins.blue{border-left-color:var(--blue);}.ins.gold{border-left-color:var(--gold);}
+@media(max-width:720px){body{padding:0 14px;border:none}.nav{margin:0 -14px;padding:8px 14px;display:block}.nav-logo{margin-bottom:6px}.nav-pills{justify-content:flex-start}.npill{font-size:8px;padding:4px 5px}.hero{padding:42px 0}.kpis{grid-template-columns:repeat(2,1fr);gap:0}.kpis>div{padding:12px 8px;border-bottom:1px solid var(--rule)}.kpis>div:nth-child(2n){border-right:0}.kpis>div:nth-last-child(-n+2){border-bottom:0}.dm-wrap,.sm-grid{grid-template-columns:1fr}.conc-body{column-count:1}.viz{padding:14px;overflow-x:auto}.hero h1{letter-spacing:-1px}}
+
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+<nav class="nav">
+  <div class="nav-logo">🇰🇿 <span id="el-navlogo">НАРОДЫ КЗ · 2026</span></div>
+  <div class="nav-pills">
+    <span class="npill" onclick="document.getElementById('s1').scrollIntoView({behavior:'smooth'})" id="np1">Состав</span>
+    <span class="npill" onclick="document.getElementById('s2').scrollIntoView({behavior:'smooth'})" id="np2">100 чел.</span>
+    <span class="npill" onclick="document.getElementById('s3').scrollIntoView({behavior:'smooth'})" id="np3">Пол</span>
+    <span class="npill" onclick="document.getElementById('s4').scrollIntoView({behavior:'smooth'})" id="np4">Город</span>
+    <span class="npill" onclick="document.getElementById('s5').scrollIntoView({behavior:'smooth'})" id="np5">Регионы</span>
+    <span class="npill" onclick="document.getElementById('s6').scrollIntoView({behavior:'smooth'})" id="np6">Районы</span>
+  </div>
+</nav>
+
+<div class="orn"><svg viewBox="0 0 800 20" preserveAspectRatio="none" style="width:100%;height:20px"><defs><pattern id="orp" x="0" y="0" width="60" height="20" patternUnits="userSpaceOnUse"><path d="M0 10 L7 3 L14 10 L21 3 L28 10 L35 3 L42 10 L49 3 L56 10" fill="none" stroke="#9b2020" stroke-width="1"/><path d="M0 10 L7 17 L14 10 L21 17 L28 10 L35 17 L42 10 L49 17 L56 10" fill="none" stroke="#8b5e0a" stroke-width="1"/><circle cx="7" cy="3" r="1.2" fill="#9b2020"/><circle cx="21" cy="3" r="1.2" fill="#9b2020"/><circle cx="35" cy="3" r="1.2" fill="#9b2020"/><circle cx="49" cy="3" r="1.2" fill="#9b2020"/><circle cx="7" cy="17" r="1.2" fill="#8b5e0a"/><circle cx="21" cy="17" r="1.2" fill="#8b5e0a"/><circle cx="35" cy="17" r="1.2" fill="#8b5e0a"/><circle cx="49" cy="17" r="1.2" fill="#8b5e0a"/></pattern></defs><rect width="100%" height="20" fill="url(#orp)"/></svg></div>
+
+<!-- LANG BAR -->
+<div class="lang-bar">
+  <button class="lbtn" id="btn-kz" onclick="setLang('kz')">ҚАЗ</button>
+  <button class="lbtn active" id="btn-ru" onclick="setLang('ru')">РУС</button>
+  <button class="lbtn" id="btn-en" onclick="setLang('en')">ENG</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-ornament"></div>
+  <div class="tag" id="el-tag">1 Мая · День единства народов Казахстана</div>
+  <h1 id="el-h1">НАРОДЫ<br><em>КАЗАХСТАНА</em></h1>
+  <div class="kpis">
+    <div><div class="kpi-n">72</div><div class="kpi-l" id="el-kpi-eth">этноса</div></div>
+    <div><div class="kpi-n">20.5М</div><div class="kpi-l" id="el-kpi-pop">человек</div></div>
+    <div><div class="kpi-n">71.5%</div><div class="kpi-l" id="el-kpi-kaz">казахи</div></div>
+    <div><div class="kpi-n">228</div><div class="kpi-l" id="el-kpi-dist">районов</div></div>
+  </div>
+  <p class="hero-desc" id="el-desc">Казахстан входит в число самых многонациональных государств Центральной Азии. На начало 2026 года здесь зарегистрированы представители 72 этносов.</p>
+  <div class="scroll-cue" id="el-scroll-cue">↓ прокрутить</div>
+</section>
+
+<div class="orn"><svg viewBox="0 0 800 20" preserveAspectRatio="none" style="width:100%;height:20px"><rect width="100%" height="20" fill="url(#orp)"/></svg></div>
+
+<!-- LEDE -->
+<p class="lede rev" id="el-lede">На начало 2026 года в Казахстане проживают представители <em>72 этносов</em>. Общая численность населения — 20,5 миллиона человек. Казахи составляют 71,5%, что вдвое больше, чем в 1989 году.</p>
+
+<!-- VIZ 1 -->
+<div class="sec-header rev" id="s1">
+  <div class="sec-num" id="el-v1-num">Визуал 01</div>
+  <h2 class="sec-title" id="el-v1-title">Тридцать лет<br><em>перемен</em></h2>
+</div>
+<p class="body-text rev" id="el-v1-body">В 1989 году казахов было 39,7%, русских — 37,8%. За два следующих десятилетия соотношение перевернулось. К 2026 году доля русских снизилась почти втрое — с 37,8% до 14,4%.</p>
+<div class="viz rev">
+  <div class="viz-title" id="el-v1-chart">Изменение этнического состава 1989–2026, % от населения</div>
+  <svg id="hist-svg"></svg>
+  <div class="anno" id="el-v1-anno">Источник: переписи 1989, 1999, 2009, 2021; данные БНС на 2026</div>
+</div>
+<p class="body-text rev" id="el-v1-after">Рост доли казахов не остановился. Между переписями 2009 и 2021 годов она выросла с 63,1% до 69%. За следующие пять лет — ещё на 2,5 процентных пункта.</p>
+
+<!-- VIZ 2 -->
+<div class="sec-header rev">
+  <div class="sec-num" id="el-v2-num">Визуал 02</div>
+  <h2 class="sec-title" id="el-v2-title">Масштаб<br><em>присутствия</em></h2>
+</div>
+<p class="body-text rev" id="el-v2-body">Площадь каждого круга строго пропорциональна численности этноса. Казахи вынесены отдельно: рядом с ними все остальные народы занимают лишь 28,5% площади.</p>
+<div class="viz rev">
+  <div class="viz-title" id="el-v2-chart">Численность этносов — площадь круга пропорциональна населению</div>
+  <svg id="prop-svg"></svg>
+  <div class="bleg" id="bleg"></div>
+  <div class="anno" id="el-v2-anno">Все 72 этноса; размер = численность; цвет = языковая группа</div>
+</div>
+
+<!-- VIZ 3 -->
+<div class="sec-header rev" id="s2">
+  <div class="sec-num" id="el-v3-num">Визуал 03</div>
+  <h2 class="sec-title" id="el-v3-title">100<br><em>казахстанцев</em></h2>
+</div>
+<p class="body-text rev" id="el-v3-body">Если взять 100 случайных жителей Казахстана: 71 из них — казахи, 14 — русские, 3 — узбеки, 2 — уйгуры, 2 — украинцы. Оставшиеся 8 — это 67 других народов.</p>
+<div class="viz rev">
+  <div class="viz-title" id="el-v3-chart">100 казахстанцев — каждая клетка один человек</div>
+  <div class="waffle-wrap">
+    <div id="wf-grid"></div>
+    <div id="wf-leg"></div>
+  </div>
+  <div class="anno" id="el-v3-anno">Нажмите на клетку</div>
+</div>
+
+<!-- VIZ 4 -->
+<div class="sec-header rev" id="s3">
+  <div class="sec-num" id="el-v4-num">Визуал 04</div>
+  <h2 class="sec-title" id="el-v4-title">Гендерный<br><em>баланс</em></h2>
+</div>
+<p class="body-text rev" id="el-v4-body">В целом по Казахстану женщин незначительно больше — 51,3%. Грузины — 57,3% мужчин. Таджики — 54,2%. Армяне — 53,7%. У каракалпаков — 59,5% женщин.</p>
+<div class="viz rev">
+  <div class="viz-title" id="el-v4-chart">Доля мужчин в каждом этносе, % — вертикальная линия 50%</div>
+  <svg id="gen-svg"></svg>
+  <div class="anno" id="el-v4-anno">Этносы численностью более 5 000 человек</div>
+</div>
+<div class="ins gold" id="el-v4-ins1">Грузины и таджики имеют аномально высокую долю мужчин — признак трудовой миграции: люди приезжают без семьи.</div>
+<div class="ins blue" id="el-v4-ins2">У каракалпаков 59,5% женщин — зеркальный эффект: мужчины уехали на заработки, женщины остались.</div>
+
+<!-- VIZ 5 -->
+<div class="sec-header rev" id="s4">
+  <div class="sec-num" id="el-v5-num">Визуал 05</div>
+  <h2 class="sec-title" id="el-v5-title">Город<br><em>и аул</em></h2>
+</div>
+<p class="body-text rev" id="el-v5-body">Корейцы — самый урбанизированный народ Казахстана: 87,8% живут в городах. На противоположном полюсе — таджики: лишь 31,3% горожан.</p>
+<div class="pullquote rev">
+  <p id="el-v5-quote">«Разрыв между самым городским и самым сельским этносом Казахстана — 56 процентных пунктов»</p>
+  <cite id="el-v5-cite">Данные БНС РК, 2026</cite>
+</div>
+<div class="viz rev">
+  <div class="viz-title" id="el-v5-chart">Доля городского населения по этносам, % — сортировка убывающая</div>
+  <svg id="urban-svg"></svg>
+  <div class="anno" id="el-v5-anno">Этносы численностью более 5 000 человек</div>
+</div>
+<p class="body-text rev" id="el-v5-after">Немцы находятся в середине списка: 73,3% горожан. Несмотря на массовый отъезд в Германию, оставшиеся осели преимущественно в городах Северного Казахстана.</p>
+
+<!-- VIZ 6 -->
+<div class="sec-header rev" id="s5">
+  <div class="sec-num" id="el-v6-num">Визуал 06</div>
+  <h2 class="sec-title" id="el-v6-title">Казахи<br><em>по регионам</em></h2>
+</div>
+<p class="body-text rev" id="el-v6-body">Разброс между регионами — почти 60 процентных пунктов. В Кызылординской области казахи составляют 96,3%. В Северо-Казахстанской — 37,5% — единственный регион, где русских больше.</p>
+<div class="viz rev">
+  <div class="viz-title" id="el-v6-chart">Доля казахов по регионам, % — отсортировано убывающе</div>
+  <svg id="reg-svg"></svg>
+  <div class="anno" id="el-v6-anno">Голубая полоса справа — доля русских в том же регионе</div>
+</div>
+
+<!-- VIZ 7 -->
+<div class="sec-header rev">
+  <div class="sec-num" id="el-v7-num">Визуал 07</div>
+  <h2 class="sec-title" id="el-v7-title">Где<br><em>сосредоточены</em></h2>
+</div>
+<p class="body-text rev" id="el-v7-body">Дунгане: 67,9% общины в Жамбылской области. Узбеки — 58,2% в Туркестанской. Таджики — 67% там же. Казахи — самый равномерно распределённый народ.</p>
+<div class="viz rev">
+  <div class="viz-title" id="el-v7-chart">Доля этноса, проживающая в одном регионе, %</div>
+  <svg id="conc-svg"></svg>
+  <div class="anno" id="el-v7-anno">Концентрация = % народа в регионе максимального присутствия</div>
+</div>
+
+<!-- VIZ 8 -->
+<div class="sec-header rev" id="s6">
+  <div class="sec-num" id="el-v8-num">Визуал 08</div>
+  <h2 class="sec-title" id="el-v8-title">228 районов:<br><em>крайние точки</em></h2>
+</div>
+<p class="body-text rev" id="el-v8-body">Риддер ВКО — 73,7% русских. Кзылкогинский район Атырауской — 99,8% казахов. Сайрамский район — 67,7% узбеков. Уйгурский район — 56,1% уйгуров.</p>
+<div class="viz rev">
+  <div class="viz-title" id="el-v8-chart">Районы с наибольшей долей отдельных этносов</div>
+  <div class="dm-wrap" id="dm-wrap"></div>
+  <div class="anno" id="el-v8-anno">Данные по 228 районам и городским администрациям</div>
+</div>
+
+<!-- VIZ 9 -->
+<div class="sec-header rev">
+  <div class="sec-num" id="el-v9-num">Визуал 09</div>
+  <h2 class="sec-title" id="el-v9-title">Малые<br><em>народы</em></h2>
+</div>
+<p class="body-text rev" id="el-v9-body">Греки, евреи, поляки, ингуши, осетины, балкарцы, ассирийцы, саха, коми — каждый народ со своей историей в Казахстане. Большинство — наследие советских депортаций 1930–1950-х годов.</p>
+<div class="viz rev">
+  <div class="viz-title" id="el-v9-chart">Этносы численностью менее 100 000 человек</div>
+  <div class="sm-grid" id="sm-grid"></div>
+  <div class="anno" id="el-v9-anno">Все значения — на начало 2026 года</div>
+</div>
+
+<!-- VIZ 10 -->
+<div class="sec-header rev">
+  <div class="sec-num" id="el-v10-num">Визуал 10</div>
+  <h2 class="sec-title" id="el-v10-title">Четыре<br><em>измерения</em></h2>
+</div>
+<p class="body-text rev" id="el-v10-body">У каждого народа — своя комбинация четырёх характеристик: доля горожан, гендерный баланс, концентрация в одном регионе и численность. Нажмите на этнос чтобы выделить.</p>
+<div class="viz rev" style="overflow:visible">
+  <div class="viz-title" id="el-v10-chart">16 крупнейших этносов — 4 показателя сравнения</div>
+  <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:14px;font-family:var(--mono);font-size:9px;color:var(--ink);opacity:.6">
+    <span style="color:#1a4d2e">■ <span id="el-axis-urban">Горожане %</span></span>
+    <span style="color:#9b2020">■ <span id="el-axis-male">Мужчины %</span></span>
+    <span style="color:#4a1e6b">■ <span id="el-axis-conc">Концентрация %</span></span>
+    <span style="color:#8b5e0a">■ <span id="el-axis-size">Численность</span></span>
+  </div>
+  <div id="eth-selector" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px"></div>
+  <svg id="multiaxis-svg" style="width:100%;display:block"></svg>
+  <div class="anno" id="el-v10-anno">Нажмите на этнос чтобы выделить.</div>
+</div>
+
+<div class="orn" style="margin:40px 0 0"><svg viewBox="0 0 800 20" preserveAspectRatio="none" style="width:100%;height:20px"><rect width="100%" height="20" fill="url(#orp)"/></svg></div>
+
+<!-- CONCLUSION -->
+<div class="conclusion rev">
+  <h2 class="conc-title" id="el-conc-h">Казахстан — это не монолит. <em>Это 72 истории.</em></h2>
+  <div class="conc-body">
+    <p id="el-conc-p1">За тридцать лет независимости этническая карта страны изменилась радикально. Казахи стали большинством, которого у них не было с советских времён.</p>
+    <p id="el-conc-p2">Но 28,5% населения — это почти 5,8 миллиона человек, принадлежащих к 71 другому народу. Они живут здесь поколениями.</p>
+    <p id="el-conc-p3">Уровень городской концентрации, гендерный баланс, компактность проживания — всё это разные истории: депортаций, трудовой миграции, исторического расселения, выбора.</p>
+    <p id="el-conc-p4">1 мая — День единства народов Казахстана. Это 72 народа, живущие в одной стране. И цифры это подтверждают.</p>
+  </div>
+  <a href="https://nurasyl.space" class="home-btn" id="el-home-btn">← вернуться на nurasyl.space</a>
+</div>
+
+<div class="orn"><svg viewBox="0 0 800 20" preserveAspectRatio="none" style="width:100%;height:20px"><rect width="100%" height="20" fill="url(#orp)"/></svg></div>
+<footer class="ft">
+  <div class="ft-src">
+    <span id="el-footer-src">Источник: Бюро национальной статистики РК</span><br>
+    <span id="el-footer-src2">Численность населения по отдельным этносам, начало 2026 г.</span><br>
+    <span id="el-footer-src3">Визуализация и анализ: nurasyl.space</span>
+  </div>
+  <div style="font-family:var(--mono);font-size:9px;color:var(--ink);opacity:.4;text-align:right" id="el-footer-date">1 мая · День единства<br>народов Казахстана 🇰🇿</div>
+</footer>
+
+<div class="tt" id="tt"></div>
+
+<script>
+const R={"eth":[{"num":"2","ethnicity":"Казахи","total":14664202,"male":7257166,"female":7407036,"urban":9024825,"rural":5639377,"pct":71.5333,"urban_pct":61.5},{"num":"3","ethnicity":"Русские","total":2943022,"male":1347767,"female":1595255,"urban":2276120,"rural":666902,"pct":14.3563,"urban_pct":77.3},{"num":"4","ethnicity":"Узбеки","total":695557,"male":347861,"female":347696,"urban":366355,"rural":329202,"pct":3.393,"urban_pct":52.7},{"num":"5","ethnicity":"Украинцы","total":367547,"male":166559,"female":200988,"urban":246331,"rural":121216,"pct":1.7929,"urban_pct":67.0},{"num":"6","ethnicity":"Уйгуры","total":309164,"male":152471,"female":156693,"urban":173511,"rural":135653,"pct":1.5081,"urban_pct":56.1},{"num":"7","ethnicity":"Немцы","total":222890,"male":105841,"female":117049,"urban":138891,"rural":83999,"pct":1.0873,"urban_pct":62.3},{"num":"8","ethnicity":"Татары","total":218361,"male":99629,"female":118732,"urban":175821,"rural":42540,"pct":1.0652,"urban_pct":80.5},{"num":"9","ethnicity":"Азербайджанцы","total":157568,"male":81162,"female":76406,"urban":93578,"rural":63990,"pct":0.7686,"urban_pct":59.4},{"num":"10","ethnicity":"Корейцы","total":120821,"male":58027,"female":62794,"urban":106117,"rural":14704,"pct":0.5894,"urban_pct":87.8},{"num":"11","ethnicity":"Турки","total":93234,"male":49472,"female":43762,"urban":42167,"rural":51067,"pct":0.4548,"urban_pct":45.2},{"num":"12","ethnicity":"Дунгане","total":88165,"male":44290,"female":43875,"urban":35195,"rural":52970,"pct":0.4301,"urban_pct":39.9},{"num":"13","ethnicity":"Белорусы","total":73788,"male":33803,"female":39985,"urban":47884,"rural":25904,"pct":0.3599,"urban_pct":64.9},{"num":"14","ethnicity":"Таджики","total":61307,"male":33202,"female":28105,"urban":19205,"rural":42102,"pct":0.2991,"urban_pct":31.3},{"num":"15","ethnicity":"Курды","total":52077,"male":26333,"female":25744,"urban":22125,"rural":29952,"pct":0.254,"urban_pct":42.5},{"num":"16","ethnicity":"Кыргызы","total":41459,"male":17555,"female":23904,"urban":29257,"rural":12202,"pct":0.2022,"urban_pct":70.6},{"num":"17","ethnicity":"Чеченцы","total":35436,"male":18784,"female":16652,"urban":21858,"rural":13578,"pct":0.1729,"urban_pct":61.7},{"num":"18","ethnicity":"Поляки","total":33928,"male":15779,"female":18149,"urban":20122,"rural":13806,"pct":0.1655,"urban_pct":59.3},{"num":"19","ethnicity":"Каракалпаки","total":32189,"male":13050,"female":19139,"urban":12809,"rural":19380,"pct":0.157,"urban_pct":39.8},{"num":"20","ethnicity":"Башкиры","total":20229,"male":9019,"female":11210,"urban":14548,"rural":5681,"pct":0.0987,"urban_pct":71.9},{"num":"21","ethnicity":"Ингуши","total":18187,"male":9408,"female":8779,"urban":15302,"rural":2885,"pct":0.0887,"urban_pct":84.1},{"num":"22","ethnicity":"Молдаване","total":17107,"male":8015,"female":9092,"urban":11420,"rural":5687,"pct":0.0834,"urban_pct":66.8},{"num":"23","ethnicity":"Армяне","total":16379,"male":8803,"female":7576,"urban":13718,"rural":2661,"pct":0.0799,"urban_pct":83.8},{"num":"24","ethnicity":"Греки","total":12065,"male":5868,"female":6197,"urban":8977,"rural":3088,"pct":0.0589,"urban_pct":74.4},{"num":"25","ethnicity":"Мордва","total":9392,"male":4092,"female":5300,"urban":6757,"rural":2635,"pct":0.0458,"urban_pct":71.9},{"num":"26","ethnicity":"Чуваши","total":8056,"male":3540,"female":4516,"urban":5719,"rural":2337,"pct":0.0393,"urban_pct":71.0},{"num":"27","ethnicity":"Удмурты","total":6503,"male":2705,"female":3798,"urban":3658,"rural":2845,"pct":0.0317,"urban_pct":56.3},{"num":"28","ethnicity":"Грузины","total":5874,"male":3368,"female":2506,"urban":4826,"rural":1048,"pct":0.0287,"urban_pct":82.2},{"num":"29","ethnicity":"Болгары","total":5784,"male":2642,"female":3142,"urban":4502,"rural":1282,"pct":0.0282,"urban_pct":77.8},{"num":"30","ethnicity":"Литовцы","total":5608,"male":2598,"female":3010,"urban":4010,"rural":1598,"pct":0.0274,"urban_pct":71.5},{"num":"31","ethnicity":"Лезгины","total":5290,"male":2698,"female":2592,"urban":4665,"rural":625,"pct":0.0258,"urban_pct":88.2},{"num":"32","ethnicity":"Марийцы","total":5280,"male":2236,"female":3044,"urban":3207,"rural":2073,"pct":0.0258,"urban_pct":60.7},{"num":"33","ethnicity":"Цыгане","total":4516,"male":2178,"female":2338,"urban":3375,"rural":1141,"pct":0.022,"urban_pct":74.7},{"num":"34","ethnicity":"Евреи","total":4067,"male":1982,"female":2085,"urban":3779,"rural":288,"pct":0.0198,"urban_pct":92.9},{"num":"35","ethnicity":"Китайцы","total":3484,"male":1814,"female":1670,"urban":2920,"rural":564,"pct":0.017,"urban_pct":83.8},{"num":"36","ethnicity":"Туркмены","total":3275,"male":1666,"female":1609,"urban":2038,"rural":1237,"pct":0.016,"urban_pct":62.2},{"num":"37","ethnicity":"Балкарцы","total":2459,"male":1214,"female":1245,"urban":1569,"rural":890,"pct":0.012,"urban_pct":63.8},{"num":"38","ethnicity":"Осетины","total":1863,"male":980,"female":883,"urban":1581,"rural":282,"pct":0.0091,"urban_pct":84.9},{"num":"39","ethnicity":"Карачаевцы","total":1846,"male":887,"female":959,"urban":1007,"rural":839,"pct":0.009,"urban_pct":54.6},{"num":"40","ethnicity":"Аварцы","total":1574,"male":911,"female":663,"urban":1204,"rural":370,"pct":0.0077,"urban_pct":76.5},{"num":"41","ethnicity":"Афганцы","total":1406,"male":878,"female":528,"urban":1240,"rural":166,"pct":0.0069,"urban_pct":88.2},{"num":"42","ethnicity":"Латышы","total":1183,"male":581,"female":602,"urban":901,"rural":282,"pct":0.0058,"urban_pct":76.2},{"num":"43","ethnicity":"Эстонцы","total":1081,"male":465,"female":616,"urban":851,"rural":230,"pct":0.0053,"urban_pct":78.7},{"num":"44","ethnicity":"Даргинцы","total":1073,"male":581,"female":492,"urban":855,"rural":218,"pct":0.0052,"urban_pct":79.7},{"num":"45","ethnicity":"Кумыки","total":1025,"male":548,"female":477,"urban":701,"rural":324,"pct":0.005,"urban_pct":68.4},{"num":"46","ethnicity":"Румыны","total":893,"male":449,"female":444,"urban":659,"rural":234,"pct":0.0044,"urban_pct":73.8},{"num":"47","ethnicity":"Коми-пермяки","total":796,"male":317,"female":479,"urban":470,"rural":326,"pct":0.0039,"urban_pct":59.0},{"num":"48","ethnicity":"Народы Индии и Пакистана","total":795,"male":638,"female":157,"urban":752,"rural":43,"pct":0.0039,"urban_pct":94.6},{"num":"49","ethnicity":"Калмыки","total":734,"male":353,"female":381,"urban":536,"rural":198,"pct":0.0036,"urban_pct":73.0},{"num":"50","ethnicity":"Арабы","total":718,"male":498,"female":220,"urban":628,"rural":90,"pct":0.0035,"urban_pct":87.5},{"num":"52","ethnicity":"Гагаузы","total":588,"male":275,"female":313,"urban":428,"rural":160,"pct":0.0029,"urban_pct":72.8},{"num":"51","ethnicity":"Караимы","total":586,"male":340,"female":246,"urban":533,"rural":53,"pct":0.0029,"urban_pct":91.0},{"num":"54","ethnicity":"Буряты","total":533,"male":219,"female":314,"urban":477,"rural":56,"pct":0.0026,"urban_pct":89.5},{"num":"53","ethnicity":"Ногайцы","total":510,"male":221,"female":289,"urban":423,"rural":87,"pct":0.0025,"urban_pct":82.9},{"num":"55","ethnicity":"Венгры","total":496,"male":245,"female":251,"urban":323,"rural":173,"pct":0.0024,"urban_pct":65.1},{"num":"57","ethnicity":"Американцы","total":455,"male":268,"female":187,"urban":428,"rural":27,"pct":0.0022,"urban_pct":94.1},{"num":"56","ethnicity":"Финны","total":431,"male":205,"female":226,"urban":349,"rural":82,"pct":0.0021,"urban_pct":81.0},{"num":"58","ethnicity":"Чехи","total":431,"male":220,"female":211,"urban":334,"rural":97,"pct":0.0021,"urban_pct":77.5},{"num":"59","ethnicity":"Табасараны","total":426,"male":239,"female":187,"urban":328,"rural":98,"pct":0.0021,"urban_pct":77.0},{"num":"60","ethnicity":"Татары крымские","total":401,"male":182,"female":219,"urban":218,"rural":183,"pct":0.002,"urban_pct":54.4},{"num":"61","ethnicity":"Алтайцы","total":396,"male":148,"female":248,"urban":308,"rural":88,"pct":0.0019,"urban_pct":77.8},{"num":"62","ethnicity":"Удины","total":384,"male":190,"female":194,"urban":351,"rural":33,"pct":0.0019,"urban_pct":91.4},{"num":"63","ethnicity":"Кабардинцы","total":375,"male":194,"female":181,"urban":261,"rural":114,"pct":0.0018,"urban_pct":69.6},{"num":"65","ethnicity":"Лакцы","total":369,"male":148,"female":221,"urban":323,"rural":46,"pct":0.0018,"urban_pct":87.5},{"num":"64","ethnicity":"Персы","total":362,"male":204,"female":158,"urban":243,"rural":119,"pct":0.0018,"urban_pct":67.1},{"num":"66","ethnicity":"Итальянцы","total":355,"male":242,"female":113,"urban":328,"rural":27,"pct":0.0017,"urban_pct":92.4},{"num":"69","ethnicity":"Саха(Якуты)","total":353,"male":158,"female":195,"urban":312,"rural":41,"pct":0.0017,"urban_pct":88.4},{"num":"68","ethnicity":"Хакасы","total":332,"male":104,"female":228,"urban":260,"rural":72,"pct":0.0016,"urban_pct":78.3},{"num":"67","ethnicity":"Ассирийцы","total":329,"male":163,"female":166,"urban":299,"rural":30,"pct":0.0016,"urban_pct":90.9},{"num":"71","ethnicity":"Монголы","total":242,"male":114,"female":128,"urban":174,"rural":68,"pct":0.0012,"urban_pct":71.9},{"num":"70","ethnicity":"Коми","total":240,"male":90,"female":150,"urban":160,"rural":80,"pct":0.0012,"urban_pct":66.7},{"num":"72","ethnicity":"Не указавшие","total":71614,"male":44991,"female":26623,"urban":69665,"rural":1949,"pct":0.3493,"urban_pct":97.3},{"num":"73","ethnicity":"Другие национальности","total":40357,"male":20840,"female":19517,"urban":30039,"rural":10318,"pct":0.1969,"urban_pct":74.4}],"regions":[{"region":"Абай","total":595720,"kazakh":471846,"kazakh_pct":79.2,"russian":93294,"russian_pct":15.7,"dominant":"Казахи","dominant_n":471846,"top5":[["Казахи",471846],["Русские",93294],["Татары",10837],["Немцы",8277],["Украинцы",3037]]},{"region":"Акмолинская","total":789608,"kazakh":451747,"kazakh_pct":57.2,"russian":205046,"russian_pct":26.0,"dominant":"Казахи","dominant_n":451747,"top5":[["Казахи",451747],["Русские",205046],["Украинцы",38228],["Немцы",29629],["Татары",13454]]},{"region":"Актюбинская","total":955970,"kazakh":820488,"kazakh_pct":85.8,"russian":67643,"russian_pct":7.1,"dominant":"Казахи","dominant_n":820488,"top5":[["Казахи",820488],["Русские",67643],["Украинцы",30699],["Татары",9856],["Немцы",7029]]},{"region":"Алматинская","total":1596532,"kazakh":1176248,"kazakh_pct":73.7,"russian":149401,"russian_pct":9.4,"dominant":"Казахи","dominant_n":1176248,"top5":[["Казахи",1176248],["Русские",149401],["Уйгуры",122212],["Азербайджанцы",32217],["Турки",26216]]},{"region":"Атырауская","total":716071,"kazakh":665824,"kazakh_pct":93.0,"russian":29783,"russian_pct":4.2,"dominant":"Казахи","dominant_n":665824,"top5":[["Казахи",665824],["Русские",29783],["Корейцы",3738],["Татары",3242],["Каракалпаки",2111]]},{"region":"Западно-Казахстанская","total":695649,"kazakh":549334,"kazakh_pct":79.0,"russian":108640,"russian_pct":15.6,"dominant":"Казахи","dominant_n":549334,"top5":[["Казахи",549334],["Русские",108640],["Украинцы",12559],["Татары",9295],["Белорусы",2333]]},{"region":"Жамбылская","total":1215656,"kazakh":908227,"kazakh_pct":74.7,"russian":84813,"russian_pct":7.0,"dominant":"Казахи","dominant_n":908227,"top5":[["Казахи",908227],["Русские",84813],["Дунгане",59879],["Турки",31018],["Узбеки",30381]]},{"region":"Жетісу","total":687701,"kazakh":524065,"kazakh_pct":76.2,"russian":80207,"russian_pct":11.7,"dominant":"Казахи","dominant_n":524065,"top5":[["Казахи",524065],["Русские",80207],["Уйгуры",45146],["Корейцы",9162],["Татары",6739]]},{"region":"Карагандинская","total":1131353,"kazakh":602671,"kazakh_pct":53.3,"russian":349406,"russian_pct":30.9,"dominant":"Казахи","dominant_n":602671,"top5":[["Казахи",602671],["Русские",349406],["Украинцы",43435],["Немцы",34672],["Татары",26972]]},{"region":"Костанайская","total":821473,"kazakh":365766,"kazakh_pct":44.5,"russian":275407,"russian_pct":33.5,"dominant":"Казахи","dominant_n":365766,"top5":[["Казахи",365766],["Русские",275407],["Украинцы",83560],["Немцы",30368],["Белорусы",15825]]},{"region":"Кызылординская","total":846312,"kazakh":815071,"kazakh_pct":96.3,"russian":12059,"russian_pct":1.4,"dominant":"Казахи","dominant_n":815071,"top5":[["Казахи",815071],["Русские",12059],["Корейцы",7753],["Узбеки",2299],["Татары",2020]]},{"region":"Мангистауская","total":819824,"kazakh":750181,"kazakh_pct":91.5,"russian":30893,"russian_pct":3.8,"dominant":"Казахи","dominant_n":750181,"top5":[["Казахи",750181],["Русские",30893],["Каракалпаки",8380],["Азербайджанцы",6411],["Узбеки",3500]]},{"region":"Павлодарская","total":745243,"kazakh":423557,"kazakh_pct":56.8,"russian":215840,"russian_pct":29.0,"dominant":"Казахи","dominant_n":423557,"top5":[["Казахи",423557],["Русские",215840],["Украинцы",38881],["Немцы",23545],["Татары",14022]]},{"region":"Северо-Казахстанская","total":514132,"kazakh":192684,"kazakh_pct":37.5,"russian":229295,"russian_pct":44.6,"dominant":"Русские","dominant_n":229295,"top5":[["Русские",229295],["Казахи",192684],["Украинцы",27511],["Немцы",21378],["Татары",11353]]},{"region":"Туркестанская","total":2149205,"kazakh":1600808,"kazakh_pct":74.5,"russian":28078,"russian_pct":1.3,"dominant":"Казахи","dominant_n":1600808,"top5":[["Казахи",1600808],["Узбеки",404485],["Таджики",41072],["Русские",28078],["Азербайджанцы",23230]]},{"region":"Ұлытау","total":219049,"kazakh":168981,"kazakh_pct":77.1,"russian":29775,"russian_pct":13.6,"dominant":"Казахи","dominant_n":168981,"top5":[["Казахи",168981],["Русские",29775],["Украинцы",6079],["Немцы",2636],["Татары",2521]]},{"region":"Восточно-Казахстанская","total":718995,"kazakh":368064,"kazakh_pct":51.2,"russian":316268,"russian_pct":44.0,"dominant":"Казахи","dominant_n":368064,"top5":[["Казахи",368064],["Русские",316268],["Немцы",10000],["Татары",6121],["Украинцы",5475]]},{"region":"г. Астана","total":1639176,"kazakh":1360593,"kazakh_pct":83.0,"russian":133977,"russian_pct":8.2,"dominant":"Казахи","dominant_n":1360593,"top5":[["Казахи",1360593],["Русские",133977],["Украинцы",21796],["Татары",16275],["Немцы",13730]]},{"region":"г. Алматы","total":2348103,"kazakh":1518323,"kazakh_pct":64.7,"russian":428793,"russian_pct":18.3,"dominant":"Казахи","dominant_n":1518323,"top5":[["Казахи",1518323],["Русские",428793],["Уйгуры",124528],["Корейцы",39643],["Татары",31587]]},{"region":"г.Шымкент","total":1294050,"kazakh":929724,"kazakh_pct":71.8,"russian":74404,"russian_pct":5.7,"dominant":"Казахи","dominant_n":929724,"top5":[["Казахи",929724],["Узбеки",203098],["Русские",74404],["Азербайджанцы",23814],["Татары",11346]]}],"districts":[{"region":"Атырауская","district":"Кзылкогинский район","total":30364,"kazakh":30313,"russian":19,"kazakh_pct":99.8,"russian_pct":0.1,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Актюбинская","district":"Байганинский район","total":22286,"kazakh":22209,"russian":17,"kazakh_pct":99.7,"russian_pct":0.1,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Кызылординская","district":"Аральский район","total":78643,"kazakh":78433,"russian":87,"kazakh_pct":99.7,"russian_pct":0.1,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Атырауская","district":"Исатайский район","total":25841,"kazakh":25759,"russian":10,"kazakh_pct":99.7,"russian_pct":0.0,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Мангистауская","district":"Мангистауский район","total":34087,"kazakh":33941,"russian":17,"kazakh_pct":99.6,"russian_pct":0.0,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Актюбинская","district":"Иргизский район","total":13345,"kazakh":13290,"russian":33,"kazakh_pct":99.6,"russian_pct":0.2,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Абай","district":"район Ақсуат","total":18097,"kazakh":18002,"russian":15,"kazakh_pct":99.5,"russian_pct":0.1,"uzbek_pct":0.0,"uighur_pct":0.1,"german_pct":0.2,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Западно-Казахстанская","district":"Каратобинский район","total":12797,"kazakh":12738,"russian":12,"kazakh_pct":99.5,"russian_pct":0.1,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Кызылординская","district":"Казалинский район","total":78709,"kazakh":78125,"russian":254,"kazakh_pct":99.3,"russian_pct":0.3,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Западно-Казахстанская","district":"Бокейординский район","total":13673,"kazakh":13551,"russian":32,"kazakh_pct":99.1,"russian_pct":0.2,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Актюбинская","district":"Шалкарский район","total":41116,"kazakh":40705,"russian":187,"kazakh_pct":99.0,"russian_pct":0.5,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Кызылординская","district":"Жанакорганский район","total":81460,"kazakh":80570,"russian":179,"kazakh_pct":98.9,"russian_pct":0.2,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Актюбинская","district":"Уилский район","total":15072,"kazakh":14913,"russian":89,"kazakh_pct":98.9,"russian_pct":0.6,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.2,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Костанайская","district":"Жангельдинский район","total":9847,"kazakh":9738,"russian":37,"kazakh_pct":98.9,"russian_pct":0.4,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Кызылординская","district":"Жалагашский район","total":35507,"kazakh":35119,"russian":80,"kazakh_pct":98.9,"russian_pct":0.2,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Мангистауская","district":"Каракиянский район","total":36125,"kazakh":35708,"russian":104,"kazakh_pct":98.8,"russian_pct":0.3,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Восточно-Казахстанская","district":"Тарбагатайский район","total":17687,"kazakh":17434,"russian":144,"kazakh_pct":98.6,"russian_pct":0.8,"uzbek_pct":0.0,"uighur_pct":0.1,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Абай","district":"Абайский район","total":13142,"kazakh":12947,"russian":52,"kazakh_pct":98.5,"russian_pct":0.4,"uzbek_pct":0.0,"uighur_pct":0.7,"german_pct":0.1,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Кызылординская","district":"Сырдарьинский район","total":37462,"kazakh":36910,"russian":210,"kazakh_pct":98.5,"russian_pct":0.6,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Западно-Казахстанская","district":"Казталовский район","total":25743,"kazakh":25366,"russian":106,"kazakh_pct":98.5,"russian_pct":0.4,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Западно-Казахстанская","district":"Сырымский район","total":16408,"kazakh":16143,"russian":67,"kazakh_pct":98.4,"russian_pct":0.4,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.3,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Мангистауская","district":"Бейнеуский район","total":72009,"kazakh":70821,"russian":47,"kazakh_pct":98.4,"russian_pct":0.1,"uzbek_pct":0.4,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Мангистауская","district":"Жанаозен г.а.","total":155195,"kazakh":152784,"russian":447,"kazakh_pct":98.4,"russian_pct":0.3,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Атырауская","district":"Макатский район","total":29144,"kazakh":28668,"russian":229,"kazakh_pct":98.4,"russian_pct":0.8,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Атырауская","district":"Жылыойский район","total":83958,"kazakh":82554,"russian":415,"kazakh_pct":98.3,"russian_pct":0.5,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Туркестанская","district":"Отрарский район","total":49942,"kazakh":49049,"russian":225,"kazakh_pct":98.2,"russian_pct":0.5,"uzbek_pct":1.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Западно-Казахстанская","district":"Жангалинский район","total":21015,"kazakh":20633,"russian":38,"kazakh_pct":98.2,"russian_pct":0.2,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Западно-Казахстанская","district":"Жанибекский район","total":13636,"kazakh":13380,"russian":174,"kazakh_pct":98.1,"russian_pct":1.3,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Алматинская","district":"Кегенский район","total":25152,"kazakh":24657,"russian":148,"kazakh_pct":98.0,"russian_pct":0.6,"uzbek_pct":0.0,"uighur_pct":0.4,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Атырауская","district":"Курмангазинский район","total":54737,"kazakh":53630,"russian":822,"kazakh_pct":98.0,"russian_pct":1.5,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Мангистауская","district":"Тупкараганский район","total":41595,"kazakh":40773,"russian":277,"kazakh_pct":98.0,"russian_pct":0.7,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Алматинская","district":"Райымбекский район","total":25790,"kazakh":25241,"russian":92,"kazakh_pct":97.9,"russian_pct":0.4,"uzbek_pct":0.1,"uighur_pct":1.3,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Атырауская","district":"Махамбетский район","total":28345,"kazakh":27677,"russian":356,"kazakh_pct":97.6,"russian_pct":1.3,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.1,"ukrainian_pct":0.1,"korean_pct":0.3,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Костанайская","district":"Амангельдинский район","total":12351,"kazakh":12044,"russian":124,"kazakh_pct":97.5,"russian_pct":1.0,"uzbek_pct":0.0,"uighur_pct":0.1,"german_pct":0.1,"ukrainian_pct":0.5,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Атырауская","district":"Индерский район","total":32428,"kazakh":31596,"russian":604,"kazakh_pct":97.4,"russian_pct":1.9,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Абай","district":"район Мақаншы","total":24771,"kazakh":24008,"russian":462,"kazakh_pct":96.9,"russian_pct":1.9,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":0.1,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.3,"tajik_pct":0.1},{"region":"Восточно-Казахстанская","district":"Зайсанский район","total":34522,"kazakh":33420,"russian":520,"kazakh_pct":96.8,"russian_pct":1.5,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Кызылординская","district":"Шиелийский район","total":85616,"kazakh":82808,"russian":1283,"kazakh_pct":96.7,"russian_pct":1.5,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":0.1,"ukrainian_pct":0.1,"korean_pct":0.9,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Абай","district":"Аягозский район","total":61871,"kazakh":59723,"russian":1108,"kazakh_pct":96.5,"russian_pct":1.8,"uzbek_pct":0.1,"uighur_pct":0.3,"german_pct":0.2,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.1,"tajik_pct":0.0},{"region":"Актюбинская","district":"Темирский район","total":34148,"kazakh":32951,"russian":485,"kazakh_pct":96.5,"russian_pct":1.4,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.1,"ukrainian_pct":0.6,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Западно-Казахстанская","district":"Акжаикский район","total":33932,"kazakh":32637,"russian":968,"kazakh_pct":96.2,"russian_pct":2.9,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.2,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Туркестанская","district":"Район Байдибека","total":47582,"kazakh":45737,"russian":229,"kazakh_pct":96.1,"russian_pct":0.5,"uzbek_pct":0.5,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Кызылординская","district":"Кармакшинский район","total":50804,"kazakh":48831,"russian":317,"kazakh_pct":96.1,"russian_pct":0.6,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.4,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Туркестанская","district":"Шардаринский район","total":82203,"kazakh":78876,"russian":1110,"kazakh_pct":96.0,"russian_pct":1.4,"uzbek_pct":0.7,"uighur_pct":0.1,"german_pct":0.1,"ukrainian_pct":0.1,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.7},{"region":"Туркестанская","district":"Арысь г.а.","total":77137,"kazakh":73788,"russian":1457,"kazakh_pct":95.7,"russian_pct":1.9,"uzbek_pct":0.9,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Туркестанская","district":"Ордабасынский район","total":130251,"kazakh":124207,"russian":1001,"kazakh_pct":95.4,"russian_pct":0.8,"uzbek_pct":0.5,"uighur_pct":0.1,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Карагандинская","district":"Каркаралинский район","total":28371,"kazakh":27045,"russian":642,"kazakh_pct":95.3,"russian_pct":2.3,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.5,"ukrainian_pct":0.5,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Жетісу","district":"Аксуский район","total":33723,"kazakh":32070,"russian":975,"kazakh_pct":95.1,"russian_pct":2.9,"uzbek_pct":0.2,"uighur_pct":0.3,"german_pct":0.2,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Мангистауская","district":"Мунайлинский район","total":174163,"kazakh":165654,"russian":805,"kazakh_pct":95.1,"russian_pct":0.5,"uzbek_pct":0.8,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Ұлытау","district":"Улытауский район","total":10855,"kazakh":10284,"russian":302,"kazakh_pct":94.7,"russian_pct":2.8,"uzbek_pct":0.2,"uighur_pct":0.1,"german_pct":0.4,"ukrainian_pct":0.6,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Ұлытау","district":"Жанааркинский район","total":29961,"kazakh":28301,"russian":845,"kazakh_pct":94.5,"russian_pct":2.8,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.4,"ukrainian_pct":0.7,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Кызылординская","district":"Кызылорда г.а.","total":366878,"kazakh":345518,"russian":8353,"kazakh_pct":94.2,"russian_pct":2.3,"uzbek_pct":0.5,"uighur_pct":0.1,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":1.7,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Актюбинская","district":"Айтекебийский район","total":19522,"kazakh":18316,"russian":536,"kazakh_pct":93.8,"russian_pct":2.7,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.2,"ukrainian_pct":1.4,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Жамбылская","district":"Сарысуский район","total":42812,"kazakh":39917,"russian":1424,"kazakh_pct":93.2,"russian_pct":3.3,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":0.2,"ukrainian_pct":0.5,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Актюбинская","district":"Мугалжарский район","total":63309,"kazakh":58643,"russian":2168,"kazakh_pct":92.6,"russian_pct":3.4,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.3,"ukrainian_pct":1.7,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Карагандинская","district":"Актогайский район","total":14940,"kazakh":13811,"russian":782,"kazakh_pct":92.4,"russian_pct":5.2,"uzbek_pct":0.2,"uighur_pct":0.1,"german_pct":0.3,"ukrainian_pct":0.4,"korean_pct":0.4,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Восточно-Казахстанская","district":"Курчумский район","total":13655,"kazakh":12622,"russian":885,"kazakh_pct":92.4,"russian_pct":6.5,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.2,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Алматинская","district":"Балхашский район","total":27154,"kazakh":25067,"russian":1254,"kazakh_pct":92.3,"russian_pct":4.6,"uzbek_pct":0.1,"uighur_pct":0.5,"german_pct":0.7,"ukrainian_pct":0.3,"korean_pct":0.5,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Жамбылская","district":"Мойынкумский район","total":27159,"kazakh":25039,"russian":1188,"kazakh_pct":92.2,"russian_pct":4.4,"uzbek_pct":0.2,"uighur_pct":0.2,"german_pct":0.2,"ukrainian_pct":0.5,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Жамбылская","district":"Район Турара Рыскулова","total":65284,"kazakh":60134,"russian":1954,"kazakh_pct":92.1,"russian_pct":3.0,"uzbek_pct":0.6,"uighur_pct":0.3,"german_pct":0.5,"ukrainian_pct":0.6,"korean_pct":0.1,"dungan_pct":0.1,"tajik_pct":0.0},{"region":"Туркестанская","district":"Казыгуртский район","total":117292,"kazakh":107993,"russian":351,"kazakh_pct":92.1,"russian_pct":0.3,"uzbek_pct":6.6,"uighur_pct":0.2,"german_pct":0.1,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Кызылординская","district":"город Байконыр","total":31233,"kazakh":28757,"russian":1296,"kazakh_pct":92.1,"russian_pct":4.1,"uzbek_pct":0.2,"uighur_pct":0.1,"german_pct":0.1,"ukrainian_pct":0.3,"korean_pct":1.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Восточно-Казахстанская","district":"район Марқакөл","total":6432,"kazakh":5910,"russian":436,"kazakh_pct":91.9,"russian_pct":6.8,"uzbek_pct":0.1,"uighur_pct":0.3,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Акмолинская","district":"г.Косшы","total":66088,"kazakh":60667,"russian":2163,"kazakh_pct":91.8,"russian_pct":3.3,"uzbek_pct":0.5,"uighur_pct":0.1,"german_pct":0.5,"ukrainian_pct":0.6,"korean_pct":0.3,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"Абай","district":"Жарминский район","total":32749,"kazakh":29994,"russian":1703,"kazakh_pct":91.6,"russian_pct":5.2,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":0.9,"ukrainian_pct":0.6,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Павлодарская","district":"Баянаульский район","total":22297,"kazakh":20384,"russian":1057,"kazakh_pct":91.4,"russian_pct":4.7,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":1.1,"ukrainian_pct":1.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Восточно-Казахстанская","district":"Катон-Карагайский район","total":9057,"kazakh":8279,"russian":721,"kazakh_pct":91.4,"russian_pct":8.0,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Туркестанская","district":"Келесский район","total":131107,"kazakh":119723,"russian":603,"kazakh_pct":91.3,"russian_pct":0.5,"uzbek_pct":6.1,"uighur_pct":0.3,"german_pct":0.1,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Карагандинская","district":"Шетский район","total":34724,"kazakh":31524,"russian":1580,"kazakh_pct":90.8,"russian_pct":4.6,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":0.9,"ukrainian_pct":0.8,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Жамбылская","district":"Жуалынский район","total":52459,"kazakh":47603,"russian":1884,"kazakh_pct":90.7,"russian_pct":3.6,"uzbek_pct":0.5,"uighur_pct":0.1,"german_pct":0.5,"ukrainian_pct":0.9,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Туркестанская","district":"Сузакский район","total":62114,"kazakh":56272,"russian":506,"kazakh_pct":90.6,"russian_pct":0.8,"uzbek_pct":7.8,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"г.Астана","district":"район Нұра","total":304136,"kazakh":274170,"russian":12680,"kazakh_pct":90.1,"russian_pct":4.2,"uzbek_pct":0.5,"uighur_pct":0.2,"german_pct":0.4,"ukrainian_pct":0.6,"korean_pct":0.5,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"Абай","district":"Урджарский район","total":39856,"kazakh":35648,"russian":2970,"kazakh_pct":89.4,"russian_pct":7.5,"uzbek_pct":0.1,"uighur_pct":0.3,"german_pct":0.8,"ukrainian_pct":0.1,"korean_pct":0.1,"dungan_pct":0.1,"tajik_pct":0.0},{"region":"Атырауская","district":"Атырау г.а.","total":431254,"kazakh":385627,"russian":27328,"kazakh_pct":89.4,"russian_pct":6.3,"uzbek_pct":0.3,"uighur_pct":0.0,"german_pct":0.2,"ukrainian_pct":0.4,"korean_pct":0.8,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Западно-Казахстанская","district":"Таскалинский район","total":15545,"kazakh":13904,"russian":1138,"kazakh_pct":89.4,"russian_pct":7.3,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.6,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Туркестанская","district":"Жетысайский район","total":182836,"kazakh":162612,"russian":1435,"kazakh_pct":88.9,"russian_pct":0.8,"uzbek_pct":1.5,"uighur_pct":0.0,"german_pct":0.1,"ukrainian_pct":0.1,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":7.4},{"region":"г.Астана","district":"район Есиль","total":320652,"kazakh":283898,"russian":15815,"kazakh_pct":88.5,"russian_pct":4.9,"uzbek_pct":0.6,"uighur_pct":0.2,"german_pct":0.4,"ukrainian_pct":0.8,"korean_pct":0.5,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"Северо-Казахстанская","district":"Уалихановский район","total":11522,"kazakh":10101,"russian":673,"kazakh_pct":87.7,"russian_pct":5.8,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":1.4,"ukrainian_pct":2.2,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Акмолинская","district":"Коргалжынский район","total":6447,"kazakh":5649,"russian":310,"kazakh_pct":87.6,"russian_pct":4.8,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":1.7,"ukrainian_pct":2.0,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Жамбылская","district":"Таласский район","total":46871,"kazakh":41080,"russian":2167,"kazakh_pct":87.6,"russian_pct":4.6,"uzbek_pct":0.3,"uighur_pct":0.1,"german_pct":0.5,"ukrainian_pct":0.5,"korean_pct":0.4,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Жетісу","district":"Кербулакский район","total":40735,"kazakh":35598,"russian":3211,"kazakh_pct":87.4,"russian_pct":7.9,"uzbek_pct":0.1,"uighur_pct":0.5,"german_pct":0.4,"ukrainian_pct":0.7,"korean_pct":0.1,"dungan_pct":0.1,"tajik_pct":0.0},{"region":"Павлодарская","district":"Майский район","total":9673,"kazakh":8417,"russian":638,"kazakh_pct":87.0,"russian_pct":6.6,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":1.4,"ukrainian_pct":1.6,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Жамбылская","district":"Байзакский район","total":95472,"kazakh":83018,"russian":1873,"kazakh_pct":87.0,"russian_pct":2.0,"uzbek_pct":0.6,"uighur_pct":0.1,"german_pct":0.3,"ukrainian_pct":0.3,"korean_pct":0.2,"dungan_pct":0.3,"tajik_pct":0.0},{"region":"Западно-Казахстанская","district":"Чингирлауский район","total":12322,"kazakh":10670,"russian":738,"kazakh_pct":86.6,"russian_pct":6.0,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.2,"ukrainian_pct":3.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Туркестанская","district":"Сарыагашский район","total":223003,"kazakh":192295,"russian":1823,"kazakh_pct":86.2,"russian_pct":0.8,"uzbek_pct":3.4,"uighur_pct":0.7,"german_pct":0.1,"ukrainian_pct":0.1,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":4.3},{"region":"Алматинская","district":"Жамбылский район","total":170729,"kazakh":146624,"russian":8135,"kazakh_pct":85.9,"russian_pct":4.8,"uzbek_pct":0.4,"uighur_pct":2.4,"german_pct":0.5,"ukrainian_pct":0.3,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Жетісу","district":"Алакольский район","total":71775,"kazakh":61158,"russian":8360,"kazakh_pct":85.2,"russian_pct":11.6,"uzbek_pct":0.1,"uighur_pct":0.5,"german_pct":0.3,"ukrainian_pct":0.3,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Западно-Казахстанская","district":"Теректинский район","total":38112,"kazakh":32337,"russian":3422,"kazakh_pct":84.8,"russian_pct":9.0,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.2,"ukrainian_pct":3.1,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"г.Астана","district":"район Алматы","total":250987,"kazakh":212467,"russian":17559,"kazakh_pct":84.7,"russian_pct":7.0,"uzbek_pct":0.7,"uighur_pct":0.2,"german_pct":0.7,"ukrainian_pct":1.0,"korean_pct":0.5,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"Актюбинская","district":"Алгинский район","total":43086,"kazakh":36465,"russian":2623,"kazakh_pct":84.6,"russian_pct":6.1,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":1.1,"ukrainian_pct":4.4,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"г.Астана","district":"район Сарайшық","total":192351,"kazakh":162314,"russian":13829,"kazakh_pct":84.4,"russian_pct":7.2,"uzbek_pct":0.6,"uighur_pct":0.2,"german_pct":0.7,"ukrainian_pct":1.3,"korean_pct":0.5,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"Абай","district":"Кокпектинский район","total":12635,"kazakh":10608,"russian":1217,"kazakh_pct":84.0,"russian_pct":9.6,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":2.5,"ukrainian_pct":0.3,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Актюбинская","district":"город Актобе","total":598683,"kazakh":503053,"russian":50551,"kazakh_pct":84.0,"russian_pct":8.4,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":0.7,"ukrainian_pct":3.1,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Жетісу","district":"Коксуский район","total":40798,"kazakh":34079,"russian":3579,"kazakh_pct":83.5,"russian_pct":8.8,"uzbek_pct":0.1,"uighur_pct":0.6,"german_pct":0.6,"ukrainian_pct":0.3,"korean_pct":0.9,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Павлодарская","district":"район Аққулы","total":11294,"kazakh":9378,"russian":1075,"kazakh_pct":83.0,"russian_pct":9.5,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":1.8,"ukrainian_pct":1.7,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"г.Алматы","district":"Наурызбайский район","total":240049,"kazakh":198215,"russian":18293,"kazakh_pct":82.6,"russian_pct":7.6,"uzbek_pct":0.6,"uighur_pct":3.3,"german_pct":0.3,"ukrainian_pct":0.5,"korean_pct":1.0,"dungan_pct":0.2,"tajik_pct":0.1},{"region":"Жетісу","district":"Саркандский район","total":37728,"kazakh":31013,"russian":5512,"kazakh_pct":82.2,"russian_pct":14.6,"uzbek_pct":0.1,"uighur_pct":0.3,"german_pct":0.4,"ukrainian_pct":0.3,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Актюбинская","district":"Хромтауский район","total":46025,"kazakh":37785,"russian":4214,"kazakh_pct":82.1,"russian_pct":9.2,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":1.3,"ukrainian_pct":4.5,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Актюбинская","district":"Хобдинский район","total":15378,"kazakh":12611,"russian":936,"kazakh_pct":82.0,"russian_pct":6.1,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":1.5,"ukrainian_pct":7.2,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Мангистауская","district":"Актау г.а.","total":306650,"kazakh":250500,"russian":29196,"kazakh_pct":81.7,"russian_pct":9.5,"uzbek_pct":0.5,"uighur_pct":0.1,"german_pct":0.1,"ukrainian_pct":1.0,"korean_pct":0.3,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Алматинская","district":"Карасайский район","total":372826,"kazakh":303687,"russian":24234,"kazakh_pct":81.5,"russian_pct":6.5,"uzbek_pct":0.5,"uighur_pct":0.9,"german_pct":0.5,"ukrainian_pct":0.3,"korean_pct":0.4,"dungan_pct":0.1,"tajik_pct":0.2},{"region":"Жамбылская","district":"Жамбылский район","total":51354,"kazakh":41870,"russian":1135,"kazakh_pct":81.5,"russian_pct":2.2,"uzbek_pct":0.5,"uighur_pct":0.1,"german_pct":0.3,"ukrainian_pct":0.3,"korean_pct":0.1,"dungan_pct":0.6,"tajik_pct":0.0},{"region":"Ұлытау","district":"город Каражал","total":17094,"kazakh":13836,"russian":2082,"kazakh_pct":80.9,"russian_pct":12.2,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":0.9,"ukrainian_pct":2.0,"korean_pct":0.5,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Костанайская","district":"Аркалык г.а.","total":36153,"kazakh":29012,"russian":3595,"kazakh_pct":80.2,"russian_pct":9.9,"uzbek_pct":0.2,"uighur_pct":0.1,"german_pct":0.7,"ukrainian_pct":3.0,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Туркестанская","district":"Тюлькубасский район","total":103792,"kazakh":83019,"russian":3746,"kazakh_pct":80.0,"russian_pct":3.6,"uzbek_pct":8.2,"uighur_pct":0.1,"german_pct":0.3,"ukrainian_pct":0.6,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Абай","district":"район Жаңасемей","total":19269,"kazakh":15250,"russian":3112,"kazakh_pct":79.1,"russian_pct":16.2,"uzbek_pct":0.0,"uighur_pct":0.3,"german_pct":1.7,"ukrainian_pct":0.9,"korean_pct":0.1,"dungan_pct":0.1,"tajik_pct":0.0},{"region":"г.Алматы","district":"Алатауский район","total":400953,"kazakh":314235,"russian":26635,"kazakh_pct":78.4,"russian_pct":6.6,"uzbek_pct":0.5,"uighur_pct":5.6,"german_pct":0.3,"ukrainian_pct":0.3,"korean_pct":1.0,"dungan_pct":2.3,"tajik_pct":0.3},{"region":"Жетісу","district":"Ескельдинский район","total":50122,"kazakh":39095,"russian":7980,"kazakh_pct":78.0,"russian_pct":15.9,"uzbek_pct":0.1,"uighur_pct":0.4,"german_pct":1.3,"ukrainian_pct":0.5,"korean_pct":1.0,"dungan_pct":0.1,"tajik_pct":0.0},{"region":"Жетісу","district":"Талдыкорган г.а.","total":210375,"kazakh":162992,"russian":31038,"kazakh_pct":77.5,"russian_pct":14.8,"uzbek_pct":0.2,"uighur_pct":0.6,"german_pct":1.0,"ukrainian_pct":0.6,"korean_pct":2.3,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"Павлодарская","district":"Актогайский район","total":11852,"kazakh":9122,"russian":1374,"kazakh_pct":77.0,"russian_pct":11.6,"uzbek_pct":0.5,"uighur_pct":0.0,"german_pct":2.3,"ukrainian_pct":4.8,"korean_pct":0.0,"dungan_pct":0.1,"tajik_pct":0.0},{"region":"г.Шымкент","district":"Каратауский район","total":334139,"kazakh":257421,"russian":7126,"kazakh_pct":77.0,"russian_pct":2.1,"uzbek_pct":16.8,"uighur_pct":0.1,"german_pct":0.1,"ukrainian_pct":0.2,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Северо-Казахстанская","district":"Акжарский район","total":12202,"kazakh":9379,"russian":1451,"kazakh_pct":76.9,"russian_pct":11.9,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":1.8,"ukrainian_pct":4.2,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"Алматинская","district":"Илийский район","total":241857,"kazakh":183457,"russian":33664,"kazakh_pct":75.9,"russian_pct":13.9,"uzbek_pct":0.4,"uighur_pct":1.9,"german_pct":0.9,"ukrainian_pct":0.7,"korean_pct":0.7,"dungan_pct":0.2,"tajik_pct":0.1},{"region":"г.Астана","district":"район Сарыарка","total":352709,"kazakh":265978,"russian":45831,"kazakh_pct":75.4,"russian_pct":13.0,"uzbek_pct":0.7,"uighur_pct":0.1,"german_pct":1.2,"ukrainian_pct":2.1,"korean_pct":0.5,"dungan_pct":0.2,"tajik_pct":0.1},{"region":"г.Шымкент","district":"Абайский район","total":259325,"kazakh":195433,"russian":10488,"kazakh_pct":75.4,"russian_pct":4.0,"uzbek_pct":14.2,"uighur_pct":0.4,"german_pct":0.1,"ukrainian_pct":0.4,"korean_pct":0.4,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Восточно-Казахстанская","district":"Уланский район","total":32214,"kazakh":24216,"russian":6803,"kazakh_pct":75.2,"russian_pct":21.1,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":1.1,"ukrainian_pct":0.7,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Карагандинская","district":"город Приозерск","total":10620,"kazakh":7971,"russian":1495,"kazakh_pct":75.1,"russian_pct":14.1,"uzbek_pct":1.0,"uighur_pct":0.2,"german_pct":0.7,"ukrainian_pct":1.5,"korean_pct":0.5,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Абай","district":"Семей г.а.","total":315314,"kazakh":234485,"russian":62337,"kazakh_pct":74.4,"russian_pct":19.8,"uzbek_pct":0.2,"uighur_pct":0.1,"german_pct":1.1,"ukrainian_pct":0.6,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Жамбылская","district":"Шуский район","total":104297,"kazakh":77561,"russian":7892,"kazakh_pct":74.4,"russian_pct":7.6,"uzbek_pct":0.6,"uighur_pct":1.1,"german_pct":0.8,"ukrainian_pct":0.6,"korean_pct":0.4,"dungan_pct":0.6,"tajik_pct":0.0},{"region":"Западно-Казахстанская","district":"Бурлинский район","total":57020,"kazakh":42424,"russian":8256,"kazakh_pct":74.4,"russian_pct":14.5,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":0.4,"ukrainian_pct":6.3,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"г.Астана","district":"район Байқоңыр","total":218341,"kazakh":161766,"russian":28263,"kazakh_pct":74.1,"russian_pct":12.9,"uzbek_pct":0.8,"uighur_pct":0.2,"german_pct":1.6,"ukrainian_pct":2.3,"korean_pct":0.9,"dungan_pct":0.3,"tajik_pct":0.2},{"region":"Восточно-Казахстанская","district":"район Үлкен Нарын","total":10123,"kazakh":7469,"russian":2304,"kazakh_pct":73.8,"russian_pct":22.8,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":1.4,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Западно-Казахстанская","district":"Уральск г.а.","total":372372,"kazakh":274037,"russian":76934,"kazakh_pct":73.6,"russian_pct":20.7,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":0.3,"ukrainian_pct":1.5,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Ұлытау","district":"Жезказган г.а.","total":93215,"kazakh":68515,"russian":15767,"kazakh_pct":73.5,"russian_pct":16.9,"uzbek_pct":0.5,"uighur_pct":0.0,"german_pct":1.3,"ukrainian_pct":2.8,"korean_pct":0.5,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"Алматинская","district":"Алатау г.а.","total":55086,"kazakh":40514,"russian":5609,"kazakh_pct":73.5,"russian_pct":10.2,"uzbek_pct":0.3,"uighur_pct":3.9,"german_pct":0.7,"ukrainian_pct":0.6,"korean_pct":0.8,"dungan_pct":0.2,"tajik_pct":0.2},{"region":"Жамбылская","district":"Меркенский район","total":87319,"kazakh":63297,"russian":4522,"kazakh_pct":72.5,"russian_pct":5.2,"uzbek_pct":2.1,"uighur_pct":0.3,"german_pct":0.5,"ukrainian_pct":1.0,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Костанайская","district":"Наурзумский район","total":8085,"kazakh":5843,"russian":988,"kazakh_pct":72.3,"russian_pct":12.2,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":1.3,"ukrainian_pct":6.2,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Акмолинская","district":"Целиноградский район","total":87293,"kazakh":62328,"russian":13014,"kazakh_pct":71.4,"russian_pct":14.9,"uzbek_pct":0.3,"uighur_pct":0.1,"german_pct":3.1,"ukrainian_pct":3.4,"korean_pct":0.2,"dungan_pct":0.2,"tajik_pct":0.1},{"region":"Абай","district":"Бескарагайский район","total":16685,"kazakh":11891,"russian":3552,"kazakh_pct":71.3,"russian_pct":21.3,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":3.0,"ukrainian_pct":1.1,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Карагандинская","district":"город Балхаш","total":76684,"kazakh":54689,"russian":15524,"kazakh_pct":71.3,"russian_pct":20.2,"uzbek_pct":0.3,"uighur_pct":0.1,"german_pct":1.8,"ukrainian_pct":1.5,"korean_pct":1.4,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"Жамбылская","district":"город Тараз","total":487499,"kazakh":346306,"russian":50070,"kazakh_pct":71.0,"russian_pct":10.3,"uzbek_pct":5.2,"uighur_pct":0.3,"german_pct":0.7,"ukrainian_pct":1.0,"korean_pct":1.6,"dungan_pct":1.9,"tajik_pct":0.2},{"region":"Ұлытау","district":"Сатпаев г.а.","total":67924,"kazakh":48045,"russian":10779,"kazakh_pct":70.7,"russian_pct":15.9,"uzbek_pct":0.9,"uighur_pct":0.1,"german_pct":1.6,"ukrainian_pct":4.2,"korean_pct":0.6,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"г.Шымкент","district":"район Тұран","total":231341,"kazakh":162478,"russian":14138,"kazakh_pct":70.2,"russian_pct":6.1,"uzbek_pct":16.4,"uighur_pct":0.2,"german_pct":0.2,"ukrainian_pct":0.6,"korean_pct":0.6,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Восточно-Казахстанская","district":"район Самар","total":11105,"kazakh":7770,"russian":2853,"kazakh_pct":70.0,"russian_pct":25.7,"uzbek_pct":0.5,"uighur_pct":0.0,"german_pct":1.8,"ukrainian_pct":0.4,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"г.Шымкент","district":"Аль-Фарабийский район","total":262566,"kazakh":183844,"russian":21206,"kazakh_pct":70.0,"russian_pct":8.1,"uzbek_pct":14.3,"uighur_pct":0.3,"german_pct":0.2,"ukrainian_pct":0.7,"korean_pct":0.9,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"Алматинская","district":"Талгарский район","total":268570,"kazakh":186953,"russian":33722,"kazakh_pct":69.6,"russian_pct":12.6,"uzbek_pct":0.4,"uighur_pct":8.9,"german_pct":0.6,"ukrainian_pct":0.5,"korean_pct":0.5,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"Актюбинская","district":"Мартукский район","total":29125,"kazakh":20154,"russian":3468,"kazakh_pct":69.2,"russian_pct":11.9,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":2.7,"ukrainian_pct":11.7,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Алматинская","district":"Қонаев г.а.","total":66325,"kazakh":45842,"russian":14368,"kazakh_pct":69.1,"russian_pct":21.7,"uzbek_pct":0.5,"uighur_pct":0.9,"german_pct":1.0,"ukrainian_pct":1.2,"korean_pct":2.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Карагандинская","district":"Нуринский район","total":20593,"kazakh":14217,"russian":2997,"kazakh_pct":69.0,"russian_pct":14.6,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":4.2,"ukrainian_pct":6.5,"korean_pct":0.1,"dungan_pct":0.1,"tajik_pct":0.0},{"region":"Туркестанская","district":"Мактааральский район","total":127384,"kazakh":86957,"russian":1822,"kazakh_pct":68.3,"russian_pct":1.4,"uzbek_pct":10.1,"uighur_pct":0.1,"german_pct":0.3,"ukrainian_pct":0.2,"korean_pct":0.7,"dungan_pct":0.0,"tajik_pct":12.9},{"region":"Туркестанская","district":"Толебийский район","total":121898,"kazakh":82855,"russian":5116,"kazakh_pct":68.0,"russian_pct":4.2,"uzbek_pct":19.5,"uighur_pct":0.1,"german_pct":0.2,"ukrainian_pct":0.5,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Туркестанская","district":"город Туркестан","total":245606,"kazakh":165631,"russian":1588,"kazakh_pct":67.4,"russian_pct":0.6,"uzbek_pct":29.8,"uighur_pct":0.1,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Туркестанская","district":"Кентау г.а.","total":99062,"kazakh":66597,"russian":2807,"kazakh_pct":67.2,"russian_pct":2.8,"uzbek_pct":26.8,"uighur_pct":0.1,"german_pct":0.1,"ukrainian_pct":0.2,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Карагандинская","district":"Бухар-Жырауский район","total":50986,"kazakh":34109,"russian":9890,"kazakh_pct":66.9,"russian_pct":19.4,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":3.9,"ukrainian_pct":3.1,"korean_pct":0.4,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Акмолинская","district":"район Биржан сал","total":11963,"kazakh":7970,"russian":2581,"kazakh_pct":66.6,"russian_pct":21.6,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":2.7,"ukrainian_pct":2.2,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Акмолинская","district":"Ерейментауский район","total":23621,"kazakh":15709,"russian":4542,"kazakh_pct":66.5,"russian_pct":19.2,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":3.3,"ukrainian_pct":5.9,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Жетісу","district":"Каратальский район","total":37657,"kazakh":24887,"russian":6085,"kazakh_pct":66.1,"russian_pct":16.2,"uzbek_pct":0.2,"uighur_pct":1.1,"german_pct":0.9,"ukrainian_pct":0.6,"korean_pct":6.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Акмолинская","district":"Зерендинский район","total":32528,"kazakh":21466,"russian":6886,"kazakh_pct":66.0,"russian_pct":21.2,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":3.8,"ukrainian_pct":3.6,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Западно-Казахстанская","district":"район Бәйтерек","total":63074,"kazakh":41514,"russian":16755,"kazakh_pct":65.8,"russian_pct":26.6,"uzbek_pct":0.3,"uighur_pct":0.0,"german_pct":0.5,"ukrainian_pct":2.4,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"г.Алматы","district":"Бостандыкский район","total":348491,"kazakh":221861,"russian":74271,"kazakh_pct":63.7,"russian_pct":21.3,"uzbek_pct":0.7,"uighur_pct":2.3,"german_pct":0.6,"ukrainian_pct":1.1,"korean_pct":2.5,"dungan_pct":0.4,"tajik_pct":0.2},{"region":"Жетісу","district":"Панфиловский район","total":134323,"kazakh":85598,"russian":3905,"kazakh_pct":63.7,"russian_pct":2.9,"uzbek_pct":0.3,"uighur_pct":31.3,"german_pct":0.1,"ukrainian_pct":0.1,"korean_pct":0.1,"dungan_pct":0.7,"tajik_pct":0.0},{"region":"г.Шымкент","district":"Енбекшинский район","total":206679,"kazakh":130548,"russian":21446,"kazakh_pct":63.2,"russian_pct":10.4,"uzbek_pct":16.7,"uighur_pct":0.1,"german_pct":0.3,"ukrainian_pct":1.0,"korean_pct":0.9,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"Актюбинская","district":"Каргалинский район","total":14875,"kazakh":9393,"russian":2336,"kazakh_pct":63.1,"russian_pct":15.7,"uzbek_pct":0.2,"uighur_pct":0.1,"german_pct":5.0,"ukrainian_pct":12.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"г.Алматы","district":"Ауэзовский район","total":360392,"kazakh":226895,"russian":72616,"kazakh_pct":63.0,"russian_pct":20.1,"uzbek_pct":0.9,"uighur_pct":6.1,"german_pct":0.5,"ukrainian_pct":1.0,"korean_pct":2.1,"dungan_pct":0.4,"tajik_pct":0.2},{"region":"Акмолинская","district":"Кокшетау г.а.","total":199413,"kazakh":125074,"russian":45819,"kazakh_pct":62.7,"russian_pct":23.0,"uzbek_pct":0.3,"uighur_pct":0.0,"german_pct":2.5,"ukrainian_pct":3.8,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Павлодарская","district":"Экибастуз г.а.","total":143265,"kazakh":89438,"russian":34876,"kazakh_pct":62.4,"russian_pct":24.3,"uzbek_pct":0.3,"uighur_pct":0.1,"german_pct":2.0,"ukrainian_pct":4.3,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Павлодарская","district":"Аксу г.а.","total":72349,"kazakh":44088,"russian":19026,"kazakh_pct":60.9,"russian_pct":26.3,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":2.9,"ukrainian_pct":4.2,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Абай","district":"город Курчатов","total":9849,"kazakh":5907,"russian":3267,"kazakh_pct":60.0,"russian_pct":33.2,"uzbek_pct":0.2,"uighur_pct":0.1,"german_pct":1.8,"ukrainian_pct":1.3,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"г.Алматы","district":"Медеуский район","total":255078,"kazakh":152802,"russian":52215,"kazakh_pct":59.9,"russian_pct":20.5,"uzbek_pct":0.6,"uighur_pct":4.1,"german_pct":0.6,"ukrainian_pct":1.0,"korean_pct":1.6,"dungan_pct":0.2,"tajik_pct":0.3},{"region":"Алматинская","district":"Енбекшиказахский район","total":283275,"kazakh":169494,"russian":27346,"kazakh_pct":59.8,"russian_pct":9.7,"uzbek_pct":0.4,"uighur_pct":17.4,"german_pct":0.7,"ukrainian_pct":0.4,"korean_pct":0.3,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"Павлодарская","district":"Иртышский район","total":15666,"kazakh":9205,"russian":3494,"kazakh_pct":58.8,"russian_pct":22.3,"uzbek_pct":0.8,"uighur_pct":0.0,"german_pct":5.1,"ukrainian_pct":8.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"г.Алматы","district":"Алмалинский район","total":272739,"kazakh":159980,"russian":66051,"kazakh_pct":58.7,"russian_pct":24.2,"uzbek_pct":0.8,"uighur_pct":2.9,"german_pct":0.6,"ukrainian_pct":1.2,"korean_pct":2.5,"dungan_pct":1.0,"tajik_pct":0.3},{"region":"Жетісу","district":"Текели г.а.","total":30465,"kazakh":17575,"russian":9562,"kazakh_pct":57.7,"russian_pct":31.4,"uzbek_pct":0.2,"uighur_pct":0.5,"german_pct":2.1,"ukrainian_pct":1.0,"korean_pct":3.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Карагандинская","district":"Караганда г.а.","total":533344,"kazakh":283552,"russian":164297,"kazakh_pct":53.2,"russian_pct":30.8,"uzbek_pct":0.3,"uighur_pct":0.1,"german_pct":3.0,"ukrainian_pct":3.7,"korean_pct":1.4,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"г.Алматы","district":"Турксибский район","total":271520,"kazakh":144361,"russian":72546,"kazakh_pct":53.2,"russian_pct":26.7,"uzbek_pct":0.6,"uighur_pct":8.2,"german_pct":0.8,"ukrainian_pct":1.2,"korean_pct":1.3,"dungan_pct":0.2,"tajik_pct":0.2},{"region":"Жамбылская","district":"Кордайский район","total":155130,"kazakh":82402,"russian":10704,"kazakh_pct":53.1,"russian_pct":6.9,"uzbek_pct":0.4,"uighur_pct":0.3,"german_pct":0.5,"ukrainian_pct":0.6,"korean_pct":0.2,"dungan_pct":31.7,"tajik_pct":0.0},{"region":"Восточно-Казахстанская","district":"Усть-Каменогорск г.а.","total":380858,"kazakh":198518,"russian":163416,"kazakh_pct":52.1,"russian_pct":42.9,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":1.2,"ukrainian_pct":0.8,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Павлодарская","district":"Павлодар г.а.","total":370209,"kazakh":192607,"russian":126136,"kazakh_pct":52.0,"russian_pct":34.1,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":2.8,"ukrainian_pct":5.2,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Костанайская","district":"Аулиекольский район","total":32658,"kazakh":16819,"russian":8296,"kazakh_pct":51.5,"russian_pct":25.4,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":3.9,"ukrainian_pct":10.4,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Павлодарская","district":"Павлодарский район","total":25685,"kazakh":13045,"russian":7552,"kazakh_pct":50.8,"russian_pct":29.4,"uzbek_pct":0.3,"uighur_pct":0.0,"german_pct":7.0,"ukrainian_pct":6.9,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"г.Алматы","district":"Жетысуский район","total":198881,"kazakh":99974,"russian":46166,"kazakh_pct":50.3,"russian_pct":23.2,"uzbek_pct":0.7,"uighur_pct":12.0,"german_pct":0.7,"ukrainian_pct":1.0,"korean_pct":1.3,"dungan_pct":1.7,"tajik_pct":0.6},{"region":"Акмолинская","district":"Жаксынский район","total":14643,"kazakh":7012,"russian":2963,"kazakh_pct":47.9,"russian_pct":20.2,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":5.0,"ukrainian_pct":14.9,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Павлодарская","district":"Щербактинский район","total":17985,"kazakh":8560,"russian":5207,"kazakh_pct":47.6,"russian_pct":29.0,"uzbek_pct":0.2,"uighur_pct":0.1,"german_pct":7.2,"ukrainian_pct":11.5,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Северо-Казахстанская","district":"Район Шал Акына","total":16827,"kazakh":8003,"russian":6167,"kazakh_pct":47.6,"russian_pct":36.6,"uzbek_pct":0.3,"uighur_pct":0.0,"german_pct":5.3,"ukrainian_pct":5.8,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Костанайская","district":"город Костанай","total":277064,"kazakh":130153,"russian":92130,"kazakh_pct":47.0,"russian_pct":33.3,"uzbek_pct":0.3,"uighur_pct":0.0,"german_pct":2.7,"ukrainian_pct":8.4,"korean_pct":1.1,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"Акмолинская","district":"Аршалынский район","total":26167,"kazakh":12162,"russian":8765,"kazakh_pct":46.5,"russian_pct":33.5,"uzbek_pct":0.2,"uighur_pct":0.1,"german_pct":5.3,"ukrainian_pct":5.9,"korean_pct":0.2,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"Акмолинская","district":"Жаркаинский район","total":11446,"kazakh":5283,"russian":3206,"kazakh_pct":46.2,"russian_pct":28.0,"uzbek_pct":0.3,"uighur_pct":0.1,"german_pct":2.0,"ukrainian_pct":10.2,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Акмолинская","district":"Егиндыкольский район","total":4757,"kazakh":2189,"russian":1207,"kazakh_pct":46.0,"russian_pct":25.4,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":4.3,"ukrainian_pct":11.9,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Костанайская","district":"Камыстинский район","total":9872,"kazakh":4546,"russian":2689,"kazakh_pct":46.0,"russian_pct":27.2,"uzbek_pct":0.4,"uighur_pct":0.0,"german_pct":2.9,"ukrainian_pct":14.9,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Костанайская","district":"Костанайский район","total":73413,"kazakh":33322,"russian":24480,"kazakh_pct":45.4,"russian_pct":33.3,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":4.2,"ukrainian_pct":9.5,"korean_pct":0.4,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Акмолинская","district":"Шортандинский район","total":25832,"kazakh":11659,"russian":7735,"kazakh_pct":45.1,"russian_pct":29.9,"uzbek_pct":0.3,"uighur_pct":0.0,"german_pct":6.4,"ukrainian_pct":6.1,"korean_pct":0.2,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"Акмолинская","district":"Степногорск  г.а.","total":65696,"kazakh":29634,"russian":25607,"kazakh_pct":45.1,"russian_pct":39.0,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":3.9,"ukrainian_pct":5.1,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Акмолинская","district":"Бурабайский район","total":70131,"kazakh":31356,"russian":27907,"kazakh_pct":44.7,"russian_pct":39.8,"uzbek_pct":0.3,"uighur_pct":0.1,"german_pct":4.0,"ukrainian_pct":3.9,"korean_pct":0.5,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Павлодарская","district":"район Тереңкөл","total":18854,"kazakh":8345,"russian":6954,"kazakh_pct":44.3,"russian_pct":36.9,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":8.4,"ukrainian_pct":6.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Павлодарская","district":"Железинский район","total":14169,"kazakh":6172,"russian":5592,"kazakh_pct":43.6,"russian_pct":39.5,"uzbek_pct":0.6,"uighur_pct":0.0,"german_pct":6.6,"ukrainian_pct":5.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Акмолинская","district":"Аккольский район","total":22021,"kazakh":9576,"russian":7837,"kazakh_pct":43.5,"russian_pct":35.6,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":6.5,"ukrainian_pct":5.8,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Северо-Казахстанская","district":"Жамбылский район","total":16545,"kazakh":7134,"russian":6465,"kazakh_pct":43.1,"russian_pct":39.1,"uzbek_pct":0.5,"uighur_pct":0.0,"german_pct":4.9,"ukrainian_pct":8.5,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Карагандинская","district":"Абайский район","total":56854,"kazakh":24305,"russian":20084,"kazakh_pct":42.7,"russian_pct":35.3,"uzbek_pct":0.3,"uighur_pct":0.1,"german_pct":3.7,"ukrainian_pct":6.0,"korean_pct":0.5,"dungan_pct":0.8,"tajik_pct":0.1},{"region":"Абай","district":"Бородулихинский район","total":31482,"kazakh":13383,"russian":13499,"kazakh_pct":42.5,"russian_pct":42.9,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":8.8,"ukrainian_pct":1.3,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Северо-Казахстанская","district":"Айыртауский район","total":29752,"kazakh":12475,"russian":12195,"kazakh_pct":41.9,"russian_pct":41.0,"uzbek_pct":0.2,"uighur_pct":0.1,"german_pct":4.6,"ukrainian_pct":5.6,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Акмолинская","district":"Буландынский район","total":27928,"kazakh":11600,"russian":10766,"kazakh_pct":41.5,"russian_pct":38.5,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":6.2,"ukrainian_pct":4.6,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"Костанайская","district":"Житикаринский район","total":40735,"kazakh":16846,"russian":14301,"kazakh_pct":41.4,"russian_pct":35.1,"uzbek_pct":0.2,"uighur_pct":0.1,"german_pct":4.3,"ukrainian_pct":10.5,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Алматинская","district":"Уйгурский район","total":59768,"kazakh":24712,"russian":829,"kazakh_pct":41.3,"russian_pct":1.4,"uzbek_pct":0.3,"uighur_pct":56.1,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Акмолинская","district":"Астраханский район","total":17988,"kazakh":7410,"russian":5382,"kazakh_pct":41.2,"russian_pct":29.9,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":7.5,"ukrainian_pct":7.7,"korean_pct":0.2,"dungan_pct":0.4,"tajik_pct":0.1},{"region":"Костанайская","district":"Алтынсаринский район","total":11690,"kazakh":4797,"russian":3562,"kazakh_pct":41.0,"russian_pct":30.5,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":6.0,"ukrainian_pct":14.5,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Карагандинская","district":"город Темиртау","total":175758,"kazakh":71273,"russian":74743,"kazakh_pct":40.6,"russian_pct":42.5,"uzbek_pct":0.2,"uighur_pct":0.1,"german_pct":3.0,"ukrainian_pct":4.7,"korean_pct":0.9,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"Павлодарская","district":"Успенский район","total":11945,"kazakh":4796,"russian":2859,"kazakh_pct":40.2,"russian_pct":23.9,"uzbek_pct":1.8,"uighur_pct":0.1,"german_pct":9.5,"ukrainian_pct":18.1,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Туркестанская","district":"Район Сауран","total":104545,"kazakh":41753,"russian":555,"kazakh_pct":39.9,"russian_pct":0.5,"uzbek_pct":58.7,"uighur_pct":0.1,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Карагандинская","district":"Осакаровский район","total":28341,"kazakh":11153,"russian":10671,"kazakh_pct":39.4,"russian_pct":37.7,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":6.4,"ukrainian_pct":5.5,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Костанайская","district":"Узункольский район","total":13888,"kazakh":5367,"russian":5745,"kazakh_pct":38.6,"russian_pct":41.4,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":2.2,"ukrainian_pct":12.1,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Северо-Казахстанская","district":"Есильский район","total":20029,"kazakh":7695,"russian":9922,"kazakh_pct":38.4,"russian_pct":49.5,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":4.0,"ukrainian_pct":4.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Северо-Казахстанская","district":"Тимирязевский район","total":9049,"kazakh":3459,"russian":3545,"kazakh_pct":38.2,"russian_pct":39.2,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":3.1,"ukrainian_pct":8.1,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Северо-Казахстанская","district":"Кызылжарский район","total":45846,"kazakh":17286,"russian":22200,"kazakh_pct":37.7,"russian_pct":48.4,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":3.9,"ukrainian_pct":3.1,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"Северо-Казахстанская","district":"Аккайынский район","total":17043,"kazakh":6348,"russian":6336,"kazakh_pct":37.2,"russian_pct":37.2,"uzbek_pct":0.3,"uighur_pct":0.0,"german_pct":8.1,"ukrainian_pct":9.9,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Акмолинская","district":"Атбасарский район","total":40626,"kazakh":15120,"russian":13958,"kazakh_pct":37.2,"russian_pct":34.4,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":6.5,"ukrainian_pct":9.6,"korean_pct":0.1,"dungan_pct":0.4,"tajik_pct":0.1},{"region":"Костанайская","district":"Рудный г.а.","total":123071,"kazakh":45601,"russian":54243,"kazakh_pct":37.1,"russian_pct":44.1,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":3.1,"ukrainian_pct":8.3,"korean_pct":0.3,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Костанайская","district":"Мендыкаринский район","total":20471,"kazakh":7428,"russian":8967,"kazakh_pct":36.3,"russian_pct":43.8,"uzbek_pct":0.3,"uighur_pct":0.0,"german_pct":3.4,"ukrainian_pct":9.3,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Северо-Казахстанская","district":"Район Им.Габита Мусрепова","total":33665,"kazakh":11708,"russian":12748,"kazakh_pct":34.8,"russian_pct":37.9,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":6.0,"ukrainian_pct":12.4,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Костанайская","district":"Карабалыкский район","total":23401,"kazakh":7922,"russian":8308,"kazakh_pct":33.9,"russian_pct":35.5,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":5.9,"ukrainian_pct":15.6,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Северо-Казахстанская","district":"город Петропавловск","total":222113,"kazakh":75324,"russian":117239,"kazakh_pct":33.9,"russian_pct":52.8,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":2.6,"ukrainian_pct":3.3,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.3},{"region":"Акмолинская","district":"Есильский район","total":19082,"kazakh":6320,"russian":6573,"kazakh_pct":33.1,"russian_pct":34.4,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":5.8,"ukrainian_pct":13.6,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Восточно-Казахстанская","district":"Глубоковский район","total":55124,"kazakh":17984,"russian":33643,"kazakh_pct":32.6,"russian_pct":61.0,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":2.5,"ukrainian_pct":1.0,"korean_pct":0.1,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"Костанайская","district":"район Беимбета Майлина","total":21517,"kazakh":6793,"russian":7748,"kazakh_pct":31.6,"russian_pct":36.0,"uzbek_pct":0.3,"uighur_pct":0.0,"german_pct":8.7,"ukrainian_pct":14.7,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Северо-Казахстанская","district":"Район Магжана Жумабаева","total":25775,"kazakh":8099,"russian":13147,"kazakh_pct":31.4,"russian_pct":51.0,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":6.1,"ukrainian_pct":5.9,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"Костанайская","district":"Сарыкольский район","total":16092,"kazakh":5022,"russian":5501,"kazakh_pct":31.2,"russian_pct":34.2,"uzbek_pct":0.3,"uighur_pct":0.1,"german_pct":3.5,"ukrainian_pct":22.5,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Костанайская","district":"Карасуский район","total":18785,"kazakh":5840,"russian":6629,"kazakh_pct":31.1,"russian_pct":35.3,"uzbek_pct":0.3,"uighur_pct":0.0,"german_pct":4.7,"ukrainian_pct":14.5,"korean_pct":0.3,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Костанайская","district":"Денисовский район","total":15388,"kazakh":4660,"russian":5043,"kazakh_pct":30.3,"russian_pct":32.8,"uzbek_pct":0.3,"uighur_pct":0.0,"german_pct":8.4,"ukrainian_pct":18.3,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Северо-Казахстанская","district":"Тайыншинский район","total":37365,"kazakh":11195,"russian":8388,"kazakh_pct":30.0,"russian_pct":22.4,"uzbek_pct":0.4,"uighur_pct":0.0,"german_pct":10.0,"ukrainian_pct":11.9,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Карагандинская","district":"город Шахтинск","total":56924,"kazakh":16906,"russian":26016,"kazakh_pct":29.7,"russian_pct":45.7,"uzbek_pct":0.3,"uighur_pct":0.0,"german_pct":4.4,"ukrainian_pct":5.7,"korean_pct":1.0,"dungan_pct":1.1,"tajik_pct":0.1},{"region":"Карагандинская","district":"город Сарань","total":43214,"kazakh":12116,"russian":20685,"kazakh_pct":28.0,"russian_pct":47.9,"uzbek_pct":0.3,"uighur_pct":0.1,"german_pct":5.1,"ukrainian_pct":5.4,"korean_pct":0.6,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Северо-Казахстанская","district":"Мамлютский район","total":16399,"kazakh":4478,"russian":8819,"kazakh_pct":27.3,"russian_pct":53.8,"uzbek_pct":0.8,"uighur_pct":0.0,"german_pct":4.1,"ukrainian_pct":3.3,"korean_pct":0.0,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"Костанайская","district":"Лисаковск г.а.","total":34280,"kazakh":9252,"russian":15347,"kazakh_pct":27.0,"russian_pct":44.8,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":6.9,"ukrainian_pct":14.4,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Восточно-Казахстанская","district":"район Алтай","total":58119,"kazakh":15554,"russian":39559,"kazakh_pct":26.8,"russian_pct":68.1,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":1.6,"ukrainian_pct":0.9,"korean_pct":0.1,"dungan_pct":0.2,"tajik_pct":0.1},{"region":"Туркестанская","district":"Сайрамский район","total":243451,"kazakh":63444,"russian":3704,"kazakh_pct":26.1,"russian_pct":1.5,"uzbek_pct":67.7,"uighur_pct":0.1,"german_pct":0.1,"ukrainian_pct":0.2,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Акмолинская","district":"Сандыктауский район","total":15938,"kazakh":3563,"russian":7825,"kazakh_pct":22.4,"russian_pct":49.1,"uzbek_pct":0.3,"uighur_pct":0.0,"german_pct":7.6,"ukrainian_pct":4.9,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Восточно-Казахстанская","district":"Шемонаихинский район","total":40047,"kazakh":8614,"russian":28081,"kazakh_pct":21.5,"russian_pct":70.1,"uzbek_pct":0.3,"uighur_pct":0.1,"german_pct":4.1,"ukrainian_pct":1.1,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"Костанайская","district":"Федоровский район","total":22712,"kazakh":4761,"russian":7674,"kazakh_pct":21.0,"russian_pct":33.8,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":9.1,"ukrainian_pct":26.4,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Восточно-Казахстанская","district":"Риддер г.а.","total":50052,"kazakh":10274,"russian":36903,"kazakh_pct":20.5,"russian_pct":73.7,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":1.6,"ukrainian_pct":0.9,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1}],"total_pop":20499822,"concentration":[{"eth":"Дунгане","region":"Жамбылская","pct":67.9,"total":88165},{"eth":"Таджики","region":"Туркестанская","pct":67.0,"total":61307},{"eth":"Узбеки","region":"Туркестанская","pct":58.2,"total":695557},{"eth":"Уйгуры","region":"г. Алматы + обл.","pct":40.3,"total":309164},{"eth":"Турки","region":"Жамбылская","pct":33.3,"total":93234},{"eth":"Поляки","region":"СКО","pct":30.6,"total":33928},{"eth":"Курды","region":"Жамбылская","pct":29.8,"total":52077},{"eth":"Кыргызы","region":"Жамбылская","pct":29.1,"total":41459},{"eth":"Корейцы","region":"г. Алматы","pct":32.8,"total":120821},{"eth":"Каракалпаки","region":"Алматинская","pct":31.5,"total":32189}],"historical":[{"year":1989,"kazakh":39.7,"russian":37.8,"ukrainian":5.4,"german":5.8,"other":11.3},{"year":1999,"kazakh":53.4,"russian":30.0,"ukrainian":3.7,"german":2.4,"other":10.5},{"year":2009,"kazakh":63.1,"russian":23.7,"ukrainian":2.1,"german":1.1,"other":10.0},{"year":2021,"kazakh":69.0,"russian":15.5,"ukrainian":1.9,"german":1.1,"other":12.5},{"year":2026,"kazakh":71.5,"russian":14.4,"ukrainian":1.8,"german":1.1,"other":11.2}],"gender":[{"eth":"Каракалпаки","total":32189,"male_pct":40.5,"female_pct":59.5},{"eth":"Удмурты","total":6503,"male_pct":41.6,"female_pct":58.4},{"eth":"Кыргызы","total":41459,"male_pct":42.3,"female_pct":57.7},{"eth":"Марийцы","total":5280,"male_pct":42.3,"female_pct":57.7},{"eth":"Мордва","total":9392,"male_pct":43.6,"female_pct":56.4},{"eth":"Чуваши","total":8056,"male_pct":43.9,"female_pct":56.1},{"eth":"Башкиры","total":20229,"male_pct":44.6,"female_pct":55.4},{"eth":"Украинцы","total":367547,"male_pct":45.3,"female_pct":54.7},{"eth":"Татары","total":218361,"male_pct":45.6,"female_pct":54.4},{"eth":"Болгары","total":5784,"male_pct":45.7,"female_pct":54.3},{"eth":"Русские","total":2943022,"male_pct":45.8,"female_pct":54.2},{"eth":"Белорусы","total":73788,"male_pct":45.8,"female_pct":54.2},{"eth":"Литовцы","total":5608,"male_pct":46.3,"female_pct":53.7},{"eth":"Поляки","total":33928,"male_pct":46.5,"female_pct":53.5},{"eth":"Молдаване","total":17107,"male_pct":46.9,"female_pct":53.1},{"eth":"Немцы","total":222890,"male_pct":47.5,"female_pct":52.5},{"eth":"Корейцы","total":120821,"male_pct":48.0,"female_pct":52.0},{"eth":"Греки","total":12065,"male_pct":48.6,"female_pct":51.4},{"eth":"Уйгуры","total":309164,"male_pct":49.3,"female_pct":50.7},{"eth":"Казахи","total":14664202,"male_pct":49.5,"female_pct":50.5},{"eth":"Узбеки","total":695557,"male_pct":50.0,"female_pct":50.0},{"eth":"Дунгане","total":88165,"male_pct":50.2,"female_pct":49.8},{"eth":"Курды","total":52077,"male_pct":50.6,"female_pct":49.4},{"eth":"Лезгины","total":5290,"male_pct":51.0,"female_pct":49.0},{"eth":"Азербайджанцы","total":157568,"male_pct":51.5,"female_pct":48.5},{"eth":"Ингуши","total":18187,"male_pct":51.7,"female_pct":48.3},{"eth":"Чеченцы","total":35436,"male_pct":53.0,"female_pct":47.0},{"eth":"Турки","total":93234,"male_pct":53.1,"female_pct":46.9},{"eth":"Армяне","total":16379,"male_pct":53.7,"female_pct":46.3},{"eth":"Таджики","total":61307,"male_pct":54.2,"female_pct":45.8},{"eth":"Грузины","total":5874,"male_pct":57.3,"female_pct":42.7}],"top20":[{"num":"2","ethnicity":"Казахи","total":14664202,"male":7257166,"female":7407036,"urban":9024825,"rural":5639377,"pct":71.5333,"urban_pct":61.5},{"num":"3","ethnicity":"Русские","total":2943022,"male":1347767,"female":1595255,"urban":2276120,"rural":666902,"pct":14.3563,"urban_pct":77.3},{"num":"4","ethnicity":"Узбеки","total":695557,"male":347861,"female":347696,"urban":366355,"rural":329202,"pct":3.393,"urban_pct":52.7},{"num":"5","ethnicity":"Украинцы","total":367547,"male":166559,"female":200988,"urban":246331,"rural":121216,"pct":1.7929,"urban_pct":67.0},{"num":"6","ethnicity":"Уйгуры","total":309164,"male":152471,"female":156693,"urban":173511,"rural":135653,"pct":1.5081,"urban_pct":56.1},{"num":"7","ethnicity":"Немцы","total":222890,"male":105841,"female":117049,"urban":138891,"rural":83999,"pct":1.0873,"urban_pct":62.3},{"num":"8","ethnicity":"Татары","total":218361,"male":99629,"female":118732,"urban":175821,"rural":42540,"pct":1.0652,"urban_pct":80.5},{"num":"9","ethnicity":"Азербайджанцы","total":157568,"male":81162,"female":76406,"urban":93578,"rural":63990,"pct":0.7686,"urban_pct":59.4},{"num":"10","ethnicity":"Корейцы","total":120821,"male":58027,"female":62794,"urban":106117,"rural":14704,"pct":0.5894,"urban_pct":87.8},{"num":"11","ethnicity":"Турки","total":93234,"male":49472,"female":43762,"urban":42167,"rural":51067,"pct":0.4548,"urban_pct":45.2},{"num":"12","ethnicity":"Дунгане","total":88165,"male":44290,"female":43875,"urban":35195,"rural":52970,"pct":0.4301,"urban_pct":39.9},{"num":"13","ethnicity":"Белорусы","total":73788,"male":33803,"female":39985,"urban":47884,"rural":25904,"pct":0.3599,"urban_pct":64.9},{"num":"14","ethnicity":"Таджики","total":61307,"male":33202,"female":28105,"urban":19205,"rural":42102,"pct":0.2991,"urban_pct":31.3},{"num":"15","ethnicity":"Курды","total":52077,"male":26333,"female":25744,"urban":22125,"rural":29952,"pct":0.254,"urban_pct":42.5},{"num":"16","ethnicity":"Кыргызы","total":41459,"male":17555,"female":23904,"urban":29257,"rural":12202,"pct":0.2022,"urban_pct":70.6},{"num":"17","ethnicity":"Чеченцы","total":35436,"male":18784,"female":16652,"urban":21858,"rural":13578,"pct":0.1729,"urban_pct":61.7},{"num":"18","ethnicity":"Поляки","total":33928,"male":15779,"female":18149,"urban":20122,"rural":13806,"pct":0.1655,"urban_pct":59.3},{"num":"19","ethnicity":"Каракалпаки","total":32189,"male":13050,"female":19139,"urban":12809,"rural":19380,"pct":0.157,"urban_pct":39.8},{"num":"20","ethnicity":"Башкиры","total":20229,"male":9019,"female":11210,"urban":14548,"rural":5681,"pct":0.0987,"urban_pct":71.9},{"num":"21","ethnicity":"Ингуши","total":18187,"male":9408,"female":8779,"urban":15302,"rural":2885,"pct":0.0887,"urban_pct":84.1}],"urban":[{"eth":"Лезгины","pct":88.2,"total":5290},{"eth":"Корейцы","pct":87.8,"total":120821},{"eth":"Ингуши","pct":84.1,"total":18187},{"eth":"Армяне","pct":83.8,"total":16379},{"eth":"Грузины","pct":82.2,"total":5874},{"eth":"Татары","pct":80.5,"total":218361},{"eth":"Болгары","pct":77.8,"total":5784},{"eth":"Русские","pct":77.3,"total":2943022},{"eth":"Греки","pct":74.4,"total":12065},{"eth":"Башкиры","pct":71.9,"total":20229},{"eth":"Мордва","pct":71.9,"total":9392},{"eth":"Литовцы","pct":71.5,"total":5608},{"eth":"Чуваши","pct":71.0,"total":8056},{"eth":"Кыргызы","pct":70.6,"total":41459},{"eth":"Украинцы","pct":67.0,"total":367547},{"eth":"Молдаване","pct":66.8,"total":17107},{"eth":"Белорусы","pct":64.9,"total":73788},{"eth":"Немцы","pct":62.3,"total":222890},{"eth":"Чеченцы","pct":61.7,"total":35436},{"eth":"Казахи","pct":61.5,"total":14664202},{"eth":"Марийцы","pct":60.7,"total":5280},{"eth":"Азербайджанцы","pct":59.4,"total":157568},{"eth":"Поляки","pct":59.3,"total":33928},{"eth":"Удмурты","pct":56.3,"total":6503},{"eth":"Уйгуры","pct":56.1,"total":309164},{"eth":"Узбеки","pct":52.7,"total":695557},{"eth":"Турки","pct":45.2,"total":93234},{"eth":"Курды","pct":42.5,"total":52077},{"eth":"Дунгане","pct":39.9,"total":88165},{"eth":"Каракалпаки","pct":39.8,"total":32189},{"eth":"Таджики","pct":31.3,"total":61307}],"dist_russian":[{"region":"Восточно-Казахстанская","district":"Риддер г.а.","total":50052,"kazakh":10274,"russian":36903,"kazakh_pct":20.5,"russian_pct":73.7,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":1.6,"ukrainian_pct":0.9,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Восточно-Казахстанская","district":"Шемонаихинский район","total":40047,"kazakh":8614,"russian":28081,"kazakh_pct":21.5,"russian_pct":70.1,"uzbek_pct":0.3,"uighur_pct":0.1,"german_pct":4.1,"ukrainian_pct":1.1,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"Восточно-Казахстанская","district":"район Алтай","total":58119,"kazakh":15554,"russian":39559,"kazakh_pct":26.8,"russian_pct":68.1,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":1.6,"ukrainian_pct":0.9,"korean_pct":0.1,"dungan_pct":0.2,"tajik_pct":0.1},{"region":"Восточно-Казахстанская","district":"Глубоковский район","total":55124,"kazakh":17984,"russian":33643,"kazakh_pct":32.6,"russian_pct":61.0,"uzbek_pct":0.1,"uighur_pct":0.1,"german_pct":2.5,"ukrainian_pct":1.0,"korean_pct":0.1,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"Северо-Казахстанская","district":"Мамлютский район","total":16399,"kazakh":4478,"russian":8819,"kazakh_pct":27.3,"russian_pct":53.8,"uzbek_pct":0.8,"uighur_pct":0.0,"german_pct":4.1,"ukrainian_pct":3.3,"korean_pct":0.0,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"Северо-Казахстанская","district":"город Петропавловск","total":222113,"kazakh":75324,"russian":117239,"kazakh_pct":33.9,"russian_pct":52.8,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":2.6,"ukrainian_pct":3.3,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.3},{"region":"Северо-Казахстанская","district":"Район Магжана Жумабаева","total":25775,"kazakh":8099,"russian":13147,"kazakh_pct":31.4,"russian_pct":51.0,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":6.1,"ukrainian_pct":5.9,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"Северо-Казахстанская","district":"Есильский район","total":20029,"kazakh":7695,"russian":9922,"kazakh_pct":38.4,"russian_pct":49.5,"uzbek_pct":0.2,"uighur_pct":0.0,"german_pct":4.0,"ukrainian_pct":4.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1}],"dist_uzbek":[{"region":"Туркестанская","district":"Сайрамский район","total":243451,"kazakh":63444,"russian":3704,"kazakh_pct":26.1,"russian_pct":1.5,"uzbek_pct":67.7,"uighur_pct":0.1,"german_pct":0.1,"ukrainian_pct":0.2,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Туркестанская","district":"Район Сауран","total":104545,"kazakh":41753,"russian":555,"kazakh_pct":39.9,"russian_pct":0.5,"uzbek_pct":58.7,"uighur_pct":0.1,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Туркестанская","district":"город Туркестан","total":245606,"kazakh":165631,"russian":1588,"kazakh_pct":67.4,"russian_pct":0.6,"uzbek_pct":29.8,"uighur_pct":0.1,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Туркестанская","district":"Кентау г.а.","total":99062,"kazakh":66597,"russian":2807,"kazakh_pct":67.2,"russian_pct":2.8,"uzbek_pct":26.8,"uighur_pct":0.1,"german_pct":0.1,"ukrainian_pct":0.2,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Туркестанская","district":"Толебийский район","total":121898,"kazakh":82855,"russian":5116,"kazakh_pct":68.0,"russian_pct":4.2,"uzbek_pct":19.5,"uighur_pct":0.1,"german_pct":0.2,"ukrainian_pct":0.5,"korean_pct":0.1,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"г.Шымкент","district":"Каратауский район","total":334139,"kazakh":257421,"russian":7126,"kazakh_pct":77.0,"russian_pct":2.1,"uzbek_pct":16.8,"uighur_pct":0.1,"german_pct":0.1,"ukrainian_pct":0.2,"korean_pct":0.2,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"г.Шымкент","district":"Енбекшинский район","total":206679,"kazakh":130548,"russian":21446,"kazakh_pct":63.2,"russian_pct":10.4,"uzbek_pct":16.7,"uighur_pct":0.1,"german_pct":0.3,"ukrainian_pct":1.0,"korean_pct":0.9,"dungan_pct":0.0,"tajik_pct":0.2},{"region":"г.Шымкент","district":"район Тұран","total":231341,"kazakh":162478,"russian":14138,"kazakh_pct":70.2,"russian_pct":6.1,"uzbek_pct":16.4,"uighur_pct":0.2,"german_pct":0.2,"ukrainian_pct":0.6,"korean_pct":0.6,"dungan_pct":0.0,"tajik_pct":0.1}],"dist_uighur":[{"region":"Алматинская","district":"Уйгурский район","total":59768,"kazakh":24712,"russian":829,"kazakh_pct":41.3,"russian_pct":1.4,"uzbek_pct":0.3,"uighur_pct":56.1,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.1},{"region":"Жетісу","district":"Панфиловский район","total":134323,"kazakh":85598,"russian":3905,"kazakh_pct":63.7,"russian_pct":2.9,"uzbek_pct":0.3,"uighur_pct":31.3,"german_pct":0.1,"ukrainian_pct":0.1,"korean_pct":0.1,"dungan_pct":0.7,"tajik_pct":0.0},{"region":"Алматинская","district":"Енбекшиказахский район","total":283275,"kazakh":169494,"russian":27346,"kazakh_pct":59.8,"russian_pct":9.7,"uzbek_pct":0.4,"uighur_pct":17.4,"german_pct":0.7,"ukrainian_pct":0.4,"korean_pct":0.3,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"г.Алматы","district":"Жетысуский район","total":198881,"kazakh":99974,"russian":46166,"kazakh_pct":50.3,"russian_pct":23.2,"uzbek_pct":0.7,"uighur_pct":12.0,"german_pct":0.7,"ukrainian_pct":1.0,"korean_pct":1.3,"dungan_pct":1.7,"tajik_pct":0.6},{"region":"Алматинская","district":"Талгарский район","total":268570,"kazakh":186953,"russian":33722,"kazakh_pct":69.6,"russian_pct":12.6,"uzbek_pct":0.4,"uighur_pct":8.9,"german_pct":0.6,"ukrainian_pct":0.5,"korean_pct":0.5,"dungan_pct":0.1,"tajik_pct":0.1},{"region":"г.Алматы","district":"Турксибский район","total":271520,"kazakh":144361,"russian":72546,"kazakh_pct":53.2,"russian_pct":26.7,"uzbek_pct":0.6,"uighur_pct":8.2,"german_pct":0.8,"ukrainian_pct":1.2,"korean_pct":1.3,"dungan_pct":0.2,"tajik_pct":0.2}],"dist_kazakh_pure":[{"region":"Атырауская","district":"Кзылкогинский район","total":30364,"kazakh":30313,"russian":19,"kazakh_pct":99.8,"russian_pct":0.1,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Актюбинская","district":"Байганинский район","total":22286,"kazakh":22209,"russian":17,"kazakh_pct":99.7,"russian_pct":0.1,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.1,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Кызылординская","district":"Аральский район","total":78643,"kazakh":78433,"russian":87,"kazakh_pct":99.7,"russian_pct":0.1,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Атырауская","district":"Исатайский район","total":25841,"kazakh":25759,"russian":10,"kazakh_pct":99.7,"russian_pct":0.0,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Мангистауская","district":"Мангистауский район","total":34087,"kazakh":33941,"russian":17,"kazakh_pct":99.6,"russian_pct":0.0,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Актюбинская","district":"Иргизский район","total":13345,"kazakh":13290,"russian":33,"kazakh_pct":99.6,"russian_pct":0.2,"uzbek_pct":0.0,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Абай","district":"район Ақсуат","total":18097,"kazakh":18002,"russian":15,"kazakh_pct":99.5,"russian_pct":0.1,"uzbek_pct":0.0,"uighur_pct":0.1,"german_pct":0.2,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0},{"region":"Западно-Казахстанская","district":"Каратобинский район","total":12797,"kazakh":12738,"russian":12,"kazakh_pct":99.5,"russian_pct":0.1,"uzbek_pct":0.1,"uighur_pct":0.0,"german_pct":0.0,"ukrainian_pct":0.0,"korean_pct":0.0,"dungan_pct":0.0,"tajik_pct":0.0}]};
+const ETH=R.eth.filter(e=>e.ethnicity!='Не указавшие'&&e.ethnicity!='Другие национальности');
+const REGS=R.regions;
+const DISTS=R.districts;
+const HIST=R.historical;
+const GEN=R.gender;
+const URB=R.urban;
+const CONC=R.concentration;
+
+const GCOL={t:'#9b2020',s:'#1a3d6b',e:'#8b5e0a',c:'#1a4d2e',i:'#4a1e6b',m:'#1a7a6e',o:'#6b5a3e'};
+const GNAME={t:'Тюркские',s:'Славянские',e:'Восточноазиатские',c:'Кавказские',i:'Иранские',m:'Семитские',o:'Другие'};
+function tGroup(g){return ((I18N[LANG]||I18N.ru).group_names||GNAME)[g]||GNAME[g]||g;}
+function fmtN(n){return Number(n).toLocaleString(LANG==='en'?'en-US':LANG==='kz'?'kk-KZ':'ru-RU');}
+const GRP={
+  'Казахи':'t','Узбеки':'t','Уйгуры':'t','Татары':'t','Турки':'t','Азербайджанцы':'t',
+  'Кыргызы':'t','Каракалпаки':'t','Башкиры':'t','Туркмены':'t',
+  'Русские':'s','Украинцы':'s','Белорусы':'s','Поляки':'s','Болгары':'s','Немцы':'s',
+  'Корейцы':'e','Дунгане':'e','Китайцы':'e',
+  'Армяне':'c','Грузины':'c','Лезгины':'c','Осетины':'c','Аварцы':'c','Чеченцы':'c','Ингуши':'c',
+  'Таджики':'i','Курды':'i','Афганцы':'i',
+  'Евреи':'m','Арабы':'m',
+};
+function gc(eth){return GCOL[GRP[eth]]||GCOL.o;}
+
+const ttEl=document.getElementById('tt');
+document.addEventListener('mousemove',e=>{ttEl.style.left=(e.clientX+14)+'px';ttEl.style.top=(e.clientY+14)+'px';});
+function tt(h){ttEl.innerHTML=h;ttEl.style.display='block';}
+function ht(){ttEl.style.display='none';}
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('prog').style.width=(window.scrollY/(document.body.scrollHeight-innerHeight)*100)+'%';
+},{passive:true});
+
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.05});
+document.querySelectorAll('.rev').forEach(el=>ro.observe(el));
+
+
+// ══════════════════════════════════════════
+// I18N
+// ══════════════════════════════════════════
+const I18N = {
+  ru: {
+    doc_title:'72 народа Казахстана · 2026', html_lang:'ru',
+    tag:'1 Мая · День единства народов Казахстана', h1:'НАРОДЫ<br><em>КАЗАХСТАНА</em>', navlogo:'НАРОДЫ КЗ · 2026',
+    nav_pills:['Состав','100 чел.','Пол','Город','Регионы','Районы'],
+    lede:'На начало 2026 года в Казахстане проживают представители <em>72 этносов</em>. Общая численность населения — 20,5 миллиона человек. Казахи составляют 71,5%, что вдвое больше, чем в 1989 году. За тридцать лет страна прошла путь от многонационального советского государства с почти равным соотношением казахов и русских к государству с явным этническим большинством.',
+    kpi_eth:'этноса', kpi_pop:'человек', kpi_kaz:'казахи', kpi_dist:'районов', hero_desc:'Казахстан входит в число самых многонациональных государств Центральной Азии. На начало 2026 года здесь зарегистрированы представители 72 этносов.', scroll_cue:'↓ прокрутить',
+    v1_num:'Визуал 01', v1_title:'Тридцать лет\nперемен', v1_body:'В 1989 году казахов было 39,7%, русских — 37,8%. За два следующих десятилетия соотношение перевернулось. К 2026 году доля русских снизилась почти втрое — с 37,8% до 14,4%.', v1_chart:'Изменение этнического состава 1989–2026, % от населения', v1_anno:'Источник: переписи 1989, 1999, 2009, 2021; данные БНС на 2026', v1_after:'Рост доли казахов не остановился. Между переписями 2009 и 2021 годов она выросла с 63,1% до 69%. За следующие пять лет — ещё на 2,5 процентных пункта.',
+    v2_num:'Визуал 02', v2_title:'Масштаб\nприсутствия', v2_body:'Площадь каждого круга строго пропорциональна численности этноса. Казахи вынесены отдельно: рядом с ними все остальные народы занимают лишь 28,5% площади.', v2_chart:'Численность этносов — площадь круга пропорциональна населению', v2_anno:'Все 72 этноса; размер = численность; цвет = языковая группа',
+    v3_num:'Визуал 03', v3_title:'100\nказахстанцев', v3_body:'Если взять 100 случайных жителей Казахстана: 71 из них — казахи, 14 — русские, 3 — узбеки, 2 — уйгуры, 2 — украинцы. Оставшиеся 8 — это 67 других народов.', v3_chart:'100 казахстанцев — каждая клетка один человек', v3_anno:'Нажмите на клетку',
+    v4_num:'Визуал 04', v4_title:'Гендерный\nбаланс', v4_body:'В целом по Казахстану женщин незначительно больше — 51,3%. Грузины — 57,3% мужчин. Таджики — 54,2%. Армяне — 53,7%. У каракалпаков — 59,5% женщин.', v4_chart:'Доля мужчин в каждом этносе, % — вертикальная линия 50%', v4_anno:'Этносы численностью более 5 000 человек', v4_ins1:'Грузины и таджики имеют аномально высокую долю мужчин — признак трудовой миграции: люди приезжают без семьи.', v4_ins2:'У каракалпаков 59,5% женщин — зеркальный эффект: мужчины уехали на заработки, женщины остались.',
+    v5_num:'Визуал 05', v5_title:'Город\nи аул', v5_body:'Корейцы — самый урбанизированный народ Казахстана: 87,8% живут в городах. На противоположном полюсе — таджики: лишь 31,3% горожан.', v5_quote:'«Разрыв между самым городским и самым сельским этносом Казахстана — 56 процентных пунктов»', v5_cite:'Данные БНС РК, 2026', v5_chart:'Доля городского населения по этносам, % — сортировка убывающая', v5_anno:'Этносы численностью более 5 000 человек', v5_after:'Немцы находятся в середине списка: 62,3% горожан. Несмотря на массовый отъезд в Германию, оставшиеся осели преимущественно в городах Северного Казахстана.',
+    v6_num:'Визуал 06', v6_title:'Казахи\nпо регионам', v6_body:'Разброс между регионами — почти 60 процентных пунктов. В Кызылординской области казахи составляют 96,3%. В Северо-Казахстанской — 37,5% — единственный регион, где русских больше.', v6_chart:'Доля казахов по регионам, % — отсортировано убывающе', v6_anno:'Голубая полоса справа — доля русских в том же регионе',
+    v7_num:'Визуал 07', v7_title:'Где\nсосредоточены', v7_body:'Дунгане: 67,9% общины в Жамбылской области. Узбеки — 58,2% в Туркестанской. Таджики — 67% там же. Казахи — самый равномерно распределённый народ.', v7_chart:'Доля этноса, проживающая в одном регионе, %', v7_anno:'Концентрация = % народа в регионе максимального присутствия',
+    v8_num:'Визуал 08', v8_title:'228 районов:\nкрайние точки', v8_body:'Риддер ВКО — 73,7% русских. Кзылкогинский район Атырауской — 99,8% казахов. Сайрамский район — 67,7% узбеков. Уйгурский район — 56,1% уйгуров.', v8_chart:'Районы с наибольшей долей отдельных этносов', v8_anno:'Данные по 228 районам и городским администрациям',
+    v9_num:'Визуал 09', v9_title:'Малые\nнароды', v9_body:'Греки, евреи, поляки, ингуши, осетины, балкарцы, ассирийцы, саха, коми — каждый народ со своей историей в Казахстане. Большинство — наследие советских депортаций 1930–1950-х годов.', v9_chart:'Этносы численностью менее 100 000 человек', v9_anno:'Все значения — на начало 2026 года',
+    v10_num:'Визуал 10', v10_title:'Четыре\nизмерения', v10_body:'У каждого народа — своя комбинация четырёх характеристик: доля горожан, гендерный баланс, концентрация в одном регионе и численность. Нажмите на этнос чтобы выделить.', v10_chart:'16 крупнейших этносов — 4 показателя сравнения', v10_anno:'Нажмите на этнос чтобы выделить.',
+    axis_urban:'Горожане %', axis_male:'Мужчины %', axis_conc:'Концентрация %', axis_size:'Численность',
+    conc_h:'Казахстан — это не монолит. <em>Это 72 истории.</em>', conc_p1:'За тридцать лет независимости этническая карта страны изменилась радикально. Казахи стали большинством, которого у них не было с советских времён.', conc_p2:'Но 28,5% населения — это почти 5,8 миллиона человек, принадлежащих к 71 другому народу. Они живут здесь поколениями.', conc_p3:'Уровень городской концентрации, гендерный баланс, компактность проживания — всё это разные истории: депортаций, трудовой миграции, исторического расселения, выбора.', conc_p4:'1 мая — День единства народов Казахстана. Это 72 народа, живущие в одной стране. И цифры это подтверждают.', home_btn:'← вернуться на nurasyl.space', footer_src:'Источник: Бюро национальной статистики РК', footer_src2:'Численность населения по отдельным этносам, начало 2026 г.', footer_src3:'Визуализация и анализ: nurasyl.space', footer_date:'1 мая · День единства<br>народов Казахстана 🇰🇿',
+    gen_left:'← Больше женщин', gen_right:'Больше мужчин →', hist_label:['Казахи','Русские','Украинцы','Немцы','Другие'], wf_tooltip:'из 100 казахстанцев', wf_anno:'Нажмите на клетку', dist_col1:'Русские по районам', dist_col2:'Узбеки по районам', dist_col3:'Уйгуры по районам', dist_col4:'Казахи: однородные районы', ma_urban:'Горожан:', ma_male:'Мужчин:', people:'чел.', total:'Всего', rural:'Сельских', community:'общины', lives_in:'живёт в', russians_short:'Рус:', wf_of100:'из 100',
+    wf_groups:[{name:'Казахи',pct:71,n:'14 664 202'},{name:'Русские',pct:14,n:'2 943 022'},{name:'Узбеки',pct:3,n:'695 557'},{name:'Уйгуры',pct:2,n:'309 164'},{name:'Украинцы',pct:2,n:'367 547'},{name:'Немцы',pct:1,n:'222 890'},{name:'Татары',pct:1,n:'218 361'},{name:'67 народов',pct:6,n:'~1 029 079'}],
+    eth_names:{"Казахи":"Казахи","Русские":"Русские","Узбеки":"Узбеки","Украинцы":"Украинцы","Уйгуры":"Уйгуры","Немцы":"Немцы","Татары":"Татары","Азербайджанцы":"Азербайджанцы","Корейцы":"Корейцы","Турки":"Турки","Дунгане":"Дунгане","Белорусы":"Белорусы","Таджики":"Таджики","Курды":"Курды","Кыргызы":"Кыргызы","Чеченцы":"Чеченцы","Поляки":"Поляки","Каракалпаки":"Каракалпаки","Башкиры":"Башкиры","Ингуши":"Ингуши","Молдаване":"Молдаване","Армяне":"Армяне","Греки":"Греки","Мордва":"Мордва","Чуваши":"Чуваши","Удмурты":"Удмурты","Грузины":"Грузины","Болгары":"Болгары","Литовцы":"Литовцы","Лезгины":"Лезгины","Марийцы":"Марийцы","Цыгане":"Цыгане","Евреи":"Евреи","Китайцы":"Китайцы","Туркмены":"Туркмены","Балкарцы":"Балкарцы","Осетины":"Осетины","Карачаевцы":"Карачаевцы","Аварцы":"Аварцы","Афганцы":"Афганцы","Латышы":"Латышы","Эстонцы":"Эстонцы","Даргинцы":"Даргинцы","Кумыки":"Кумыки","Румыны":"Румыны","Коми-пермяки":"Коми-пермяки","Народы Индии и Пакистана":"Народы Индии и Пакистана","Калмыки":"Калмыки","Арабы":"Арабы","Гагаузы":"Гагаузы","Караимы":"Караимы","Буряты":"Буряты","Ногайцы":"Ногайцы","Венгры":"Венгры","Американцы":"Американцы","Финны":"Финны","Чехи":"Чехи","Табасараны":"Табасараны","Татары крымские":"Татары крымские","Алтайцы":"Алтайцы","Удины":"Удины","Кабардинцы":"Кабардинцы","Лакцы":"Лакцы","Персы":"Персы","Итальянцы":"Итальянцы","Саха(Якуты)":"Саха(Якуты)","Хакасы":"Хакасы","Ассирийцы":"Ассирийцы","Монголы":"Монголы","Коми":"Коми","Не указавшие":"Не указавшие","Другие национальности":"Другие национальности"}, reg_names:{"Абай":"Абай","Акмолинская":"Акмолинская","Актюбинская":"Актюбинская","Алматинская":"Алматинская","Атырауская":"Атырауская","Западно-Казахстанская":"Западно-Казахстанская","Жамбылская":"Жамбылская","Жетісу":"Жетісу","Карагандинская":"Карагандинская","Костанайская":"Костанайская","Кызылординская":"Кызылординская","Мангистауская":"Мангистауская","Павлодарская":"Павлодарская","Северо-Казахстанская":"Северо-Казахстанская","Туркестанская":"Туркестанская","Ұлытау":"Ұлытау","Восточно-Казахстанская":"Восточно-Казахстанская","г. Астана":"г. Астана","г. Алматы":"г. Алматы","г.Шымкент":"г.Шымкент","г. Алматы + обл.":"г. Алматы + обл.","СКО":"СКО"}, conc_data_labels:{"Дунгане":"Дунгане","Таджики":"Таджики","Узбеки":"Узбеки","Уйгуры":"Уйгуры","Турки":"Турки","Поляки":"Поляки","Курды":"Курды","Кыргызы":"Кыргызы","Корейцы":"Корейцы","Каракалпаки":"Каракалпаки"}, conc_regions:{"Абай":"Абай","Акмолинская":"Акмолинская","Актюбинская":"Актюбинская","Алматинская":"Алматинская","Атырауская":"Атырауская","Западно-Казахстанская":"Западно-Казахстанская","Жамбылская":"Жамбылская","Жетісу":"Жетісу","Карагандинская":"Карагандинская","Костанайская":"Костанайская","Кызылординская":"Кызылординская","Мангистауская":"Мангистауская","Павлодарская":"Павлодарская","Северо-Казахстанская":"Северо-Казахстанская","Туркестанская":"Туркестанская","Ұлытау":"Ұлытау","Восточно-Казахстанская":"Восточно-Казахстанская","г. Астана":"г. Астана","г. Алматы":"г. Алматы","г.Шымкент":"г.Шымкент","г. Алматы + обл.":"г. Алматы + обл.","СКО":"СКО"}, group_names:{"t":"Тюркские","s":"Славянские","e":"Восточноазиатские","c":"Кавказские","i":"Иранские","m":"Семитские","o":"Другие"}
+  },
+  kz: {
+    doc_title:'Қазақстан халықтары · 2026', html_lang:'kk',
+    tag:'1 Мамыр · Қазақстан халқының бірлігі күні', h1:'ҚАЗАҚСТАН<br><em>ХАЛЫҚТАРЫ</em>', navlogo:'ҚАЗАҚСТАН ХАЛЫҚТАРЫ · 2026',
+    nav_pills:['Құрам','100 адам','Жыныс','Қала','Аймақтар','Аудандар'],
+    lede:'2026 жылдың басында Қазақстанда <em>72 этностың</em> өкілдері тұрады. Жалпы халық саны — 20,5 миллион адам. Қазақтардың үлесі 71,5%, бұл 1989 жылмен салыстырғанда екі есе жоғары.',
+    kpi_eth:'этнос', kpi_pop:'адам', kpi_kaz:'қазақтар', kpi_dist:'аудан', hero_desc:'Қазақстан Орталық Азиядағы ең көпэтносты мемлекеттердің бірі. 2026 жылдың басында мұнда 72 этностың өкілдері тіркелген.', scroll_cue:'↓ төмен қарай',
+    v1_num:'Визуал 01', v1_title:'Отыз жыл\nөзгеріс', v1_body:'1989 жылы қазақтар 39,7%, орыстар 37,8% болды. Кейінгі онжылдықтарда арақатынас толық өзгерді. 2026 жылға қарай орыстардың үлесі 37,8%-дан 14,4%-ға дейін төмендеді.', v1_chart:'Этникалық құрамның өзгеруі, 1989–2026, халық үлесі %', v1_anno:'Дереккөз: 1989, 1999, 2009, 2021 санақтары; 2026 жылғы БНС дерегі', v1_after:'Қазақтардың үлесі өсуін жалғастырды. 2009–2021 санақтары арасында ол 63,1%-дан 69%-ға көтерілді. Келесі бес жылда тағы 2,5 пайыздық пунктке өсті.',
+    v2_num:'Визуал 02', v2_title:'Этностар\nсаны', v2_body:'Әр шеңбердің ауданы этнос санына пропорционал. Қазақтар бөлек көрсетілген: қалған халықтардың жиынтық үлесі 28,5%.', v2_chart:'Этностар саны — шеңбер ауданы халық санына пропорционал', v2_anno:'Барлық 72 этнос; өлшем = саны; түс = тілдік топ',
+    v3_num:'Визуал 03', v3_title:'100\nқазақстандық', v3_body:'100 кездейсоқ қазақстандықтың 71-і қазақ, 14-і орыс, 3-і өзбек, 2-і ұйғыр, 2-і украин. Қалған 8 адам — 67 басқа этностың өкілдері.', v3_chart:'100 қазақстандық — әр ұяшық бір адам', v3_anno:'Ұяшықты басыңыз',
+    v4_num:'Визуал 04', v4_title:'Гендерлік\nбаланс', v4_body:'Жалпы Қазақстанда әйелдер сәл көбірек — 51,3%. Грузиндерде ерлер 57,3%, тәжіктерде 54,2%, армяндарда 53,7%. Қарақалпақтарда әйелдер үлесі 59,5%.', v4_chart:'Әр этностағы ерлер үлесі, % — тік сызық 50%', v4_anno:'Саны 5 000 адамнан жоғары этностар', v4_ins1:'Грузиндер мен тәжіктерде ерлер үлесінің жоғары болуы еңбек миграциясының белгісі болуы мүмкін.', v4_ins2:'Қарақалпақтарда әйелдер үлесі 59,5% — кері әсер: ерлер жұмысқа кеткен, әйелдер қалған.',
+    v5_num:'Визуал 05', v5_title:'Қала\nжәне ауыл', v5_body:'Кәрістер — Қазақстандағы ең урбандалған этнос: 87,8% қалада тұрады. Ең төмен көрсеткіш тәжіктерде: қала тұрғындары 31,3%.', v5_quote:'«Ең қалалық және ең ауылдық этнос арасындағы айырма — 56 пайыздық пункт»', v5_cite:'ҚР БНС дерегі, 2026', v5_chart:'Этностар бойынша қала халқының үлесі, % — кему ретімен', v5_anno:'Саны 5 000 адамнан жоғары этностар', v5_after:'Немістер тізімнің ортасында: 62,3% қалада тұрады. Германияға жаппай көшуге қарамастан, қалғандары негізінен Солтүстік Қазақстан қалаларында орнықты.',
+    v6_num:'Визуал 06', v6_title:'Қазақтар\nаймақтарда', v6_body:'Аймақтар арасындағы айырма 60 пайыздық пунктке жуық. Қызылорда облысында қазақтар 96,3%. Солтүстік Қазақстанда — 37,5%, бұл орыстар саны көбірек жалғыз өңір.', v6_chart:'Аймақтар бойынша қазақтар үлесі, % — кему ретімен', v6_anno:'Оң жақтағы көк жолақ — сол аймақтағы орыстар үлесі',
+    v7_num:'Визуал 07', v7_title:'Қайда\nшоғырланған', v7_body:'Дүнгендердің 67,9%-ы Жамбыл облысында. Өзбектердің 58,2%-ы Түркістанда. Тәжіктердің 67%-ы да сонда. Қазақтар ең біркелкі таралған халық.', v7_chart:'Бір аймақта тұратын этнос үлесі, %', v7_anno:'Шоғырлану = этностың ең көп орналасқан аймақтағы үлесі',
+    v8_num:'Визуал 08', v8_title:'228 аудан:\nшеткі нүктелер', v8_body:'ШҚО Риддер — 73,7% орыс. Атыраудағы Қызылқоға ауданы — 99,8% қазақ. Сайрам ауданы — 67,7% өзбек. Ұйғыр ауданы — 56,1% ұйғыр.', v8_chart:'Жекелеген этностар үлесі ең жоғары аудандар', v8_anno:'228 аудан және қалалық әкімшілік бойынша дерек',
+    v9_num:'Визуал 09', v9_title:'Шағын\nэтностар', v9_body:'Гректер, еврейлер, поляктар, ингуштар, осетиндер, балқарлар, ассириялықтар, саха, коми — әр халықтың Қазақстандағы өз тарихы бар.', v9_chart:'Саны 100 000 адамнан төмен этностар', v9_anno:'Барлық мәндер — 2026 жылдың басына',
+    v10_num:'Визуал 10', v10_title:'Төрт\nөлшем', v10_body:'Әр халықтың төрт көрсеткіші бар: қала үлесі, гендерлік баланс, бір аймақта шоғырлану және жалпы саны. Этносты басып, бөліп көрсетуге болады.', v10_chart:'16 ірі этнос — 4 көрсеткіш бойынша салыстыру', v10_anno:'Этносты басып, бөліп көрсетіңіз.',
+    axis_urban:'Қала %', axis_male:'Ерлер %', axis_conc:'Шоғырлану %', axis_size:'Саны',
+    conc_h:'Қазақстан — монолит емес. <em>Бұл 72 тарих.</em>', conc_p1:'Тәуелсіздік жылдарында елдің этникалық картасы айтарлықтай өзгерді. Қазақтар тұрақты көпшілікке айналды.', conc_p2:'Бірақ халықтың 28,5%-ы — 71 басқа этносқа жататын шамамен 5,8 миллион адам.', conc_p3:'Қалалық шоғырлану, гендерлік баланс, ықшам қоныстану — мұның бәрі әртүрлі тарихи және әлеуметтік процестерді көрсетеді.', conc_p4:'1 мамыр — Қазақстан халқының бірлігі күні. Бұл бір елде тұратын 72 халық.', home_btn:'← nurasyl.space сайтына қайту', footer_src:'Дереккөз: ҚР Ұлттық статистика бюросы', footer_src2:'Жекелеген этностар бойынша халық саны, 2026 жылдың басы', footer_src3:'Визуализация және талдау: nurasyl.space', footer_date:'1 мамыр · Қазақстан халқының<br>бірлігі күні 🇰🇿',
+    gen_left:'← Әйелдер көбірек', gen_right:'Ерлер көбірек →', hist_label:['Қазақтар','Орыстар','Украиндар','Немістер','Басқалар'], wf_tooltip:'100 қазақстандықтың ішінде', wf_anno:'Ұяшықты басыңыз', dist_col1:'Орыстар аудандарда', dist_col2:'Өзбектер аудандарда', dist_col3:'Ұйғырлар аудандарда', dist_col4:'Қазақтар: біртекті аудандар', ma_urban:'Қалада:', ma_male:'Ерлер:', people:'адам', total:'Барлығы', rural:'Ауылда', community:'қауымдастық', lives_in:'тұрады', russians_short:'Орыс:', wf_of100:'100-ден',
+    wf_groups:[{name:'Қазақтар',pct:71,n:'14 664 202'},{name:'Орыстар',pct:14,n:'2 943 022'},{name:'Өзбектер',pct:3,n:'695 557'},{name:'Ұйғырлар',pct:2,n:'309 164'},{name:'Украиндар',pct:2,n:'367 547'},{name:'Немістер',pct:1,n:'222 890'},{name:'Татарлар',pct:1,n:'218 361'},{name:'67 халық',pct:6,n:'~1 029 079'}],
+    eth_names:{"Казахи":"Қазақтар","Русские":"Орыстар","Узбеки":"Өзбектер","Украинцы":"Украиндар","Уйгуры":"Ұйғырлар","Немцы":"Немістер","Татары":"Татарлар","Азербайджанцы":"Әзербайжандар","Корейцы":"Кәрістер","Турки":"Түріктер","Дунгане":"Дүнгендер","Белорусы":"Белорустар","Таджики":"Тәжіктер","Курды":"Күрдтер","Кыргызы":"Қырғыздар","Чеченцы":"Шешендер","Поляки":"Поляктар","Каракалпаки":"Қарақалпақтар","Башкиры":"Башқұрттар","Ингуши":"Ингуштар","Молдаване":"Молдовандар","Армяне":"Армяндар","Греки":"Гректер","Мордва":"Мордва","Чуваши":"Чуваштар","Удмурты":"Удмурттар","Грузины":"Грузиндер","Болгары":"Болгарлар","Литовцы":"Литвалықтар","Лезгины":"Лезгиндер","Марийцы":"Марилер","Цыгане":"Ромалар","Евреи":"Еврейлер","Китайцы":"Қытайлар","Туркмены":"Түрікмендер","Балкарцы":"Балқарлар","Осетины":"Осетиндер","Карачаевцы":"Қарашайлар","Аварцы":"Аварлар","Афганцы":"Ауғандар","Латышы":"Латыштар","Эстонцы":"Эстондар","Даргинцы":"Даргиндер","Кумыки":"Құмықтар","Румыны":"Румындар","Коми-пермяки":"Коми-пермяктар","Народы Индии и Пакистана":"Үндістан және Пәкістан халықтары","Калмыки":"Қалмақтар","Арабы":"Арабтар","Гагаузы":"Гагауздар","Караимы":"Қараимдар","Буряты":"Буряттар","Ногайцы":"Ноғайлар","Венгры":"Мажарлар","Американцы":"Америкалықтар","Финны":"Финдер","Чехи":"Чехтер","Табасараны":"Табасарандар","Татары крымские":"Қырым татарлары","Алтайцы":"Алтайлықтар","Удины":"Удиндер","Кабардинцы":"Кабардиндер","Лакцы":"Лактар","Персы":"Парсылар","Итальянцы":"Итальяндар","Саха(Якуты)":"Саха (якуттар)","Хакасы":"Хакастар","Ассирийцы":"Ассириялықтар","Монголы":"Моңғолдар","Коми":"Коми","Не указавшие":"Көрсетілмеген","Другие национальности":"Басқа этностар"}, reg_names:{"Абай":"Абай","Акмолинская":"Ақмола","Актюбинская":"Ақтөбе","Алматинская":"Алматы облысы","Атырауская":"Атырау","Западно-Казахстанская":"Батыс Қазақстан","Жамбылская":"Жамбыл","Жетісу":"Жетісу","Карагандинская":"Қарағанды","Костанайская":"Қостанай","Кызылординская":"Қызылорда","Мангистауская":"Маңғыстау","Павлодарская":"Павлодар","Северо-Казахстанская":"Солтүстік Қазақстан","Туркестанская":"Түркістан","Ұлытау":"Ұлытау","Восточно-Казахстанская":"Шығыс Қазақстан","г. Астана":"Астана қ.","г.Астана":"Астана қ.","г. Алматы":"Алматы қ.","г.Алматы":"Алматы қ.","г.Шымкент":"Шымкент қ.","г. Алматы + обл.":"Алматы қ. + облысы","СКО":"СҚО"}, conc_data_labels:{"Казахи":"Қазақтар","Русские":"Орыстар","Узбеки":"Өзбектер","Украинцы":"Украиндар","Уйгуры":"Ұйғырлар","Немцы":"Немістер","Татары":"Татарлар","Азербайджанцы":"Әзербайжандар","Корейцы":"Кәрістер","Турки":"Түріктер","Дунгане":"Дүнгендер","Белорусы":"Белорустар","Таджики":"Тәжіктер","Курды":"Күрдтер","Кыргызы":"Қырғыздар","Чеченцы":"Шешендер","Поляки":"Поляктар","Каракалпаки":"Қарақалпақтар","Башкиры":"Башқұрттар","Ингуши":"Ингуштар","Молдаване":"Молдовандар","Армяне":"Армяндар","Греки":"Гректер","Мордва":"Мордва","Чуваши":"Чуваштар","Удмурты":"Удмурттар","Грузины":"Грузиндер","Болгары":"Болгарлар","Литовцы":"Литвалықтар","Лезгины":"Лезгиндер","Марийцы":"Марилер","Цыгане":"Ромалар","Евреи":"Еврейлер","Китайцы":"Қытайлар","Туркмены":"Түрікмендер","Балкарцы":"Балқарлар","Осетины":"Осетиндер","Карачаевцы":"Қарашайлар","Аварцы":"Аварлар","Афганцы":"Ауғандар","Латышы":"Латыштар","Эстонцы":"Эстондар","Даргинцы":"Даргиндер","Кумыки":"Құмықтар","Румыны":"Румындар","Коми-пермяки":"Коми-пермяктар","Народы Индии и Пакистана":"Үндістан және Пәкістан халықтары","Калмыки":"Қалмақтар","Арабы":"Арабтар","Гагаузы":"Гагауздар","Караимы":"Қараимдар","Буряты":"Буряттар","Ногайцы":"Ноғайлар","Венгры":"Мажарлар","Американцы":"Америкалықтар","Финны":"Финдер","Чехи":"Чехтер","Табасараны":"Табасарандар","Татары крымские":"Қырым татарлары","Алтайцы":"Алтайлықтар","Удины":"Удиндер","Кабардинцы":"Кабардиндер","Лакцы":"Лактар","Персы":"Парсылар","Итальянцы":"Итальяндар","Саха(Якуты)":"Саха (якуттар)","Хакасы":"Хакастар","Ассирийцы":"Ассириялықтар","Монголы":"Моңғолдар","Коми":"Коми","Не указавшие":"Көрсетілмеген","Другие национальности":"Басқа этностар"}, conc_regions:{"Абай":"Абай","Акмолинская":"Ақмола","Актюбинская":"Ақтөбе","Алматинская":"Алматы облысы","Атырауская":"Атырау","Западно-Казахстанская":"Батыс Қазақстан","Жамбылская":"Жамбыл","Жетісу":"Жетісу","Карагандинская":"Қарағанды","Костанайская":"Қостанай","Кызылординская":"Қызылорда","Мангистауская":"Маңғыстау","Павлодарская":"Павлодар","Северо-Казахстанская":"Солтүстік Қазақстан","Туркестанская":"Түркістан","Ұлытау":"Ұлытау","Восточно-Казахстанская":"Шығыс Қазақстан","г. Астана":"Астана қ.","г.Астана":"Астана қ.","г. Алматы":"Алматы қ.","г.Алматы":"Алматы қ.","г.Шымкент":"Шымкент қ.","г. Алматы + обл.":"Алматы қ. + облысы","СКО":"СҚО"}, district_names:{"Риддер г.а.":"Риддер қ.ә.","Шемонаихинский район":"Шемонаиха ауданы","район Алтай":"Алтай ауданы","Глубоковский район":"Глубокое ауданы","Мамлютский район":"Мамлют ауданы","город Петропавловск":"Петропавл қаласы","Район Магжана Жумабаева":"Мағжан Жұмабаев ауданы","Есильский район":"Есіл ауданы","Сайрамский район":"Сайрам ауданы","Район Сауран":"Сауран ауданы","город Туркестан":"Түркістан қаласы","Кентау г.а.":"Кентау қ.ә.","Толебийский район":"Төле би ауданы","Каратауский район":"Қаратау ауданы","Енбекшинский район":"Еңбекші ауданы","район Тұран":"Тұран ауданы","Уйгурский район":"Ұйғыр ауданы","Панфиловский район":"Панфилов ауданы","Енбекшиказахский район":"Еңбекшіқазақ ауданы","Жетысуский район":"Жетісу ауданы","Талгарский район":"Талғар ауданы","Турксибский район":"Түрксіб ауданы","Кзылкогинский район":"Қызылқоға ауданы","Байганинский район":"Байғанин ауданы","Аральский район":"Арал ауданы","Исатайский район":"Исатай ауданы","Мангистауский район":"Маңғыстау ауданы","Иргизский район":"Ырғыз ауданы","район Ақсуат":"Ақсуат ауданы","Каратобинский район":"Қаратөбе ауданы"}, group_names:{"t":"Түркі","s":"Славян","e":"Шығыс Азия","c":"Кавказ","i":"Иран","m":"Семит","o":"Басқа"}
+  },
+  en: {
+    doc_title:'Peoples of Kazakhstan · 2026', html_lang:'en',
+    tag:'May 1 · Day of Unity of the Peoples of Kazakhstan', h1:'PEOPLES OF<br><em>KAZAKHSTAN</em>', navlogo:'PEOPLES KZ · 2026',
+    nav_pills:['Composition','100 people','Gender','City','Regions','Districts'],
+    lede:'At the beginning of 2026, Kazakhstan is home to representatives of <em>72 ethnic groups</em>. The total population is 20.5 million. Kazakhs account for 71.5%, roughly twice their share in 1989.',
+    kpi_eth:'ethnic groups', kpi_pop:'people', kpi_kaz:'Kazakhs', kpi_dist:'districts', hero_desc:'Kazakhstan is one of the most multi-ethnic states in Central Asia. At the beginning of 2026, representatives of 72 ethnic groups are registered here.', scroll_cue:'↓ scroll',
+    v1_num:'Visual 01', v1_title:'Thirty years\nof change', v1_body:'In 1989, Kazakhs made up 39.7% of the population and Russians 37.8%. Over the following decades the balance reversed. By 2026, the Russian share had fallen from 37.8% to 14.4%.', v1_chart:'Change in ethnic composition, 1989–2026, % of population', v1_anno:'Source: censuses of 1989, 1999, 2009, 2021; BNS data for 2026', v1_after:'The Kazakh share continued to grow. Between the 2009 and 2021 censuses it rose from 63.1% to 69%. Over the next five years it gained another 2.5 percentage points.',
+    v2_num:'Visual 02', v2_title:'Scale of\npresence', v2_body:'Each circle area is proportional to the size of the ethnic group. Kazakhs are shown separately: all other peoples together account for only 28.5%.', v2_chart:'Ethnic group size — circle area is proportional to population', v2_anno:'All 72 ethnic groups; size = population; color = language group',
+    v3_num:'Visual 03', v3_title:'100\nKazakhstanis', v3_body:'If we take 100 random residents of Kazakhstan: 71 are Kazakhs, 14 Russians, 3 Uzbeks, 2 Uyghurs, 2 Ukrainians. The remaining 8 represent 67 other peoples.', v3_chart:'100 Kazakhstanis — each cell is one person', v3_anno:'Click a cell',
+    v4_num:'Visual 04', v4_title:'Gender\nbalance', v4_body:'Women are slightly more numerous in Kazakhstan overall — 51.3%. Among Georgians, men account for 57.3%; Tajiks, 54.2%; Armenians, 53.7%. Among Karakalpaks, women account for 59.5%.', v4_chart:'Male share by ethnic group, % — vertical line is 50%', v4_anno:'Ethnic groups with more than 5,000 people', v4_ins1:'Georgians and Tajiks have an unusually high male share — a likely sign of labor migration.', v4_ins2:'Among Karakalpaks, women account for 59.5% — a mirror effect of male out-migration.',
+    v5_num:'Visual 05', v5_title:'City\nand village', v5_body:'Koreans are the most urbanized ethnic group in Kazakhstan: 87.8% live in cities. Tajiks are at the opposite end: only 31.3% are urban residents.', v5_quote:'“The gap between the most urban and the most rural ethnic group is 56 percentage points”', v5_cite:'BNS Kazakhstan data, 2026', v5_chart:'Urban population share by ethnic group, % — descending order', v5_anno:'Ethnic groups with more than 5,000 people', v5_after:'Germans are in the middle of the list: 62.3% live in cities. Despite large-scale emigration to Germany, those who remained are mostly settled in northern Kazakhstan’s cities.',
+    v6_num:'Visual 06', v6_title:'Kazakhs\nby region', v6_body:'The regional spread is almost 60 percentage points. In Kyzylorda region, Kazakhs make up 96.3%. In North Kazakhstan, 37.5% — the only region where Russians are more numerous.', v6_chart:'Share of Kazakhs by region, % — descending order', v6_anno:'Blue strip on the right — Russian share in the same region',
+    v7_num:'Visual 07', v7_title:'Where groups\nare concentrated', v7_body:'Dungans: 67.9% of the community lives in Zhambyl region. Uzbeks — 58.2% in Turkestan. Tajiks — 67% there as well. Kazakhs are the most evenly distributed group.', v7_chart:'Share of an ethnic group living in one region, %', v7_anno:'Concentration = % of a people living in its top region',
+    v8_num:'Visual 08', v8_title:'228 districts:\nextreme points', v8_body:'Ridder in East Kazakhstan is 73.7% Russian. Kzylkoginsky district in Atyrau is 99.8% Kazakh. Sairam district is 67.7% Uzbek. Uyghur district is 56.1% Uyghur.', v8_chart:'Districts with the highest shares of selected ethnic groups', v8_anno:'Data for 228 districts and city administrations',
+    v9_num:'Visual 09', v9_title:'Small\npeoples', v9_body:'Greeks, Jews, Poles, Ingush, Ossetians, Balkars, Assyrians, Sakha, Komi — each people has its own history in Kazakhstan.', v9_chart:'Ethnic groups with fewer than 100,000 people', v9_anno:'All values are for the beginning of 2026',
+    v10_num:'Visual 10', v10_title:'Four\ndimensions', v10_body:'Each people has its own combination of four characteristics: urban share, gender balance, concentration in one region and total population. Click an ethnic group to highlight it.', v10_chart:'16 largest ethnic groups — comparison across 4 indicators', v10_anno:'Click an ethnic group to highlight it.',
+    axis_urban:'Urban %', axis_male:'Male %', axis_conc:'Concentration %', axis_size:'Population',
+    conc_h:'Kazakhstan is not a monolith. <em>It is 72 stories.</em>', conc_p1:'Over three decades of independence, the country’s ethnic map has changed substantially. Kazakhs became a clear majority.', conc_p2:'But 28.5% of the population — almost 5.8 million people — belongs to 71 other peoples. Many have lived here for generations.', conc_p3:'Urban concentration, gender balance and compact settlement all tell different stories: deportations, labor migration, historical settlement and choice.', conc_p4:'May 1 is the Day of Unity of the Peoples of Kazakhstan. It is 72 peoples living in one country.', home_btn:'← back to nurasyl.space', footer_src:'Source: Bureau of National Statistics of Kazakhstan', footer_src2:'Population by selected ethnic groups, beginning of 2026', footer_src3:'Visualization and analysis: nurasyl.space', footer_date:'May 1 · Day of Unity of<br>the Peoples of Kazakhstan 🇰🇿',
+    gen_left:'← More women', gen_right:'More men →', hist_label:['Kazakhs','Russians','Ukrainians','Germans','Others'], wf_tooltip:'out of 100 Kazakhstanis', wf_anno:'Click a cell', dist_col1:'Russians by district', dist_col2:'Uzbeks by district', dist_col3:'Uyghurs by district', dist_col4:'Kazakhs: homogeneous districts', ma_urban:'Urban:', ma_male:'Male:', people:'people', total:'Total', rural:'Rural', community:'community', lives_in:'lives in', russians_short:'Rus:', wf_of100:'out of 100',
+    wf_groups:[{name:'Kazakhs',pct:71,n:'14,664,202'},{name:'Russians',pct:14,n:'2,943,022'},{name:'Uzbeks',pct:3,n:'695,557'},{name:'Uyghurs',pct:2,n:'309,164'},{name:'Ukrainians',pct:2,n:'367,547'},{name:'Germans',pct:1,n:'222,890'},{name:'Tatars',pct:1,n:'218,361'},{name:'67 peoples',pct:6,n:'~1,029,079'}],
+    eth_names:{"Казахи":"Kazakhs","Русские":"Russians","Узбеки":"Uzbeks","Украинцы":"Ukrainians","Уйгуры":"Uyghurs","Немцы":"Germans","Татары":"Tatars","Азербайджанцы":"Azerbaijanis","Корейцы":"Koreans","Турки":"Turks","Дунгане":"Dungans","Белорусы":"Belarusians","Таджики":"Tajiks","Курды":"Kurds","Кыргызы":"Kyrgyz","Чеченцы":"Chechens","Поляки":"Poles","Каракалпаки":"Karakalpaks","Башкиры":"Bashkirs","Ингуши":"Ingush","Молдаване":"Moldovans","Армяне":"Armenians","Греки":"Greeks","Мордва":"Mordvins","Чуваши":"Chuvash","Удмурты":"Udmurts","Грузины":"Georgians","Болгары":"Bulgarians","Литовцы":"Lithuanians","Лезгины":"Lezgins","Марийцы":"Mari","Цыгане":"Roma","Евреи":"Jews","Китайцы":"Chinese","Туркмены":"Turkmen","Балкарцы":"Balkars","Осетины":"Ossetians","Карачаевцы":"Karachays","Аварцы":"Avars","Афганцы":"Afghans","Латышы":"Latvians","Эстонцы":"Estonians","Даргинцы":"Dargins","Кумыки":"Kumyks","Румыны":"Romanians","Коми-пермяки":"Komi-Permyaks","Народы Индии и Пакистана":"Peoples of India and Pakistan","Калмыки":"Kalmyks","Арабы":"Arabs","Гагаузы":"Gagauz","Караимы":"Karaites","Буряты":"Buryats","Ногайцы":"Nogais","Венгры":"Hungarians","Американцы":"Americans","Финны":"Finns","Чехи":"Czechs","Табасараны":"Tabasarans","Татары крымские":"Crimean Tatars","Алтайцы":"Altaians","Удины":"Udis","Кабардинцы":"Kabardians","Лакцы":"Laks","Персы":"Persians","Итальянцы":"Italians","Саха(Якуты)":"Sakha (Yakuts)","Хакасы":"Khakas","Ассирийцы":"Assyrians","Монголы":"Mongols","Коми":"Komi","Не указавшие":"Not stated","Другие национальности":"Other ethnicities"}, reg_names:{"Абай":"Abai","Акмолинская":"Akmola","Актюбинская":"Aktobe","Алматинская":"Almaty region","Атырауская":"Atyrau","Западно-Казахстанская":"West Kazakhstan","Жамбылская":"Zhambyl","Жетісу":"Zhetisu","Карагандинская":"Karaganda","Костанайская":"Kostanay","Кызылординская":"Kyzylorda","Мангистауская":"Mangystau","Павлодарская":"Pavlodar","Северо-Казахстанская":"North Kazakhstan","Туркестанская":"Turkestan","Ұлытау":"Ulytau","Восточно-Казахстанская":"East Kazakhstan","г. Астана":"Astana city","г.Астана":"Astana city","г. Алматы":"Almaty city","г.Алматы":"Almaty city","г.Шымкент":"Shymkent city","г. Алматы + обл.":"Almaty city + region","СКО":"North Kazakhstan"}, conc_data_labels:{"Казахи":"Kazakhs","Русские":"Russians","Узбеки":"Uzbeks","Украинцы":"Ukrainians","Уйгуры":"Uyghurs","Немцы":"Germans","Татары":"Tatars","Азербайджанцы":"Azerbaijanis","Корейцы":"Koreans","Турки":"Turks","Дунгане":"Dungans","Белорусы":"Belarusians","Таджики":"Tajiks","Курды":"Kurds","Кыргызы":"Kyrgyz","Чеченцы":"Chechens","Поляки":"Poles","Каракалпаки":"Karakalpaks","Башкиры":"Bashkirs","Ингуши":"Ingush","Молдаване":"Moldovans","Армяне":"Armenians","Греки":"Greeks","Мордва":"Mordvins","Чуваши":"Chuvash","Удмурты":"Udmurts","Грузины":"Georgians","Болгары":"Bulgarians","Литовцы":"Lithuanians","Лезгины":"Lezgins","Марийцы":"Mari","Цыгане":"Roma","Евреи":"Jews","Китайцы":"Chinese","Туркмены":"Turkmen","Балкарцы":"Balkars","Осетины":"Ossetians","Карачаевцы":"Karachays","Аварцы":"Avars","Афганцы":"Afghans","Латышы":"Latvians","Эстонцы":"Estonians","Даргинцы":"Dargins","Кумыки":"Kumyks","Румыны":"Romanians","Коми-пермяки":"Komi-Permyaks","Народы Индии и Пакистана":"Peoples of India and Pakistan","Калмыки":"Kalmyks","Арабы":"Arabs","Гагаузы":"Gagauz","Караимы":"Karaites","Буряты":"Buryats","Ногайцы":"Nogais","Венгры":"Hungarians","Американцы":"Americans","Финны":"Finns","Чехи":"Czechs","Табасараны":"Tabasarans","Татары крымские":"Crimean Tatars","Алтайцы":"Altaians","Удины":"Udis","Кабардинцы":"Kabardians","Лакцы":"Laks","Персы":"Persians","Итальянцы":"Italians","Саха(Якуты)":"Sakha (Yakuts)","Хакасы":"Khakas","Ассирийцы":"Assyrians","Монголы":"Mongols","Коми":"Komi","Не указавшие":"Not stated","Другие национальности":"Other ethnicities"}, conc_regions:{"Абай":"Abai","Акмолинская":"Akmola","Актюбинская":"Aktobe","Алматинская":"Almaty region","Атырауская":"Atyrau","Западно-Казахстанская":"West Kazakhstan","Жамбылская":"Zhambyl","Жетісу":"Zhetisu","Карагандинская":"Karaganda","Костанайская":"Kostanay","Кызылординская":"Kyzylorda","Мангистауская":"Mangystau","Павлодарская":"Pavlodar","Северо-Казахстанская":"North Kazakhstan","Туркестанская":"Turkestan","Ұлытау":"Ulytau","Восточно-Казахстанская":"East Kazakhstan","г. Астана":"Astana city","г.Астана":"Astana city","г. Алматы":"Almaty city","г.Алматы":"Almaty city","г.Шымкент":"Shymkent city","г. Алматы + обл.":"Almaty city + region","СКО":"North Kazakhstan"}, district_names:{"Риддер г.а.":"Ridder city administration","Шемонаихинский район":"Shemonaikha district","район Алтай":"Altai district","Глубоковский район":"Glubokoe district","Мамлютский район":"Mamlyut district","город Петропавловск":"Petropavlovsk city","Район Магжана Жумабаева":"Magzhan Zhumabayev district","Есильский район":"Esil district","Сайрамский район":"Sairam district","Район Сауран":"Sauran district","город Туркестан":"Turkestan city","Кентау г.а.":"Kentau city administration","Толебийский район":"Tolebi district","Каратауский район":"Karatau district","Енбекшинский район":"Enbekshi district","район Тұран":"Turan district","Уйгурский район":"Uyghur district","Панфиловский район":"Panfilov district","Енбекшиказахский район":"Enbekshikazakh district","Жетысуский район":"Zhetysu district","Талгарский район":"Talgar district","Турксибский район":"Turksib district","Кзылкогинский район":"Kyzylkoga district","Байганинский район":"Baiganin district","Аральский район":"Aral district","Исатайский район":"Isatai district","Мангистауский район":"Mangystau district","Иргизский район":"Irgiz district","район Ақсуат":"Aksuat district","Каратобинский район":"Karatobe district"}, group_names:{"t":"Turkic","s":"Slavic","e":"East Asian","c":"Caucasian","i":"Iranian","m":"Semitic","o":"Other"}
+  }
+};
+
+let LANG='ru';
+
+function tName(key, fallback){ return (I18N[LANG]||I18N.ru)[key] || fallback || key; }
+function tEth(eth){ return ((I18N[LANG]||I18N.ru).eth_names||{})[eth] || eth; }
+function tReg(reg){ return ((I18N[LANG]||I18N.ru).reg_names||{})[reg] || reg; }
+function tDistrict(name){ return ((I18N[LANG]||I18N.ru).district_names||{})[name] || name; }
+function tConc(eth){ return ((I18N[LANG]||I18N.ru).conc_data_labels||{})[eth] || tEth(eth); }
+function tConcReg(reg){ return ((I18N[LANG]||I18N.ru).conc_regions||{})[reg] || tReg(reg); }
+
+
+function setLang(lang){
+  LANG=lang;
+  document.querySelectorAll('.lbtn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('btn-'+lang)?.classList.add('active');
+  applyLang();
+  // Redraw all charts
+  drawHist();drawProp();drawWaffle();drawGender();
+  drawUrban();drawRegions();drawConc();drawDistricts();
+  drawSmall();drawMultiAxis();
+}
+
+
+function applyLang(){
+  const t=I18N[LANG]||I18N.ru;
+  document.documentElement.lang=t.html_lang||LANG;
+  if(t.doc_title) document.title=t.doc_title;
+  const ids={
+    'el-tag': t.tag||'1 Мая · День единства народов Казахстана',
+    'el-h1': t.h1||'НАРОДЫ<br><em>КАЗАХСТАНА</em>',
+    'el-navlogo': t.navlogo||'НАРОДЫ КЗ · 2026',
+    'el-kpi-eth': t.kpi_eth, 'el-kpi-pop': t.kpi_pop,
+    'el-kpi-kaz': t.kpi_kaz, 'el-kpi-dist': t.kpi_dist,
+    'el-desc': t.hero_desc,
+    'el-scroll-cue': t.scroll_cue||'↓ прокрутить',
+    'el-lede': t.lede,
+    'el-v1-num':t.v1_num,'el-v1-title':t.v1_title,'el-v1-body':t.v1_body,
+    'el-v1-chart':t.v1_chart,'el-v1-anno':t.v1_anno,'el-v1-after':t.v1_after,
+    'el-v2-num':t.v2_num,'el-v2-title':t.v2_title,'el-v2-body':t.v2_body,
+    'el-v2-chart':t.v2_chart,'el-v2-anno':t.v2_anno,
+    'el-v3-num':t.v3_num,'el-v3-title':t.v3_title,'el-v3-body':t.v3_body,
+    'el-v3-chart':t.v3_chart,'el-v3-anno':t.v3_anno,
+    'el-v4-num':t.v4_num,'el-v4-title':t.v4_title,'el-v4-body':t.v4_body,
+    'el-v4-chart':t.v4_chart,'el-v4-anno':t.v4_anno,
+    'el-v4-ins1':t.v4_ins1,'el-v4-ins2':t.v4_ins2,
+    'el-v5-num':t.v5_num,'el-v5-title':t.v5_title,'el-v5-body':t.v5_body,
+    'el-v5-quote':t.v5_quote,'el-v5-cite':t.v5_cite,
+    'el-v5-chart':t.v5_chart,'el-v5-anno':t.v5_anno,'el-v5-after':t.v5_after,
+    'el-v6-num':t.v6_num,'el-v6-title':t.v6_title,'el-v6-body':t.v6_body,
+    'el-v6-chart':t.v6_chart,'el-v6-anno':t.v6_anno,
+    'el-v7-num':t.v7_num,'el-v7-title':t.v7_title,'el-v7-body':t.v7_body,
+    'el-v7-chart':t.v7_chart,'el-v7-anno':t.v7_anno,
+    'el-v8-num':t.v8_num,'el-v8-title':t.v8_title,'el-v8-body':t.v8_body,
+    'el-v8-chart':t.v8_chart,'el-v8-anno':t.v8_anno,
+    'el-v9-num':t.v9_num,'el-v9-title':t.v9_title,'el-v9-body':t.v9_body,
+    'el-v9-chart':t.v9_chart,'el-v9-anno':t.v9_anno,
+    'el-v10-num':t.v10_num,'el-v10-title':t.v10_title,'el-v10-body':t.v10_body,
+    'el-v10-chart':t.v10_chart,'el-v10-anno':t.v10_anno,
+    'el-axis-urban':t.axis_urban,'el-axis-male':t.axis_male,
+    'el-axis-conc':t.axis_conc,'el-axis-size':t.axis_size,
+    'el-conc-h':t.conc_h,
+    'el-conc-p1':t.conc_p1,'el-conc-p2':t.conc_p2,
+    'el-conc-p3':t.conc_p3,'el-conc-p4':t.conc_p4,
+    'el-home-btn':t.home_btn,
+    'el-footer-src':t.footer_src,'el-footer-src2':t.footer_src2,
+    'el-footer-src3':t.footer_src3,'el-footer-date':t.footer_date,
+  };
+  // nav pills
+  const navKeys=['np1','np2','np3','np4','np5','np6'];
+  const navVals=t.nav_pills||['Состав','100 чел.','Пол','Город','Регионы','Районы'];
+  navKeys.forEach((id,i)=>{const el=document.getElementById(id);if(el)el.textContent=navVals[i];});
+  Object.entries(ids).forEach(([id,val])=>{
+    if(!val) return;
+    const el=document.getElementById(id);
+    if(el) el.innerHTML=val;
+  });
+  // Section title em formatting
+  [1,2,3,4,5,6,7,8,9,10].forEach(n=>{
+    const el=document.getElementById('el-v'+n+'-title');
+    if(el && t['v'+n+'_title']){
+      const parts=t['v'+n+'_title'].split('\n');
+      el.innerHTML=parts.length>1 ? parts[0]+'<br><em>'+parts[1]+'</em>' : t['v'+n+'_title'];
+    }
+  });
+  // conc-h with em
+  const ch=document.getElementById('el-conc-h');
+  if(ch && t.conc_h) ch.innerHTML=t.conc_h;
+  // h1
+  const h1=document.getElementById('el-h1');
+  if(h1 && t.h1) h1.innerHTML=t.h1;
+}
+
+// ════ VIZ 1: STACKED AREA HISTORY ════
+function drawHist(){
+  const svg=document.getElementById('hist-svg');
+  const W=svg.clientWidth||860,H=260;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.style.height=H+'px';
+  const pL=48,pR=24,pT=20,pB=36;
+  const iW=W-pL-pR,iH=H-pT-pB;
+  const years=HIST.map(d=>d.year);
+  const minY=years[0],maxY=years[years.length-1];
+  const xS=y=>pL+(y-minY)/(maxY-minY)*iW;
+  const yS=v=>pT+iH-v/100*iH;
+
+  const keys=['kazakh','russian','ukrainian','german','other'];
+  const cols=['#9b2020','#1a3d6b','#4a8fc8','#6b5a3e','#bbb'];
+  const labels=tName('hist_label',['Казахи','Русские','Украинцы','Немцы','Другие']);
+
+  let html='';
+  // Grid
+  [20,40,60,80,100].forEach(v=>{
+    const y=yS(v);
+    html+=`<line x1="${pL}" y1="${y.toFixed(1)}" x2="${W-pR}" y2="${y.toFixed(1)}" stroke="#e8e0cc" stroke-width="1"/>`;
+    html+=`<text x="${pL-6}" y="${y.toFixed(1)}" text-anchor="end" dominant-baseline="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b5a3e" opacity=".6">${v}%</text>`;
+  });
+  years.forEach(y=>{
+    const x=xS(y);
+    html+=`<line x1="${x.toFixed(1)}" y1="${pT}" x2="${x.toFixed(1)}" y2="${H-pB}" stroke="#e8e0cc" stroke-width="1"/>`;
+    html+=`<text x="${x.toFixed(1)}" y="${H-pB+14}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b5a3e" opacity=".7">${y}</text>`;
+  });
+
+  // Draw stacked areas — cumulative
+  const cumData=HIST.map(d=>{
+    let cum=0;
+    const out={year:d.year};
+    keys.forEach(k=>{out[k+'_start']=cum;cum+=d[k];out[k+'_end']=cum;});
+    return out;
+  });
+
+  keys.forEach((k,ki)=>{
+    const col=cols[ki];
+    const pts_top=HIST.map((d,i)=>`${xS(d.year).toFixed(1)},${yS(cumData[i][k+'_end']).toFixed(1)}`);
+    const pts_bot=[...HIST].reverse().map((d,i)=>`${xS(d.year).toFixed(1)},${yS(cumData[HIST.length-1-i][k+'_start']).toFixed(1)}`);
+    html+=`<path d="M${[...pts_top,...pts_bot].join('L')}Z" fill="${col}" opacity="${ki===0?'.85':'.7'}" stroke="${col}" stroke-width=".3"/>`;
+  });
+
+  // Labels on last point
+  keys.forEach((k,ki)=>{
+    const last=HIST[HIST.length-1];
+    const lastCum=cumData[cumData.length-1];
+    const midV=(lastCum[k+'_start']+lastCum[k+'_end'])/2;
+    const x=xS(last.year)+6;
+    const y=yS(midV);
+    if(last[k]>1.5){
+      html+=`<text x="${x}" y="${y.toFixed(1)}" dominant-baseline="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="white" font-weight="500">${labels[ki]}</text>`;
+    }
+  });
+
+  // Dots for each year with hover
+  HIST.forEach((d,di)=>{
+    keys.forEach((k,ki)=>{
+      const cum=cumData[di];
+      const midV=(cum[k+'_start']+cum[k+'_end'])/2;
+      const x=xS(d.year);const y=yS(midV);
+      html+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="${cols[ki]}" stroke="white" stroke-width="1" style="cursor:pointer"
+        onmouseenter="tt('<b>${labels[ki]}</b><br>${d.year}: ${d[k]}%')" onmouseleave="ht()"/>`;
+    });
+  });
+
+  svg.innerHTML=html;
+}
+
+// ════ VIZ 2: PROPORTIONAL CIRCLES ════
+function drawProp(){
+  const svg=document.getElementById('prop-svg');
+  const W=svg.clientWidth||860,H=380;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.style.height=H+'px';
+
+  const items=ETH.filter(e=>e.ethnicity!='Казахи').slice(0,18);
+  const kazakh=ETH.find(e=>e.ethnicity=='Казахи');
+  const maxN=kazakh.total;
+  const scR=v=>Math.sqrt(v/maxN)*180;
+
+  // Kazakh - large circle left
+  const kR=scR(kazakh.total);
+  let html='';
+  const kx=kR+16,ky=H/2;
+  html+=`<circle cx="${kx.toFixed(1)}" cy="${ky.toFixed(1)}" r="${kR.toFixed(1)}" fill="#9b2020" opacity=".15" stroke="#9b2020" stroke-width="1.5"/>`;
+  html+=`<text x="${kx.toFixed(1)}" y="${(ky-12).toFixed(1)}" text-anchor="middle" font-family="Playfair Display,serif" font-size="14" font-weight="700" fill="#9b2020">${tEth('Казахи')}</text>`;
+  html+=`<text x="${kx.toFixed(1)}" y="${(ky+4).toFixed(1)}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#9b2020">14 664 202</text>`;
+  html+=`<text x="${kx.toFixed(1)}" y="${(ky+18).toFixed(1)}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#9b2020" opacity=".6">71.5%</text>`;
+
+  // Others packed to the right
+  const startX=kR*2+32+16;
+  const aW=W-startX-8;
+  const nodes=items.map((e,i)=>({
+    ...e,r:Math.max(4,scR(e.total)),
+    x:startX+40+((i*113)%aW),
+    y:40+((i*79)%(H-80)),vx:0,vy:0
+  }));
+  for(let k=0;k<250;k++){
+    nodes.forEach(a=>{
+      a.vx+=(startX+aW/2-a.x)*.003;
+      a.vy+=(H/2-a.y)*.003;
+      nodes.forEach(b=>{
+        if(a===b)return;
+        const dx=a.x-b.x,dy=a.y-b.y;
+        const d=Math.sqrt(dx*dx+dy*dy)||1;
+        const min=a.r+b.r+2;
+        if(d<min){const f=(min-d)/d*.45;a.vx+=dx*f;a.vy+=dy*f;}
+      });
+      a.x=Math.max(startX+a.r+2,Math.min(W-a.r-2,a.x+a.vx));
+      a.y=Math.max(a.r+2,Math.min(H-a.r-2,a.y+a.vy));
+      a.vx*=.72;a.vy*=.72;
+    });
+  }
+  nodes.forEach(n=>{
+    const c=gc(n.ethnicity);
+    html+=`<circle cx="${n.x.toFixed(1)}" cy="${n.y.toFixed(1)}" r="${n.r.toFixed(1)}"
+      fill="${c}" opacity=".78" stroke="white" stroke-width=".6" style="cursor:pointer"
+      onmouseenter="tt('<b>${tEth(n.ethnicity)}</b><br>${fmtN(n.total)} ${tName('people','чел.')}<br>${n.pct.toFixed(2)}%')" onmouseleave="ht()"/>`;
+    if(n.r>13){
+      const fs=Math.max(7,Math.min(11,n.r*.55));
+      html+=`<text x="${n.x.toFixed(1)}" y="${n.y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle"
+        font-family="Source Serif 4,serif" font-size="${fs}" fill="white" style="pointer-events:none">${tEth(n.ethnicity)}</text>`;
+    }
+  });
+
+  // Divider line
+  html+=`<line x1="${(kR*2+32).toFixed(1)}" y1="16" x2="${(kR*2+32).toFixed(1)}" y2="${H-16}" stroke="#d4c9b0" stroke-width="1" stroke-dasharray="4,3"/>`;
+
+  svg.innerHTML=html;
+
+  // legend
+  const leg=document.getElementById('bleg');
+  leg.innerHTML=Object.keys(GNAME).map(g=>`
+    <div class="bl-i"><div class="bl-d" style="background:${GCOL[g]}"></div>${tGroup(g)}</div>`).join('');
+}
+
+// ════ VIZ 3: WAFFLE ════
+function drawWaffle(){
+  const t=I18N[LANG]||I18N.ru;
+  const wfg=t.wf_groups||[];
+  const groups=wfg.map((g,i)=>({...g,col:['#9b2020','#1a3d6b','#b85c1a','#5a1e8b','#2a6b9b','#3a7a6e','#6b4a1a','#b0a090'][i]}));
+  if(!groups.length)return;
+  const _orig=[
+    {name:'Казахи',pct:71,col:'#9b2020',n:'14 664 202'},
+    {name:'Русские',pct:14,col:'#1a3d6b',n:'2 943 022'},
+    {name:'Узбеки',pct:3,col:'#b85c1a',n:'695 557'},
+    {name:'Уйгуры',pct:2,col:'#5a1e8b',n:'309 164'},
+    {name:'Украинцы',pct:2,col:'#2a6b9b',n:'367 547'},
+    {name:'Немцы',pct:1,col:'#3a7a6e',n:'222 890'},
+    {name:'Татары',pct:1,col:'#6b4a1a',n:'218 361'},
+    {name:'67 народов',pct:6,col:'#b0a090',n:'~1 029 079'},
+  ];
+  const cells=[];
+  groups.forEach(g=>{for(let i=0;i<g.pct;i++)cells.push(g);});
+  while(cells.length<100)cells.push(groups[groups.length-1]);
+
+  const grid=document.getElementById('wf-grid');
+  grid.innerHTML=cells.map(c=>
+    `<div class="wf-c" style="background:${c.col}"
+      onmouseenter="tt('<b>${c.name}</b><br>${c.pct} ${tName('wf_tooltip','из 100 казахстанцев')}<br>${c.n} ${tName('people','чел.')}')" onmouseleave="ht()"></div>`
+  ).join('');
+
+  document.getElementById('wf-leg').innerHTML=groups.map(g=>`
+    <div class="wl-r">
+      <div class="wl-dot" style="background:${g.col}"></div>
+      <div class="wl-name">${g.name}</div>
+      <div class="wl-pct">${g.pct} ${tName('wf_of100','из 100')}</div>
+    </div>`).join('');
+}
+
+// ════ VIZ 4: GENDER DIVERGING ════
+function drawGender(){
+  const items=[...GEN].sort((a,b)=>b.male_pct-a.male_pct);
+  const svg=document.getElementById('gen-svg');
+  const W=svg.clientWidth||860,rowH=22,pL=120,pR=60,pT=24,pB=16;
+  const H=pT+items.length*rowH+pB;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.style.height=H+'px';
+  const mid=W/2;
+  const xS=v=>mid+(v-50)/50*(W-pL-pR)*0.46;
+
+  let html='';
+  html+=`<line x1="${mid}" y1="${pT}" x2="${mid}" y2="${H-pB}" stroke="#d4c9b0" stroke-width="1.5"/>`;
+  html+=`<text x="${mid-8}" y="${pT-8}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a3d6b">← Больше женщин</text>`;
+  html+=`<text x="${mid+8}" y="${pT-8}" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#9b2020">Больше мужчин →</text>`;
+
+  items.forEach((e,i)=>{
+    const y=pT+i*rowH+rowH/2;
+    const x=xS(e.male_pct);
+    const col=e.male_pct>50?'#9b2020':'#1a3d6b';
+    html+=`<line x1="${mid}" y1="${y}" x2="${x.toFixed(1)}" y2="${y}" stroke="${col}" stroke-width="1.5" opacity=".4"/>`;
+    html+=`<circle cx="${x.toFixed(1)}" cy="${y}" r="5.5" fill="${col}" opacity=".8" style="cursor:pointer"
+      onmouseenter="tt('<b>${tEth(e.eth)}</b><br>${tName('ma_male','Мужчин:')} ${e.male_pct}% | ${tName('gen_left','Женщин').replace('← ','').replace('Больше ','')}: ${e.female_pct}%<br>${tName('total','Всего')}: ${fmtN(e.total)}')" onmouseleave="ht()"/>`;
+    const anchor=e.male_pct>=50?'end':'start';
+    const lx=e.male_pct>=50?pL-6:pL-6;
+    html+=`<text x="${pL-6}" y="${y}" dominant-baseline="middle" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1209">${tEth(e.eth)}</text>`;
+    html+=`<text x="${(x+(e.male_pct>50?7:-7)).toFixed(1)}" y="${y}" dominant-baseline="middle" text-anchor="${e.male_pct>50?'start':'end'}" font-family="JetBrains Mono,monospace" font-size="9" fill="${col}" font-weight="500">${e.male_pct}%</text>`;
+  });
+  svg.innerHTML=html;
+}
+
+// ════ VIZ 5: URBAN SORTED BARS ════
+function drawUrban(){
+  const items=URB.filter(e=>e.total>5000).sort((a,b)=>b.pct-a.pct);
+  const svg=document.getElementById('urban-svg');
+  const W=svg.clientWidth||860,barH=18,pL=100,pR=56,pT=12,pB=12,gap=3;
+  const H=pT+(barH+gap)*items.length+pB;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.style.height=H+'px';
+  const xS=v=>(v/100)*(W-pL-pR);
+
+  let html='';
+  // Ref line at 50%
+  const x50=pL+xS(50);
+  html+=`<line x1="${x50.toFixed(1)}" y1="${pT}" x2="${x50.toFixed(1)}" y2="${H-pB}" stroke="#d4c9b0" stroke-width="1"/>`;
+
+  items.forEach((e,i)=>{
+    const y=pT+i*(barH+gap);
+    const bw=xS(e.pct);
+    const col=e.pct>75?'#1a3d6b':e.pct>50?'#1a4d2e':'#8b5e0a';
+    html+=`<rect x="${pL}" y="${y}" width="${bw.toFixed(1)}" height="${barH}" fill="${col}" opacity=".78" rx="1"
+      onmouseenter="tt('<b>${tEth(e.eth)}</b><br>${tName('ma_urban','Горожан:')} ${e.pct}%<br>${tName('rural','Сельских')}: ${(100-e.pct).toFixed(1)}%<br>${tName('total','Всего')}: ${fmtN(e.total)}')" onmouseleave="ht()" style="cursor:pointer"/>`;
+    html+=`<text x="${pL-6}" y="${y+barH/2}" dominant-baseline="middle" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1209">${tEth(e.eth)}</text>`;
+    html+=`<text x="${(pL+bw+5).toFixed(1)}" y="${y+barH/2}" dominant-baseline="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="${col}" font-weight="500">${e.pct}%</text>`;
+  });
+  svg.innerHTML=html;
+}
+
+// ════ VIZ 6: REGION BARS ════
+function drawRegions(){
+  const sorted=[...REGS].sort((a,b)=>b.kazakh_pct-a.kazakh_pct);
+  const svg=document.getElementById('reg-svg');
+  const W=svg.clientWidth||860,barH=20,pL=168,pR=100,pT=12,pB=12,gap=4;
+  const H=pT+(barH+gap)*sorted.length+pB;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.style.height=H+'px';
+  const iW=W-pL-pR;
+
+  let html='';
+  sorted.forEach((r,i)=>{
+    const y=pT+i*(barH+gap);
+    const kw=(r.kazakh_pct/100)*iW;
+    const rw=(r.russian_pct/100)*iW;
+    const col=r.kazakh_pct<50?'#9b2020':r.kazakh_pct<70?'#8b5e0a':'#1a4d2e';
+    html+=`<rect x="${pL}" y="${y}" width="${iW}" height="${barH}" fill="#f0ead8" rx="1"/>`;
+    html+=`<rect x="${pL}" y="${y}" width="${kw.toFixed(1)}" height="${barH}" fill="${col}" rx="1"
+      onmouseenter="tt('<b>${tReg(r.region)}</b><br>${tEth('Казахи')}: ${r.kazakh_pct}%<br>${tEth('Русские')}: ${r.russian_pct}%')" onmouseleave="ht()" style="cursor:pointer"/>`;
+    // Russian overlay
+    if(r.russian_pct>3){
+      html+=`<rect x="${(pL+kw).toFixed(1)}" y="${(y+barH*.25).toFixed(1)}" width="${(rw*.5).toFixed(1)}" height="${(barH*.5).toFixed(1)}" fill="#1a3d6b" opacity=".35"/>`;
+    }
+    html+=`<text x="${pL-6}" y="${y+barH/2}" dominant-baseline="middle" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1209">${tReg(r.region)}</text>`;
+    html+=`<text x="${(pL+kw+6).toFixed(1)}" y="${y+barH/2}" dominant-baseline="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="${col}" font-weight="600">${r.kazakh_pct}%</text>`;
+    if(r.russian_pct>18){
+      html+=`<text x="${(W-pR+6).toFixed(1)}" y="${y+barH/2}" dominant-baseline="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a3d6b">${tName('russians_short','Рус:')} ${r.russian_pct}%</text>`;
+    }
+  });
+  svg.innerHTML=html;
+}
+
+// ════ VIZ 7: CONCENTRATION ════
+function drawConc(){
+  const svg=document.getElementById('conc-svg');
+  const W=svg.clientWidth||860,H=320;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.style.height=H+'px';
+  const pL=110,pR=20,pT=32,pB=32;
+  const data=CONC.sort((a,b)=>b.pct-a.pct);
+  const iH=H-pT-pB;
+  const rowH=iH/data.length;
+  const barH=Math.min(22,rowH-6);
+
+  let html='';
+  [25,50,75].forEach(v=>{
+    const x=pL+(v/75)*(W-pL-pR);
+    html+=`<line x1="${x.toFixed(1)}" y1="${pT-8}" x2="${x.toFixed(1)}" y2="${H-pB}" stroke="#e8e0cc" stroke-width="1"/>`;
+    html+=`<text x="${x.toFixed(1)}" y="${pT-14}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b5a3e" opacity=".6">${v}%</text>`;
+  });
+
+  data.forEach((d,i)=>{
+    const y=pT+i*rowH+(rowH-barH)/2;
+    const bw=(d.pct/75)*(W-pL-pR);
+    const colors={'Дунгане':'#8b5e0a','Таджики':'#4a1e6b','Узбеки':'#9b2020','Уйгуры':'#5a1e8b','Турки':'#1a7a6e','Поляки':'#1a3d6b','Курды':'#1a4d2e','Кыргызы':'#2a6b9b','Корейцы':'#8b5e0a','Каракалпаки':'#b85c1a'};
+    const col=colors[d.eth]||'#6b5a3e';
+    html+=`<rect x="${pL}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${barH}" fill="${col}" opacity=".8" rx="2"
+      onmouseenter="tt('<b>${tConc(d.eth)}</b><br>${d.pct}% ${tName('community','общины')}<br>${tName('lives_in','живёт в')}: ${tConcReg(d.region)}<br>${tName('total','Всего')}: ${fmtN(d.total)}')" onmouseleave="ht()" style="cursor:pointer"/>`;
+    html+=`<text x="${pL-6}" y="${(y+barH/2).toFixed(1)}" dominant-baseline="middle" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1209">${tConc(d.eth)}</text>`;
+    html+=`<text x="${(pL+bw+6).toFixed(1)}" y="${(y+barH/2).toFixed(1)}" dominant-baseline="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="${col}" font-weight="600">${d.pct}% → ${tConcReg(d.region)}</text>`;
+  });
+  svg.innerHTML=html;
+}
+
+// ════ VIZ 8: DISTRICT MATRIX ════
+function drawDistricts(){
+  const el=document.getElementById('dm-wrap');
+  function col(items,key,color,title){
+    return `<div>
+      <div class="dm-col-title">${title}</div>
+      ${items.map((d,i)=>`<div class="dm-row">
+        <div class="dm-rank">${String(i+1).padStart(2,'0')}</div>
+        <div class="dm-info">
+          <div class="dm-name">${tDistrict(d.district)}</div>
+          <div class="dm-reg">${tReg(d.region)}</div>
+          <div class="dm-bar-bg"><div class="dm-bar-fg" style="width:${d[key]}%;background:${color}"></div></div>
+        </div>
+        <div class="dm-pct" style="color:${color}">${d[key]}%</div>
+      </div>`).join('')}
+    </div>`;
+  }
+  const topRus=R.dist_russian.slice(0,7);
+  const topUzb=R.dist_uzbek.slice(0,7);
+  const topUig=R.dist_uighur.slice(0,6);
+  const topKaz=R.dist_kazakh_pure.slice(0,7);
+  el.innerHTML=
+    col(topRus,'russian_pct','#1a3d6b',tName('dist_col1','Русские по районам'))+
+    col(topUzb,'uzbek_pct','#9b2020',tName('dist_col2','Узбеки по районам'))+
+    col(topUig,'uighur_pct','#5a1e8b',tName('dist_col3','Уйгуры по районам'))+
+    col(topKaz,'kazakh_pct','#1a4d2e',tName('dist_col4','Казахи: однородные районы'));
+}
+
+// ════ VIZ 9: SMALL MULTIPLES ════
+function drawSmall(){
+  const items=ETH.filter(e=>e.total<100000&&e.total>200&&!['Не указавшие','Другие национальности'].includes(e.ethnicity));
+  const max=items[0]?.total||100000;
+  document.getElementById('sm-grid').innerHTML=items.map(e=>{
+    const col=gc(e.ethnicity);
+    return `<div class="sm-cell" onmouseenter="tt('<b>${tEth(e.ethnicity)}</b><br>${fmtN(e.total)} ${tName('people','чел.')}<br>${e.pct.toFixed(3)}%')" onmouseleave="ht()">
+      <div class="sm-eth">${tEth(e.ethnicity)}</div>
+      <div class="sm-bar-bg"><div class="sm-bar-fg" style="width:${e.total/max*100}%;background:${col}"></div></div>
+      <div class="sm-n" style="color:${col}">${fmtN(e.total)}</div>
+      <div class="sm-tag">${e.pct.toFixed(3)}%</div>
+    </div>`;
+  }).join('');
+}
+
+// ════ VIZ 10: MULTI-AXIS ════
+const RADAR=[{"eth":"Казахи","total":14664202,"pct":71.5333,"urban":61.5,"male_pct":49.5,"conc":10.9,"conc_reg":"Туркестанская"},{"eth":"Русские","total":2943022,"pct":14.3563,"urban":77.3,"male_pct":45.8,"conc":14.6,"conc_reg":"г. Алматы"},{"eth":"Узбеки","total":695557,"pct":3.393,"urban":52.7,"male_pct":50.0,"conc":58.2,"conc_reg":"Туркестанская"},{"eth":"Украинцы","total":367547,"pct":1.7929,"urban":67.0,"male_pct":45.3,"conc":22.7,"conc_reg":"Костанайская"},{"eth":"Уйгуры","total":309164,"pct":1.5081,"urban":56.1,"male_pct":49.3,"conc":40.3,"conc_reg":"г. Алматы"},{"eth":"Немцы","total":222890,"pct":1.0873,"urban":62.3,"male_pct":47.5,"conc":15.6,"conc_reg":"Карагандинская"},{"eth":"Татары","total":218361,"pct":1.0652,"urban":80.5,"male_pct":45.6,"conc":14.5,"conc_reg":"г. Алматы"},{"eth":"Азербайджанцы","total":157568,"pct":0.7686,"urban":59.4,"male_pct":51.5,"conc":20.4,"conc_reg":"Алматинская"},{"eth":"Корейцы","total":120821,"pct":0.5894,"urban":87.8,"male_pct":48.0,"conc":32.8,"conc_reg":"г. Алматы"},{"eth":"Турки","total":93234,"pct":0.4548,"urban":45.2,"male_pct":53.1,"conc":33.3,"conc_reg":"Жамбылская"},{"eth":"Дунгане","total":88165,"pct":0.4301,"urban":39.9,"male_pct":50.2,"conc":67.9,"conc_reg":"Жамбылская"},{"eth":"Белорусы","total":73788,"pct":0.3599,"urban":64.9,"male_pct":45.8,"conc":21.4,"conc_reg":"Костанайская"},{"eth":"Таджики","total":61307,"pct":0.2991,"urban":31.3,"male_pct":54.2,"conc":67.0,"conc_reg":"Туркестанская"},{"eth":"Курды","total":52077,"pct":0.254,"urban":42.5,"male_pct":50.6,"conc":29.8,"conc_reg":"Жамбылская"},{"eth":"Кыргызы","total":41459,"pct":0.2022,"urban":70.6,"male_pct":42.3,"conc":29.1,"conc_reg":"Жамбылская"},{"eth":"Чеченцы","total":35436,"pct":0.1729,"urban":61.7,"male_pct":53.0,"conc":13.7,"conc_reg":"Карагандинская"}];
+let selectedEth=null;
+
+function drawMultiAxis(){
+  const container=document.getElementById('eth-selector');
+  const svg=document.getElementById('multiaxis-svg');
+  if(!svg||!container) return;
+  const W=svg.clientWidth||860;
+
+  container.innerHTML=RADAR.map(r=>{
+    const c=gc(r.eth);
+    const active=selectedEth===r.eth;
+    return '<button onclick="selectEth(\''+r.eth+'\')" style="font-family:var(--mono);font-size:9px;letter-spacing:1px;padding:4px 9px;cursor:pointer;border:1px solid '+(active?c:'#d4c9b0')+';background:'+(active?c:'transparent')+';color:'+(active?'white':'var(--ink)')+';transition:all .2s;border-radius:1px;">'+tEth(r.eth)+'</button>';
+  }).join('');
+
+  const maxConc=Math.max(...RADAR.map(r=>r.conc));
+  const maxTotal=Math.max(...RADAR.map(r=>r.total));
+  const colLabels=[tName('axis_urban','Горожане %'),tName('axis_male','Мужчины %'),tName('axis_conc','Концентрация %'),tName('axis_size','Численность')];
+  const colColors=['#1a4d2e','#9b2020','#4a1e6b','#8b5e0a'];
+  const pL=110,pR=16,colW=(W-pL-pR)/4;
+  const barH=20,gap=6,pT=48,pB=24;
+  const n=RADAR.length;
+  const H=pT+n*(barH+gap)+pB;
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  svg.style.height=H+'px';
+
+  let html='';
+  colLabels.forEach((lbl,ci)=>{
+    const cx=pL+ci*colW+colW/2;
+    html+=`<text x="${cx.toFixed(1)}" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" font-weight="500" fill="${colColors[ci]}">${lbl}</text>`;
+    html+=`<rect x="${(pL+ci*colW+2).toFixed(1)}" y="${pT-4}" width="${(colW-4).toFixed(1)}" height="${(n*(barH+gap)).toFixed(1)}" fill="${ci%2===0?'#faf5ed':'#f5f0e8'}" rx="2" opacity=".5"/>`;
+  });
+
+  RADAR.forEach((r,i)=>{
+    const y=pT+i*(barH+gap);
+    const isSelected=selectedEth===r.eth;
+    const isOther=selectedEth&&!isSelected;
+    const alpha=isOther?0.22:1;
+    const aStr=alpha.toFixed(2);
+    const name=tEth(r.eth);
+
+    html+=`<text x="${pL-6}" y="${(y+barH/2).toFixed(1)}" dominant-baseline="middle" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="#1a1209" opacity="${isOther?0.28:0.85}">${name}</text>`;
+
+    // urban
+    {
+      const w=(r.urban/100)*(colW-10), x=pL+5, col='#1a4d2e';
+      html+=`<rect x="${x}" y="${y}" width="${(colW-10).toFixed(1)}" height="${barH}" fill="#ede8df" rx="1" opacity="${aStr}"/>`;
+      html+=`<rect x="${x}" y="${y}" width="${w.toFixed(1)}" height="${barH}" fill="${col}" rx="1" opacity="${(alpha*.82).toFixed(2)}" style="cursor:pointer" onmouseenter="tt('&lt;b&gt;${name}&lt;/b&gt;&lt;br&gt;${tName('ma_urban','Горожан:')} ${r.urban}%')" onmouseleave="ht()"/>`;
+      html+=`<text x="${(x+w+3).toFixed(1)}" y="${(y+barH/2).toFixed(1)}" dominant-baseline="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="${col}" opacity="${aStr}">${r.urban}%</text>`;
+    }
+    // male
+    {
+      const rangeMin=40,rangeMax=60,x=pL+colW+5,aw=colW-10;
+      const mid=x+(50-rangeMin)/(rangeMax-rangeMin)*aw;
+      const barW=Math.abs(r.male_pct-50)/(rangeMax-50)*aw/2;
+      const left=r.male_pct<50, col=left?'#1a3d6b':'#9b2020', barX=left?mid-barW:mid;
+      html+=`<rect x="${x}" y="${y}" width="${aw.toFixed(1)}" height="${barH}" fill="#ede8df" rx="1" opacity="${aStr}"/>`;
+      html+=`<line x1="${mid.toFixed(1)}" y1="${y}" x2="${mid.toFixed(1)}" y2="${y+barH}" stroke="#888" stroke-width="1" opacity=".35"/>`;
+      html+=`<rect x="${barX.toFixed(1)}" y="${y}" width="${Math.max(0,barW).toFixed(1)}" height="${barH}" fill="${col}" rx="1" opacity="${(alpha*.82).toFixed(2)}" style="cursor:pointer" onmouseenter="tt('&lt;b&gt;${name}&lt;/b&gt;&lt;br&gt;${tName('ma_male','Мужчин:')} ${r.male_pct}%')" onmouseleave="ht()"/>`;
+      html+=`<text x="${(left?barX-3:barX+barW+3).toFixed(1)}" y="${(y+barH/2).toFixed(1)}" dominant-baseline="middle" text-anchor="${left?'end':'start'}" font-family="JetBrains Mono,monospace" font-size="8" fill="${col}" opacity="${aStr}">${r.male_pct}%</text>`;
+    }
+    // concentration
+    {
+      const w=(r.conc/maxConc)*(colW-10), x=pL+2*colW+5, col='#4a1e6b';
+      html+=`<rect x="${x}" y="${y}" width="${(colW-10).toFixed(1)}" height="${barH}" fill="#ede8df" rx="1" opacity="${aStr}"/>`;
+      html+=`<rect x="${x}" y="${y}" width="${w.toFixed(1)}" height="${barH}" fill="${col}" rx="1" opacity="${(alpha*.82).toFixed(2)}" style="cursor:pointer" onmouseenter="tt('&lt;b&gt;${name}&lt;/b&gt;&lt;br&gt;${r.conc}% → ${tReg(r.conc_reg)}')" onmouseleave="ht()"/>`;
+      html+=`<text x="${(x+w+3).toFixed(1)}" y="${(y+barH/2).toFixed(1)}" dominant-baseline="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="${col}" opacity="${aStr}">${r.conc}%</text>`;
+    }
+    // size log
+    {
+      const logMax=Math.log10(maxTotal), logV=Math.log10(r.total||1);
+      const w=(logV/logMax)*(colW-10), x=pL+3*colW+5, col='#8b5e0a';
+      html+=`<rect x="${x}" y="${y}" width="${(colW-10).toFixed(1)}" height="${barH}" fill="#ede8df" rx="1" opacity="${aStr}"/>`;
+      html+=`<rect x="${x}" y="${y}" width="${w.toFixed(1)}" height="${barH}" fill="${col}" rx="1" opacity="${(alpha*.82).toFixed(2)}" style="cursor:pointer" onmouseenter="tt('&lt;b&gt;${name}&lt;/b&gt;&lt;br&gt;${fmtN(r.total)} ${tName('people','чел.')}')" onmouseleave="ht()"/>`;
+      const nLbl=r.total>=1000000?(r.total/1000000).toFixed(1)+(LANG==='en'?'M':'М'):r.total>=1000?Math.round(r.total/1000)+(LANG==='en'?'K':'К'):''+r.total;
+      html+=`<text x="${(x+w+3).toFixed(1)}" y="${(y+barH/2).toFixed(1)}" dominant-baseline="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="${col}" opacity="${aStr}">${nLbl}</text>`;
+    }
+    if(isSelected){html+=`<rect x="${pL-2}" y="${y-2}" width="${(W-pL-pR+4).toFixed(1)}" height="${barH+4}" fill="none" stroke="${gc(r.eth)}" stroke-width="2" rx="2"/>`;}
+  });
+  svg.innerHTML=html;
+}
+function selectEth(eth){
+  selectedEth=(selectedEth===eth)?null:eth;
+  drawMultiAxis();
+}
+
+// ════ INIT ════
+function init(){
+  drawHist();drawProp();drawWaffle();drawGender();
+  drawUrban();drawRegions();drawConc();drawDistricts();
+  drawSmall();drawMultiAxis();
+}
+window.addEventListener('load',()=>{init();applyLang();});
+window.addEventListener('resize',()=>{drawHist();drawProp();drawWaffle();drawGender();drawUrban();drawRegions();drawConc();drawDistricts();drawSmall();drawMultiAxis();});
+</script>
+</body>
+</html>
