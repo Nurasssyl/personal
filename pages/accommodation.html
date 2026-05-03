@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Где живут туристы — Казахстан 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;0,700;1,300;1,700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+:root {
+  --ink: #0a0a0a;
+  --cream: #f5f0e8;
+  --rust: #c84b2f;
+  --gold: #d4a843;
+  --teal: #1a6b6b;
+  --ff-d: 'Bebas Neue', sans-serif;
+  --ff-s: 'DM Serif Display', serif;
+  --ff-b: 'Fraunces', serif;
+  --ff-m: 'IBM Plex Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--ink); color: var(--cream); font-family: var(--ff-b); font-weight: 300; overflow-x: hidden; }
+body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9998; }
+
+/* PROGRESS */
+#progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--rust); width: 0%; z-index: 9999; }
+
+/* LANGUAGE SWITCHER */
+#lang-switcher { position: fixed; top: 20px; right: 20px; z-index: 200; display: flex; gap: 4px; }
+.lang-btn { font-family: var(--ff-m); font-size: 9px; letter-spacing: 2px; padding: 6px 12px; border: 1px solid rgba(245,240,232,0.2); background: transparent; color: rgba(245,240,232,0.4); cursor: pointer; transition: all 0.25s; text-transform: uppercase; }
+.lang-btn.active { background: var(--rust); border-color: var(--rust); color: var(--cream); }
+.lang-btn:hover:not(.active) { border-color: rgba(245,240,232,0.4); color: rgba(245,240,232,0.7); }
+
+/* SIDE NAV */
+#side-nav { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 7px; }
+.nav-dot { width: 6px; height: 6px; border-radius: 50%; border: 1px solid rgba(245,240,232,0.3); cursor: pointer; transition: all 0.3s; }
+.nav-dot.active { background: var(--rust); border-color: var(--rust); transform: scale(1.5); }
+
+/* TOOLTIP */
+#tooltip { position: fixed; background: rgba(6,6,6,0.97); border: 1px solid rgba(245,240,232,0.1); padding: 10px 14px; font-family: var(--ff-m); font-size: 11px; color: var(--cream); pointer-events: none; z-index: 9999; opacity: 0; transition: opacity 0.15s; max-width: 260px; line-height: 1.65; }
+
+/* SECTIONS */
+section { position: relative; min-height: 100vh; padding: 90px 8vw; overflow: hidden; }
+#hero { display: flex; flex-direction: column; justify-content: center; padding: 0 8vw; min-height: 100vh; }
+
+/* HERO */
+.hero-kicker { font-family: var(--ff-m); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--rust); margin-bottom: 22px; opacity: 0; }
+.hero-title { font-family: var(--ff-d); font-size: clamp(4rem, 13vw, 16rem); line-height: 0.87; color: var(--cream); opacity: 0; letter-spacing: -2px; }
+.hero-title em { font-style: normal; color: var(--rust); }
+.hero-sub { font-family: var(--ff-s); font-size: clamp(0.9rem, 2vw, 1.4rem); font-style: italic; color: rgba(245,240,232,0.5); margin-top: 28px; max-width: 560px; opacity: 0; line-height: 1.55; }
+.hero-stats-row { display: flex; gap: 36px; margin-top: 52px; flex-wrap: wrap; opacity: 0; }
+.hero-stat { border-left: 2px solid var(--rust); padding-left: 14px; }
+.hero-stat .num { font-family: var(--ff-d); font-size: 2.4rem; color: var(--cream); line-height: 1; }
+.hero-stat .lbl { font-family: var(--ff-m); font-size: 8px; color: rgba(245,240,232,0.35); text-transform: uppercase; letter-spacing: 2px; margin-top: 3px; }
+.hero-scroll { position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 7px; opacity: 0; }
+.hero-scroll span { font-family: var(--ff-m); font-size: 8px; letter-spacing: 3px; color: rgba(245,240,232,0.22); text-transform: uppercase; }
+.scroll-line { width: 1px; height: 52px; background: linear-gradient(to bottom, rgba(245,240,232,0.22), transparent); animation: scrl 2s ease-in-out infinite; }
+@keyframes scrl { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+/* SECTION PARTS */
+.sl { font-family: var(--ff-m); font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--rust); opacity: 0.85; display: block; }
+.sh { font-family: var(--ff-d); font-size: clamp(2.4rem, 5vw, 6rem); line-height: 0.9; color: var(--cream); letter-spacing: -1px; margin-top: 10px; }
+.sb { font-family: var(--ff-b); font-size: 0.97rem; line-height: 1.82; color: rgba(245,240,232,0.68); max-width: 520px; font-weight: 300; }
+.div { width: 32px; height: 2px; background: var(--rust); margin: 18px 0; }
+.hn { font-family: var(--ff-d); font-size: 1.35em; color: var(--rust); }
+
+/* TWO COL LAYOUT */
+.two-col { display: grid; grid-template-columns: 1fr 1.55fr; gap: 64px; align-items: start; margin-top: 48px; }
+.text-col { display: flex; flex-direction: column; gap: 18px; }
+
+/* COUNTER */
+.counter-block { margin-top: 32px; }
+.c-item { display: flex; align-items: baseline; gap: 10px; padding: 16px 0; border-bottom: 1px solid rgba(245,240,232,0.07); }
+.c-item:first-child { border-top: 1px solid rgba(245,240,232,0.07); }
+.c-num { font-family: var(--ff-d); font-size: 2.8rem; color: var(--cream); min-width: 130px; }
+.c-lbl { font-family: var(--ff-b); font-size: 0.82rem; color: rgba(245,240,232,0.4); line-height: 1.4; }
+
+/* TYPE BARS */
+.tb-row { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
+.tb-name { font-family: var(--ff-m); font-size: 8px; color: rgba(245,240,232,0.5); width: 185px; flex-shrink: 0; text-align: right; line-height: 1.3; }
+.tb-wrap { flex: 1; height: 24px; background: rgba(245,240,232,0.035); position: relative; overflow: hidden; }
+.tb-bar { height: 100%; background: var(--rust); width: 0; transition: width 1.2s cubic-bezier(.4,0,.2,1); }
+.tb-val { font-family: var(--ff-m); font-size: 8px; color: rgba(245,240,232,0.3); position: absolute; right: 6px; top: 50%; transform: translateY(-50%); }
+
+/* BUBBLE */
+#bubble-wrap { width: 100%; height: 560px; margin-top: 44px; }
+
+/* S3 DONUT - FIXED LAYOUT */
+#s3-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-top: 48px; }
+#donut-outer { position: relative; width: 100%; max-width: 380px; margin: 0 auto; }
+#donut-outer svg { display: block; width: 100%; }
+#donut-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; pointer-events: none; }
+#donut-center .dc-n { font-family: var(--ff-d); font-size: 2.4rem; color: var(--cream); line-height: 1; }
+#donut-center .dc-l { font-family: var(--ff-m); font-size: 7px; color: rgba(245,240,232,0.3); text-transform: uppercase; letter-spacing: 2px; }
+.leg-item { display: flex; align-items: center; gap: 9px; padding: 8px 0; border-bottom: 1px solid rgba(245,240,232,0.05); }
+.leg-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.leg-name { font-family: var(--ff-b); font-size: 0.8rem; color: rgba(245,240,232,0.6); flex: 1; }
+.leg-pct { font-family: var(--ff-m); font-size: 0.8rem; color: var(--gold); }
+
+/* OCC GRID */
+#occ-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; margin-top: 48px; }
+.occ-cell { aspect-ratio: 1; position: relative; overflow: hidden; cursor: pointer; transition: transform 0.28s; }
+.occ-cell:hover { transform: scale(1.05); z-index: 2; }
+.occ-bg { position: absolute; inset: 0; }
+.occ-in { position: absolute; inset: 0; padding: 10px 9px; display: flex; flex-direction: column; justify-content: space-between; }
+.occ-reg { font-family: var(--ff-m); font-size: 7px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.6); line-height: 1.3; }
+.occ-pct { font-family: var(--ff-d); font-size: 1.7rem; color: #fff; line-height: 1; }
+.occ-sub { font-family: var(--ff-m); font-size: 6px; color: rgba(255,255,255,0.35); letter-spacing: 1px; }
+
+/* MAP */
+#s5 { background: #060b0e; }
+#map-wrap { margin-top: 44px; width: 100%; }
+#world-map { width: 100%; display: block; }
+.cpath { stroke: #0a0a0a; stroke-width: 0.35; cursor: pointer; }
+.cpath.hd { transition: fill 0.15s; }
+.cpath.hd:hover { opacity: 0.75; }
+#top-grid { margin-top: 24px; display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; }
+.tc-card { background: rgba(245,240,232,0.028); border: 1px solid rgba(245,240,232,0.06); padding: 10px 8px; text-align: center; }
+.tc-flag { font-size: 1.3rem; display: block; margin-bottom: 3px; }
+.tc-name { font-family: var(--ff-m); font-size: 7px; color: rgba(245,240,232,0.4); letter-spacing: 0.5px; display: block; margin-bottom: 2px; }
+.tc-val { font-family: var(--ff-d); font-size: 1rem; color: var(--cream); display: block; }
+.map-scale { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+.map-grad { width: 160px; height: 6px; }
+.map-labels { display: flex; justify-content: space-between; width: 160px; }
+.map-lbl { font-family: var(--ff-m); font-size: 7px; color: rgba(245,240,232,0.3); }
+
+/* GENDER */
+#gender-rows { margin-top: 16px; }
+.g-legend { display: flex; gap: 24px; margin-bottom: 18px; }
+.gl-i { display: flex; align-items: center; gap: 7px; }
+.gl-dot { width: 10px; height: 10px; }
+.gl-lbl { font-family: var(--ff-m); font-size: 8px; letter-spacing: 1px; color: rgba(245,240,232,0.4); }
+.g-row { display: grid; grid-template-columns: 140px 1fr 1fr 48px; gap: 3px; align-items: center; margin-bottom: 4px; opacity: 0; }
+.g-lbl { font-family: var(--ff-m); font-size: 7px; text-transform: uppercase; letter-spacing: 0.8px; color: rgba(245,240,232,0.4); text-align: right; padding-right: 8px; }
+.g-fw { display: flex; justify-content: flex-end; }
+.g-mw { display: flex; justify-content: flex-start; }
+.g-bar { height: 18px; width: 0; transition: width 1s ease; }
+.g-f { background: #4a7a78; }
+.g-m { background: var(--rust); }
+.g-pct { font-family: var(--ff-m); font-size: 7px; color: rgba(245,240,232,0.28); text-align: center; }
+
+/* RESORT */
+#resort-chart { margin-top: 48px; }
+.rc { display: flex; border: 1px solid rgba(245,240,232,0.065); margin-bottom: 2px; overflow: hidden; cursor: default; transition: border-color 0.28s; opacity: 0; transform: translateY(14px); }
+.rc:hover { border-color: rgba(200,75,47,0.4); }
+.rc-rank { font-family: var(--ff-d); font-size: 2.2rem; color: rgba(245,240,232,0.04); padding: 16px 18px; width: 65px; display: flex; align-items: center; background: rgba(245,240,232,0.01); flex-shrink: 0; }
+.rc-info { flex: 1; padding: 12px 16px; display: flex; flex-direction: column; justify-content: center; }
+.rc-name { font-family: var(--ff-s); font-size: 0.92rem; color: var(--cream); margin-bottom: 5px; }
+.rc-bw { height: 3px; background: rgba(245,240,232,0.04); }
+.rc-b { height: 100%; background: var(--teal); width: 0; transition: width 1.2s ease; }
+.rc-v { font-family: var(--ff-m); font-size: 0.7rem; color: var(--gold); padding: 12px 16px 12px 0; display: flex; flex-direction: column; justify-content: center; align-items: flex-end; min-width: 100px; }
+.rv-n { font-size: 0.95rem; }
+.rv-l { font-size: 7px; color: rgba(245,240,232,0.22); letter-spacing: 1px; text-transform: uppercase; }
+.rc-occ { padding: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; min-width: 60px; border-left: 1px solid rgba(245,240,232,0.04); }
+.ro-n { font-family: var(--ff-d); font-size: 1.2rem; color: var(--cream); }
+.ro-l { font-family: var(--ff-m); font-size: 6px; color: rgba(245,240,232,0.22); letter-spacing: 1px; }
+
+/* PURPOSE */
+#purpose-chart { margin-top: 48px; width: 100%; }
+
+/* STAY */
+#stay-chart { margin-top: 48px; width: 100%; }
+
+/* STARS */
+#stars-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 48px; }
+.sc { border: 1px solid rgba(245,240,232,0.065); padding: 26px; opacity: 0; transform: translateY(22px); }
+.sc-star { font-family: var(--ff-d); font-size: 1.4rem; color: var(--gold); margin-bottom: 4px; }
+.sc-cnt { font-family: var(--ff-m); font-size: 7px; color: rgba(245,240,232,0.22); letter-spacing: 2px; margin-bottom: 18px; }
+.sc-met { margin-bottom: 12px; }
+.sc-ml { font-family: var(--ff-m); font-size: 7px; color: rgba(245,240,232,0.3); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
+.sc-bw { height: 5px; background: rgba(245,240,232,0.04); }
+.sc-b { height: 100%; width: 0; transition: width 1.5s ease; }
+.sc-v { font-family: var(--ff-d); font-size: 1.2rem; color: var(--cream); margin-top: 3px; }
+
+/* URBAN */
+#urban-chart { margin-top: 48px; }
+.ur-row { display: grid; grid-template-columns: 145px 1fr 36px; gap: 9px; align-items: center; margin-bottom: 7px; opacity: 0; }
+.ur-lbl { font-family: var(--ff-m); font-size: 7px; text-transform: uppercase; letter-spacing: 0.8px; color: rgba(245,240,232,0.4); text-align: right; }
+.ur-w { position: relative; height: 20px; background: rgba(245,240,232,0.03); overflow: hidden; }
+.ur-c { position: absolute; left: 0; top: 0; bottom: 0; background: var(--rust); opacity: 0.72; width: 0; transition: width 1.2s ease; }
+.ur-r { position: absolute; right: 0; top: 0; bottom: 0; background: var(--teal); opacity: 0.62; width: 0; transition: width 1.2s ease; }
+.ur-pct { font-family: var(--ff-m); font-size: 7px; color: rgba(245,240,232,0.26); text-align: right; }
+
+/* IFO */
+#ifo-chart { margin-top: 48px; width: 100%; }
+
+/* BIZ */
+#biz-viz { margin-top: 48px; display: grid; grid-template-columns: repeat(2,1fr); gap: 48px; }
+.bz-blk { opacity: 0; }
+.bz-nm { font-family: var(--ff-s); font-style: italic; font-size: 1.2rem; color: var(--cream); margin-bottom: 12px; }
+.bz-pw { display: flex; align-items: center; gap: 18px; }
+.bz-st { display: flex; flex-direction: column; gap: 7px; }
+.bs-i { display: flex; align-items: center; gap: 7px; }
+.bs-d { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.bs-l { font-family: var(--ff-m); font-size: 7px; color: rgba(245,240,232,0.32); letter-spacing: 1px; }
+.bs-v { font-family: var(--ff-d); font-size: 0.9rem; color: var(--cream); }
+
+/* REV SCATTER */
+#rev-scatter { margin-top: 48px; width: 100%; }
+
+/* CLUSTER */
+.cstat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 48px; }
+.cstat { background: rgba(245,240,232,0.022); padding: 28px 22px; border: 1px solid rgba(245,240,232,0.045); opacity: 0; transform: translateY(14px); }
+.cs-n { font-family: var(--ff-d); font-size: clamp(2rem,3.2vw,3.6rem); color: var(--cream); line-height: 1; }
+.cs-l { font-family: var(--ff-m); font-size: 7px; color: rgba(245,240,232,0.28); letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; }
+.cs-s { font-family: var(--ff-b); font-size: 0.75rem; color: rgba(245,240,232,0.32); margin-top: 3px; }
+
+/* ROOM */
+#room-chart { margin-top: 48px; display: flex; flex-direction: column; gap: 8px; }
+
+/* PRICE */
+#price-chart { margin-top: 48px; width: 100%; }
+
+/* CHILDREN */
+#child-inner { display: grid; grid-template-columns: 280px 1fr; gap: 56px; margin-top: 48px; align-items: center; }
+.child-stat { margin-bottom: 20px; }
+.chi-l { font-family: var(--ff-m); font-size: 7px; color: rgba(245,240,232,0.32); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
+.chi-n { font-family: var(--ff-d); font-size: 3.2rem; color: var(--cream); line-height: 1; }
+
+/* CONCLUSION */
+#concl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 64px; }
+.conc-blk { border-top: 2px solid rgba(245,240,232,0.1); padding-top: 18px; opacity: 0; }
+.conc-n { font-family: var(--ff-d); font-size: 3.2rem; color: var(--rust); }
+.conc-t { font-family: var(--ff-b); font-size: 0.92rem; color: rgba(245,240,232,0.52); line-height: 1.7; margin-top: 6px; }
+
+/* BACK HOME */
+#back-home { display: block; text-align: center; margin: 68px auto 0; width: fit-content; padding: 15px 42px; border: 1px solid rgba(245,240,232,0.18); font-family: var(--ff-m); font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--cream); text-decoration: none; transition: all 0.3s; position: relative; overflow: hidden; }
+#back-home::before { content: ''; position: absolute; inset: 0; background: var(--rust); transform: translateX(-100%); transition: transform 0.4s cubic-bezier(.4,0,.2,1); }
+#back-home:hover::before { transform: translateX(0); }
+#back-home span { position: relative; z-index: 1; }
+
+footer { text-align: center; padding: 32px; font-family: var(--ff-m); font-size: 8px; color: rgba(245,240,232,0.16); letter-spacing: 2px; border-top: 1px solid rgba(245,240,232,0.04); line-height: 1.8; }
+footer a { color: var(--rust); text-decoration: none; }
+
+/* BG VARIANTS */
+#s2  { background: #0c0c0c; }
+#s3  { background: var(--ink); }
+#s4  { background: #0d0d0d; }
+#s6  { background: #0b1210; }
+#s7  { background: var(--ink); }
+#s8  { background: #0a0c10; }
+#s9  { background: var(--ink); }
+#s10 { background: #0f0c08; }
+#s11 { background: #050505; }
+#s12 { background: var(--ink); }
+#s13 { background: #080f0a; }
+#s14 { background: var(--ink); }
+#s15 { background: #08090e; }
+#s16 { background: var(--ink); }
+#s17 { background: #0d0a0f; }
+#s18 { background: var(--ink); }
+#s19 { background: #050d0a; }
+#s20 { background: var(--ink); }
+
+@media(max-width:880px){
+  .two-col,#s3-inner,#concl-grid,#biz-viz,#child-inner{grid-template-columns:1fr;}
+  #occ-grid{grid-template-columns:repeat(4,1fr);}
+  #stars-grid{grid-template-columns:1fr 1fr;}
+  .cstat-grid{grid-template-columns:1fr 1fr;}
+  #side-nav,#top-grid{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<div id="tooltip"></div>
+
+<!-- LANGUAGE SWITCHER -->
+<div id="lang-switcher">
+  <button class="lang-btn active" onclick="setLang('ru')">РУС</button>
+  <button class="lang-btn" onclick="setLang('kz')">ҚАЗ</button>
+  <button class="lang-btn" onclick="setLang('en')">ENG</button>
+</div>
+
+<!-- SIDE NAV -->
+<nav id="side-nav">
+  <div class="nav-dot active" data-s="hero"></div>
+  <div class="nav-dot" data-s="s1"></div>
+  <div class="nav-dot" data-s="s2"></div>
+  <div class="nav-dot" data-s="s3"></div>
+  <div class="nav-dot" data-s="s4"></div>
+  <div class="nav-dot" data-s="s5"></div>
+  <div class="nav-dot" data-s="s6"></div>
+  <div class="nav-dot" data-s="s7"></div>
+  <div class="nav-dot" data-s="s8"></div>
+  <div class="nav-dot" data-s="s9"></div>
+  <div class="nav-dot" data-s="s10"></div>
+  <div class="nav-dot" data-s="s11"></div>
+  <div class="nav-dot" data-s="s12"></div>
+  <div class="nav-dot" data-s="s13"></div>
+  <div class="nav-dot" data-s="s14"></div>
+  <div class="nav-dot" data-s="s15"></div>
+  <div class="nav-dot" data-s="s16"></div>
+  <div class="nav-dot" data-s="s17"></div>
+  <div class="nav-dot" data-s="s18"></div>
+  <div class="nav-dot" data-s="s19"></div>
+  <div class="nav-dot" data-s="s20"></div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-kicker" data-i18n="hero.kicker"></div>
+  <h1 class="hero-title" data-i18n="hero.title"></h1>
+  <p class="hero-sub" data-i18n="hero.sub"></p>
+  <div class="hero-stats-row">
+    <div class="hero-stat"><div class="num">10,1<span style="font-size:1.3rem">млн</span></div><div class="lbl" data-i18n="stat.visitors"></div></div>
+    <div class="hero-stat"><div class="num">4 482</div><div class="lbl" data-i18n="stat.objects"></div></div>
+    <div class="hero-stat"><div class="num">350<span style="font-size:1.3rem">млрд ₸</span></div><div class="lbl" data-i18n="stat.revenue"></div></div>
+    <div class="hero-stat"><div class="num">+9,4%</div><div class="lbl" data-i18n="stat.growth"></div></div>
+  </div>
+  <div class="hero-scroll"><span data-i18n="scroll"></span><div class="scroll-line"></div></div>
+</section>
+
+<!-- ══ S1 ══ -->
+<section id="s1">
+  <div class="two-col">
+    <div class="text-col">
+      <span class="sl" data-i18n="s1.label"></span>
+      <h2 class="sh" data-i18n="s1.title"></h2>
+      <div class="div"></div>
+      <p class="sb" data-i18n="s1.body"></p>
+      <div class="counter-block">
+        <div class="c-item"><div class="c-num" data-target="94523">0</div><div class="c-lbl" data-i18n="s1.c1"></div></div>
+        <div class="c-item"><div class="c-num" data-target="232953">0</div><div class="c-lbl" data-i18n="s1.c2"></div></div>
+        <div class="c-item"><div class="c-num" data-target="30536">0</div><div class="c-lbl" data-i18n="s1.c3"></div></div>
+      </div>
+    </div>
+    <div>
+      <span class="sl" data-i18n="s1.chart-label"></span>
+      <div id="type-chart" style="margin-top:18px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S2 ══ -->
+<section id="s2">
+  <span class="sl" data-i18n="s2.label"></span>
+  <h2 class="sh" data-i18n="s2.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s2.body"></p>
+  <div id="bubble-wrap"><svg id="bubble-svg" style="width:100%;height:100%"></svg></div>
+</section>
+
+<!-- ══ S3 ══ -->
+<section id="s3">
+  <div id="s3-inner">
+    <div>
+      <span class="sl" data-i18n="s3.label"></span>
+      <h2 class="sh" data-i18n="s3.title"></h2>
+      <div class="div"></div>
+      <p class="sb" data-i18n="s3.body"></p>
+      <div id="donut-legend" style="margin-top:24px"></div>
+    </div>
+    <div id="donut-outer">
+      <svg id="donut-svg" viewBox="0 0 360 360"></svg>
+      <div id="donut-center">
+        <div class="dc-n">350 млрд</div>
+        <div class="dc-l">тенге · 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S4 ══ -->
+<section id="s4">
+  <span class="sl" data-i18n="s4.label"></span>
+  <h2 class="sh" data-i18n="s4.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s4.body"></p>
+  <div id="occ-grid"></div>
+</section>
+
+<!-- ══ S5 WORLD MAP ══ -->
+<section id="s5">
+  <span class="sl" data-i18n="s5.label"></span>
+  <h2 class="sh" data-i18n="s5.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s5.body"></p>
+  <div id="map-wrap">
+    <svg id="world-map"></svg>
+    <div class="map-scale">
+      <div>
+        <div class="map-grad" style="background:linear-gradient(to right,#2a6644,#d4a843,#c84b2f)"></div>
+        <div class="map-labels"><div class="map-lbl">1</div><div class="map-lbl">429 761</div></div>
+      </div>
+      <div style="font-family:var(--ff-m);font-size:7px;color:rgba(245,240,232,0.25)" data-i18n="s5.legend"></div>
+    </div>
+  </div>
+  <div id="top-grid"></div>
+</section>
+
+<!-- ══ S6 ══ -->
+<section id="s6">
+  <span class="sl" data-i18n="s6.label"></span>
+  <h2 class="sh" data-i18n="s6.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s6.body"></p>
+  <div id="gender-viz" style="margin-top:44px">
+    <div class="g-legend">
+      <div class="gl-i"><div class="gl-dot" style="background:#4a7a78"></div><div class="gl-lbl" data-i18n="s6.female"></div></div>
+      <div class="gl-i"><div class="gl-dot" style="background:var(--rust)"></div><div class="gl-lbl" data-i18n="s6.male"></div></div>
+    </div>
+    <div id="gender-rows"></div>
+  </div>
+</section>
+
+<!-- ══ S7 ══ -->
+<section id="s7">
+  <span class="sl" data-i18n="s7.label"></span>
+  <h2 class="sh" data-i18n="s7.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s7.body"></p>
+  <div id="resort-chart"></div>
+</section>
+
+<!-- ══ S8 ══ -->
+<section id="s8">
+  <span class="sl" data-i18n="s8.label"></span>
+  <h2 class="sh" data-i18n="s8.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s8.body"></p>
+  <div id="purpose-chart"><svg id="purpose-svg"></svg></div>
+</section>
+
+<!-- ══ S9 ══ -->
+<section id="s9">
+  <span class="sl" data-i18n="s9.label"></span>
+  <h2 class="sh" data-i18n="s9.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s9.body"></p>
+  <div id="scatter-wrap"><svg id="scatter-svg"></svg></div>
+</section>
+
+<!-- ══ S10 ══ -->
+<section id="s10">
+  <span class="sl" data-i18n="s10.label"></span>
+  <h2 class="sh" data-i18n="s10.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s10.body"></p>
+  <div id="stars-grid"></div>
+</section>
+
+<!-- ══ S11 ══ -->
+<section id="s11">
+  <span class="sl" data-i18n="s11.label"></span>
+  <h2 class="sh" data-i18n="s11.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s11.body"></p>
+  <div id="urban-chart"></div>
+</section>
+
+<!-- ══ S12 ══ -->
+<section id="s12">
+  <span class="sl" data-i18n="s12.label"></span>
+  <h2 class="sh" data-i18n="s12.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s12.body"></p>
+  <div id="biz-viz"></div>
+</section>
+
+<!-- ══ S13 ══ -->
+<section id="s13">
+  <span class="sl" data-i18n="s13.label"></span>
+  <h2 class="sh" data-i18n="s13.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s13.body"></p>
+  <div id="ifo-chart"><svg id="ifo-svg"></svg></div>
+</section>
+
+<!-- ══ S14 ══ -->
+<section id="s14">
+  <span class="sl" data-i18n="s14.label"></span>
+  <h2 class="sh" data-i18n="s14.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s14.body"></p>
+  <div id="rev-scatter"><svg id="rev-svg"></svg></div>
+</section>
+
+<!-- ══ S15 ══ -->
+<section id="s15">
+  <span class="sl" data-i18n="s15.label"></span>
+  <h2 class="sh" data-i18n="s15.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s15.body"></p>
+  <div class="cstat-grid" id="cluster-stats">
+    <div class="cstat"><div class="cs-n">535</div><div class="cs-l" data-i18n="cs.objects"></div><div class="cs-s" data-i18n="cs.objects.s"></div></div>
+    <div class="cstat"><div class="cs-n">2,97 млн</div><div class="cs-l" data-i18n="cs.visitors"></div><div class="cs-s" data-i18n="cs.visitors.s"></div></div>
+    <div class="cstat"><div class="cs-n">122 млрд ₸</div><div class="cs-l" data-i18n="cs.rev"></div><div class="cs-s" data-i18n="cs.rev.s"></div></div>
+    <div class="cstat"><div class="cs-n">46%</div><div class="cs-l" data-i18n="cs.occ"></div><div class="cs-s" data-i18n="cs.occ.s"></div></div>
+    <div class="cstat"><div class="cs-n">15 847</div><div class="cs-l" data-i18n="cs.rooms"></div><div class="cs-s" data-i18n="cs.rooms.s"></div></div>
+    <div class="cstat"><div class="cs-n">23 609 ₸</div><div class="cs-l" data-i18n="cs.price"></div><div class="cs-s" data-i18n="cs.price.s"></div></div>
+  </div>
+</section>
+
+<!-- ══ S16 ══ -->
+<section id="s16">
+  <span class="sl" data-i18n="s16.label"></span>
+  <h2 class="sh" data-i18n="s16.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s16.body"></p>
+  <div id="stay-chart"><svg id="stay-svg"></svg></div>
+</section>
+
+<!-- ══ S17 ══ -->
+<section id="s17">
+  <span class="sl" data-i18n="s17.label"></span>
+  <h2 class="sh" data-i18n="s17.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s17.body"></p>
+  <div id="room-chart"></div>
+</section>
+
+<!-- ══ S18 ══ -->
+<section id="s18">
+  <span class="sl" data-i18n="s18.label"></span>
+  <h2 class="sh" data-i18n="s18.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s18.body"></p>
+  <div id="price-chart"><svg id="price-svg"></svg></div>
+</section>
+
+<!-- ══ S19 ══ -->
+<section id="s19">
+  <span class="sl" data-i18n="s19.label"></span>
+  <h2 class="sh" data-i18n="s19.title"></h2>
+  <div class="div"></div>
+  <p class="sb" data-i18n="s19.body"></p>
+  <div id="child-inner">
+    <svg id="child-svg" viewBox="0 0 280 280" width="280"></svg>
+    <div>
+      <div class="child-stat"><div class="chi-l" data-i18n="ch.camps"></div><div class="chi-n">108</div></div>
+      <div class="child-stat"><div class="chi-l" data-i18n="ch.children"></div><div class="chi-n" style="color:var(--rust)">92 434</div></div>
+      <div class="child-stat"><div class="chi-l" data-i18n="ch.capacity"></div><div class="chi-n" style="color:var(--gold);font-size:2.6rem">22 704</div></div>
+      <div class="child-stat"><div class="chi-l" data-i18n="ch.revenue"></div><div class="chi-n" style="color:var(--teal);font-size:2.2rem">5,87 млрд ₸</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S20 ══ -->
+<section id="s20">
+  <span class="sl" data-i18n="s20.label"></span>
+  <h2 class="sh" style="max-width:660px" data-i18n="s20.title"></h2>
+  <div class="div"></div>
+  <p class="sb" style="max-width:600px" data-i18n="s20.body"></p>
+  <div id="concl-grid">
+    <div class="conc-blk"><div class="conc-n">+9,4%</div><div class="conc-t" data-i18n="c1.text"></div></div>
+    <div class="conc-blk"><div class="conc-n">1,4 млн</div><div class="conc-t" data-i18n="c2.text"></div></div>
+    <div class="conc-blk"><div class="conc-n">33,4%</div><div class="conc-t" data-i18n="c3.text"></div></div>
+    <div class="conc-blk"><div class="conc-n">46%</div><div class="conc-t" data-i18n="c4.text"></div></div>
+  </div>
+  <a href="https://nurasyl.space/" id="back-home"><span data-i18n="back"></span></a>
+</section>
+
+<footer>
+  <span data-i18n="footer.data"></span><br>
+  <span data-i18n="footer.viz"></span> <a href="https://nurasyl.space">Nurasyl Abdrazakuly</a> · nurasyl.space
+</footer>
+
+<script>
+// ═══════════════════════════════════════════
+// i18n TRANSLATIONS
+// ═══════════════════════════════════════════
+const T = {
+  ru: {
+    "hero.kicker": "Казахстан · Туристическая инфраструктура · 2025",
+    "hero.title": "ГДЕ<br>ЖИВУТ<br><em>ТУРИСТЫ</em>",
+    "hero.sub": "Данные Бюро национальной статистики РК за январь–декабрь 2025 года. Полный разбор гостиничного сектора страны.",
+    "stat.visitors": "Посетителей", "stat.objects": "Объектов размещения", "stat.revenue": "Объём услуг", "stat.growth": "Рост к 2024",
+    "scroll": "Прокрутить",
+    "s1.label":"01 — Общий обзор","s1.title":"4 482<br>ОБЪЕКТА","s1.body":"Сектор гостеприимства вырос на <span class='hn'>9,4%</span> в физическом объёме. 4 482 объекта размещения охватывают всё: от деловых отелей Астаны до сельских гостевых домов в предгорьях Алтая.","s1.c1":"номеров в фонде","s1.c2":"единовременная вместимость","s1.c3":"работников в отрасли","s1.chart-label":"Посетители по типу объекта",
+    "s2.label":"02 — Регионы","s2.title":"КТО ПРИНИМАЕТ<br>БОЛЬШЕ ВСЕХ","s2.body":"Пузырь = регион. Размер — число посетителей. Цвет — средняя цена ночи: тёмный — дешевле, красный — дороже. По оси X — количество объектов размещения.",
+    "s3.label":"03 — Структура выручки","s3.title":"350<br>МИЛЛИАРДОВ ₸","s3.body":"Гостиницы с рестораном формируют <span class='hn'>69%</span> всей выручки. Краткосрочная аренда достигла 12% рынка — самый быстрорастущий сегмент.",
+    "s4.label":"04 — Заполняемость","s4.title":"КАЖДЫЙ ТРЕТИЙ<br>НОМЕР ПУСТУЕТ","s4.body":"Средняя загрузка номеров — <span class='hn'>33,4%</span>. Разброс по регионам значительный: от 15,5% в Атырауской до 46,8% в Алматы. Цвет — от тёмного (низкая) до красного (высокая).",
+    "s5.label":"05 — Иностранные гости","s5.title":"1,4 МЛН<br>НЕРЕЗИДЕНТОВ","s5.body":"Россия, Китай и Индия — три крупнейших источника иностранных гостей. Турция входит в топ-5 благодаря масштабной трудовой и деловой активности. Наведите на страну для точных данных.","s5.legend":"Серый = нет зарегистрированных гостей",
+    "s6.label":"06 — Персонал по полу","s6.title":"64% —<br>ЖЕНЩИНЫ","s6.body":"Отрасль размещения Казахстана — преимущественно женская по составу. Исключение — нефтегазовые регионы, где доля мужчин превышает среднее значение по стране.","s6.female":"Женщины ←","s6.male":"→ Мужчины",
+    "s7.label":"07 — Курортные зоны","s7.title":"17 КУРОРТНЫХ<br>ЗОН","s7.body":"Алматинский горный кластер — доминирующий полюс с 3 млн посетителей и 122 млрд ₸ выручки. Алаколь (Абай) фиксирует наибольшую загрузку в стране — <span class='hn'>53,7%</span>.",
+    "s8.label":"08 — Цель поездки","s8.title":"ДЕЛОВОЙ ИЛИ<br>РЕКРЕАЦИОННЫЙ?","s8.body":"В Атырауской и Западно-Казахстанской областях свыше 50% поездок носят деловой характер — следствие высокой концентрации нефтегазовых предприятий. Алматинская область — почти исключительно рекреационный спрос.",
+    "s9.label":"09 — Цена vs загрузка","s9.title":"ЦЕНА НЕ<br>ГАРАНТИРУЕТ СПРОС","s9.body":"Самый дорогой 5★ объект в Шымкенте (171 543 ₸/ночь) демонстрирует загрузку лишь 31%. Наибольший 5★-номер в Акмолинской области показывает загрузку 73,7%. Взаимосвязь нелинейная.",
+    "s10.label":"10 — Категории звёздности","s10.title":"★★★★★<br>VS ★★★","s10.body":"Разрыв в загрузке между 5★ и 3★ составляет 14 п.п. Ценовой разрыв — трёхкратный. Некатегорийные объекты (51% рынка) удерживают загрузку в 31% — конкурентный показатель на фоне категорийных гостиниц.",
+    "s11.label":"11 — Город vs село","s11.title":"42% —<br>ЗА ГОРОДОМ","s11.body":"Значительная доля объектов размещения сосредоточена в сельской местности. В Жетісу, Абай и Алматинской областях сельские объекты численно превышают городские.",
+    "s12.label":"12 — Структура спроса","s12.title":"НЕФТЬ<br>ОПРЕДЕЛЯЕТ СПРОС","s12.body":"Нефтегазовые регионы формируют принципиально иной тип туристического потока. Доля деловых поездок в Атырауской области превышает 58% — максимальный показатель по стране.",
+    "s13.label":"13 — Физический рост","s13.title":"КТО РАСТЁТ<br>БЫСТРЕЕ ВСЕХ","s13.body":"Кызылординская область показывает рост <span class='hn'>+31%</span> — максимум по стране. Западно-Казахстанская и Жамбылская — единственные регионы с отрицательной динамикой относительно 2024 года.",
+    "s14.label":"14 — Выручка vs посетители","s14.title":"АЛМАТЫ<br>ЗАРАБАТЫВАЕТ<br>БОЛЬШЕ ВСЕХ","s14.body":"Два города формируют 54% совокупной выручки отрасли. Размер пузыря — средняя цена ночи в регионе. Акмолинская область — аномалия: высокая выручка при среднем числе посетителей (эффект Боровое).",
+    "s15.label":"15 — Горный кластер Алматы","s15.title":"САМЫЙ<br>МОЩНЫЙ ПОЛЮС","s15.body":"535 объектов в горах вокруг Алматы принимают почти 3 млн гостей в год. По числу посетителей кластер сопоставим с целыми областями. Средняя цена ночи — <span class='hn'>23 609 ₸</span> — наивысшая среди курортных зон.",
+    "cs.objects":"объектов","cs.objects.s":"горный кластер","cs.visitors":"посетителей","cs.visitors.s":"в год","cs.rev":"выручка","cs.rev.s":"35% от всех курортов","cs.occ":"загрузка номеров","cs.occ.s":"лучший показатель в РК","cs.rooms":"номеров","cs.rooms.s":"в номерном фонде","cs.price":"средняя цена ночи","cs.price.s":"максимум среди зон",
+    "s16.label":"16 — Однодневные vs многодневные","s16.title":"91% ОСТАЮТСЯ<br>НА НОЧЬ","s16.body":"9,2 из 10 млн гостей — многодневные туристы. В Актюбинской области доля однодневных визитёров достигает 32,4% — наибольший показатель по стране. Это указывает на транзитную функцию региона.",
+    "s17.label":"17 — Структура номерного фонда","s17.title":"72% —<br>СТАНДАРТ","s17.body":"94 523 номера распределены между четырьмя категориями. Доля класса «люкс» составляет 12,5%. Номера с минимальным оснащением (12,1%) сохраняются преимущественно в санаторно-курортных объектах советской постройки.",
+    "s18.label":"18 — Средняя стоимость ночи","s18.title":"14-КРАТНЫЙ<br>РАЗБРОС ЦЕН","s18.body":"Диапазон средних цен: от 7 016 ₸ в Бухтарминской зоне до 96 623 ₸ в 5★ отелях Алматы. Курортные зоны Алтая и Алаколя занимают верхний ценовой сегмент среди рекреационных объектов.",
+    "s19.label":"19 — Детский отдых","s19.title":"108 ДЕТСКИХ<br>ЛАГЕРЕЙ","s19.body":"Детские лагеря — специфический сегмент с наибольшей средней вместимостью на объект: 210 мест. На 108 объектов приходится 92 434 детей в год. Средняя выручка на объект — 54 млн ₸.",
+    "ch.camps":"Детских лагерей","ch.children":"Детей за год","ch.capacity":"Вместимость","ch.revenue":"Выручка",
+    "s20.label":"20 — Выводы","s20.title":"ИНДУСТРИЯ<br>ГОСТЕПРИИМСТВА<br>СОЗРЕВАЕТ","s20.body":"Казахстан 2025 — рынок существенных контрастов. Высокий рост ряда регионов соседствует со стагнацией других. Среднее значение загрузки в 33,4% указывает на значительный нереализованный потенциал при текущей туристической инфраструктуре.",
+    "c1.text":"Рост физического объёма услуг по стране. Показатель отражает сочетание восстановительного и органического роста в большинстве регионов.",
+    "c2.text":"Иностранных гостей из 150+ стран. Россия, Китай и Индия формируют основной объём въездного потока. Среднеазиатские соседи — Узбекистан и Кыргызстан — занимают устойчивые позиции в пятёрке.",
+    "c3.text":"Средняя загрузка номеров — ниже среднемирового значения (~55%). Разрыв фиксирует ёмкость для роста при условии адресного маркетинга и улучшения транспортной доступности.",
+    "c4.text":"Загрузка Алматинского горного кластера — наилучший показатель в стране. Горный туризм формируется как ключевой бренд казахстанского туристического продукта.",
+    "back":"← На главную","footer.data":"Данные: Бюро национальной статистики РК · Январь–декабрь 2025 · Публикация БНС 01.04.2026","footer.viz":"Визуализация:"
+  },
+  kz: {
+    "hero.kicker": "Қазақстан · Туристік инфрақұрылым · 2025",
+    "hero.title": "ТУРИСТЕР<br>ҚАЙДА<br><em>ТҰРАДЫ</em>",
+    "hero.sub": "БҰС РК деректері, 2025 жылғы қаңтар–желтоқсан. Қазақстанның қонақ үй секторын толық талдау.",
+    "stat.visitors": "Келушілер", "stat.objects": "Орналасу орындары", "stat.revenue": "Қызметтер көлемі", "stat.growth": "2024-ке өсу",
+    "scroll": "Төмен",
+    "s1.label":"01 — Жалпы шолу","s1.title":"4 482<br>ОБЪЕКТ","s1.body":"Орналасу саласы физикалық көлем бойынша <span class='hn'>9,4%</span>-ға өсті. 4 482 объект Астана іскерлік қонақ үйлерінен Алтай алдындағы ауылдық үйлерге дейін барлығын қамтиды.","s1.c1":"Бөлмелер қоры","s1.c2":"Бір мезгілдегі сыйымдылық","s1.c3":"Саладағы қызметкерлер","s1.chart-label":"Объект түрі бойынша келушілер",
+    "s2.label":"02 — Аймақтар","s2.title":"КІМ КӨП<br>ҚАБЫЛДАЙДЫ","s2.body":"Дөңгелек = аймақ. Өлшемі — келушілер саны. Түсі — орташа түнгі баға. X осі — орналасу орындарының саны.",
+    "s3.label":"03 — Табыс құрылымы","s3.title":"350<br>МИЛЛИАРД ₸","s3.body":"Мейрамханасы бар қонақ үйлер жалпы табыстың <span class='hn'>69%</span>-ін қалыптастырады. Қысқа мерзімді жалға беру 12%-ға жетті — ең жылдам өсуші сегмент.",
+    "s4.label":"04 — Толтырылу","s4.title":"ҮШ БӨЛМЕНІҢ<br>БІРІ БОС","s4.body":"Орташа бөлме толтырылуы — <span class='hn'>33,4%</span>. Аймақтар арасындағы айырма маңызды: Атырау облысындағы 15,5%-дан Алматы қаласындағы 46,8%-ға дейін.",
+    "s5.label":"05 — Шетелдік қонақтар","s5.title":"1,4 МЛН<br>РЕЗИДЕНТ ЕМЕС","s5.body":"Ресей, Қытай және Үндістан — шетелдік қонақтардың үш ірі көзі. Түркия еңбек және іскерлік белсенділіктің арқасында үздік 5-ке кіреді. Нақты деректер үшін елдің үстінен апарыңыз.","s5.legend":"Сұр = тіркелген қонақ жоқ",
+    "s6.label":"06 — Қызметкерлер жынысы","s6.title":"64% —<br>ӘЙЕЛДЕР","s6.body":"Орналасу саласы Қазақстанда негізінен әйелдер еңбегімен қамтамасыз етілген. Ерекшелік — мұнай-газ аймақтары, мұнда ерлер үлесі ұлттық орташадан жоғары.","s6.female":"Әйелдер ←","s6.male":"→ Ерлер",
+    "s7.label":"07 — Курорт аймақтары","s7.title":"17 КУРОРТ<br>АЙМАҒЫ","s7.body":"Алматы тау кластері — 3 млн келуші мен 122 млрд ₸ табыспен басым полюс. Алакөл (Абай) ел бойынша ең жоғары толтырылуды тіркейді — <span class='hn'>53,7%</span>.",
+    "s8.label":"08 — Сапар мақсаты","s8.title":"ІСКЕРЛІК ПЕ<br>РЕКРЕАЦИЯЛЫҚ ПА?","s8.body":"Атырау және Батыс Қазақстан облыстарында сапарлардың 50%-дан астамы іскерлік сипатта — мұнай-газ кәсіпорындарының жоғары шоғырлануының салдары.",
+    "s9.label":"09 — Баға мен толтырылу","s9.title":"БАҒА СҰРАНЫСТЫ<br>КЕПІЛДЕМЕЙДІ","s9.body":"Шымкентте ең қымбат 5★ объект (171 543 ₸/түн) бар, бірақ толтырылу тек 31%. Акмола облысында 5★-толтырылу 73,7%-ға жетеді. Байланыс сызықтық емес.",
+    "s10.label":"10 — Жұлдыз санаттары","s10.title":"★★★★★<br>VS ★★★","s10.body":"5★ мен 3★ арасындағы толтырылу айырмасы 14 п.п. Бағалық айырма — үш есе. Санатсыз объектілер (нарықтың 51%) 31% толтырылуды сақтайды.",
+    "s11.label":"11 — Қала мен ауыл","s11.title":"42% —<br>ҚАЛА СЫРТЫНДА","s11.body":"Орналасу орындарының едәуір үлесі ауылдық жерлерде шоғырланған. Жетісу, Абай және Алматы облыстарында ауылдық объектілер санымен басым.",
+    "s12.label":"12 — Сұраныс құрылымы","s12.title":"МҰНАЙ<br>СҰРАНЫСТЫ АНЫҚТАЙДЫ","s12.body":"Мұнай-газ аймақтары принципті өзге туристік ағын түрін қалыптастырады. Атырау облысындағы іскерлік сапарлардың үлесі 58%-дан асады — ел бойынша ең жоғары көрсеткіш.",
+    "s13.label":"13 — Физикалық өсу","s13.title":"КІМ ТЕЗІРЕК<br>ӨСЕДІ","s13.body":"Қызылорда облысы <span class='hn'>+31%</span> өсуімен ел бойынша рекорд жаңартты. Батыс Қазақстан мен Жамбыл — 2024 жылмен салыстырғанда жағымсыз динамикасы бар жалғыз аймақтар.",
+    "s14.label":"14 — Табыс пен келушілер","s14.title":"АЛМАТЫ<br>ЕҢ КӨП<br>ТАБАДЫ","s14.body":"Екі қала жиынтық салалық табыстың 54%-ын қалыптастырады. Дөңгелек өлшемі — аймақтағы орташа түнгі баға.",
+    "s15.label":"15 — Алматы тау кластері","s15.title":"ЕҢ КҮШТІ<br>ПОЛЮС","s15.body":"Алматы маңындағы таулардағы 535 объект жылына 3 млн-ға жуық қонақ қабылдайды. Орташа түнгі баға — <span class='hn'>23 609 ₸</span> — курорт аймақтары арасында ең жоғары.",
+    "cs.objects":"объект","cs.objects.s":"тау кластері","cs.visitors":"келуші","cs.visitors.s":"жылына","cs.rev":"табыс","cs.rev.s":"барлық курорттардың 35%","cs.occ":"бөлме толтырылуы","cs.occ.s":"РК бойынша үздік","cs.rooms":"бөлме","cs.rooms.s":"бөлмелер қорында","cs.price":"орташа түнгі баға","cs.price.s":"аймақтар арасындағы максимум",
+    "s16.label":"16 — Бір күндік пен көп күндік","s16.title":"91% ТҮНЕЙДІ","s16.body":"10 млн қонақтың 9,2 млн-ы — көп күндік туристер. Актөбе облысында бір күндік келушілердің үлесі 32,4%-ға жетеді — ел бойынша ең жоғары. Бұл аймақтың транзиттік функциясын көрсетеді.",
+    "s17.label":"17 — Бөлмелер қорының құрылымы","s17.title":"72% —<br>СТАНДАРТ","s17.body":"94 523 бөлме төрт санат арасында бөлінген. Люкс класс үлесі 12,5%. Минималды жабдықталған бөлмелер (12,1%) негізінен кеңестік дәуірдегі санаторий-курорттық объектілерде сақталған.",
+    "s18.label":"18 — Орташа түнгі баға","s18.title":"БАҒАЛАР 14<br>ЕСЕГЕ ЕРЕКШЕЛЕНЕДІ","s18.body":"Орташа бағалар ауқымы: Бұқтырма аймағындағы 7 016 ₸-нан Алматының 5★ қонақ үйлерінде 96 623 ₸-ға дейін.",
+    "s19.label":"19 — Балалар демалысы","s19.title":"108 БАЛАЛАР<br>ЛАГЕРІ","s19.body":"Балалар лагерьлері — объектіге шаққандағы орташа сыйымдылығы ең жоғары сегмент: 210 орын. 108 объектіге жылына 92 434 бала келеді.",
+    "ch.camps":"Балалар лагері","ch.children":"Бала/жыл","ch.capacity":"Сыйымдылық","ch.revenue":"Табыс",
+    "s20.label":"20 — Қорытынды","s20.title":"ҚОНАҚЖАЙЛЫЛЫҚ<br>САЛАСЫ<br>ЖЕТІЛЕДІ","s20.body":"Қазақстан 2025 — айтарлықтай контрасты нарық. Бірқатар аймақтардың жоғары өсуі басқаларының тоқырауымен қатар жүреді. 33,4% орташа толтырылу деңгейі қолданыстағы туристік инфрақұрылым шеңберінде іске асырылмаған айтарлықтай әлеуетті көрсетеді.",
+    "c1.text":"Ел бойынша қызметтердің физикалық көлемінің өсуі. Көрсеткіш аймақтардың басым бөлігіндегі қалпына келу мен органикалық өсудің үйлесуін бейнелейді.",
+    "c2.text":"150+ елден шетелдік қонақтар. Ресей, Қытай және Үндістан негізгі кіру ағынын қалыптастырады.",
+    "c3.text":"Орташа бөлме толтырылуы — әлемдік орташа мәннен (~55%) төмен. Айырма мақсатты маркетинг пен көліктік қолжетімділікті жетілдіру кезіндегі өсу сыйымдылығын тіркейді.",
+    "c4.text":"Алматы тау кластерінің толтырылуы — ел бойынша үздік. Тауды мекендейтін туризм Қазақстанның туристік өнімінің негізгі бренді ретінде қалыптасуда.",
+    "back":"← Басты бетке","footer.data":"Деректер: Қазақстан Республикасының Ұлттық статистика бюросы · Қаңтар–желтоқсан 2025","footer.viz":"Визуализация:"
+  },
+  en: {
+    "hero.kicker": "Kazakhstan · Hospitality Sector · 2025",
+    "hero.title": "WHERE<br>TOURISTS<br><em>STAY</em>",
+    "hero.sub": "National Statistics Bureau of Kazakhstan, January–December 2025. Full breakdown of the country's accommodation sector.",
+    "stat.visitors": "Visitors", "stat.objects": "Accommodations", "stat.revenue": "Revenue", "stat.growth": "Growth vs 2024",
+    "scroll": "Scroll",
+    "s1.label":"01 — Overview","s1.title":"4 482<br>FACILITIES","s1.body":"The hospitality sector grew by <span class='hn'>9.4%</span> in physical volume. 4,482 accommodation facilities span from Astana's business hotels to rural guesthouses in the Altai foothills.","s1.c1":"Rooms available","s1.c2":"Simultaneous capacity, beds","s1.c3":"Employees in the sector","s1.chart-label":"Visitors by facility type",
+    "s2.label":"02 — Regions","s2.title":"WHO RECEIVES<br>THE MOST","s2.body":"Bubble = region. Size = visitors. Color = average nightly rate: dark = cheaper, red = more expensive. X-axis = number of facilities.",
+    "s3.label":"03 — Revenue structure","s3.title":"350<br>BILLION ₸","s3.body":"Hotels with restaurants account for <span class='hn'>69%</span> of total revenue. Short-term rental reached 12% — the fastest-growing segment.",
+    "s4.label":"04 — Occupancy","s4.title":"ONE IN THREE<br>ROOMS IS EMPTY","s4.body":"Average room occupancy — <span class='hn'>33.4%</span>. Regional spread is wide: from 15.5% in Atyrau to 46.8% in Almaty city. Color: dark = low, red = high.",
+    "s5.label":"05 — International visitors","s5.title":"1.4M<br>NON-RESIDENTS","s5.body":"Russia, China and India are the three largest sources of foreign guests. Turkey ranks in the top five driven by labour and business activity. Hover over a country for exact data.","s5.legend":"Grey = no registered visitors",
+    "s6.label":"06 — Staff by gender","s6.title":"64% ARE<br>WOMEN","s6.body":"Kazakhstan's accommodation sector is predominantly staffed by women. Oil-and-gas regions are the exception, where the male share exceeds the national average.","s6.female":"Women ←","s6.male":"→ Men",
+    "s7.label":"07 — Resort zones","s7.title":"17 RESORT<br>ZONES","s7.body":"The Almaty Mountain Cluster is the dominant pole — 3M visitors and ₸122B revenue. Alakol (Abai) records the highest occupancy in the country at <span class='hn'>53.7%</span>.",
+    "s8.label":"08 — Trip purpose","s8.title":"BUSINESS OR<br>LEISURE?","s8.body":"In Atyrau and West Kazakhstan oblasts, over 50% of trips are business-related — a direct consequence of the high concentration of oil and gas enterprises. Almaty oblast is almost exclusively leisure-driven.",
+    "s9.label":"09 — Price vs occupancy","s9.title":"PRICE DOES NOT<br>GUARANTEE DEMAND","s9.body":"The most expensive 5★ property is in Shymkent (₸171,543/night) with occupancy of only 31%. The highest 5★ occupancy (73.7%) is in Akmola. The relationship is non-linear.",
+    "s10.label":"10 — Star categories","s10.title":"★★★★★<br>VS ★★★","s10.body":"The occupancy gap between 5★ and 3★ is 14 pp. The price gap is 3×. Unrated properties (51% of the market) maintain 31% occupancy — competitive relative to rated hotels.",
+    "s11.label":"11 — Urban vs rural","s11.title":"42%<br>OUTSIDE CITIES","s11.body":"A significant share of facilities is located in rural areas. In Zhetysu, Abai and Almaty oblast, rural properties outnumber urban ones.",
+    "s12.label":"12 — Demand structure","s12.title":"OIL DRIVES<br>DEMAND","s12.body":"Oil-and-gas regions generate a fundamentally different tourist flow. The share of business trips in Atyrau oblast exceeds 58% — the highest in the country.",
+    "s13.label":"13 — Physical growth","s13.title":"WHO GROWS<br>FASTEST","s13.body":"Kyzylorda oblast records <span class='hn'>+31%</span> growth — the national high. West Kazakhstan and Zhambyl are the only regions with negative dynamics relative to 2024.",
+    "s14.label":"14 — Revenue vs visitors","s14.title":"ALMATY EARNS<br>THE MOST","s14.body":"Two cities account for 54% of total sector revenue. Bubble size = average nightly rate. Akmola is an outlier: high revenue despite moderate visitor numbers (Borovoye effect).",
+    "s15.label":"15 — Almaty Mountain Cluster","s15.title":"THE STRONGEST<br>POLE","s15.body":"535 facilities in the mountains around Almaty receive nearly 3M guests per year. Average nightly rate — <span class='hn'>₸23,609</span> — the highest among all resort zones.",
+    "cs.objects":"facilities","cs.objects.s":"mountain cluster","cs.visitors":"visitors","cs.visitors.s":"per year","cs.rev":"revenue","cs.rev.s":"35% of all resort zones","cs.occ":"room occupancy","cs.occ.s":"best in Kazakhstan","cs.rooms":"rooms","cs.rooms.s":"in the room stock","cs.price":"avg nightly rate","cs.price.s":"highest among zones",
+    "s16.label":"16 — Day-trip vs multi-day","s16.title":"91% STAY<br>OVERNIGHT","s16.body":"9.2 out of 10M guests are multi-day tourists. In Aktobe oblast, the day-trip share reaches 32.4% — the highest nationally, indicating the region's transit function.",
+    "s17.label":"17 — Room stock structure","s17.title":"72% ARE<br>STANDARD","s17.body":"94,523 rooms across four categories. The deluxe share is 12.5%. Minimally equipped rooms (12.1%) are retained mainly in Soviet-era sanatorium facilities.",
+    "s18.label":"18 — Average nightly rate","s18.title":"14× PRICE<br>RANGE","s18.body":"Average rates range from ₸7,016 in the Bukhtarma zone to ₸96,623 in Almaty's 5★ hotels. Altai and Alakol resort zones occupy the upper price tier among recreational facilities.",
+    "s19.label":"19 — Children's camps","s19.title":"108 CHILDREN'S<br>CAMPS","s19.body":"Children's camps are a distinct segment with the highest average capacity per facility: 210 beds. 108 facilities serve 92,434 children per year.","ch.camps":"Children's camps","ch.children":"Children / year","ch.capacity":"Capacity","ch.revenue":"Revenue",
+    "s20.label":"20 — Conclusions","s20.title":"HOSPITALITY<br>SECTOR IS<br>MATURING","s20.body":"Kazakhstan 2025 is a market of significant contrasts. High growth in some regions coexists with stagnation in others. The 33.4% average occupancy rate points to substantial unrealised potential within the existing tourism infrastructure.",
+    "c1.text":"Physical volume growth across the country, reflecting a combination of recovery and organic growth in most regions.",
+    "c2.text":"International visitors from 150+ countries. Russia, China and India account for the bulk of inbound flow. Central Asian neighbours Uzbekistan and Kyrgyzstan hold steady positions in the top five.",
+    "c3.text":"Average room occupancy — below the global benchmark (~55%). The gap quantifies growth capacity, conditional on targeted marketing and improved transport accessibility.",
+    "c4.text":"Almaty Mountain Cluster occupancy — the national best. Mountain tourism is solidifying as the flagship brand of Kazakhstan's tourist product.",
+    "back":"← Back to Home","footer.data":"Data: National Statistics Bureau of Kazakhstan · January–December 2025 · Published 01.04.2026","footer.viz":"Visualization:"
+  }
+};
+
+let LANG = 'ru';
+
+function setLang(lang) {
+  LANG = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase().includes(lang==='ru'?'рус':lang==='kz'?'қаз':'eng')));
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = T[lang][key];
+    if (val !== undefined) el.innerHTML = val;
+  });
+  // Update type chart labels if needed
+  rebuildTypeChart();
+}
+
+// ═══════════ DATA ═══════════
+const REGIONS = [
+  {r:"Абай",rk:"Abai",rq:"Абай",count:322,visitors:247961,revenue:5471782,ifo:97,rooms:6723,capacity:17449,occ_rooms:27.1,avg_price:10806,city:72,rural:250,workers:744,male:343,female:401},
+  {r:"Акмолинская",rk:"Akmola",rq:"Ақмола",count:376,visitors:681709,revenue:34033328,ifo:113.8,rooms:6159,capacity:16712,occ_rooms:28.4,avg_price:16713,city:171,rural:205,workers:3333,male:1235,female:2098},
+  {r:"Актюбинская",rk:"Aktobe",rq:"Ақтөбе",count:108,visitors:284855,revenue:4812760,ifo:101,rooms:2249,capacity:5759,occ_rooms:23.3,avg_price:9621,city:77,rural:31,workers:769,male:219,female:550},
+  {r:"Алматинская",rk:"Almaty reg.",rq:"Алматы обл.",count:284,visitors:658543,revenue:15583339,ifo:119.6,rooms:6118,capacity:16155,occ_rooms:35.8,avg_price:14947,city:101,rural:183,workers:1978,male:805,female:1173},
+  {r:"Атырауская",rk:"Atyrau",rq:"Атырау",count:138,visitors:187174,revenue:6557524,ifo:112,rooms:4335,capacity:7590,occ_rooms:15.5,avg_price:13135,city:101,rural:37,workers:1261,male:428,female:833},
+  {r:"Западно-Казахстанская",rk:"WKO",rq:"БҚО",count:111,visitors:160330,revenue:4660240,ifo:88.1,rooms:2536,capacity:5161,occ_rooms:18.4,avg_price:13685,city:84,rural:27,workers:1013,male:294,female:719},
+  {r:"Жамбылская",rk:"Zhambyl",rq:"Жамбыл",count:234,visitors:212400,revenue:3771242,ifo:96.7,rooms:2870,capacity:7934,occ_rooms:22.1,avg_price:10881,city:82,rural:152,workers:1071,male:442,female:629},
+  {r:"Жетісу",rk:"Zhetysu",rq:"Жетісу",count:389,visitors:381545,revenue:8464347,ifo:103.8,rooms:7745,capacity:21846,occ_rooms:32,avg_price:10950,city:119,rural:270,workers:1582,male:665,female:917},
+  {r:"Карагандинская",rk:"Karaganda",rq:"Қарағанды",count:276,visitors:444187,revenue:9925428,ifo:102.3,rooms:5154,capacity:14236,occ_rooms:30.9,avg_price:15404,city:196,rural:80,workers:2058,male:632,female:1426},
+  {r:"Костанайская",rk:"Kostanai",rq:"Қостанай",count:128,visitors:249899,revenue:4360617,ifo:110.5,rooms:2275,capacity:6289,occ_rooms:37.8,avg_price:10151,city:71,rural:57,workers:950,male:350,female:600},
+  {r:"Кызылординская",rk:"Kyzylorda",rq:"Қызылорда",count:158,visitors:212278,revenue:3288322,ifo:131,rooms:2119,capacity:5038,occ_rooms:17.5,avg_price:10915,city:85,rural:73,workers:820,male:310,female:510},
+  {r:"Мангистауская",rk:"Mangystau",rq:"Маңғыстау",count:104,visitors:426818,revenue:20635290,ifo:99.6,rooms:4055,capacity:8690,occ_rooms:34.9,avg_price:16813,city:101,rural:3,workers:1261,male:520,female:741},
+  {r:"Павлодарская",rk:"Pavlodar",rq:"Павлодар",count:150,visitors:304025,revenue:6777540,ifo:120.3,rooms:3709,capacity:10319,occ_rooms:34.5,avg_price:13172,city:107,rural:43,workers:1290,male:470,female:820},
+  {r:"Северо-Казахстанская",rk:"NKO",rq:"СҚО",count:126,visitors:164968,revenue:3052049,ifo:119.5,rooms:2083,capacity:6737,occ_rooms:29.9,avg_price:12345,city:67,rural:59,workers:720,male:250,female:470},
+  {r:"Туркестанская",rk:"Turkestan",rq:"Түркістан",count:269,visitors:347636,revenue:8561988,ifo:125.1,rooms:3668,capacity:10335,occ_rooms:25.1,avg_price:9385,city:108,rural:161,workers:1540,male:590,female:950},
+  {r:"Ұлытау",rk:"Ulytau",rq:"Ұлытау",count:30,visitors:33162,revenue:840835,ifo:113.4,rooms:342,capacity:625,occ_rooms:27.5,avg_price:10624,city:17,rural:13,workers:180,male:75,female:105},
+  {r:"Восточно-Казахстанская",rk:"EKO",rq:"ШҚО",count:412,visitors:446790,revenue:9814141,ifo:114.5,rooms:6050,capacity:21737,occ_rooms:31.4,avg_price:12915,city:170,rural:242,workers:1840,male:690,female:1150},
+  {r:"г. Астана",rk:"Astana",rq:"Астана қ.",count:317,visitors:1604825,revenue:74904234,ifo:105.5,rooms:9675,capacity:18313,occ_rooms:35.9,avg_price:19402,city:317,rural:0,workers:4021,male:1320,female:2701},
+  {r:"г. Алматы",rk:"Almaty city",rq:"Алматы қ.",count:388,visitors:2487889,revenue:110942775,ifo:106.1,rooms:12512,capacity:23149,occ_rooms:46.8,avg_price:26877,city:388,rural:0,workers:6712,male:2080,female:4632},
+  {r:"г. Шымкент",rk:"Shymkent",rq:"Шымкент қ.",count:162,visitors:550063,revenue:14180166,ifo:120.3,rooms:4146,capacity:8879,occ_rooms:43.1,avg_price:13901,city:162,rural:0,workers:1900,male:670,female:1230}
+];
+
+// ALL NATIONS from dataset — full ISO numeric mapping
+const NATIONS_ALL = {"Австралия":6838,"Австрия":2831,"Азербайджан":10790,"Албания":156,"Алжир":195,"Американское Самоа":55,"Ангола":16,"Андорра":50,"Антигуа И Барбуда":10,"Аргентина":511,"Армения":2066,"Афганистан":483,"Багамы":26,"Бангладеш":297,"Барбадос":11,"Бахрейн":891,"Беларусь":12914,"Бельгия":5032,"Бенин":8,"Болгария":2226,"Боливия":18,"Босния И Герцеговина":82,"Ботсвана":32,"Бразилия":2353,"Бруней-Даруссалам":34,"Буркина-Фасо":10,"Бурунди":4,"Бутан":5,"Вануату":2,"Венгрия":1980,"Венесуэла":119,"Вьетнам":8059,"Габон":2,"Гаити":7,"Гана":94,"Гватемала":11,"Гвинея":14,"Германия":36688,"Гондурас":7,"Гонконг":1362,"Гренада":5,"Греция":1449,"Грузия":4518,"Дания":971,"Демократическая Республика Конго":38,"Доминика":30,"Доминиканская Республика":25,"Египет":3757,"Замбия":10,"Зимбабве":69,"Израиль":2859,"Индия":131034,"Индонезия":2538,"Иордания":1219,"Ирак":254,"Иран":5573,"Ирландия":1794,"Исландия":628,"Испания":5093,"Италия":19288,"Йемен":85,"Камбоджа":26,"Камерун":23,"Канада":4816,"Катар":3211,"Кения":362,"Кипр":1833,"Китай":241713,"Колумбия":575,"Коморы":21,"Конго":35,"Корея КНДР":123,"Коста-Рика":78,"Кот-Д'Ивуар":34,"Куба":40,"Кувейт":5102,"Кыргызстан":25767,"Лаос":17,"Латвия":2174,"Ливан":461,"Ливия":81,"Литва":2164,"Лихтенштейн":115,"Люксембург":247,"Маврикий":36,"Мавритания":29,"Мадагаскар":61,"Макао":66,"Северная Македония":231,"Малави":14,"Малайзия":10733,"Мали":56,"Мальдивы":108,"Мальта":293,"Марокко":917,"Мексика":433,"Мозамбик":31,"Молдова":1086,"Монако":8,"Монголия":3763,"Мьянма":272,"Намибия":62,"Непал":368,"Нигер":32,"Нигерия":226,"Нидерланды":6308,"Никарагуа":25,"Новая Зеландия":824,"Норвегия":638,"ОАЭ":25414,"Оман":5812,"Пакистан":1745,"Панама":119,"Папуа-Новая Гвинея":11,"Парагвай":4,"Перу":237,"Польша":7827,"Португалия":1495,"Республика Корея":29858,"Россия":429761,"Руанда":39,"Румыния":2348,"Сальвадор":57,"Сан-Марино":17,"Саудовская Аравия":9919,"Сенегал":12,"Сербия":1854,"Сингапур":5017,"Сирия":250,"Словакия":683,"Словения":916,"Соединённое Королевство":24479,"США":41917,"Соломоновы Острова":6,"Сомали":9,"Судан":218,"Суринам":29,"Сьерра-Леоне":30,"Таджикистан":8186,"Тайвань":1144,"Таиланд":3304,"Танзания":45,"Тунис":715,"Туркменистан":3872,"Турция":68633,"Уганда":57,"Узбекистан":45109,"Украина":12482,"Уругвай":53,"Фиджи":68,"Филиппины":7111,"Финляндия":1368,"Франция":12807,"Хорватия":1340,"Центрально-Африканская Республика":68,"Черногория":129,"Чешская Республика":2814,"Чили":210,"Швейцария":3918,"Швеция":1814,"Шри-Ланка":281,"Эквадор":127,"Экваториальная Гвинея":17,"Эстония":1013,"Эфиопия":32,"Южная Африка":1408,"Ямайка":38,"Япония":8785};
+
+// ISO numeric → alpha3 complete map
+const NUM2A3 = {"004":"AFG","008":"ALB","012":"DZA","016":"ASM","020":"AND","024":"AGO","028":"ATG","032":"ARG","036":"AUS","040":"AUT","050":"BGD","052":"BRB","056":"BEL","064":"BTN","068":"BOL","070":"BIH","072":"BWA","076":"BRA","096":"BRN","100":"BGR","104":"MMR","116":"KHM","120":"CMR","124":"CAN","132":"CPV","140":"CAF","144":"LKA","148":"TCD","152":"CHL","156":"CHN","170":"COL","174":"COM","178":"COG","180":"COD","184":"COK","188":"CRI","191":"HRV","192":"CUB","196":"CYP","203":"CZE","204":"BEN","208":"DNK","214":"DOM","218":"ECU","222":"SLV","226":"GNQ","231":"ETH","232":"ERI","238":"FLK","242":"FJI","246":"FIN","250":"FRA","258":"PYF","262":"DJI","266":"GAB","270":"GMB","276":"DEU","288":"GHA","300":"GRC","304":"DNK","308":"GRD","316":"GUM","320":"GTM","324":"GIN","328":"GUY","332":"HTI","340":"HND","344":"HKG","348":"HUN","356":"IND","360":"IDN","364":"IRN","368":"IRQ","372":"IRL","376":"ISR","380":"ITA","384":"CIV","388":"JAM","392":"JPN","398":"KAZ","400":"JOR","404":"KEN","408":"PRK","410":"KOR","414":"KWT","418":"LAO","422":"LBN","426":"LSO","428":"LVA","430":"LBR","434":"LBY","438":"LIE","440":"LTU","442":"LUX","450":"MDG","454":"MWI","458":"MYS","462":"MDV","466":"MLI","470":"MLT","478":"MRT","480":"MUS","484":"MEX","492":"MCO","496":"MNG","499":"MNE","504":"MAR","508":"MOZ","512":"OMN","516":"NAM","520":"NRU","524":"NPL","528":"NLD","540":"NCL","548":"VUT","554":"NZL","558":"NIC","562":"NER","566":"NGA","578":"NOR","586":"PAK","591":"PAN","598":"PNG","600":"PRY","604":"PER","608":"PHL","616":"POL","620":"PRT","630":"PRI","634":"QAT","642":"ROU","643":"RUS","646":"RWA","678":"STP","682":"SAU","686":"SEN","694":"SLE","703":"SVK","705":"SVN","706":"SOM","710":"ZAF","716":"ZWE","724":"ESP","729":"SDN","732":"MAR","740":"SUR","752":"SWE","756":"CHE","760":"SYR","762":"TJK","764":"THA","768":"TGO","780":"TTO","784":"ARE","788":"TUN","792":"TUR","795":"TKM","800":"UGA","804":"UKR","807":"MKD","818":"EGY","826":"GBR","834":"TZA","840":"USA","854":"BFA","858":"URY","860":"UZB","862":"VEN","704":"VNM","887":"YEM","894":"ZMB","051":"ARM","031":"AZE","112":"BLR","233":"EST","268":"GEO","352":"ISL","417":"KGZ","498":"MDA","688":"SRB","158":"TWN"};
+
+// Russian name → ISO3
+const RU2ISO = {"Австралия":"AUS","Австрия":"AUT","Азербайджан":"AZE","Албания":"ALB","Алжир":"DZA","Американское Самоа":"ASM","Ангола":"AGO","Андорра":"AND","Антигуа И Барбуда":"ATG","Аргентина":"ARG","Армения":"ARM","Афганистан":"AFG","Багамы":"BHS","Бангладеш":"BGD","Барбадос":"BRB","Бахрейн":"BHR","Беларусь":"BLR","Бельгия":"BEL","Бенин":"BEN","Болгария":"BGR","Боливия":"BOL","Босния И Герцеговина":"BIH","Ботсвана":"BWA","Бразилия":"BRA","Бруней-Даруссалам":"BRN","Буркина-Фасо":"BFA","Бурунди":"BDI","Бутан":"BTN","Вануату":"VUT","Венгрия":"HUN","Венесуэла":"VEN","Вьетнам":"VNM","Габон":"GAB","Гаити":"HTI","Гана":"GHA","Гватемала":"GTM","Гвинея":"GIN","Германия":"DEU","Гондурас":"HND","Гонконг":"HKG","Гренада":"GRD","Греция":"GRC","Грузия":"GEO","Дания":"DNK","Демократическая Республика Конго":"COD","Доминика":"DMA","Доминиканская Республика":"DOM","Египет":"EGY","Замбия":"ZMB","Зимбабве":"ZWE","Израиль":"ISR","Индия":"IND","Индонезия":"IDN","Иордания":"JOR","Ирак":"IRQ","Иран":"IRN","Ирландия":"IRL","Исландия":"ISL","Испания":"ESP","Италия":"ITA","Йемен":"YEM","Камбоджа":"KHM","Камерун":"CMR","Канада":"CAN","Катар":"QAT","Кения":"KEN","Кипр":"CYP","Китай":"CHN","Колумбия":"COL","Коморы":"COM","Конго":"COG","Корея КНДР":"PRK","Коста-Рика":"CRI","Кот-Д'Ивуар":"CIV","Куба":"CUB","Кувейт":"KWT","Кыргызстан":"KGZ","Лаос":"LAO","Латвия":"LVA","Ливан":"LBN","Ливия":"LBY","Литва":"LTU","Лихтенштейн":"LIE","Люксембург":"LUX","Маврикий":"MUS","Мавритания":"MRT","Мадагаскар":"MDG","Макао":"MAC","Северная Македония":"MKD","Малави":"MWI","Малайзия":"MYS","Мали":"MLI","Мальдивы":"MDV","Мальта":"MLT","Марокко":"MAR","Мексика":"MEX","Мозамбик":"MOZ","Молдова":"MDA","Монако":"MCO","Монголия":"MNG","Мьянма":"MMR","Намибия":"NAM","Непал":"NPL","Нигер":"NER","Нигерия":"NGA","Нидерланды":"NLD","Никарагуа":"NIC","Новая Зеландия":"NZL","Норвегия":"NOR","ОАЭ":"ARE","Оман":"OMN","Пакистан":"PAK","Панама":"PAN","Папуа-Новая Гвинея":"PNG","Парагвай":"PRY","Перу":"PER","Польша":"POL","Португалия":"PRT","Республика Корея":"KOR","Россия":"RUS","Руанда":"RWA","Румыния":"ROU","Сальвадор":"SLV","Сан-Марино":"SMR","Саудовская Аравия":"SAU","Сенегал":"SEN","Сербия":"SRB","Сингапур":"SGP","Сирия":"SYR","Словакия":"SVK","Словения":"SVN","Соединённое Королевство":"GBR","США":"USA","Соломоновы Острова":"SLB","Сомали":"SOM","Судан":"SDN","Суринам":"SUR","Сьерра-Леоне":"SLE","Таджикистан":"TJK","Тайвань":"TWN","Таиланд":"THA","Танзания":"TZA","Тунис":"TUN","Туркменистан":"TKM","Турция":"TUR","Уганда":"UGA","Узбекистан":"UZB","Украина":"UKR","Уругвай":"URY","Фиджи":"FJI","Филиппины":"PHL","Финляндия":"FIN","Франция":"FRA","Хорватия":"HRV","Центрально-Африканская Республика":"CAF","Черногория":"MNE","Чешская Республика":"CZE","Чили":"CHL","Швейцария":"CHE","Швеция":"SWE","Шри-Ланка":"LKA","Эквадор":"ECU","Экваториальная Гвинея":"GNQ","Эстония":"EST","Эфиопия":"ETH","Южная Африка":"ZAF","Ямайка":"JAM","Япония":"JPN"};
+
+const BY_TYPE = [
+  {ru:"Гостиница с рестораном",kz:"Мейрамханасы бар қонақүй",en:"Hotel w/ restaurant",visitors:5024050},
+  {ru:"Гостиница без ресторана",kz:"Ресторансыз қонақүй",en:"Hotel w/o restaurant",visitors:2795327},
+  {ru:"Бунгало/коттеджи/шале",kz:"Бунгало/коттедж",en:"Bungalows/cottages",visitors:1299272},
+  {ru:"Другие виды жилья",kz:"Басқа тұрғын жайлар",en:"Other accommodation",visitors:341588},
+  {ru:"Туристская база",kz:"Туристік база",en:"Tourist base",visitors:191013},
+  {ru:"Дом отдыха",kz:"Демалыс үйі",en:"Holiday home",visitors:135438},
+  {ru:"Хостел",kz:"Хостел",en:"Hostel",visitors:252135},
+  {ru:"Детский лагерь",kz:"Балалар лагері",en:"Children's camp",visitors:92434},
+  {ru:"Пансионат",kz:"Пансионат",en:"Pension",visitors:92503},
+  {ru:"Мотель",kz:"Мотель",en:"Motel",visitors:71268},
+  {ru:"Кемпинг",kz:"Кемпинг",en:"Camping",visitors:43341}
+];
+
+const RESORTS = [
+  {ru:"Алматинский горный кластер",kz:"Алматы тау кластері",en:"Almaty Mountain Cluster",visitors:2976997,revenue:121988592,occ_rooms:46,avg_price:23609},
+  {ru:"Щучинско-Боровская",kz:"Шүшінбор аймағы",en:"Shchuchinsk-Borovoye",visitors:463140,revenue:29180433,occ_rooms:31.2,avg_price:19608},
+  {ru:"Мангистауская",kz:"Маңғыстау аймағы",en:"Mangystau",visitors:370119,revenue:19596356,occ_rooms:38,avg_price:18566},
+  {ru:"Балхашская",kz:"Балқаш аймағы",en:"Balkhash",visitors:182901,revenue:3256547,occ_rooms:25.5,avg_price:10515},
+  {ru:"Туркестан",kz:"Түркістан",en:"Turkestan",visitors:148525,revenue:4141510,occ_rooms:20.1,avg_price:10064},
+  {ru:"Алакол (Жетісу)",kz:"Алакөл (Жетісу)",en:"Alakol (Zhetysu)",visitors:149180,revenue:5531653,occ_rooms:32.6,avg_price:22300},
+  {ru:"Алакол (Абай)",kz:"Алакөл (Абай)",en:"Alakol (Abai)",visitors:100926,revenue:3351687,occ_rooms:53.7,avg_price:0},
+  {ru:"Алтайская",kz:"Алтай аймағы",en:"Altai",visitors:108220,revenue:2838938,occ_rooms:29.9,avg_price:27671},
+  {ru:"Алматинская курортная",kz:"Алматы курорт аймағы",en:"Almaty resort zone",visitors:100443,revenue:2833920,occ_rooms:26.4,avg_price:20647},
+  {ru:"Баянаульская",kz:"Баянауыл аймағы",en:"Bayanaul",visitors:72876,revenue:2022576,occ_rooms:27,avg_price:15247}
+];
+
+const PURPOSE = [
+  {r:"Абай",rk:"Abai",rq:"Абай",total:247961,leisure:204549,business:43412},
+  {r:"Акмолинская",rk:"Akmola",rq:"Ақмола",total:681709,leisure:598164,business:83545},
+  {r:"Актюбинская",rk:"Aktobe",rq:"Ақтөбе",total:284855,leisure:228422,business:56433},
+  {r:"Алматинская",rk:"Almaty reg.",rq:"Алматы обл.",total:658543,leisure:634797,business:23746},
+  {r:"Атырауская",rk:"Atyrau",rq:"Атырау",total:187174,leisure:78380,business:108794},
+  {r:"Западно-Казахстанская",rk:"WKO",rq:"БҚО",total:160330,leisure:72929,business:87401},
+  {r:"Жамбылская",rk:"Zhambyl",rq:"Жамбыл",total:212400,leisure:146421,business:65979},
+  {r:"Жетісу",rk:"Zhetysu",rq:"Жетісу",total:381545,leisure:316704,business:64841},
+  {r:"Карагандинская",rk:"Karaganda",rq:"Қарағанды",total:444187,leisure:267104,business:177083},
+  {r:"Костанайская",rk:"Kostanai",rq:"Қостанай",total:249899,leisure:187700,business:62199},
+  {r:"Кызылординская",rk:"Kyzylorda",rq:"Қызылорда",total:212278,leisure:168900,business:43378},
+  {r:"Мангистауская",rk:"Mangystau",rq:"Маңғыстау",total:426818,leisure:292000,business:134818},
+  {r:"Павлодарская",rk:"Pavlodar",rq:"Павлодар",total:304025,leisure:226000,business:78025},
+  {r:"Северо-Казахстанская",rk:"NKO",rq:"СҚО",total:164968,leisure:120000,business:44968},
+  {r:"Туркестанская",rk:"Turkestan",rq:"Түркістан",total:347636,leisure:290000,business:57636},
+  {r:"Ұлытау",rk:"Ulytau",rq:"Ұлытау",total:33162,leisure:24000,business:9162},
+  {r:"Восточно-Казахстанская",rk:"EKO",rq:"ШҚО",total:446790,leisure:350000,business:96790},
+  {r:"г. Астана",rk:"Astana",rq:"Астана қ.",total:1604825,leisure:950000,business:654825},
+  {r:"г. Алматы",rk:"Almaty city",rq:"Алматы қ.",total:2487889,leisure:1700000,business:787889},
+  {r:"г. Шымкент",rk:"Shymkent",rq:"Шымкент қ.",total:550063,leisure:450000,business:100063}
+];
+
+const STAY_DATA = [
+  {r:"Абай",rk:"Abai",rq:"Абай",total:247961,day:9048,multi:238913},
+  {r:"Акмолинская",rk:"Akmola",rq:"Ақмола",total:681709,day:17828,multi:663881},
+  {r:"Актюбинская",rk:"Aktobe",rq:"Ақтөбе",total:284855,day:92270,multi:192585},
+  {r:"Алматинская",rk:"Almaty reg.",rq:"Алматы обл.",total:658543,day:91158,multi:567385},
+  {r:"Атырауская",rk:"Atyrau",rq:"Атырау",total:187174,day:16561,multi:170613},
+  {r:"Западно-Казахстанская",rk:"WKO",rq:"БҚО",total:160330,day:362,multi:159968},
+  {r:"Жамбылская",rk:"Zhambyl",rq:"Жамбыл",total:212400,day:9603,multi:202797},
+  {r:"Жетісу",rk:"Zhetysu",rq:"Жетісу",total:381545,day:11205,multi:370340},
+  {r:"Карагандинская",rk:"Karaganda",rq:"Қарағанды",total:444187,day:29123,multi:415064},
+  {r:"Костанайская",rk:"Kostanai",rq:"Қостанай",total:249899,day:11543,multi:238356},
+  {r:"Кызылординская",rk:"Kyzylorda",rq:"Қызылорда",total:212278,day:268,multi:212010},
+  {r:"Мангистауская",rk:"Mangystau",rq:"Маңғыстау",total:426818,day:10188,multi:416630},
+  {r:"Павлодарская",rk:"Pavlodar",rq:"Павлодар",total:304025,day:38379,multi:265646},
+  {r:"Северо-Казахстанская",rk:"NKO",rq:"СҚО",total:164968,day:13789,multi:151179},
+  {r:"Туркестанская",rk:"Turkestan",rq:"Түркістан",total:347636,day:4565,multi:343071},
+  {r:"Ұлытау",rk:"Ulytau",rq:"Ұлытау",total:33162,day:2883,multi:30279},
+  {r:"Восточно-Казахстанская",rk:"EKO",rq:"ШҚО",total:446790,day:73934,multi:372856},
+  {r:"г. Астана",rk:"Astana",rq:"Астана қ.",total:1604825,day:165703,multi:1439122},
+  {r:"г. Алматы",rk:"Almaty city",rq:"Алматы қ.",total:2487889,day:256258,multi:2231631},
+  {r:"г. Шымкент",rk:"Shymkent",rq:"Шымкент қ.",total:550063,day:11685,multi:538378}
+];
+
+const STARS5 = [
+  {r:"г. Алматы",rk:"Almaty city",rq:"Алматы қ.",occ_rooms:56.4,avg:96623},
+  {r:"г. Астана",rk:"Astana",rq:"Астана қ.",occ_rooms:52.9,avg:74028},
+  {r:"Акмолинская",rk:"Akmola",rq:"Ақмола",occ_rooms:73.7,avg:80602},
+  {r:"г. Шымкент",rk:"Shymkent",rq:"Шымкент қ.",occ_rooms:31.1,avg:171543},
+  {r:"Карагандинская",rk:"Karaganda",rq:"Қарағанды",occ_rooms:45.2,avg:46473},
+  {r:"Мангистауская",rk:"Mangystau",rq:"Маңғыстау",occ_rooms:53.6,avg:27207},
+  {r:"Атырауская",rk:"Atyrau",rq:"Атырау",occ_rooms:25.5,avg:50322}
+];
+
+const FLAGS = {"RUS":"🇷🇺","CHN":"🇨🇳","IND":"🇮🇳","TUR":"🇹🇷","UZB":"🇺🇿","USA":"🇺🇸","KOR":"🇰🇷","DEU":"🇩🇪","ITA":"🇮🇹","KGZ":"🇰🇬","ARE":"🇦🇪","UKR":"🇺🇦","BLR":"🇧🇾","FRA":"🇫🇷","TJK":"🇹🇯","JPN":"🇯🇵","VNM":"🇻🇳","POL":"🇵🇱","NLD":"🇳🇱","AUS":"🇦🇺","GBR":"🇬🇧"};
+
+// ═══════ UTILS ═══════
+const fmt = d3.format(",");
+const fmtK = v => v>=1e6?(v/1e6).toFixed(1)+'M':v>=1e3?(v/1e3).toFixed(0)+'K':v;
+const tip = document.getElementById('tooltip');
+function showTip(html,e){tip.innerHTML=html;tip.style.opacity=1;tip.style.left=(e.clientX+16)+'px';tip.style.top=(e.clientY-20)+'px';}
+function hideTip(){tip.style.opacity=0;}
+
+function regName(d){ return LANG==='kz'?d.rq:LANG==='en'?d.rk:d.r; }
+
+// ═══════ INIT ═══════
+gsap.registerPlugin(ScrollTrigger);
+window.addEventListener('scroll',()=>{
+  document.getElementById('progress-bar').style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+});
+
+// Nav dots
+const SIDS=['hero','s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13','s14','s15','s16','s17','s18','s19','s20'];
+const dots=document.querySelectorAll('.nav-dot');
+dots.forEach((d,i)=>d.addEventListener('click',()=>document.getElementById(SIDS[i]).scrollIntoView({behavior:'smooth'})));
+new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){const i=SIDS.indexOf(e.target.id);dots.forEach(d=>d.classList.remove('active'));if(i>=0)dots[i].classList.add('active');}}),{threshold:0.3}).observe;
+SIDS.forEach(id=>{const el=document.getElementById(id);if(el)new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){const i=SIDS.indexOf(e.target.id);dots.forEach(d=>d.classList.remove('active'));if(i>=0)dots[i].classList.add('active');}}),{threshold:0.3}).observe(el);});
+
+// Hero anims
+gsap.to('.hero-kicker',{opacity:1,duration:0.7,delay:0.2});
+gsap.to('.hero-title',{opacity:1,duration:0.9,delay:0.5});
+gsap.to('.hero-sub',{opacity:1,duration:0.7,delay:0.9});
+gsap.to('.hero-stats-row',{opacity:1,duration:0.7,delay:1.2});
+gsap.to('.hero-scroll',{opacity:1,duration:0.7,delay:1.7});
+
+// Scroll animations for headings
+gsap.utils.toArray('.sh').forEach(el=>gsap.from(el,{scrollTrigger:{trigger:el,start:'top 86%'},opacity:0,y:30,duration:0.75}));
+gsap.utils.toArray('.sl').forEach(el=>gsap.from(el,{scrollTrigger:{trigger:el,start:'top 90%'},opacity:0,x:-16,duration:0.55}));
+gsap.utils.toArray('.sb').forEach(el=>gsap.from(el,{scrollTrigger:{trigger:el,start:'top 88%'},opacity:0,y:15,duration:0.65,delay:0.15}));
+gsap.utils.toArray('.div').forEach(el=>gsap.from(el,{scrollTrigger:{trigger:el,start:'top 92%'},scaleX:0,transformOrigin:'left',duration:0.55}));
+
+// ═══════ S1 TYPE CHART ═══════
+function rebuildTypeChart(){
+  const c=document.getElementById('type-chart');
+  if(!c) return;
+  c.innerHTML='';
+  const max=BY_TYPE[0].visitors;
+  BY_TYPE.forEach(d=>{
+    const pct=(d.visitors/max*100).toFixed(1);
+    const name = LANG==='kz'?d.kz:LANG==='en'?d.en:d.ru;
+    c.innerHTML+=`<div class="tb-row"><div class="tb-name">${name}</div><div class="tb-wrap"><div class="tb-bar" style="width:${pct}%"></div><span class="tb-val">${fmtK(d.visitors)}</span></div></div>`;
+  });
+}
+rebuildTypeChart();
+
+ScrollTrigger.create({trigger:'#s1',start:'top 72%',onEnter:()=>{
+  document.querySelectorAll('.c-num[data-target]').forEach(el=>{
+    const t=+el.dataset.target;let s=0;const st=t/80;
+    const ti=setInterval(()=>{s+=st;if(s>=t){s=t;clearInterval(ti);}el.textContent=fmt(Math.round(s));},20);
+  });
+}});
+
+// ═══════ S2 BUBBLE ═══════
+(()=>{
+  const svg=d3.select('#bubble-svg');
+  const W=document.getElementById('bubble-wrap').offsetWidth||800;const H=560;
+  document.getElementById('bubble-wrap').style.height=H+'px';
+  svg.attr('viewBox',`0 0 ${W} ${H}`);
+  const x=d3.scaleLinear().domain([0,d3.max(REGIONS,d=>d.count)+40]).range([70,W-70]);
+  const y=d3.scaleLinear().domain([0,d3.max(REGIONS,d=>d.visitors)*1.05]).range([H-55,38]);
+  const r=d3.scaleSqrt().domain([0,d3.max(REGIONS,d=>d.visitors)]).range([5,52]);
+  const col=d3.scaleLinear().domain([9000,27000]).range(['#1a5050','#c84b2f']);
+  svg.append('g').selectAll('line').data(y.ticks(5)).join('line').attr('x1',70).attr('x2',W-70).attr('y1',d=>y(d)).attr('y2',d=>y(d)).attr('stroke','rgba(245,240,232,0.04)').attr('stroke-dasharray','3,3');
+  const nodes=svg.append('g').selectAll('g').data(REGIONS).join('g').attr('transform',d=>`translate(${x(d.count)},${y(d.visitors)})`);
+  nodes.append('circle').attr('r',0).attr('fill',d=>col(d.avg_price)).attr('opacity',0.72).attr('stroke','rgba(245,240,232,0.15)').attr('stroke-width',1)
+    .on('mousemove',(e,d)=>showTip(`<b>${regName(d)}</b><br>${fmt(d.visitors)} ${LANG==='en'?'visitors':LANG==='kz'?'келуші':'посетителей'}<br>${d.occ_rooms}% ${LANG==='en'?'occupancy':LANG==='kz'?'толтырылу':'загрузка'}<br>${fmt(d.avg_price)} ₸`,e))
+    .on('mouseleave',hideTip);
+  nodes.append('text').attr('text-anchor','middle').attr('dy','0.35em').attr('font-family','IBM Plex Mono').attr('font-size','8px').attr('fill','rgba(245,240,232,0.8)').attr('pointer-events','none').text(d=>d.visitors>150000?d.rk:'');
+  svg.append('text').attr('x',W/2).attr('y',H-6).attr('text-anchor','middle').attr('font-family','IBM Plex Mono').attr('font-size','8px').attr('fill','rgba(245,240,232,0.2)').attr('letter-spacing','2').text('NUMBER OF PROPERTIES →');
+  ScrollTrigger.create({trigger:'#s2',start:'top 72%',onEnter:()=>nodes.selectAll('circle').transition().duration(1000).delay((_,i)=>i*50).attr('r',d=>r(d.visitors))});
+})();
+
+// ═══════ S3 DONUT ═══════
+(()=>{
+  const data=[
+    {ru:'Гостиницы с рестораном',kz:'Мейрамханасы бар қонақүйлер',en:'Hotels w/ restaurant',val:241191347,color:'#c84b2f'},
+    {ru:'Гостиницы без ресторана',kz:'Ресторансыз қонақүйлер',en:'Hotels w/o restaurant',val:53326518,color:'#d4a843'},
+    {ru:'Краткосрочная аренда',kz:'Қысқа мерзімді жалға беру',en:'Short-term rental',val:42479746,color:'#1a6b6b'},
+    {ru:'Офиц. мероприятия',kz:'Ресми іс-шаралар',en:'Official events',val:7127909,color:'#5b8c8a'},
+    {ru:'Прочие места',kz:'Басқа орындар',en:'Other',val:4523503,color:'#3a3a3a'},
+    {ru:'Придорожные',kz:'Жол бойындағы',en:'Roadside',val:1567097,color:'#2a2a2a'},
+    {ru:'Кемпинги',kz:'Кемпингтер',en:'Camping',val:421827,color:'#1e1e1e'},
+  ];
+  const total=d3.sum(data,d=>d.val);
+  const W=360,H=360,cx=W/2,cy=H/2;
+  const arc=d3.arc().outerRadius(165).innerRadius(108);
+  const pie=d3.pie().value(d=>d.val).sort(null).padAngle(0.012);
+  const svg=d3.select('#donut-svg');
+  const paths=svg.append('g').attr('transform',`translate(${cx},${cy})`).selectAll('path').data(pie(data)).join('path')
+    .attr('fill',d=>d.data.color)
+    .attr('d',d=>arc({...d,endAngle:d.startAngle}))
+    .on('mousemove',(e,d)=>{const nm=LANG==='kz'?d.data.kz:LANG==='en'?d.data.en:d.data.ru;showTip(`${nm}<br>${(d.data.val/total*100).toFixed(1)}%<br>${(d.data.val/1e9).toFixed(1)} млрд ₸`,e);}).on('mouseleave',hideTip);
+  const leg=document.getElementById('donut-legend');
+  data.forEach(d=>{
+    const nm=LANG==='kz'?d.kz:LANG==='en'?d.en:d.ru;
+    const pct=(d.val/total*100).toFixed(1);
+    leg.innerHTML+=`<div class="leg-item"><div class="leg-dot" style="background:${d.color}"></div><div class="leg-name">${nm}</div><div class="leg-pct">${pct}%</div></div>`;
+  });
+  ScrollTrigger.create({trigger:'#s3',start:'top 72%',onEnter:()=>paths.transition().duration(1200).delay((_,i)=>i*80).attrTween('d',function(d){const ip=d3.interpolate(d.startAngle,d.endAngle);return t=>arc({...d,endAngle:ip(t)});})});
+})();
+
+// ═══════ S4 OCC HEATMAP ═══════
+(()=>{
+  const c=document.getElementById('occ-grid');
+  const col=d3.scaleLinear().domain([15,50]).range(['#121212','#c84b2f']);
+  REGIONS.forEach(r=>{
+    c.innerHTML+=`<div class="occ-cell"><div class="occ-bg" style="background:${col(Math.min(r.occ_rooms,50))}"></div><div class="occ-in"><div class="occ-reg">${r.rk}</div><div class="occ-pct">${r.occ_rooms}%</div><div class="occ-sub">occupancy</div></div></div>`;
+  });
+})();
+
+// ═══════ S5 WORLD MAP ═══════
+(()=>{
+  const valByISO3={};
+  // Greenland (304→DNK) and Western Sahara (732→MAR) are mapped in NUM2A3
+  // so their fills will automatically inherit parent country colors
+  Object.entries(NATIONS_ALL).forEach(([name,val])=>{const iso=RU2ISO[name];if(iso){valByISO3[iso]=(valByISO3[iso]||0)+val;}});
+  const maxVal=Math.max(...Object.values(valByISO3));
+  const col=d3.scaleLog().domain([1,maxVal]).range(['#1a7a4a','#c84b2f']).clamp(true);
+
+  // Top 10
+  const iso3ByRu={};Object.entries(RU2ISO).forEach(([ru,iso])=>iso3ByRu[iso]=ru);
+  const sorted=Object.entries(valByISO3).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const tg=document.getElementById('top-grid');
+  sorted.forEach(([iso,val])=>{
+    tg.innerHTML+=`<div class="tc-card"><span class="tc-flag">${FLAGS[iso]||'🌍'}</span><span class="tc-name">${iso}</span><span class="tc-val">${fmt(val)}</span></div>`;
+  });
+
+  const mw=document.getElementById('map-wrap');
+  const W=mw.offsetWidth||900;const H=Math.round(W*0.50);
+  const svg=d3.select('#world-map').attr('viewBox',`0 0 ${W} ${H}`).attr('width','100%');
+  const proj=d3.geoNaturalEarth1().scale(W/6.1).translate([W/2,H/2]);
+  const path=d3.geoPath().projection(proj);
+
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(r=>r.json()).then(world=>{
+    const countries=topojson.feature(world,world.objects.countries);
+    svg.selectAll('.cpath').data(countries.features).join('path')
+      .attr('class', d => {
+        const a3=NUM2A3[String(d.id).padStart(3,'0')];
+        return 'cpath'+(a3&&valByISO3[a3]?' hd':'');
+      })
+      .attr('d', path)
+      .style('fill', d => {
+        const a3=NUM2A3[String(d.id).padStart(3,'0')];
+        if(a3==='KAZ') return '#d4a843';
+        if(a3&&valByISO3[a3]) return col(valByISO3[a3]);
+        return '#252525';
+      })
+      .attr('stroke','#080808').attr('stroke-width',0.35)
+    .on('mousemove',(e,d)=>{
+      const numId=String(d.id).padStart(3,'0');
+      const a3=NUM2A3[numId];
+      if(a3==='KAZ'){showTip('🇰🇿 Kazakhstan / Казахстан<br>Host country / Принимающая страна',e);return;}
+      if(numId==='304'){showTip('<b>Гренландия</b><br>Административная территория Дании<br>Включено в данные по Дании',e);return;}
+      if(numId==='732'){showTip('<b>Западная Сахара</b><br>Контролируется Марокко<br>Включено в данные по Марокко',e);return;}
+      const ruNm=iso3ByRu[a3];
+      const val=valByISO3[a3];
+      if(val) showTip(`<b>${ruNm||a3}</b><br>${fmt(val)} гостей / visitors`,e);
+      else showTip(`${ruNm||a3||'—'}<br>Нет данных / No data`,e);
+    }).on('mouseleave',hideTip);
+  }).catch(()=>{
+    svg.append('text').attr('x',W/2).attr('y',H/2).attr('text-anchor','middle').attr('font-family','IBM Plex Mono').attr('font-size','11px').attr('fill','rgba(245,240,232,0.25)').text('Загрузка карты...');
+  });
+})();
+
+// ═══════ S6 GENDER ═══════
+(()=>{
+  const c=document.getElementById('gender-rows');
+  const maxW=Math.max(...REGIONS.map(r=>r.workers));
+  REGIONS.forEach((r,i)=>{
+    const fW=(r.female/maxW*100).toFixed(1);const mW=(r.male/maxW*100).toFixed(1);
+    const fPct=(r.female/r.workers*100).toFixed(0);
+    c.innerHTML+=`<div class="g-row" id="gr${i}"><div class="g-lbl">${r.rk}</div><div class="g-fw"><div class="g-bar g-f" data-w="${fW}"></div></div><div class="g-mw"><div class="g-bar g-m" data-w="${mW}"></div></div><div class="g-pct">${fPct}F</div></div>`;
+  });
+  ScrollTrigger.create({trigger:'#s6',start:'top 72%',onEnter:()=>{
+    document.querySelectorAll('.g-row').forEach((r,i)=>gsap.to(r,{opacity:1,duration:0.35,delay:i*0.055}));
+    document.querySelectorAll('.g-bar').forEach(b=>b.style.width=b.dataset.w+'%');
+  }});
+})();
+
+// ═══════ S7 RESORT ═══════
+(()=>{
+  const c=document.getElementById('resort-chart');
+  const maxV=RESORTS[0].visitors;
+  RESORTS.forEach((r,i)=>{
+    const pct=(r.visitors/maxV*100).toFixed(1);
+    const nm=LANG==='kz'?r.kz:LANG==='en'?r.en:r.ru;
+    c.innerHTML+=`<div class="rc" id="rc${i}"><div class="rc-rank">${i+1}</div><div class="rc-info"><div class="rc-name">${nm}</div><div class="rc-bw"><div class="rc-b" data-pct="${pct}"></div></div></div><div class="rc-v"><div class="rv-n">${fmtK(r.visitors)}</div><div class="rv-l">${LANG==='en'?'visitors':LANG==='kz'?'келуші':'гостей'}</div></div><div class="rc-occ"><div class="ro-n">${r.occ_rooms>0?r.occ_rooms+'%':'—'}</div><div class="ro-l">occ.</div></div></div>`;
+  });
+  ScrollTrigger.create({trigger:'#s7',start:'top 72%',onEnter:()=>{
+    document.querySelectorAll('.rc').forEach((c,i)=>gsap.to(c,{opacity:1,y:0,duration:0.45,delay:i*0.07}));
+    document.querySelectorAll('.rc-b').forEach(b=>b.style.width=b.dataset.pct+'%');
+  }});
+})();
+
+// ═══════ S8 PURPOSE ═══════
+(()=>{
+  const c=document.getElementById('purpose-chart');
+  const W=c.offsetWidth||800;const H=PURPOSE.length*30+55;
+  const svg=d3.select('#purpose-svg').attr('viewBox',`0 0 ${W} ${H}`).attr('width','100%');
+  const x=d3.scaleLinear().domain([0,100]).range([170,W-16]);
+  const y=d3.scaleBand().domain(PURPOSE.map(d=>d.rk)).range([28,H-6]).padding(0.26);
+  svg.selectAll('.rl').data(PURPOSE).join('text').attr('class','rl').attr('x',167).attr('y',d=>y(d.rk)+y.bandwidth()/2+1).attr('text-anchor','end').attr('dominant-baseline','middle').attr('font-family','IBM Plex Mono').attr('font-size','8px').attr('fill','rgba(245,240,232,0.42)').text(d=>LANG==='kz'?d.rq:LANG==='en'?d.rk:d.rk);
+  const lBars=svg.selectAll('.lb').data(PURPOSE).join('rect').attr('class','lb').attr('x',x(0)).attr('y',d=>y(d.rk)).attr('height',y.bandwidth()).attr('fill','#1a6b6b').attr('opacity',0.78).attr('width',0);
+  const bBars=svg.selectAll('.bb').data(PURPOSE).join('rect').attr('class','bb').attr('x',d=>x(d.leisure/d.total*100)).attr('y',d=>y(d.rk)).attr('height',y.bandwidth()).attr('fill','#c84b2f').attr('opacity',0.78).attr('width',0);
+  svg.selectAll('.pl').data(PURPOSE).join('text').attr('class','pl').attr('x',W-12).attr('y',d=>y(d.rk)+y.bandwidth()/2+1).attr('dominant-baseline','middle').attr('font-family','IBM Plex Mono').attr('font-size','7px').attr('fill','rgba(245,240,232,0.28)').attr('text-anchor','end').text(d=>`${(d.business/d.total*100).toFixed(0)}% biz`);
+  ['#1a6b6b','#c84b2f'].forEach((col,i)=>{
+    svg.append('rect').attr('x',170+i*110).attr('y',8).attr('width',9).attr('height',7).attr('fill',col);
+    svg.append('text').attr('x',170+i*110+13).attr('y',15).attr('font-family','IBM Plex Mono').attr('font-size','7px').attr('fill','rgba(245,240,232,0.38)').text(i===0?(LANG==='en'?'Leisure':LANG==='kz'?'Рекреация':'Личные'):(LANG==='en'?'Business':LANG==='kz'?'Іскерлік':'Деловые'));
+  });
+  ScrollTrigger.create({trigger:'#s8',start:'top 72%',onEnter:()=>{
+    lBars.transition().duration(1000).delay((_,i)=>i*32).attr('width',d=>x(d.leisure/d.total*100)-x(0));
+    bBars.transition().duration(1000).delay((_,i)=>i*32+180).attr('width',d=>x(d.business/d.total*100)-x(0));
+  }});
+})();
+
+// ═══════ S9 SCATTER ═══════
+(()=>{
+  const c=document.getElementById('scatter-wrap');
+  const W=c.offsetWidth||700;const H=380;
+  const svg=d3.select('#scatter-svg').attr('viewBox',`0 0 ${W} ${H}`).attr('width','100%');
+  const pad={l:76,r:46,t:28,b:56};
+  const x=d3.scaleLinear().domain([0,d3.max(STARS5,d=>d.avg)*1.08]).range([pad.l,W-pad.r]);
+  const y=d3.scaleLinear().domain([0,80]).range([H-pad.b,pad.t]);
+  svg.append('g').selectAll('line').data(y.ticks(6)).join('line').attr('x1',pad.l).attr('x2',W-pad.r).attr('y1',d=>y(d)).attr('y2',d=>y(d)).attr('stroke','rgba(245,240,232,0.04)');
+  svg.append('line').attr('x1',pad.l).attr('x2',W-pad.r).attr('y1',y(33.4)).attr('y2',y(33.4)).attr('stroke','rgba(212,168,67,0.22)').attr('stroke-dasharray','4,4');
+  svg.append('text').attr('x',W-pad.r-4).attr('y',y(33.4)-6).attr('font-family','IBM Plex Mono').attr('font-size','7px').attr('fill','rgba(212,168,67,0.38)').attr('text-anchor','end').text('KZ avg');
+  svg.append('g').attr('transform',`translate(0,${H-pad.b})`).call(d3.axisBottom(x).ticks(5).tickFormat(d=>(d/1000).toFixed(0)+'K ₸')).call(g=>{g.select('.domain').attr('stroke','rgba(245,240,232,0.1)');g.selectAll('text').attr('fill','rgba(245,240,232,0.22)').attr('font-family','IBM Plex Mono').attr('font-size','7px');g.selectAll('.tick line').attr('stroke','none');});
+  svg.append('g').attr('transform',`translate(${pad.l},0)`).call(d3.axisLeft(y).ticks(6).tickFormat(d=>d+'%')).call(g=>{g.select('.domain').attr('stroke','rgba(245,240,232,0.1)');g.selectAll('text').attr('fill','rgba(245,240,232,0.22)').attr('font-family','IBM Plex Mono').attr('font-size','7px');g.selectAll('.tick line').attr('stroke','none');});
+  const circles=svg.selectAll('circle').data(STARS5).join('circle').attr('cx',d=>x(d.avg)).attr('cy',d=>y(d.occ_rooms)).attr('r',0).attr('fill','#c84b2f').attr('opacity',0.82).attr('stroke','rgba(245,240,232,0.2)').attr('stroke-width',1).on('mousemove',(e,d)=>showTip(`<b>${d.r}</b><br>${fmt(d.avg)} ₸<br>${d.occ_rooms}% occ.`,e)).on('mouseleave',hideTip);
+  svg.selectAll('.sl2').data(STARS5).join('text').attr('class','sl2').attr('x',d=>x(d.avg)+12).attr('y',d=>y(d.occ_rooms)+4).attr('font-family','IBM Plex Mono').attr('font-size','8px').attr('fill','rgba(245,240,232,0.5)').text(d=>d.rk);
+  ScrollTrigger.create({trigger:'#s9',start:'top 72%',onEnter:()=>circles.transition().duration(800).delay((_,i)=>i*100).attr('r',11)});
+})();
+
+// ═══════ S10 STARS CARDS ═══════
+(()=>{
+  const cats=[
+    {label:'★★★★★',count:24,occ_rooms:49.1,avg:71622,color:'#d4a843'},
+    {label:'★★★★',count:46,occ_rooms:47.5,avg:32443,color:'#c8a050'},
+    {label:'★★★',count:30,occ_rooms:35.3,avg:20432,color:'#8b7355'},
+    {label:'★★',count:3,occ_rooms:18,avg:17038,color:'#666'},
+    {label:LANG==='en'?'Unrated':LANG==='kz'?'Санатсыз':'Без категории',count:2287,occ_rooms:31,avg:14774,color:'#3a3a3a'},
+    {label:LANG==='en'?'Other':LANG==='kz'?'Басқа':'Прочие',count:2091,occ_rooms:null,avg:13631,color:'#282828'},
+  ];
+  const c=document.getElementById('stars-grid');
+  cats.forEach((cat,i)=>{
+    c.innerHTML+=`<div class="sc" id="sc${i}"><div class="sc-star">${cat.label}</div><div class="sc-cnt">${fmt(cat.count)} obj.</div><div class="sc-met"><div class="sc-ml">Room occupancy</div><div class="sc-bw"><div class="sc-b" data-w="${cat.occ_rooms||0}" style="background:${cat.color}"></div></div><div class="sc-v">${cat.occ_rooms?cat.occ_rooms+'%':'—'}</div></div><div class="sc-met"><div class="sc-ml">Avg nightly rate</div><div class="sc-bw"><div class="sc-b" data-w="${cat.avg/1200}" style="background:${cat.color}"></div></div><div class="sc-v">${fmt(cat.avg)} ₸</div></div></div>`;
+  });
+  ScrollTrigger.create({trigger:'#s10',start:'top 72%',onEnter:()=>{
+    document.querySelectorAll('.sc').forEach((c,i)=>gsap.to(c,{opacity:1,y:0,duration:0.55,delay:i*0.09}));
+    document.querySelectorAll('.sc-b').forEach(b=>b.style.width=Math.min(b.dataset.w,100)+'%');
+  }});
+})();
+
+// ═══════ S11 URBAN ═══════
+(()=>{
+  const c=document.getElementById('urban-chart');
+  REGIONS.forEach((r,i)=>{
+    const cp=(r.city/r.count*100).toFixed(0);const rp=100-cp;
+    c.innerHTML+=`<div class="ur-row" id="ur${i}"><div class="ur-lbl">${r.rk}</div><div class="ur-w"><div class="ur-c" data-w="${cp}"></div><div class="ur-r" data-w="${rp}"></div></div><div class="ur-pct">${cp}%</div></div>`;
+  });
+  ScrollTrigger.create({trigger:'#s11',start:'top 72%',onEnter:()=>{
+    document.querySelectorAll('.ur-row').forEach((r,i)=>gsap.to(r,{opacity:1,duration:0.35,delay:i*0.05}));
+    document.querySelectorAll('.ur-c').forEach(b=>b.style.width=b.dataset.w+'%');
+    document.querySelectorAll('.ur-r').forEach(b=>b.style.width=b.dataset.w+'%');
+  }});
+})();
+
+// ═══════ S12 BIZ PIES ═══════
+(()=>{
+  const c=document.getElementById('biz-viz');
+  const hl=[PURPOSE.find(p=>p.r==='Атырауская'),PURPOSE.find(p=>p.r==='Западно-Казахстанская'),PURPOSE.find(p=>p.r==='Алматинская'),PURPOSE.find(p=>p.r==='г. Алматы')].filter(Boolean);
+  hl.forEach((p,i)=>{
+    const biz=(p.business/p.total*100).toFixed(1);const lei=(100-biz).toFixed(1);const id=`bp${i}`;
+    const nm=LANG==='kz'?p.rq:LANG==='en'?p.rk:p.r;
+    c.innerHTML+=`<div class="bz-blk" id="bb${i}"><div class="bz-nm">${nm}</div><div class="bz-pw"><svg id="${id}" viewBox="0 0 100 100" width="100" height="100" style="flex-shrink:0"></svg><div class="bz-st"><div class="bs-i"><div class="bs-d" style="background:#c84b2f"></div><div class="bs-l">${LANG==='en'?'BIZ':LANG==='kz'?'ІСК.':'БИЗ'}</div><div class="bs-v">${biz}%</div></div><div class="bs-i"><div class="bs-d" style="background:#1a6b6b"></div><div class="bs-l">${LANG==='en'?'LEISURE':LANG==='kz'?'РЕК.':'ОТД.'}</div><div class="bs-v">${lei}%</div></div></div></div></div>`;
+    const svg=d3.select(`#${id}`);const arc=d3.arc().outerRadius(48).innerRadius(26);
+    d3.select(`#${id}`).append('g').attr('transform','translate(50,50)').selectAll('path').data(d3.pie().value(d=>d).sort(null)([+biz,+lei])).join('path').attr('fill',(_,i)=>i===0?'#c84b2f':'#1a6b6b').attr('opacity',0.85).attr('d',arc);
+    d3.select(`#${id}`).append('text').attr('x',50).attr('y',54).attr('text-anchor','middle').attr('font-family','Bebas Neue').attr('font-size','14px').attr('fill','rgba(245,240,232,0.9)').text(`${biz}%`);
+  });
+  ScrollTrigger.create({trigger:'#s12',start:'top 72%',onEnter:()=>document.querySelectorAll('.bz-blk').forEach((b,i)=>gsap.to(b,{opacity:1,duration:0.55,delay:i*0.14}))});
+})();
+
+// ═══════ S13 IFO ═══════
+(()=>{
+  const sorted=[...REGIONS].sort((a,b)=>b.ifo-a.ifo);
+  const c=document.getElementById('ifo-chart');
+  const W=c.offsetWidth||700;const H=sorted.length*26+52;
+  const svg=d3.select('#ifo-svg').attr('viewBox',`0 0 ${W} ${H}`).attr('width','100%');
+  const pad={l:170,r:64,t:36,b:14};
+  const x=d3.scaleLinear().domain([-15,35]).range([pad.l,W-pad.r]);
+  const y=d3.scaleBand().domain(sorted.map(d=>d.rk)).range([pad.t,H-pad.b]).padding(0.28);
+  svg.append('line').attr('x1',x(0)).attr('x2',x(0)).attr('y1',pad.t).attr('y2',H-pad.b).attr('stroke','rgba(245,240,232,0.15)');
+  svg.append('text').attr('x',x(0)).attr('y',pad.t-8).attr('text-anchor','middle').attr('font-family','IBM Plex Mono').attr('font-size','7px').attr('fill','rgba(245,240,232,0.22)').text('100');
+  const delta=d=>d.ifo-100;
+  const bars=svg.selectAll('.ib').data(sorted).join('rect').attr('class','ib').attr('x',d=>delta(d)>=0?x(0):x(delta(d))).attr('y',d=>y(d.rk)).attr('height',y.bandwidth()).attr('fill',d=>delta(d)>=0?'#1a6b6b':'#c84b2f').attr('opacity',0.8).attr('width',0);
+  svg.selectAll('.il').data(sorted).join('text').attr('class','il').attr('x',166).attr('y',d=>y(d.rk)+y.bandwidth()/2+1).attr('text-anchor','end').attr('dominant-baseline','middle').attr('font-family','IBM Plex Mono').attr('font-size','7.5px').attr('fill','rgba(245,240,232,0.42)').text(d=>d.rk);
+  svg.selectAll('.iv').data(sorted).join('text').attr('class','iv').attr('x',d=>delta(d)>=0?x(delta(d))+4:x(delta(d))-4).attr('y',d=>y(d.rk)+y.bandwidth()/2+1).attr('dominant-baseline','middle').attr('text-anchor',d=>delta(d)>=0?'start':'end').attr('font-family','IBM Plex Mono').attr('font-size','7px').attr('fill',d=>delta(d)>=0?'#4a9080':'#c84b2f').text(d=>(delta(d)>0?'+':'')+delta(d).toFixed(1)+'%');
+  ScrollTrigger.create({trigger:'#s13',start:'top 72%',onEnter:()=>bars.transition().duration(1000).delay((_,i)=>i*38).attr('width',d=>Math.abs(x(delta(d))-x(0)))});
+})();
+
+// ═══════ S14 REV SCATTER ═══════
+(()=>{
+  const c=document.getElementById('rev-scatter');
+  const W=c.offsetWidth||800;const H=460;
+  const svg=d3.select('#rev-svg').attr('viewBox',`0 0 ${W} ${H}`).attr('width','100%');
+  const pad={l:68,r:52,t:26,b:52};
+  const x=d3.scaleLinear().domain([0,d3.max(REGIONS,d=>d.visitors)*1.05]).range([pad.l,W-pad.r]);
+  const y=d3.scaleLinear().domain([0,d3.max(REGIONS,d=>d.revenue)*1.05]).range([H-pad.b,pad.t]);
+  const r=d3.scaleSqrt().domain([0,d3.max(REGIONS,d=>d.avg_price)]).range([5,20]);
+  const col=d3.scaleLinear().domain([9000,27000]).range(['#1a4040','#d4a843']);
+  svg.append('g').selectAll('line').data(y.ticks(5)).join('line').attr('x1',pad.l).attr('x2',W-pad.r).attr('y1',d=>y(d)).attr('y2',d=>y(d)).attr('stroke','rgba(245,240,232,0.035)');
+  svg.append('g').attr('transform',`translate(0,${H-pad.b})`).call(d3.axisBottom(x).ticks(5).tickFormat(d=>fmtK(d))).call(g=>{g.select('.domain').attr('stroke','rgba(245,240,232,0.08)');g.selectAll('text').attr('fill','rgba(245,240,232,0.2)').attr('font-family','IBM Plex Mono').attr('font-size','7px');g.selectAll('.tick line').attr('stroke','none');});
+  svg.append('g').attr('transform',`translate(${pad.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d=>(d/1e9).toFixed(0)+'B')).call(g=>{g.select('.domain').attr('stroke','rgba(245,240,232,0.08)');g.selectAll('text').attr('fill','rgba(245,240,232,0.2)').attr('font-family','IBM Plex Mono').attr('font-size','7px');g.selectAll('.tick line').attr('stroke','none');});
+  svg.append('text').attr('x',W/2).attr('y',H-4).attr('text-anchor','middle').attr('font-family','IBM Plex Mono').attr('font-size','7px').attr('fill','rgba(245,240,232,0.16)').text('Visitors →');
+  svg.append('text').attr('transform','rotate(-90)').attr('x',-H/2).attr('y',13).attr('text-anchor','middle').attr('font-family','IBM Plex Mono').attr('font-size','7px').attr('fill','rgba(245,240,232,0.16)').text('↑ Revenue ₸');
+  const circles=svg.selectAll('.rv').data(REGIONS).join('circle').attr('class','rv').attr('cx',d=>x(d.visitors)).attr('cy',d=>y(d.revenue)).attr('r',0).attr('fill',d=>col(d.avg_price)).attr('opacity',0.75).attr('stroke','rgba(245,240,232,0.18)').attr('stroke-width',1).on('mousemove',(e,d)=>showTip(`<b>${regName(d)}</b><br>${fmt(d.visitors)} guests<br>${(d.revenue/1e9).toFixed(1)}B ₸<br>avg ₸${fmt(d.avg_price)}`,e)).on('mouseleave',hideTip);
+  svg.selectAll('.rvl').data(REGIONS).join('text').attr('class','rvl').attr('x',d=>x(d.visitors)+r(d.avg_price)+4).attr('y',d=>y(d.revenue)+4).attr('font-family','IBM Plex Mono').attr('font-size','7px').attr('fill','rgba(245,240,232,0.45)').text(d=>d.rk);
+  ScrollTrigger.create({trigger:'#s14',start:'top 72%',onEnter:()=>circles.transition().duration(900).delay((_,i)=>i*42).attr('r',d=>r(d.avg_price))});
+})();
+
+// ═══════ S15 CLUSTER STATS ═══════
+ScrollTrigger.create({trigger:'#s15',start:'top 72%',onEnter:()=>document.querySelectorAll('.cstat').forEach((s,i)=>gsap.to(s,{opacity:1,y:0,duration:0.55,delay:i*0.09}))});
+
+// ═══════ S16 STAY CHART ═══════
+(()=>{
+  const c=document.getElementById('stay-chart');
+  const sorted=[...STAY_DATA].sort((a,b)=>(b.day/b.total)-(a.day/a.total));
+  const W=c.offsetWidth||700;const H=sorted.length*28+52;
+  const svg=d3.select('#stay-svg').attr('viewBox',`0 0 ${W} ${H}`).attr('width','100%');
+  const pad={l:150,r:72,t:28,b:16};
+  const x=d3.scaleLinear().domain([0,100]).range([pad.l,W-pad.r]);
+  const y=d3.scaleBand().domain(sorted.map(d=>d.rk)).range([pad.t,H-pad.b]).padding(0.30);
+  [['#1a6b6b',LANG==='en'?'Multi-day':LANG==='kz'?'Көп күндік':'Многодневные'],['#c84b2f',LANG==='en'?'Day-trip':LANG==='kz'?'Бір күндік':'Однодневные']].forEach(([col,lbl],i)=>{
+    svg.append('rect').attr('x',pad.l+i*110).attr('y',8).attr('width',8).attr('height',7).attr('fill',col);
+    svg.append('text').attr('x',pad.l+i*110+12).attr('y',15).attr('font-family','IBM Plex Mono').attr('font-size','7px').attr('fill','rgba(245,240,232,0.36)').text(lbl);
+  });
+  sorted.forEach(d=>{
+    const dayPct=d.day/d.total*100;
+    svg.append('text').attr('x',pad.l-6).attr('y',y(d.rk)+y.bandwidth()/2+1).attr('text-anchor','end').attr('dominant-baseline','middle').attr('font-family','IBM Plex Mono').attr('font-size','7.5px').attr('fill','rgba(245,240,232,0.42)').text(d.rk);
+    svg.append('rect').attr('x',x(0)).attr('y',y(d.rk)).attr('height',y.bandwidth()).attr('fill','#1a6b6b').attr('opacity',0.7).attr('width',0).attr('class','sov').attr('data-w',x(100)-x(0));
+    svg.append('rect').attr('x',x(0)).attr('y',y(d.rk)).attr('height',y.bandwidth()).attr('fill','#c84b2f').attr('opacity',0.9).attr('width',0).attr('class','sday').attr('data-w',x(dayPct)-x(0));
+    svg.append('text').attr('x',x(100)+5).attr('y',y(d.rk)+y.bandwidth()/2+1).attr('dominant-baseline','middle').attr('font-family','IBM Plex Mono').attr('font-size','7px').attr('fill','rgba(245,240,232,0.22)').text(`${dayPct.toFixed(0)}%`);
+  });
+  ScrollTrigger.create({trigger:'#s16',start:'top 72%',onEnter:()=>{
+    d3.selectAll('.sov').transition().duration(1000).attr('width',function(){return +this.getAttribute('data-w');});
+    d3.selectAll('.sday').transition().duration(1000).delay(200).attr('width',function(){return +this.getAttribute('data-w');});
+  }});
+})();
+
+// ═══════ S17 ROOM STRUCTURE ═══════
+(()=>{
+  const c=document.getElementById('room-chart');
+  const types=[
+    {ru:'Стандартные',kz:'Стандартты',en:'Standard',val:67848,color:'#c84b2f'},
+    {ru:'Класс «Люкс»',kz:'Люкс класс',en:'Deluxe/Luxury',val:11804,color:'#d4a843'},
+    {ru:'Минимальное оснащение',kz:'Базалық жабдықталу',en:'Basic amenities',val:11431,color:'#4a7a78'},
+    {ru:'Апартаменты',kz:'Апартаменттер',en:'Apartments',val:2957,color:'#8b7355'},
+  ];
+  const total=94523;const maxV=types[0].val;
+  types.forEach((r,i)=>{
+    const pct=(r.val/total*100).toFixed(1);const bw=(r.val/maxV*100).toFixed(1);
+    const nm=LANG==='kz'?r.kz:LANG==='en'?r.en:r.ru;
+    c.innerHTML+=`<div style="display:flex;align-items:center;gap:13px;opacity:0;transform:translateX(-16px)" class="rr" id="rr${i}"><div style="font-family:var(--ff-b);font-size:0.82rem;color:rgba(245,240,232,0.52);width:210px;flex-shrink:0">${nm}</div><div style="flex:1;position:relative;height:28px;background:rgba(245,240,232,0.03)"><div style="height:100%;background:${r.color};width:0;transition:width 1.2s ease" class="rb" data-w="${bw}"></div><div style="position:absolute;right:6px;top:50%;transform:translateY(-50%);font-family:var(--ff-m);font-size:7px;color:rgba(245,240,232,0.25)">${fmtK(r.val)}</div></div><div style="font-family:var(--ff-d);font-size:1.4rem;color:${r.color};width:50px;text-align:right">${pct}%</div></div>`;
+  });
+  ScrollTrigger.create({trigger:'#s17',start:'top 72%',onEnter:()=>{
+    document.querySelectorAll('.rr').forEach((r,i)=>gsap.to(r,{opacity:1,x:0,duration:0.45,delay:i*0.09}));
+    document.querySelectorAll('.rb').forEach(b=>b.style.width=b.dataset.w+'%');
+  }});
+})();
+
+// ═══════ S18 PRICE DOTS ═══════
+(()=>{
+  const c=document.getElementById('price-chart');
+  const W=c.offsetWidth||700;const H=420;
+  const svg=d3.select('#price-svg').attr('viewBox',`0 0 ${W} ${H}`).attr('width','100%');
+  const priceData=[
+    ...STARS5.map(d=>({label:`${d.rk} (5★)`,val:d.avg,color:'#d4a843'})),
+    ...RESORTS.filter(r=>r.avg_price>0).slice(0,8).map(r=>({label:(LANG==='en'?r.en:LANG==='kz'?r.kz:r.ru).slice(0,26),val:r.avg_price,color:'#1a6b6b'})),
+    {label:LANG==='en'?'National avg':LANG==='kz'?'Ұлттық орта':'Нац. средняя',val:15183,color:'#c84b2f'},
+  ].filter(d=>d.val>0).sort((a,b)=>b.val-a.val);
+  const x=d3.scaleLinear().domain([0,d3.max(priceData,d=>d.val)*1.05]).range([210,W-16]);
+  const y=d3.scaleBand().domain(priceData.map(d=>d.label)).range([8,H-8]).padding(0.26);
+  svg.selectAll('.pll').data(priceData).join('text').attr('class','pll').attr('x',207).attr('y',d=>y(d.label)+y.bandwidth()/2+1).attr('text-anchor','end').attr('dominant-baseline','middle').attr('font-family','IBM Plex Mono').attr('font-size','7.5px').attr('fill','rgba(245,240,232,0.42)').text(d=>d.label.length>26?d.label.slice(0,26)+'…':d.label);
+  const lines=svg.selectAll('.plin').data(priceData).join('line').attr('class','plin').attr('x1',210).attr('x2',210).attr('y1',d=>y(d.label)+y.bandwidth()/2).attr('y2',d=>y(d.label)+y.bandwidth()/2).attr('stroke',d=>d.color).attr('opacity',0.28).attr('stroke-width',1);
+  const dots=svg.selectAll('.pdt').data(priceData).join('circle').attr('class','pdt').attr('cx',210).attr('cy',d=>y(d.label)+y.bandwidth()/2).attr('r',4.5).attr('fill',d=>d.color).attr('opacity',0).on('mousemove',(e,d)=>showTip(`${d.label}<br>${fmt(d.val)} ₸`,e)).on('mouseleave',hideTip);
+  svg.selectAll('.pvt').data(priceData).join('text').attr('class','pvt').attr('x',d=>x(d.val)+9).attr('y',d=>y(d.label)+y.bandwidth()/2+1).attr('dominant-baseline','middle').attr('font-family','IBM Plex Mono').attr('font-size','7px').attr('fill',d=>d.color).attr('opacity',0).text(d=>fmt(d.val)+' ₸');
+  ScrollTrigger.create({trigger:'#s18',start:'top 72%',onEnter:()=>{
+    lines.transition().duration(1000).delay((_,i)=>i*52).attr('x2',d=>x(d.val));
+    dots.transition().duration(700).delay((_,i)=>i*52+750).attr('cx',d=>x(d.val)).attr('opacity',1);
+    svg.selectAll('.pvt').transition().duration(400).delay((_,i)=>i*52+1050).attr('opacity',0.62);
+  }});
+})();
+
+// ═══════ S19 CHILDREN ═══════
+(()=>{
+  const svg=d3.select('#child-svg');
+  const arc=d3.arc().outerRadius(130).innerRadius(85);
+  const pie=d3.pie().value(d=>d).sort(null)([108/4482,1-108/4482]);
+  svg.append('g').attr('transform','translate(140,140)').selectAll('path').data(pie).join('path').attr('fill',(_,i)=>i===0?'#d4a843':'rgba(245,240,232,0.04)').attr('d',arc);
+  svg.append('text').attr('x',140).attr('y',138).attr('text-anchor','middle').attr('font-family','Bebas Neue').attr('font-size','24px').attr('fill','rgba(245,240,232,0.88)').text('2,4%');
+  svg.append('text').attr('x',140).attr('y',157).attr('text-anchor','middle').attr('font-family','IBM Plex Mono').attr('font-size','6.5px').attr('fill','rgba(245,240,232,0.26)').attr('letter-spacing','1.5').text('OF ALL FACILITIES');
+})();
+
+// ═══════ S20 CONCLUSION ═══════
+ScrollTrigger.create({trigger:'#s20',start:'top 72%',onEnter:()=>document.querySelectorAll('.conc-blk').forEach((b,i)=>gsap.to(b,{opacity:1,duration:0.55,delay:i*0.14}))});
+
+// INITIAL LANGUAGE RENDER
+setLang('ru');
+
+</script>
+</body>
+</html>
