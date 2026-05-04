@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Казахстан учится — 2025/26 · nurasyl.space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#111;--white:#fff;--accent:#c0392b;
+  --gray:#666;--light:#f5f5f5;--border:#ddd;--mid:#999;
+  --text:#1a1a1a;--bg:#fff;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.7;overflow-x:hidden}
+
+/* ── LANG BAR ── */
+#lang-bar{position:fixed;top:0;left:0;right:0;z-index:999;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:40px}
+#lang-bar .site-tag{font-family:'DM Mono',monospace;font-size:10px;color:var(--mid);text-transform:uppercase;letter-spacing:2px}
+#lang-bar .langs{display:flex;gap:2px}
+#lang-bar button{background:transparent;border:1px solid var(--border);color:var(--gray);font-family:'DM Mono',monospace;font-size:10px;padding:3px 10px;cursor:pointer;letter-spacing:1px;transition:all .15s}
+#lang-bar button.active{background:var(--black);border-color:var(--black);color:#fff}
+#lang-bar button:hover:not(.active){border-color:var(--gray);color:var(--black)}
+
+/* ── MASTHEAD ── */
+#masthead{margin-top:40px;border-bottom:3px double var(--black);padding:3rem 3rem 2.5rem}
+.nyt-dateline{font-family:'DM Mono',monospace;font-size:10px;color:var(--mid);letter-spacing:3px;text-transform:uppercase;margin-bottom:1rem;border-top:1px solid var(--black);padding-top:.75rem}
+h1.headline{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,5vw,4.2rem);font-weight:900;line-height:1.1;color:var(--black);margin-bottom:1rem;max-width:900px}
+.headline-sub{font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2vw,1.5rem);font-weight:400;font-style:italic;color:var(--gray);margin-bottom:2rem;max-width:700px;line-height:1.4}
+.masthead-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0;border-top:1px solid var(--black);border-left:1px solid var(--black)}
+.mstat{border-right:1px solid var(--black);border-bottom:1px solid var(--black);padding:1.2rem 1.5rem}
+.mstat-n{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;line-height:1;color:var(--black);display:block}
+.mstat-n.red{color:var(--accent)}
+.mstat-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--mid);letter-spacing:1px;text-transform:uppercase;margin-top:5px;display:block;line-height:1.4}
+.byline{font-family:'DM Mono',monospace;font-size:10px;color:var(--mid);margin-top:1.5rem;letter-spacing:1px;border-top:1px solid var(--border);padding-top:.75rem}
+
+/* ── SECTION ── */
+.section{border-bottom:1px solid var(--border);padding:3.5rem 3rem}
+.section-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:.4rem}
+h2.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;line-height:1.15;margin-bottom:1.5rem;color:var(--black)}
+.section-rule{border:none;border-top:2px solid var(--black);margin-bottom:1.5rem}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem}
+.prose p{margin-bottom:1rem;color:#222;font-size:16px}
+.pull-quote{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,2vw,1.6rem);font-style:italic;line-height:1.3;color:var(--black);border-left:3px solid var(--accent);padding-left:1.2rem;margin:1.8rem 0}
+.chart-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mid);margin-bottom:.6rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)}
+.source-note{font-family:'DM Mono',monospace;font-size:9px;color:var(--mid);margin-top:.6rem}
+
+/* ── FUNNEL ── */
+.funnel-wrap{display:flex;flex-direction:column;gap:5px;margin:1.5rem 0}
+.funnel-row{display:flex;align-items:center;gap:1rem}
+.funnel-bar-wrap{flex:1;height:44px;background:var(--light);position:relative;overflow:hidden}
+.funnel-bar{height:100%;background:var(--black);display:flex;align-items:center;padding-left:10px}
+.funnel-bar.red{background:var(--accent)}
+.funnel-bar-label{color:#fff;font-family:'DM Mono',monospace;font-size:10px;white-space:nowrap;letter-spacing:.5px}
+.funnel-meta{min-width:110px;text-align:right}
+.funnel-n{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;display:block;line-height:1}
+.funnel-pct{font-family:'DM Mono',monospace;font-size:9px;color:var(--mid)}
+
+/* ── HBAR ── */
+.hbar-chart{display:flex;flex-direction:column;gap:8px;margin:1.2rem 0}
+.hbar-row{display:flex;align-items:center;gap:10px}
+.hbar-name{font-family:'DM Mono',monospace;font-size:10px;min-width:170px;text-align:right;color:var(--gray);line-height:1.3}
+.hbar-track{flex:1;height:22px;background:var(--light)}
+.hbar-fill{height:100%;background:var(--black)}
+.hbar-fill.accent{background:var(--accent)}
+.hbar-val{font-family:'DM Mono',monospace;font-size:10px;color:var(--gray);min-width:90px}
+
+/* ── GENDER ── */
+.gender-block{margin:.8rem 0}
+.g-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--mid);margin-bottom:2px;text-transform:uppercase;letter-spacing:1px}
+.gender-track{height:34px;display:flex;border:1px solid var(--border);overflow:hidden;margin-bottom:8px}
+.gender-male{background:var(--black);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'DM Mono',monospace;font-size:10px}
+.gender-female{background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'DM Mono',monospace;font-size:10px}
+.gender-legend{display:flex;gap:1.5rem;font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);margin-top:.4rem}
+.g-dot{display:inline-block;width:8px;height:8px;margin-right:3px;vertical-align:middle}
+
+/* ── AGE ── */
+.age-row{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.age-label{font-family:'DM Mono',monospace;font-size:9px;min-width:55px;text-align:right;color:var(--gray)}
+.age-bar-wrap{flex:1;height:18px;background:var(--light)}
+.age-bar{height:100%;background:var(--black)}
+.age-bar.peak{background:var(--accent)}
+.age-val{font-family:'DM Mono',monospace;font-size:9px;color:var(--mid);min-width:55px}
+
+/* ── LANG TILES ── */
+.lang-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:1.2rem 0}
+.lang-cell{background:#fff;padding:1.2rem 1rem;text-align:center}
+.lang-pct{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:700;line-height:1;display:block}
+.lang-name{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--mid);margin-top:4px}
+.lang-abs{font-family:'DM Mono',monospace;font-size:10px;color:var(--gray);margin-top:2px}
+
+/* ── BIG CALLOUT ── */
+.big-callout{border-top:2px solid var(--black);border-bottom:2px solid var(--black);padding:1.5rem;text-align:center;margin:1.8rem 0}
+.big-callout .num{font-family:'Playfair Display',serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:900;line-height:1;color:var(--accent);display:block}
+.big-callout .label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-top:.4rem}
+
+/* ── REGION DOTS ── */
+#region-dots{display:flex;flex-wrap:wrap;gap:10px;margin:1.2rem 0;align-items:flex-end}
+.reg-dot-wrap{display:flex;flex-direction:column;align-items:center;gap:3px}
+.reg-dot{border-radius:50%;background:var(--black);transition:background .2s;cursor:default}
+.reg-dot:hover{background:var(--accent)}
+.reg-dot-name{font-family:'DM Mono',monospace;font-size:7px;color:var(--mid);text-align:center;max-width:55px;line-height:1.2}
+.reg-dot-val{font-family:'DM Mono',monospace;font-size:8px;color:var(--black)}
+
+/* ── POSTGRAD ── */
+.pg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:1.2rem 0}
+.pg-cell{background:#fff;padding:1.2rem 1rem;text-align:center}
+.pg-num{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:700;line-height:1;display:block}
+.pg-label{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--mid);margin-top:5px}
+.pg-sub{font-family:'Source Serif 4',serif;font-size:12px;color:var(--gray);margin-top:3px;font-style:italic}
+
+/* ── SPEC TABLE ── */
+.spec-list{border:1px solid var(--border);margin:1.2rem 0}
+.spec-row{display:grid;grid-template-columns:2.5fr 1fr 1fr;border-bottom:1px solid var(--border);transition:background .12s}
+.spec-row:last-child{border-bottom:none}
+.spec-row:hover{background:var(--light)}
+.spec-row.header{background:var(--black)}
+.spec-cell{padding:8px 12px;font-family:'DM Mono',monospace;font-size:10px;border-right:1px solid var(--border)}
+.spec-cell:last-child{border-right:none}
+.spec-row.header .spec-cell{color:#aaa;font-size:9px;text-transform:uppercase;letter-spacing:1px;border-right-color:#333}
+.spec-name-col{font-family:'Source Serif 4',serif;font-size:13px;padding:8px 12px;border-right:1px solid var(--border)}
+
+/* ── DROPOUT GRID ── */
+.dropout-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:1.2rem 0}
+.dropout-cell{background:#fff;padding:1rem}
+.dropout-n{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1;display:block}
+.dropout-pct{font-family:'DM Mono',monospace;font-size:9px;color:var(--accent);display:block;margin-top:1px}
+.dropout-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-top:5px;line-height:1.3}
+
+/* ── GRAD FLOW ── */
+.grad-flow{display:flex;align-items:stretch;margin:1.5rem 0;border:1px solid var(--border)}
+.grad-box{padding:1.2rem 1rem;text-align:center;flex:1;border-right:1px solid var(--border)}
+.grad-box:last-child{border-right:none;background:var(--light)}
+.grad-n{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1;display:block}
+.grad-label{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--gray);margin-top:4px}
+.grad-arrow{display:flex;align-items:center;justify-content:center;padding:0 .3rem;font-size:1.2rem;color:var(--border)}
+
+/* ── DORM ── */
+.dorm-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.dorm-label{font-family:'DM Mono',monospace;font-size:9px;min-width:120px;text-align:right;color:var(--gray)}
+.dorm-track{flex:1;height:20px;background:var(--light);position:relative}
+.dorm-fill-need{height:100%;background:#ccc;position:absolute;top:0;left:0}
+.dorm-fill-have{height:100%;background:var(--black);position:absolute;top:0;left:0}
+.dorm-val{font-family:'DM Mono',monospace;font-size:9px;color:var(--mid);min-width:90px}
+
+/* ── QUOTA TABLE ── */
+.quota-list{border:1px solid var(--border);margin:1.2rem 0}
+.quota-row{display:grid;grid-template-columns:3fr 1fr 1fr;border-bottom:1px solid var(--border);transition:background .12s}
+.quota-row:last-child{border-bottom:none}
+.quota-row:hover{background:var(--light)}
+.quota-row.header{background:var(--black)}
+.quota-cell{padding:7px 12px;font-family:'DM Mono',monospace;font-size:10px;border-right:1px solid var(--border)}
+.quota-cell:last-child{border-right:none}
+.quota-row.header .quota-cell{color:#aaa;font-size:9px;text-transform:uppercase;border-right-color:#333}
+.quota-name{font-family:'Source Serif 4',serif;font-size:13px;padding:7px 12px;border-right:1px solid var(--border);line-height:1.4}
+
+/* ── KZ LANG REGION ── */
+.kz-spec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:1.2rem 0}
+.kz-spec-cell{background:#fff;padding:.8rem 1rem}
+.kz-spec-name{font-family:'DM Mono',monospace;font-size:10px;color:var(--gray);margin-bottom:.3rem}
+.kz-spec-bar-wrap{height:14px;background:var(--light);margin-bottom:3px}
+.kz-spec-bar{height:100%;background:var(--black)}
+.kz-spec-bar.hi{background:var(--accent)}
+.kz-spec-nums{display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:9px;color:var(--mid)}
+
+/* ── NAT BARS ── */
+.nat-row{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.nat-name{font-family:'DM Mono',monospace;font-size:10px;min-width:110px;text-align:right;color:var(--gray)}
+.nat-bar-wrap{flex:1;height:18px;background:var(--light)}
+.nat-bar{height:100%;background:var(--black)}
+.nat-bar.top{background:var(--accent)}
+.nat-val{font-family:'DM Mono',monospace;font-size:9px;color:var(--mid);min-width:55px}
+
+/* ── WORLD MAP ── */
+.map-legend{display:flex;gap:2rem;flex-wrap:wrap;margin-top:.5rem}
+.map-legend-item{display:flex;align-items:center;gap:5px;font-family:'DM Mono',monospace;font-size:9px;color:var(--gray)}
+.map-dot-sm{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.map-dot-md{width:14px;height:14px;border-radius:50%;background:var(--accent)}
+.map-dot-lg{width:20px;height:20px;border-radius:50%;background:var(--accent)}
+
+/* ── DIVIDER ── */
+.nyt-divider{display:flex;align-items:center;gap:1rem;margin:0;padding:1.5rem 3rem;border-bottom:1px solid var(--border);background:var(--light)}
+.nyt-divider span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--mid);white-space:nowrap}
+.nyt-divider::before,.nyt-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── CONCLUSION ── */
+#conclusion{background:var(--black);color:#fff;padding:4rem 3rem}
+#conclusion h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.5rem);color:#fff;margin-bottom:1.5rem;font-weight:900}
+#conclusion .concl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#333;border:1px solid #333;margin:2.5rem 0}
+#conclusion .concl-item{background:var(--black);padding:1.5rem;text-align:center}
+#conclusion .concl-num{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--accent);display:block}
+#conclusion .concl-label{font-family:'DM Mono',monospace;font-size:9px;color:#666;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+#conclusion p{color:#aaa;margin-bottom:1rem;font-size:15px;max-width:700px}
+#conclusion .data-note{font-family:'DM Mono',monospace;font-size:9px;color:#444;margin-top:2.5rem;border-top:1px solid #333;padding-top:1rem;line-height:1.7}
+
+/* ── HOME LINK ── */
+#home-link{padding:2rem 3rem;border-top:2px solid var(--black);display:flex;align-items:center;justify-content:space-between}
+#home-link a{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--black);text-decoration:none;border-bottom:2px solid var(--accent)}
+#home-link a:hover{color:var(--accent)}
+#home-link p{font-family:'DM Mono',monospace;font-size:9px;color:var(--mid);letter-spacing:1px}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:768px){
+  #masthead,.two-col,.three-col{padding-left:1.2rem;padding-right:1.2rem}
+  .two-col,.three-col{grid-template-columns:1fr;gap:2rem}
+  .masthead-grid{grid-template-columns:1fr 1fr}
+  #conclusion .concl-grid{grid-template-columns:1fr 1fr}
+  .pg-grid{grid-template-columns:1fr}
+  .dropout-grid{grid-template-columns:1fr 1fr}
+  .kz-spec-grid{grid-template-columns:1fr}
+  .hbar-name{min-width:90px;font-size:8px}
+  .section{padding:2.5rem 1.2rem}
+  #home-link{flex-direction:column;gap:1rem;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- LANG BAR -->
+<div id="lang-bar">
+  <span class="site-tag">nurasyl.space · Education KZ 2025/26</span>
+  <div class="langs">
+    <button onclick="setLang('ru')" id="btn-ru" class="active">RU</button>
+    <button onclick="setLang('kz')" id="btn-kz">KZ</button>
+    <button onclick="setLang('en')" id="btn-en">EN</button>
+  </div>
+</div>
+
+<!-- ══ MASTHEAD ══ -->
+<div id="masthead">
+  <div class="nyt-dateline" data-ru="Статистика образования · БНС РК · 2025/26 учебный год" data-kz="Білім статистикасы · ҰСБ ҚР · 2025/26 оқу жылы" data-en="Education Statistics · Bureau of National Statistics · Academic Year 2025/26">Статистика образования · БНС РК · 2025/26 учебный год</div>
+  <h1 class="headline" data-ru="Больше миллиона. Казахстан учится" data-kz="Бір миллионнан астам. Қазақстан оқиды" data-en="More Than a Million. Kazakhstan Studies">Больше миллиона. Казахстан учится</h1>
+  <p class="headline-sub" data-ru="1 295 829 человек в колледжах, вузах, магистратуре и докторантуре — портрет послешкольного образования страны на начало 2025/26 учебного года" data-kz="1 295 829 адам колледждерде, университеттерде, магистратура мен докторантурада — 2025/26 оқу жылының басындағы мектептен кейінгі білімнің портреті" data-en="1,295,829 people in colleges, universities, master's and doctoral programmes — a portrait of post-secondary education in Kazakhstan at the start of 2025/26">1 295 829 человек в колледжах, вузах, магистратуре и докторантуре — портрет послешкольного образования страны на начало 2025/26 учебного года</p>
+  <div class="masthead-grid">
+    <div class="mstat"><span class="mstat-n">562 084</span><span class="mstat-label" data-ru="Студентов колледжей" data-kz="Колледж студенттері" data-en="College students">Студентов колледжей</span></div>
+    <div class="mstat"><span class="mstat-n">678 114</span><span class="mstat-label" data-ru="Студентов вузов" data-kz="ЖОО студенттері" data-en="University students">Студентов вузов</span></div>
+    <div class="mstat"><span class="mstat-n red">42 613</span><span class="mstat-label" data-ru="Магистрантов" data-kz="Магистранттар" data-en="Master's students">Магистрантов</span></div>
+    <div class="mstat"><span class="mstat-n red">9 491</span><span class="mstat-label">PhD</span></div>
+    <div class="mstat"><span class="mstat-n">9 631</span><span class="mstat-label" data-ru="Врачей-резидентов" data-kz="Дәрігер-резиденттер" data-en="Medical residents">Врачей-резидентов</span></div>
+    <div class="mstat"><span class="mstat-n">65.6%</span><span class="mstat-label" data-ru="Учатся на казахском" data-kz="Қазақша оқиды" data-en="Study in Kazakh">Учатся на казахском</span></div>
+    <div class="mstat"><span class="mstat-n">52.5%</span><span class="mstat-label" data-ru="Женщин в вузах" data-kz="ЖОО-дағы әйелдер" data-en="Women in universities">Женщин в вузах</span></div>
+    <div class="mstat"><span class="mstat-n red">33 499</span><span class="mstat-label" data-ru="Иностранных студентов" data-kz="Шетелдік студенттер" data-en="Foreign students">Иностранных студентов</span></div>
+  </div>
+  <p class="byline" data-ru="Анализ и визуализация — Нурасыл Абдразакулы · nurasyl.space · Данные: БНС РК, декабрь 2025" data-kz="Талдау және визуализация — Нұрасыл Абдразақұлы · nurasyl.space · Деректер: ҰСБ ҚР, желтоқсан 2025" data-en="Analysis & visualisation — Nurasyl Abdrazakuly · nurasyl.space · Data: Bureau of National Statistics of Kazakhstan, December 2025">Анализ и визуализация — Нурасыл Абдразакулы · nurasyl.space · Данные: БНС РК, декабрь 2025</p>
+</div>
+
+<!-- ══ 01 FUNNEL ══ -->
+<div class="section reveal">
+  <div class="section-num" data-ru="01 / Система" data-kz="01 / Жүйе" data-en="01 / System">01 / Система</div>
+  <h2 class="section-title" data-ru="Воронка образования" data-kz="Білім воронкасы" data-en="The Education Funnel">Воронка образования</h2>
+  <hr class="section-rule">
+  <div class="two-col">
+    <div class="prose">
+      <p data-ru="Послешкольное образование в Казахстане — несколько параллельных миров. Вузы немного обгоняют колледжи по численности. А за пределами бакалавриата — узкий коридор: магистратура, резидентура, докторантура." data-kz="Қазақстандағы мектептен кейінгі білім — бірнеше параллель әлем. Университеттер студент санымен колледждерді сәл озып тұр. Бакалавриаттан тыс — тар дәліз: магистратура, резидентура, докторантура." data-en="Post-secondary education in Kazakhstan is several parallel worlds. Universities slightly outnumber colleges. Beyond the bachelor's lies a narrow corridor: master's, residency, doctoral.">Послешкольное образование в Казахстане — несколько параллельных миров. Вузы немного обгоняют колледжи по численности. А за пределами бакалавриата — узкий коридор: магистратура, резидентура, докторантура.</p>
+      <div class="pull-quote" data-ru="На каждого магистранта — 13 студентов колледжа" data-kz="Әрбір магистрантқа — 13 колледж студенті" data-en="For every master's student — 13 college students">На каждого магистранта — 13 студентов колледжа</div>
+      <p data-ru="Если взять всех 1,3 миллиона за 100%: вузы — 52,3%, колледжи — 43,4%. На весь послевузовский уровень — лишь 4,7%." data-kz="1,3 миллион оқушының барлығы 100% болса: университеттер — 52,3%, колледждер — 43,4%. Жоғары оқу орнынан кейінгі деңгей — тек 4,7%." data-en="Taking all 1.3 million as 100%: universities — 52.3%, colleges — 43.4%. The entire post-graduate level — just 4.7%.">Если взять всех 1,3 миллиона за 100%: вузы — 52,3%, колледжи — 43,4%. На весь послевузовский уровень — лишь 4,7%.</p>
+    </div>
+    <div>
+      <div class="chart-label" data-ru="Визуал 1 · Численность по уровням образования" data-kz="Визуал 1 · Деңгей бойынша оқушылар саны" data-en="Visual 1 · Students by education level">Визуал 1 · Численность по уровням образования</div>
+      <div class="funnel-wrap">
+        <div class="funnel-row"><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%"><span class="funnel-bar-label" data-ru="ВУЗы" data-kz="ЖОО" data-en="Universities">ВУЗы</span></div></div><div class="funnel-meta"><span class="funnel-n">678 114</span><span class="funnel-pct">52.3%</span></div></div>
+        <div class="funnel-row"><div class="funnel-bar-wrap"><div class="funnel-bar red" style="width:82.9%"><span class="funnel-bar-label" data-ru="Колледжи" data-kz="Колледждер" data-en="Colleges">Колледжи</span></div></div><div class="funnel-meta"><span class="funnel-n">562 084</span><span class="funnel-pct">43.4%</span></div></div>
+        <div class="funnel-row"><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:23%"><span class="funnel-bar-label" data-ru="Магистратура" data-kz="Магистратура" data-en="Master's">Магистратура</span></div></div><div class="funnel-meta"><span class="funnel-n">42 613</span><span class="funnel-pct">3.3%</span></div></div>
+        <div class="funnel-row"><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:5.2%"></div></div><div class="funnel-meta"><span class="funnel-n">9 631</span><span class="funnel-pct" data-ru="Резидентура" data-kz="Резидентура" data-en="Residency">Резидентура</span></div></div>
+        <div class="funnel-row"><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:5.1%"></div></div><div class="funnel-meta"><span class="funnel-n">9 491</span><span class="funnel-pct">PhD</span></div></div>
+      </div>
+      <div class="source-note">БНС РК · начало 2025/26 учебного года</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 02 GENDER ══ -->
+<div class="section reveal">
+  <div class="section-num" data-ru="02 / Пол" data-kz="02 / Жыныс" data-en="02 / Gender">02 / Пол</div>
+  <h2 class="section-title" data-ru="Мужчины и женщины" data-kz="Еркектер мен әйелдер" data-en="Men and Women">Мужчины и женщины</h2>
+  <hr class="section-rule">
+  <div class="two-col">
+    <div>
+      <div class="chart-label" data-ru="Визуал 2 · Доля женщин по уровням образования" data-kz="Визуал 2 · Деңгейлер бойынша әйелдер үлесі" data-en="Visual 2 · Share of women by education level">Визуал 2 · Доля женщин по уровням образования</div>
+      <div class="gender-block">
+        <div class="g-label" data-ru="ВУЗЫ · 678 114" data-kz="ЖОО · 678 114" data-en="UNIVERSITIES · 678,114">ВУЗЫ · 678 114</div>
+        <div class="gender-track"><div class="gender-male" style="width:47.5%">47.5%</div><div class="gender-female" style="width:52.5%">52.5%</div></div>
+        <div class="g-label" data-ru="МАГИСТРАТУРА · 42 613" data-kz="МАГИСТРАТУРА · 42 613" data-en="MASTER'S · 42,613">МАГИСТРАТУРА · 42 613</div>
+        <div class="gender-track"><div class="gender-male" style="width:49%">49%</div><div class="gender-female" style="width:51%">51%</div></div>
+        <div class="g-label">PhD · 9 491</div>
+        <div class="gender-track"><div class="gender-male" style="width:52%">52%</div><div class="gender-female" style="width:48%">48%</div></div>
+        <div class="g-label" data-ru="КОЛЛЕДЖИ · 562 084" data-kz="КОЛЛЕДЖДЕР · 562 084" data-en="COLLEGES · 562,084">КОЛЛЕДЖИ · 562 084</div>
+        <div class="gender-track"><div class="gender-male" style="width:52.7%">52.7%</div><div class="gender-female" style="width:47.3%">47.3%</div></div>
+        <div class="gender-legend">
+          <span><span class="g-dot" style="background:var(--black)"></span><span data-ru="Мужчины" data-kz="Еркектер" data-en="Men">Мужчины</span></span>
+          <span><span class="g-dot" style="background:var(--accent)"></span><span data-ru="Женщины" data-kz="Әйелдер" data-en="Women">Женщины</span></span>
+        </div>
+      </div>
+      <div class="source-note">БНС РК · 2025/26</div>
+    </div>
+    <div class="prose">
+      <p data-ru="В вузах женщин больше, чем мужчин — 356 304 против 321 810. Казахстан повторяет мировую тенденцию: высшее образование феминизируется. В педагогических, медицинских и гуманитарных направлениях женщины давно в большинстве." data-kz="Университеттерде әйелдер көп — 356 304 еркекке қарсы 321 810. Қазақстан жаһандық үрдісті қайталайды." data-en="In universities women outnumber men — 356,304 vs 321,810. Kazakhstan mirrors the global trend: higher education is feminising.">В вузах женщин больше, чем мужчин — 356 304 против 321 810. Казахстан повторяет мировую тенденцию: высшее образование феминизируется. В педагогических, медицинских и гуманитарных направлениях женщины давно в большинстве.</p>
+      <div class="pull-quote" data-ru="Сварка — 3.4% женщин. Педагогика — 66%. Разрыв — 20-кратный." data-kz="Дәнекерлеу — 3.4% әйел. Педагогика — 66%. Айырма — 20 есе." data-en="Welding — 3.4% women. Teaching — 66%. A 20-fold gap.">Сварка — 3.4% женщин. Педагогика — 66%. Разрыв — 20-кратный.</div>
+      <p data-ru="В колледжах — наоборот: 296 052 мужчины против 266 032 женщин. Технические специальности — строительство, сварка, горное дело — остаются мужской территорией. На уровне PhD разрыв снова появляется: мужчин больше." data-kz="Колледждерде кері: 296 052 ер адам, 266 032 әйел. Техникалық мамандықтар — ерлер аймағы." data-en="In colleges it reverses: 296,052 men vs 266,032 women. Technical trades remain male territory. At PhD level the gap reappears.">В колледжах — наоборот: 296 052 мужчины против 266 032 женщин. Технические специальности — строительство, сварка, горное дело — остаются мужской территорией. На уровне PhD разрыв снова появляется: мужчин больше.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 03 AGE ══ -->
+<div class="section reveal">
+  <div class="section-num" data-ru="03 / Возраст" data-kz="03 / Жас" data-en="03 / Age">03 / Возраст</div>
+  <h2 class="section-title" data-ru="Когда учатся казахстанцы" data-kz="Қазақстандықтар қашан оқиды" data-en="When Kazakhstanis Study">Когда учатся казахстанцы</h2>
+  <hr class="section-rule">
+  <div class="two-col">
+    <div class="prose">
+      <p data-ru="Пик студенческой жизни в вузах — 19 лет: 133 963 человека. Вокруг пика почти симметричный горб. К 25 годам поток резко иссякает. Но хвост неожиданно длинный." data-kz="Университеттердегі шың — 19 жас: 133 963 адам. Шың айналасы симметриялы горб. 25-ке қарай ағым азаяды. Бірақ құйрық ұзын." data-en="The university peak is 19: 133,963 people. Around the peak a near-symmetrical hump. By 25 the flow drops sharply. But the tail is surprisingly long.">Пик студенческой жизни в вузах — 19 лет: 133 963 человека. Вокруг пика почти симметричный горб. К 25 годам поток резко иссякает. Но хвост неожиданно длинный.</p>
+      <div class="big-callout"><span class="num">9 575</span><span class="label" data-ru="студентов вузов — в возрасте 40–49 лет" data-kz="40–49 жастағы ЖОО студенттері" data-en="university students aged 40–49">студентов вузов — в возрасте 40–49 лет</span></div>
+      <p data-ru="15 005 человек учатся в 30–34 года, 11 014 — в 35–39, почти 10 тысяч — в 40–49. Это учёба поверх жизни. 96 человек учатся в 60 лет и старше." data-kz="15 005 адам 30–34 жаста оқиды, 11 014 — 35–39 жаста, шамамен 10 мың — 40–49 жаста. 96 адам 60 жаста оқиды." data-en="15,005 people study aged 30–34, 11,014 at 35–39, nearly 10,000 at 40–49. 96 people study at age 60+.">15 005 человек учатся в 30–34 года, 11 014 — в 35–39, почти 10 тысяч — в 40–49. Это учёба поверх жизни. 96 человек учатся в 60 лет и старше.</p>
+    </div>
+    <div>
+      <div class="chart-label" data-ru="Визуал 3 · Возраст студентов ВУЗов · Казахстан" data-kz="Визуал 3 · ЖОО студенттерінің жасы" data-en="Visual 3 · Age of university students">Визуал 3 · Возраст студентов ВУЗов</div>
+      <div id="age-chart">
+        <div class="age-row"><span class="age-label">≤17</span><div class="age-bar-wrap"><div class="age-bar" style="width:13%"></div></div><span class="age-val">87 635</span></div>
+        <div class="age-row"><span class="age-label">18</span><div class="age-bar-wrap"><div class="age-bar peak" style="width:97%"></div></div><span class="age-val">130 317</span></div>
+        <div class="age-row"><span class="age-label">19</span><div class="age-bar-wrap"><div class="age-bar peak" style="width:100%"></div></div><span class="age-val">133 963</span></div>
+        <div class="age-row"><span class="age-label">20</span><div class="age-bar-wrap"><div class="age-bar peak" style="width:91.5%"></div></div><span class="age-val">122 564</span></div>
+        <div class="age-row"><span class="age-label">21</span><div class="age-bar-wrap"><div class="age-bar" style="width:53.3%"></div></div><span class="age-val">71 449</span></div>
+        <div class="age-row"><span class="age-label">22</span><div class="age-bar-wrap"><div class="age-bar" style="width:24.3%"></div></div><span class="age-val">32 528</span></div>
+        <div class="age-row"><span class="age-label">23</span><div class="age-bar-wrap"><div class="age-bar" style="width:15.4%"></div></div><span class="age-val">20 610</span></div>
+        <div class="age-row"><span class="age-label">24</span><div class="age-bar-wrap"><div class="age-bar" style="width:9.4%"></div></div><span class="age-val">12 535</span></div>
+        <div class="age-row"><span class="age-label">25–29</span><div class="age-bar-wrap"><div class="age-bar" style="width:18%"></div></div><span class="age-val">24 082</span></div>
+        <div class="age-row"><span class="age-label">30–34</span><div class="age-bar-wrap"><div class="age-bar" style="width:11.2%"></div></div><span class="age-val">15 005</span></div>
+        <div class="age-row"><span class="age-label">35–39</span><div class="age-bar-wrap"><div class="age-bar" style="width:8.2%"></div></div><span class="age-val">11 014</span></div>
+        <div class="age-row"><span class="age-label">40–49</span><div class="age-bar-wrap"><div class="age-bar" style="width:7.2%"></div></div><span class="age-val">9 575</span></div>
+        <div class="age-row"><span class="age-label">50+</span><div class="age-bar-wrap"><div class="age-bar" style="width:1.7%"></div></div><span class="age-val">2 247</span></div>
+      </div>
+      <div class="source-note" data-ru="Красным — пик 18–20 лет · БНС РК" data-kz="Қызылмен — 18–20 жас шыңы · ҰСБ ҚР" data-en="Red = peak ages 18–20 · BSA RK">Красным — пик 18–20 лет · БНС РК</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 04 LANGUAGE ══ -->
+<div class="section reveal">
+  <div class="section-num" data-ru="04 / Язык" data-kz="04 / Тіл" data-en="04 / Language">04 / Язык</div>
+  <h2 class="section-title" data-ru="На каком языке учит Казахстан" data-kz="Қазақстан қандай тілде оқиды" data-en="What Language Does Kazakhstan Study In">На каком языке учит Казахстан</h2>
+  <hr class="section-rule">
+  <div class="two-col">
+    <div>
+      <div class="chart-label" data-ru="Визуал 4 · Язык обучения в ВУЗах" data-kz="Визуал 4 · ЖОО-дағы оқыту тілі" data-en="Visual 4 · Language of instruction in universities">Визуал 4 · Язык обучения в ВУЗах</div>
+      <div class="lang-grid">
+        <div class="lang-cell"><span class="lang-pct">65.6%</span><span class="lang-name" data-ru="Казахский" data-kz="Қазақ тілі" data-en="Kazakh">Казахский</span><span class="lang-abs">444 950</span></div>
+        <div class="lang-cell"><span class="lang-pct">24.8%</span><span class="lang-name" data-ru="Русский" data-kz="Орыс тілі" data-en="Russian">Русский</span><span class="lang-abs">168 126</span></div>
+        <div class="lang-cell"><span class="lang-pct" style="color:var(--accent)">9.3%</span><span class="lang-name" data-ru="Английский" data-kz="Ағылшын тілі" data-en="English">Английский</span><span class="lang-abs">62 843</span></div>
+      </div>
+      <div class="chart-label" style="margin-top:1.5rem" data-ru="Визуал 5 · % казахского языка по регионам (убывание)" data-kz="Визуал 5 · Өңірлер бойынша қазақ тілі % (кему)" data-en="Visual 5 · % Kazakh instruction by region (descending)">Визуал 5 · % казахского языка по регионам (убывание)</div>
+      <div class="hbar-chart" id="lang-region-chart"></div>
+      <div class="source-note">БНС РК · ВУЗы 2025/26</div>
+    </div>
+    <div class="prose">
+      <p data-ru="Казахский доминирует: 65,6% студентов учатся на государственном языке. Кызылорда — лидер: 97,8%. Английский сильнее, чем кажется: каждый 11-й студент вуза учится на английском — 62 843 человека." data-kz="Қазақ тілі үстемдік етеді: 65,6% студент мемлекеттік тілде оқиды. Қызылорда — 97,8%. Ағылшын тілі — 62 843 студент." data-en="Kazakh dominates: 65.6% of students study in the state language. Kyzylorda leads at 97.8%. English is stronger than it seems: one in eleven university students studies in English.">Казахский доминирует: 65,6% студентов учатся на государственном языке. Кызылорда — лидер: 97,8%. Английский сильнее, чем кажется: каждый 11-й студент вуза учится на английском — 62 843 человека.</p>
+      <div class="pull-quote" data-ru="Север страны — выше 50% на русском. Юг — выше 80% на казахском." data-kz="Елдің солтүстігі — орысша 50%-дан астам. Оңтүстік — қазақша 80%-дан астам." data-en="The north — over 50% in Russian. The south — over 80% in Kazakh.">Север страны — выше 50% на русском. Юг — выше 80% на казахском.</div>
+      <div class="chart-label" style="margin-top:1rem" data-ru="Визуал 12 · % казахского языка по регионам (плитка)" data-kz="Визуал 12 · Өңірлер бойынша қазақ тілі % (тор)" data-en="Visual 12 · % Kazakh by region (tile)">Визуал 12 · % казахского языка по регионам (плитка)</div>
+      <div class="kz-spec-grid" id="kz-lang-region"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 05 REGIONS ══ -->
+<div class="section reveal">
+  <div class="section-num" data-ru="05 / Регионы" data-kz="05 / Өңірлер" data-en="05 / Regions">05 / Регионы</div>
+  <h2 class="section-title" data-ru="Три города — больше половины страны" data-kz="Үш қала — елдің жартысынан астамы" data-en="Three Cities — More Than Half the Country">Три города — больше половины страны</h2>
+  <hr class="section-rule">
+  <div class="two-col">
+    <div class="prose">
+      <p data-ru="Алматы, Астана, Шымкент — 411 143 студента вузов из 678 114, то есть 60,6%. Алматы с 218 985 студентами обгоняет 14 регионов вместе взятых." data-kz="Алматы, Астана, Шымкент — 678 114-тің 411 143-і, яғни 60,6%. Алматы 218 985 студентімен 14 өңірді тастай озады." data-en="Almaty, Astana, Shymkent — 411,143 of 678,114 university students, i.e. 60.6%. Almaty at 218,985 outpaces 14 regions combined.">Алматы, Астана, Шымкент — 411 143 студента вузов из 678 114, то есть 60,6%. Алматы с 218 985 студентами обгоняет 14 регионов вместе взятых.</p>
+      <div class="pull-quote" data-ru="Ұлытау: 1 393 студента. Алматы: 218 985. Разрыв — 157 раз." data-kz="Ұлытау: 1 393. Алматы: 218 985. Айырма — 157 есе." data-en="Ulytau: 1,393 students. Almaty: 218,985. A 157-fold gap.">Ұлытау: 1 393 студента. Алматы: 218 985. Разрыв — 157 раз.</div>
+      <p data-ru="В колледжах концентрация меньше, но Туркестанская область неожиданно в топ-3: 43 359 учащихся — больше, чем Астана (40 722)." data-kz="Колледждерде шоғырлану аз, бірақ Түркістан облысы топ-3-те: 43 359 оқушы — Астанадан (40 722) артық." data-en="In colleges the concentration is lower, but Turkestan Region breaks into the top-3: 43,359 — more than Astana (40,722).">В колледжах концентрация меньше, но Туркестанская область неожиданно в топ-3: 43 359 учащихся — больше, чем Астана (40 722).</p>
+    </div>
+    <div>
+      <div class="chart-label" data-ru="Визуал 6 · Студенты ВУЗов по регионам · размер ∝ численность" data-kz="Визуал 6 · ЖОО студенттері өңірлер бойынша" data-en="Visual 6 · University students by region">Визуал 6 · Студенты ВУЗов по регионам · размер ∝ численность</div>
+      <div id="region-dots"></div>
+      <div style="margin-top:2rem">
+        <div class="chart-label" data-ru="Визуал 7 · Топ-8 регионов по колледжам · по убыванию" data-kz="Визуал 7 · Колледждер бойынша үздік 8 өңір" data-en="Visual 7 · Top-8 regions by college enrollment">Визуал 7 · Топ-8 регионов по колледжам</div>
+        <div class="hbar-chart" id="college-region-chart"></div>
+      </div>
+      <div class="source-note">БНС РК · 2025/26</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 06 NATIONALITIES ══ -->
+<div class="section reveal">
+  <div class="section-num" data-ru="06 / Национальности" data-kz="06 / Ұлттар" data-en="06 / Nationalities">06 / Национальности</div>
+  <h2 class="section-title" data-ru="Кто учится по национальности" data-kz="Ұлты бойынша кім оқиды" data-en="Who Studies by Nationality">Кто учится по национальности</h2>
+  <hr class="section-rule">
+  <div class="two-col">
+    <div>
+      <div class="chart-label" data-ru="Визуал 8 · Топ-10 национальностей · по убыванию" data-kz="Визуал 8 · Үздік 10 ұлт" data-en="Visual 8 · Top-10 nationalities (descending)">Визуал 8 · Топ-10 национальностей · по убыванию</div>
+      <div id="nat-chart"></div>
+      <div class="source-note">БНС РК · ВУЗы 2025/26</div>
+    </div>
+    <div class="prose">
+      <p data-ru="Казахи — 84,9% студентов вузов (575 826 человек). Русские — 5,5% (37 006). Узбеки — 2,1% (14 390). Туркмены — 1,3% (8 851) — третьи по численности из иноязычных, что отражает активный поток из Туркменистана." data-kz="Қазақтар — 84,9% (575 826 адам). Орыстар — 5,5% (37 006). Өзбектер — 2,1% (14 390). Түркімендер — 1,3% (8 851)." data-en="Kazakhs — 84.9% of university students (575,826). Russians — 5.5% (37,006). Uzbeks — 2.1% (14,390). Turkmens — 1.3% (8,851), reflecting an active flow from Turkmenistan.">Казахи — 84,9% студентов вузов (575 826 человек). Русские — 5,5% (37 006). Узбеки — 2,1% (14 390). Туркмены — 1,3% (8 851) — третьи по численности из иноязычных, что отражает активный поток из Туркменистана.</p>
+      <div class="pull-quote" data-ru="85 из 100 студентов вузов — казахи" data-kz="ЖОО студенттерінің 100-дің 85-і — қазақ" data-en="85 out of 100 university students are Kazakh">85 из 100 студентов вузов — казахи</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 07 FOREIGN STUDENTS MAP ══ -->
+<div class="section reveal">
+  <div class="section-num" data-ru="07 / Иностранные студенты" data-kz="07 / Шетелдік студенттер" data-en="07 / Foreign Students">07 / Иностранные студенты</div>
+  <h2 class="section-title" data-ru="Откуда едут учиться в Казахстан" data-kz:"Қазақстанға оқуға қайдан келеді" data-en="Where Do Students Come to Study in Kazakhstan">Откуда едут учиться в Казахстан</h2>
+  <hr class="section-rule">
+  <div class="two-col">
+    <div class="prose">
+      <p data-ru="В 2025/26 году в казахстанские вузы принято 12 115 иностранных студентов. Туркменистан лидирует — 6 046 человек (49,9%). Узбекистан — 1 362 (11,2%). Китай — 1 084 (8,9%). Индия — 897, Россия — 876, Монголия — 559. Всего студенты из более чем 50 стран мира." data-kz="2025/26 жылы қазақстандық университеттерге 12 115 шетелдік студент қабылданды. Түркіменістан — 6 046 (49,9%). Өзбекстан — 1 362 (11,2%). Қытай — 1 084 (8,9%)." data-en="In 2025/26, 12,115 foreign students were enrolled in Kazakhstani universities. Turkmenistan leads — 6,046 (49.9%). Uzbekistan — 1,362 (11.2%). China — 1,084 (8.9%). India — 897, Russia — 876, Mongolia — 559. Students come from over 50 countries.">В 2025/26 году в казахстанские вузы принято 12 115 иностранных студентов. Туркменистан лидирует — 6 046 человек (49,9%). Узбекистан — 1 362 (11,2%). Китай — 1 084 (8,9%). Индия — 897, Россия — 876, Монголия — 559. Всего студенты из более чем 50 стран мира.</p>
+      <div class="chart-label" data-ru="Визуал 9 · Иностранные студенты по странам · по убыванию" data-kz="Визуал 9 · Шетелдік студенттер елдер бойынша" data-en="Visual 9 · Foreign students by country (descending)">Визуал 9 · Иностранные студенты по странам · по убыванию</div>
+      <div class="hbar-chart" id="foreign-chart"></div>
+      <div class="source-note">БНС РК · ВУЗы 2025/26</div>
+    </div>
+    <div>
+      <div class="chart-label" data-ru="Визуал 10 · Страны происхождения иностранных студентов · хороплет" data-kz="Визуал 10 · Шетелдік студенттер картасы · хороплет" data-en="Visual 10 · Countries of origin · choropleth map">Визуал 10 · Страны происхождения иностранных студентов</div>
+      <div id="d3-world-map" style="width:100%;border:1px solid var(--border);background:#f7f5f0;overflow:hidden"></div>
+      <div class="map-legend" style="margin-top:.6rem;align-items:center">
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--mid)" data-ru="Меньше" data-kz="Аз" data-en="Fewer">Меньше</span>
+        <div id="map-legend-gradient" style="height:10px;width:120px;border-radius:2px"></div>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--mid)" data-ru="Больше" data-kz:"Көп" data-en="More">Больше</span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--mid);margin-left:.5rem" data-ru="· серый = нет данных" data-kz="· сұр = деректер жоқ" data-en="· grey = no data">· серый = нет данных</span>
+      </div>
+      <div class="source-note">БНС РК · ВУЗы 2025/26</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 08 VUZ SPECIALTIES ══ -->
+<div class="section reveal">
+  <div class="section-num" data-ru="08 / Специальности ВУЗ" data-kz="08 / ЖОО мамандықтары" data-en="08 / University Majors">08 / Специальности ВУЗ</div>
+  <h2 class="section-title" data-ru="На кого учатся в вузах" data-kz="ЖОО-да кім болуға оқиды" data-en="What Do University Students Study">На кого учатся в вузах</h2>
+  <hr class="section-rule">
+  <div class="two-col">
+    <div>
+      <div class="chart-label" data-ru="Визуал 11 · Направления подготовки · по убыванию · % женщин" data-kz="Визуал 11 · Даярлау бағыттары · кему · % әйел" data-en="Visual 11 · Fields of study · descending · % women">Визуал 11 · Направления подготовки · по убыванию · % женщин</div>
+      <div class="hbar-chart" id="vuz-spec-chart"></div>
+      <div class="source-note">БНС РК · Классификатор 6B · 2025/26</div>
+    </div>
+    <div class="prose">
+      <p data-ru="Педагогика — крупнейшее направление: 180 762 студента, 66,1% — женщины. Инженерия и строительство — на втором месте: 108 865 студентов, женщин лишь 31,3%. ИКТ — 71 770 студентов, женщин только 24,4%." data-kz="Педагогика — ең ірі бағыт: 180 762 студент, 66,1% — әйел. Инженерия мен құрылыс — екінші: 108 865 студент, 31,3% — әйел. АКТ — 71 770 студент, 24,4% — әйел." data-en="Pedagogy is the largest field: 180,762 students, 66.1% women. Engineering and construction — second: 108,865 students, only 31.3% women. ICT — 71,770 students, only 24.4% women.">Педагогика — крупнейшее направление: 180 762 студента, 66,1% — женщины. Инженерия и строительство — на втором месте: 108 865 студентов, женщин лишь 31,3%. ИКТ — 71 770 студентов, женщин только 24,4%.</p>
+      <div class="pull-quote" data-ru="Право: 42 742 студента. Каждый третий — женщина." data-kz="Заң: 42 742 студент. Үшеуінің бірі — әйел." data-en="Law: 42,742 students. One in three is a woman.">Право: 42 742 студента. Каждый третий — женщина.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 09 COLLEGE SPECIALTIES ══ -->
+<div class="section reveal">
+  <div class="section-num" data-ru="09 / Колледжи" data-kz="09 / Колледждер" data-en="09 / Colleges">09 / Колледжи</div>
+  <h2 class="section-title" data-ru="Медицина правит колледжами" data-kz="Медицина колледждерде үстемдік етеді" data-en="Medicine Rules the Colleges">Медицина правит колледжами</h2>
+  <hr class="section-rule">
+  <div class="two-col">
+    <div class="prose">
+      <p data-ru="Сестринское дело — крупнейшая специальность в системе: 49 333 учащихся. Из них 45 275 — женщины (91,8%). Лечебное дело — второе: 35 516. Организация питания — третье: 29 356. Медицина явно доминирует." data-kz="Мейіргер ісі — жүйедегі ең ірі мамандық: 49 333 оқушы, 91,8% — әйел. Емдеу ісі — екінші: 35 516. Тамақтануды ұйымдастыру — үшінші: 29 356." data-en="Nursing is the largest specialty in the system: 49,333 students, 91.8% women. General medicine — second: 35,516. Catering — third: 29,356. Medicine clearly dominates.">Сестринское дело — крупнейшая специальность в системе: 49 333 учащихся. Из них 45 275 — женщины (91,8%). Лечебное дело — второе: 35 516. Организация питания — третье: 29 356. Медицина явно доминирует.</p>
+      <div class="pull-quote" data-ru="Сварочное дело: 12 301 учащийся. 419 из них — женщины (3.4%)." data-kz="Дәнекерлеу: 12 301 оқушы. 419-ы — әйел (3.4%)." data-en="Welding: 12,301 students. 419 women (3.4%).">Сварочное дело: 12 301 учащийся. 419 из них — женщины (3.4%).</div>
+    </div>
+    <div>
+      <div class="chart-label" data-ru="Визуал 13 · Топ-10 специальностей колледжей · по убыванию" data-kz="Визуал 13 · Колледждердің үздік 10 мамандығы" data-en="Visual 13 · Top-10 college specialties (descending)">Визуал 13 · Топ-10 специальностей колледжей · по убыванию</div>
+      <div class="spec-list">
+        <div class="spec-row header"><div class="spec-cell" data-ru="Специальность" data-kz="Мамандық" data-en="Specialty">Специальность</div><div class="spec-cell" data-ru="Всего" data-kz="Барлығы" data-en="Total">Всего</div><div class="spec-cell">% ♀</div></div>
+        <div class="spec-row"><div class="spec-name-col" data-ru="Сестринское дело" data-kz="Мейіргер ісі" data-en="Nursing">Сестринское дело</div><div class="spec-cell" style="color:var(--accent);font-weight:600">49 333</div><div class="spec-cell">91.8%</div></div>
+        <div class="spec-row"><div class="spec-name-col" data-ru="Лечебное дело" data-kz="Емдеу ісі" data-en="General Medicine">Лечебное дело</div><div class="spec-cell">35 516</div><div class="spec-cell">54.3%</div></div>
+        <div class="spec-row"><div class="spec-name-col" data-ru="Организация питания" data-kz="Тамақтануды ұйымдастыру" data-en="Catering">Организация питания</div><div class="spec-cell">29 356</div><div class="spec-cell">60.2%</div></div>
+        <div class="spec-row"><div class="spec-name-col" data-ru="Правоведение" data-kz="Заңтану" data-en="Law Studies">Правоведение</div><div class="spec-cell">12 939</div><div class="spec-cell">38.4%</div></div>
+        <div class="spec-row"><div class="spec-name-col" data-ru="Стоматология" data-kz="Стоматология" data-en="Dentistry">Стоматология</div><div class="spec-cell">12 300</div><div class="spec-cell">38.0%</div></div>
+        <div class="spec-row"><div class="spec-name-col" data-ru="Сварочное дело" data-kz="Дәнекерлеу ісі" data-en="Welding">Сварочное дело</div><div class="spec-cell">12 301</div><div class="spec-cell">3.4%</div></div>
+        <div class="spec-row"><div class="spec-name-col" data-ru="Фармация" data-kz="Фармация" data-en="Pharmacy">Фармация</div><div class="spec-cell">6 572</div><div class="spec-cell">87.7%</div></div>
+        <div class="spec-row"><div class="spec-name-col" data-ru="Ветеринария" data-kz="Ветеринария" data-en="Veterinary">Ветеринария</div><div class="spec-cell">6 527</div><div class="spec-cell">31.3%</div></div>
+        <div class="spec-row"><div class="spec-name-col" data-ru="Лесное хозяйство" data-kz="Орман шаруашылығы" data-en="Forestry">Лесное хозяйство</div><div class="spec-cell">3 359</div><div class="spec-cell">12.4%</div></div>
+        <div class="spec-row"><div class="spec-name-col" data-ru="Граф. и мультимедиа дизайн" data-kz="Граф. дизайн" data-en="Graphic Design">Граф. и мультимедиа дизайн</div><div class="spec-cell">3 263</div><div class="spec-cell">72.0%</div></div>
+      </div>
+      <div class="source-note">БНС РК · Колледжи 2025/26</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 10 GRADUATES ══ -->
+<div class="section reveal">
+  <div class="section-num" data-ru="10 / Выпускники" data-kz="10 / Түлектер" data-en="10 / Graduates">10 / Выпускники</div>
+  <h2 class="section-title" data-ru="Сколько выпускается и сколько придёт" data-kz="Қанша бітіреді және қанша келеді" data-en="How Many Graduate and How Many Are Coming">Сколько выпускается и сколько придёт</h2>
+  <hr class="section-rule">
+  <div class="two-col">
+    <div class="prose">
+      <p data-ru="В 2024/25 году вузы выпустили 152 834 специалиста. Ожидаемый выпуск следующего года — 160 365 (+4,9%). Принято в 2025/26: 208 952 человека, из них 74,7% — сразу после школы, 18,9% — после колледжа, 6,4% — уже с дипломом." data-kz="2024/25 жылы университеттер 152 834 маман бітірді. Келесі жылдың күтілетін шығарылымы — 160 365 (+4,9%). 2025/26-да 208 952 адам қабылданды: 74,7% — мектептен кейін, 18,9% — колледждан кейін." data-en="In 2024/25 universities graduated 152,834 specialists. Expected next year — 160,365 (+4.9%). Enrolled in 2025/26: 208,952 — 74.7% straight from school, 18.9% from college, 6.4% with an existing degree.">В 2024/25 году вузы выпустили 152 834 специалиста. Ожидаемый выпуск следующего года — 160 365 (+4,9%). Принято в 2025/26: 208 952 человека, из них 74,7% — сразу после школы, 18,9% — после колледжа, 6,4% — уже с дипломом.</p>
+      <div class="pull-quote" data-ru="Каждый пятый новый студент вуза — с колледжем за плечами" data-kz="Жаңа ЖОО студенттерінің әрбір бесіншісі — колледжден" data-en="One in five new university students has a college behind them">Каждый пятый новый студент вуза — с колледжем за плечами</div>
+    </div>
+    <div>
+      <div class="chart-label" data-ru="Визуал 14 · Поток студентов ВУЗов" data-kz="Визуал 14 · ЖОО студенттерінің ағыны" data-en="Visual 14 · University student flow">Визуал 14 · Поток студентов ВУЗов</div>
+      <div class="grad-flow">
+        <div class="grad-box"><span class="grad-n" style="color:var(--accent)">208 952</span><span class="grad-label" data-ru="Принято 2025/26" data-kz="Қабылданды" data-en="Enrolled 2025/26">Принято 2025/26</span></div>
+        <div class="grad-arrow">→</div>
+        <div class="grad-box"><span class="grad-n">678 114</span><span class="grad-label" data-ru="Всего студентов" data-kz="Барлығы" data-en="Total">Всего студентов</span></div>
+        <div class="grad-arrow">→</div>
+        <div class="grad-box"><span class="grad-n">152 834</span><span class="grad-label" data-ru="Выпуск 2024/25" data-kz="Шығарылым" data-en="Graduated 2024/25">Выпуск 2024/25</span></div>
+        <div class="grad-arrow">→</div>
+        <div class="grad-box"><span class="grad-n" style="color:var(--accent)">160 365</span><span class="grad-label" data-ru="Ожид. выпуск" data-kz="Күтілетін" data-en="Expected">Ожид. выпуск</span></div>
+      </div>
+      <div class="chart-label" style="margin-top:1.5rem" data-ru="Визуал 15 · Откуда приходят новые студенты · по убыванию" data-kz="Визуал 15 · Жаңа студенттер қайдан" data-en="Visual 15 · Where new students come from">Визуал 15 · Откуда приходят новые студенты</div>
+      <div class="hbar-chart">
+        <div class="hbar-row"><div class="hbar-name" data-ru="После школы" data-kz="Мектептен кейін" data-en="After school">После школы</div><div class="hbar-track"><div class="hbar-fill accent" style="width:74.7%"></div></div><div class="hbar-val">156 007 · 74.7%</div></div>
+        <div class="hbar-row"><div class="hbar-name" data-ru="После колледжа" data-kz="Колледждан кейін" data-en="After college">После колледжа</div><div class="hbar-track"><div class="hbar-fill" style="width:18.9%"></div></div><div class="hbar-val">39 566 · 18.9%</div></div>
+        <div class="hbar-row"><div class="hbar-name" data-ru="Второе высшее" data-kz="Екінші жоғары" data-en="2nd degree">Второе высшее</div><div class="hbar-track"><div class="hbar-fill" style="width:6.4%"></div></div><div class="hbar-val">13 379 · 6.4%</div></div>
+      </div>
+      <div class="source-note">БНС РК · ВУЗы 2025/26</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 11 DROPOUTS ══ -->
+<div class="section reveal">
+  <div class="section-num" data-ru="11 / Отчисления" data-kz="11 / Шығарып тастаулар" data-en="11 / Dropouts">11 / Отчисления</div>
+  <h2 class="section-title" data-ru="Почему уходят из вузов" data-kz="ЖОО-дан неге кетеді" data-en="Why Students Leave Universities">Почему уходят из вузов</h2>
+  <hr class="section-rule">
+  <div class="two-col">
+    <div>
+      <div class="chart-label" data-ru="Визуал 16 · Причины отчисления · 63 327 студентов · 2024/25 · по убыванию" data-kz="Визуал 16 · Шығарып тастаудың себептері · кему" data-en="Visual 16 · Reasons for dropout · 63,327 · descending">Визуал 16 · Причины отчисления · 63 327 студентов · 2024/25</div>
+      <div class="dropout-grid">
+        <div class="dropout-cell"><span class="dropout-n">17 636</span><span class="dropout-pct">27.8%</span><span class="dropout-label" data-ru="По собств. желанию" data-kz="Өз еркімен" data-en="Personal choice">По собств. желанию</span></div>
+        <div class="dropout-cell"><span class="dropout-n">13 765</span><span class="dropout-pct">21.7%</span><span class="dropout-label" data-ru="Финансовые трудности" data-kz="Қаржылық қиын." data-en="Financial hardship">Финансовые трудности</span></div>
+        <div class="dropout-cell"><span class="dropout-n">11 881</span><span class="dropout-pct">18.8%</span><span class="dropout-label" data-ru="Неуспеваемость" data-kz="Үлгермеушілік" data-en="Academic failure">Неуспеваемость</span></div>
+        <div class="dropout-cell"><span class="dropout-n">8 146</span><span class="dropout-pct">12.9%</span><span class="dropout-label" data-ru="Перевод в др. вуз" data-kz="Басқа ЖОО-ға" data-en="Transfer">Перевод в др. вуз</span></div>
+        <div class="dropout-cell"><span class="dropout-n">5 919</span><span class="dropout-pct">9.3%</span><span class="dropout-label" data-ru="Нарушение дисциплины" data-kz="Тәртіп бұзу" data-en="Disciplinary">Нарушение дисциплины</span></div>
+        <div class="dropout-cell"><span class="dropout-n">1 141</span><span class="dropout-pct">1.8%</span><span class="dropout-label" data-ru="Призыв в армию" data-kz="Армияға шақыру" data-en="Military">Призыв в армию</span></div>
+      </div>
+      <div class="source-note">БНС РК · ВУЗы · выбыло за 2024/25 год</div>
+    </div>
+    <div class="prose">
+      <p data-ru="63 327 студентов покинули вузы в 2024/25. Главная причина — собственное желание (27,8%). Но второй по величине блок — финансовые трудности (21,7%). Каждый пятый отчисленный ушёл, потому что не смог платить." data-kz="63 327 студент 2024/25-та ЖОО-дан кетті. Басты себеп — өз еркімен (27,8%). Екінші — қаржылық қиындықтар (21,7%). Шығарылғандардың әрбір бесіншісі ақша жетпегендіктен кетті." data-en="63,327 students left universities in 2024/25. The main reason — personal choice (27.8%). Second — financial hardship (21.7%). One in five dropouts left because they couldn't pay.">63 327 студентов покинули вузы в 2024/25. Главная причина — собственное желание (27,8%). Но второй по величине блок — финансовые трудности (21,7%). Каждый пятый отчисленный ушёл, потому что не смог платить.</p>
+      <div class="pull-quote" data-ru="21.7% бросили учёбу из-за денег." data-kz="21.7% оқуды ақша болмағандықтан тастады." data-en="21.7% dropped out because of money.">21.7% бросили учёбу из-за денег.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 12 DORMITORIES ══ -->
+<div class="section reveal">
+  <div class="section-num" data-ru="12 / Общежития" data-kz="12 / Жатақханалар" data-en="12 / Dormitories">12 / Общежития</div>
+  <h2 class="section-title" data-ru="Дефицит мест в общежитиях" data-kz="Жатақхана орындарының тапшылығы" data-en="The Dormitory Shortage">Дефицит мест в общежитиях</h2>
+  <hr class="section-rule">
+  <div class="two-col">
+    <div class="prose">
+      <p data-ru="364 460 студентов — иногородние. Из них 115 633 нуждаются в общежитии. Место получили 95 266 — лишь 82,4%. Дефицит — 20 367 мест. В Алматы всё острее: 41 507 нуждающихся, место получили только 30 728 (74%)." data-kz="364 460 студент — аутандық. Олардың 115 633-і жатақханаға мұқтаж. Тек 95 266-ы (82,4%) орын алды. Тапшылық — 20 367 орын. Алматыда: 41 507 мұқтаж, тек 30 728-і (74%) алды." data-en="364,460 students are from out of town. Of these 115,633 need a dormitory. Only 95,266 received one (82.4%). Shortage: 20,367 places. In Almaty: 41,507 in need, only 30,728 received (74%).">364 460 студентов — иногородние. Из них 115 633 нуждаются в общежитии. Место получили 95 266 — лишь 82,4%. Дефицит — 20 367 мест. В Алматы всё острее: 41 507 нуждающихся, место получили только 30 728 (74%).</p>
+      <div class="big-callout"><span class="num">20 367</span><span class="label" data-ru="студентов не получили место в общежитии" data-kz="жатақхана орнынсыз студенттер" data-en="students without a dormitory place">студентов не получили место в общежитии</span></div>
+    </div>
+    <div>
+      <div class="chart-label" data-ru="Визуал 17 · Нуждались vs получили общежитие · по убыванию потребности" data-kz="Визуал 17 · Мұқтаж vs алынды · кему" data-en="Visual 17 · Needed vs received dormitory (descending)">Визуал 17 · Нуждались vs получили · серый = нуждались, чёрный = получили</div>
+      <div id="dorm-chart" style="margin:1.2rem 0"></div>
+      <div class="source-note">БНС РК · ВУЗы 2025/26</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 13 QUOTAS ══ -->
+<div class="section reveal">
+  <div class="section-num" data-ru="13 / Квоты" data-kz="13 / Квоталар" data-en="13 / Social Quotas">13 / Квоты</div>
+  <h2 class="section-title" data-ru="Кто учится по социальной квоте" data-kz="Әлеуметтік квота бойынша кім оқиды" data-en="Who Studies Under Social Quotas">Кто учится по социальной квоте</h2>
+  <hr class="section-rule">
+  <div class="two-col">
+    <div class="prose">
+      <p data-ru="Государство резервирует гранты для отдельных категорий граждан. Самая массовая квота — дети из многодетных семей: 35 125 студентов. Сельская молодёжь по социальным специальностям — 19 166. Дети из неполных семей — 10 362. Квотники — более 65 тысяч." data-kz="Мемлекет жекелеген санаттар үшін гранттар брондайды. Ең жаппай — көпбалалы отбасылар: 35 125. Ауыл жастары — 19 166. Толымсыз отбасылар — 10 362." data-en="The state reserves grants for specific categories. The largest quota — children from large families: 35,125. Rural youth for social programmes — 19,166. Single-parent families — 10,362. Over 65,000 quota students total.">Государство резервирует гранты для отдельных категорий граждан. Самая массовая квота — дети из многодетных семей: 35 125 студентов. Сельская молодёжь по социальным специальностям — 19 166. Дети из неполных семей — 10 362. Квотники — более 65 тысяч.</p>
+    </div>
+    <div>
+      <div class="chart-label" data-ru="Визуал 18 · Студенты по категориям квот · по убыванию" data-kz="Визуал 18 · Квота санаттары бойынша студенттер · кему" data-en="Visual 18 · Students by quota category (descending)">Визуал 18 · Студенты по категориям квот</div>
+      <div class="quota-list">
+        <div class="quota-row header"><div class="quota-cell" data-ru="Категория" data-kz="Санат" data-en="Category">Категория</div><div class="quota-cell" data-ru="Студентов" data-kz="Студент" data-en="Students">Студентов</div><div class="quota-cell">% ♀</div></div>
+        <div class="quota-row"><div class="quota-name" data-ru="Дети из многодетных семей (4+)" data-kz="Көпбалалы отбасылар (4+)" data-en="Large families (4+ children)">Дети из многодетных семей (4+)</div><div class="quota-cell" style="color:var(--accent);font-weight:600">35 125</div><div class="quota-cell">63.1%</div></div>
+        <div class="quota-row"><div class="quota-name" data-ru="Сельская молодёжь (соц. специальности)" data-kz="Ауыл жастары (соц.)" data-en="Rural youth (social)">Сельская молодёжь (соц. специальности)</div><div class="quota-cell">19 166</div><div class="quota-cell">59.2%</div></div>
+        <div class="quota-row"><div class="quota-name" data-ru="Неполные семьи (3+ лет статус)" data-kz="Толымсыз отбасылар" data-en="Single-parent families">Неполные семьи (3+ лет статус)</div><div class="quota-cell">10 362</div><div class="quota-cell">53.5%</div></div>
+        <div class="quota-row"><div class="quota-name" data-ru="Сельская молодёжь (переселение)" data-kz="Ауыл жастары (көшу)" data-en="Rural youth (relocation)">Сельская молодёжь (переселение)</div><div class="quota-cell">7 097</div><div class="quota-cell">75.3%</div></div>
+        <div class="quota-row"><div class="quota-name" data-ru="Казахи-репатрианты (не граждане РК)" data-kz="Оралмандар" data-en="Kazakh diaspora (non-citizens)">Казахи-репатрианты (не граждане РК)</div><div class="quota-cell">4 477</div><div class="quota-cell">51.4%</div></div>
+        <div class="quota-row"><div class="quota-name" data-ru="Дети-сироты" data-kz="Жетім балалар" data-en="Orphans">Дети-сироты</div><div class="quota-cell">2 533</div><div class="quota-cell">57.8%</div></div>
+        <div class="quota-row"><div class="quota-name" data-ru="Инвалиды и семьи с инвалидами" data-kz="Мүгедектер мен отбасылары" data-en="Persons with disabilities">Инвалиды и семьи с инвалидами</div><div class="quota-cell">2 101</div><div class="quota-cell">55.5%</div></div>
+      </div>
+      <div class="source-note">БНС РК · ВУЗы 2025/26 · Sheet 13</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 14 POSTGRAD ══ -->
+<div class="section reveal">
+  <div class="section-num" data-ru="14 / Послевузовское" data-kz="14 / Жоғары оқу орнынан кейінгі" data-en="14 / Post-Graduate">14 / Послевузовское</div>
+  <h2 class="section-title" data-ru="После диплома: магистры, резиденты, PhD" data-kz="Дипломнан кейін: магистрлер, резиденттер, PhD" data-en="After the Degree: Masters, Residents, PhDs">После диплома: магистры, резиденты, PhD</h2>
+  <hr class="section-rule">
+  <div class="two-col">
+    <div class="prose">
+      <p data-ru="Послевузовское — три траектории. Магистратура: 42 613 в 114 организациях. Резидентура — только медицина: 9 631 в 24 организациях. Докторантура: 9 491 в 79 организациях. Алматы и Астана дают 54,3% магистрантов и 74,8% докторантов страны." data-kz="Жоғары оқу орнынан кейінгі — үш траектория. Магистратура: 42 613, 114 ұйымда. Резидентура: 9 631, 24 ұйымда. Докторантура: 9 491, 79 ұйымда. Алматы мен Астана магистранттардың 54,3%-ін береді." data-en="Post-graduate — three trajectories. Master's: 42,613 in 114 institutions. Residency (medical only): 9,631 in 24. Doctoral: 9,491 in 79. Almaty and Astana account for 54.3% of master's and 74.8% of doctoral students.">Послевузовское — три траектории. Магистратура: 42 613 в 114 организациях. Резидентура — только медицина: 9 631 в 24 организациях. Докторантура: 9 491 в 79 организациях. Алматы и Астана дают 54,3% магистрантов и 74,8% докторантов страны.</p>
+      <div class="pull-quote" data-ru="Три из четырёх докторантов — в Алматы или Астане" data-kz="Докторанттардың үштен үші — Алматы немесе Астанада" data-en="Three in four doctoral students are in Almaty or Astana">Три из четырёх докторантов — в Алматы или Астане</div>
+    </div>
+    <div>
+      <div class="pg-grid">
+        <div class="pg-cell"><span class="pg-num">42 613</span><span class="pg-label" data-ru="Магистранты" data-kz="Магистранттар" data-en="Master's">Магистранты</span><span class="pg-sub" data-ru="114 орг." data-kz="114 ұйым" data-en="114 institutions">114 орг.</span></div>
+        <div class="pg-cell"><span class="pg-num" style="color:var(--accent)">9 631</span><span class="pg-label" data-ru="Резиденты" data-kz="Резиденттер" data-en="Residents">Резиденты</span><span class="pg-sub" data-ru="24 орг." data-kz="24 ұйым" data-en="24 institutions">24 орг.</span></div>
+        <div class="pg-cell"><span class="pg-num">9 491</span><span class="pg-label">PhD</span><span class="pg-sub" data-ru="79 орг." data-kz="79 ұйым" data-en="79 institutions">79 орг.</span></div>
+      </div>
+      <div class="chart-label" data-ru="Визуал 19 · Магистранты по регионам · по убыванию" data-kz="Визуал 19 · Өңірлер бойынша магистранттар · кему" data-en="Visual 19 · Master's students by region (descending)">Визуал 19 · Магистранты по регионам · по убыванию</div>
+      <div class="hbar-chart" id="postgrad-chart"></div>
+      <div class="source-note">БНС РК · Послевузовское 2025/26</div>
+    </div>
+  </div>
+</div>
+
+<div class="nyt-divider"><span data-ru="— итоги —" data-kz="— қорытынды —" data-en="— conclusions —">— итоги —</span></div>
+
+<!-- ══ CONCLUSION ══ -->
+<div id="conclusion" class="reveal">
+  <h2 data-ru="Казахстан учится. Неравномерно." data-kz="Қазақстан оқиды. Біркелкі емес." data-en="Kazakhstan Studies. Unevenly.">Казахстан учится. Неравномерно.</h2>
+  <div class="concl-grid">
+    <div class="concl-item"><span class="concl-num">1 295 829</span><span class="concl-label" data-ru="Всего обучающихся" data-kz="Барлық оқушылар" data-en="Total students">Всего обучающихся</span></div>
+    <div class="concl-item"><span class="concl-num">60.6%</span><span class="concl-label" data-ru="Студентов вузов — в 3 городах" data-kz="ЖОО студенттері — 3 қалада" data-en="Uni students in 3 cities">Студентов вузов — в 3 городах</span></div>
+    <div class="concl-item"><span class="concl-num">65.6%</span><span class="concl-label" data-ru="Учатся на казахском" data-kz="Қазақша оқиды" data-en="Study in Kazakh">Учатся на казахском</span></div>
+    <div class="concl-item"><span class="concl-num">21.7%</span><span class="concl-label" data-ru="Отчислены из-за денег" data-kz="Қаржылық себептермен" data-en="Dropped out: financial">Отчислены из-за денег</span></div>
+    <div class="concl-item"><span class="concl-num">20 367</span><span class="concl-label" data-ru="Без места в общежитии" data-kz="Жатақханасыз" data-en="Without dormitory">Без места в общежитии</span></div>
+    <div class="concl-item"><span class="concl-num">33 499</span><span class="concl-label" data-ru="Иностранных студентов" data-kz="Шетелдік студенттер" data-en="Foreign students">Иностранных студентов</span></div>
+  </div>
+  <p data-ru="Казахстан — молодая страна с высоким запросом на образование. Система неравномерна по трём осям: география (60% студентов — в трёх городах), гендер (вузы феминизируются, колледжи — нет), уровень (за пределами бакалавриата — резкое сужение)." data-kz="Қазақстан — жоғары сұранысы бар жас ел. Жүйе үш осьте теңсіз: география, гендер, деңгей." data-en="Kazakhstan is a young country with strong demand for education. The system is uneven across three axes: geography (60% of students in three cities), gender (universities feminising, colleges not), level (sharp narrowing beyond bachelor's).">Казахстан — молодая страна с высоким запросом на образование. Система неравномерна по трём осям: география (60% студентов — в трёх городах), гендер (вузы феминизируются, колледжи — нет), уровень (за пределами бакалавриата — резкое сужение).</p>
+  <p data-ru="Финансовый барьер — реальный. 13 765 отчисленных из-за денег и 20 367 без места в общежитии — это люди, которые хотели учиться, но не смогли." data-kz="Қаржылық кедергі — нақты. 13 765 адам ақша болмағандықтан оқудан шыққан, 20 367 — жатақханасыз." data-en="The financial barrier is real. 13,765 dropped out due to finances, 20,367 without a dormitory place — people who wanted to study but couldn't.">Финансовый барьер — реальный. 13 765 отчисленных из-за денег и 20 367 без места в общежитии — это люди, которые хотели учиться, но не смогли.</p>
+  <p data-ru="Медицина доминирует в колледжах: 49 тысяч медсестёр, 35 тысяч фельдшеров, 12 тысяч стоматологов. Казахстан готовит медицинских работников среднего звена в промышленных масштабах." data-kz="Медицина колледждерде үстемдік етеді: 49 мың мейіргер, 35 мың фельдшер, 12 мың стоматолог." data-en="Medicine dominates colleges: 49,000 nurses, 35,000 general medics, 12,000 dentists. Kazakhstan is training mid-level healthcare workers at industrial scale.">Медицина доминирует в колледжах: 49 тысяч медсестёр, 35 тысяч фельдшеров, 12 тысяч стоматологов. Казахстан готовит медицинских работников среднего звена в промышленных масштабах.</p>
+  <div class="data-note" data-ru="Данные: Бюро национальной статистики РК. Серия 19: «Высшие учебные заведения РК на начало 2025–2026 учебного года»; «Техническое и профессиональное, послесреднее образование на начало 2025/2026»; «О послевузовском образовании на начало 2025/2026». Опубликовано декабрь 2025. Анализ и визуализация: Нурасыл Абдразакулы · nurasyl.space · Серия «Кто управляет Казахстаном»" data-kz="Деректер: ҚР ҰСБ. 19-сериясы. 2025 жылдың желтоқсаны. Нұрасыл Абдразақұлы · nurasyl.space" data-en="Data: Bureau of National Statistics of RK. Education series 19. Published December 2025. Nurasyl Abdrazakuly · nurasyl.space · 'Who Runs Kazakhstan' series">Данные: Бюро национальной статистики РК. Серия 19: «Высшие учебные заведения РК на начало 2025–2026»; «ТиПО на начало 2025/2026»; «О послевузовском образовании на начало 2025/2026». Декабрь 2025. Анализ: Нурасыл Абдразакулы · nurasyl.space</div>
+</div>
+
+<!-- HOME LINK -->
+<div id="home-link">
+  <a href="https://nurasyl.space/" target="_blank" data-ru="← К главной странице" data-kz="← Басты бетке" data-en="← Back to homepage">← К главной странице</a>
+  <p data-ru="nurasyl.space — данные о Казахстане" data-kz="nurasyl.space — Қазақстан туралы деректер" data-en="nurasyl.space — data about Kazakhstan">nurasyl.space — данные о Казахстане</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════════
+let currentLang = 'ru';
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('#lang-bar button').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + lang).classList.add('active');
+  document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+    const val = el.getAttribute('data-' + lang);
+    if (val !== null) el.textContent = val;
+  });
+  renderAll();
+}
+const nk = () => currentLang;
+
+// ═══════════════════════════════════════════════════════════
+// DATA — all sorted descending
+// ═══════════════════════════════════════════════════════════
+const regionData = [
+  {ru:'г. Алматы',kz:'Алматы қ.',en:'Almaty city',vuz:218985,kol:91408},
+  {ru:'г. Астана',kz:'Астана қ.',en:'Astana city',vuz:101600,kol:40722},
+  {ru:'г. Шымкент',kz:'Шымкент қ.',en:'Shymkent city',vuz:91558,kol:54777},
+  {ru:'Карагандинская',kz:'Қарағанды',en:'Karaganda',vuz:40762,kol:35165},
+  {ru:'З.-Казахстанская',kz:'Батыс ҚЗ',en:'W. Kazakhstan',vuz:26584,kol:15520},
+  {ru:'Актюбинская',kz:'Ақтөбе',en:'Aktobe',vuz:24668,kol:30079},
+  {ru:'Жамбылская',kz:'Жамбыл',en:'Zhambyl',vuz:20858,kol:29135},
+  {ru:'Кызылординская',kz:'Қызылорда',en:'Kyzylorda',vuz:19234,kol:21704},
+  {ru:'Абай',kz:'Абай',en:'Abay',vuz:18751,kol:20975},
+  {ru:'Костанайская',kz:'Қостанай',en:'Kostanay',vuz:19345,kol:21989},
+  {ru:'Павлодарская',kz:'Павлодар',en:'Pavlodar',vuz:15656,kol:23245},
+  {ru:'В.-Казахстанская',kz:'Шығыс ҚЗ',en:'E. Kazakhstan',vuz:15499,kol:20196},
+  {ru:'Акмолинская',kz:'Ақмола',en:'Akmola',vuz:12616,kol:20228},
+  {ru:'Туркестанская',kz:'Түркістан',en:'Turkestan',vuz:11423,kol:43359},
+  {ru:'Атырауская',kz:'Атырау',en:'Atyrau',vuz:11035,kol:20243},
+  {ru:'Мангистауская',kz:'Маңғыстау',en:'Mangystau',vuz:7510,kol:22458},
+  {ru:'Алматинская',kz:'Алматы обл.',en:'Almaty reg.',vuz:8532,kol:19377},
+  {ru:'С.-Казахстанская',kz:'Солт. ҚЗ',en:'N. Kazakhstan',vuz:6799,kol:11058},
+  {ru:'Жетісу',kz:'Жетісу',en:'Zhetysu',vuz:5306,kol:13976},
+  {ru:'Ұлытау',kz:'Ұлытау',en:'Ulytau',vuz:1393,kol:6470}
+].sort((a,b)=>b.vuz-a.vuz);
+
+const colRegions = [...regionData].sort((a,b)=>b.kol-a.kol).slice(0,8);
+
+const vuzSpecs = [
+  {ru:'Педагогика',kz:'Педагогика',en:'Pedagogy',n:180762,w:119437},
+  {ru:'Инженерия и строительство',kz:'Инженерия мен құрылыс',en:'Engineering & Construction',n:108865,w:34110},
+  {ru:'Бизнес и право',kz:'Бизнес және заң',en:'Business & Law',n:92785,w:42878},
+  {ru:'ИКТ',kz:'АКТ',en:'ICT',n:71770,w:17539},
+  {ru:'Здравоохранение',kz:'Денсаулық сақтау',en:'Healthcare',n:56189,w:33415},
+  {ru:'Искусство и гум.',kz:'Өнер және гум.',en:'Arts & Humanities',n:43484,w:32920},
+  {ru:'Естественные науки',kz:'Жаратылыс ғыл.',en:'Natural Sciences',n:36298,w:25880},
+  {ru:'Услуги',kz:'Қызметтер',en:'Services',n:31631,w:17370},
+  {ru:'Соц. науки и журн.',kz:'Әлеуметтік ғыл.',en:'Social Sciences',n:25125,w:20363},
+  {ru:'Нац. безопасность',kz:'Ұлттық қауіпсіздік',en:'National Security',n:5780,w:1329}
+].sort((a,b)=>b.n-a.n);
+
+const postgradData = [
+  {ru:'г. Алматы',kz:'Алматы қ.',en:'Almaty city',n:12950},
+  {ru:'г. Астана',kz:'Астана қ.',en:'Astana city',n:10205},
+  {ru:'г. Шымкент',kz:'Шымкент қ.',en:'Shymkent city',n:5734},
+  {ru:'В.-Казахстанская',kz:'Шығыс ҚЗ',en:'E. Kazakhstan',n:1897},
+  {ru:'Карагандинская',kz:'Қарағанды',en:'Karaganda',n:1846},
+  {ru:'Жамбылская',kz:'Жамбыл',en:'Zhambyl',n:1522}
+].sort((a,b)=>b.n-a.n);
+
+const foreignData = [
+  {ru:'Туркменистан',kz:'Түркіменістан',en:'Turkmenistan', n:6046},
+  {ru:'Узбекистан',  kz:'Өзбекстан',    en:'Uzbekistan',   n:1362},
+  {ru:'Китай',       kz:'Қытай',         en:'China',        n:1084},
+  {ru:'Индия',       kz:'Үндістан',      en:'India',        n:897},
+  {ru:'Россия',      kz:'Ресей',         en:'Russia',       n:876},
+  {ru:'Монголия',    kz:'Монголия',      en:'Mongolia',     n:559},
+  {ru:'Кыргызстан',  kz:'Қырғызстан',   en:'Kyrgyzstan',   n:390},
+  {ru:'Таджикистан', kz:'Тәжікстан',    en:'Tajikistan',   n:176},
+  {ru:'Азербайджан', kz:'Әзербайжан',   en:'Azerbaijan',   n:122},
+  {ru:'Афганистан',  kz:'Ауғанстан',    en:'Afghanistan',  n:115},
+].sort((a,b)=>b.n-a.n);
+
+const natData = [
+  {ru:'Казахи',kz:'Қазақтар',en:'Kazakhs',n:575826},
+  {ru:'Узбеки',kz:'Өзбектер',en:'Uzbeks',n:14390},
+  {ru:'Русские',kz:'Орыстар',en:'Russians',n:37006},
+  {ru:'Туркмены',kz:'Түркімендер',en:'Turkmens',n:8851},
+  {ru:'Украинцы',kz:'Украиндықтар',en:'Ukrainians',n:3394},
+  {ru:'Азербайджанцы',kz:'Әзербайжандықтар',en:'Azerbaijanis',n:2380},
+  {ru:'Кыргызы',kz:'Қырғыздар',en:'Kyrgyz',n:1224},
+  {ru:'Таджики',kz:'Тәжіктер',en:'Tajiks',n:1095},
+  {ru:'Белорусы',kz:'Белорустар',en:'Belarusians',n:795},
+  {ru:'Армяне',kz:'Армяндар',en:'Armenians',n:293}
+].sort((a,b)=>b.n-a.n);
+
+const langRegions = [
+  {ru:'Кызылординская',kz:'Қызылорда',en:'Kyzylorda',total:19234,kaz:18802},
+  {ru:'г. Шымкент',kz:'Шымкент қ.',en:'Shymkent',total:91558,kaz:80993},
+  {ru:'Жамбылская',kz:'Жамбыл',en:'Zhambyl',total:20858,kaz:18278},
+  {ru:'Туркестанская',kz:'Түркістан',en:'Turkestan',total:11423,kaz:10091},
+  {ru:'З.-Казахстанская',kz:'Батыс ҚЗ',en:'W. Kazakhstan',total:26584,kaz:20866},
+  {ru:'Атырауская',kz:'Атырау',en:'Atyrau',total:11035,kaz:8483},
+  {ru:'Актюбинская',kz:'Ақтөбе',en:'Aktobe',total:24668,kaz:18578},
+  {ru:'г. Алматы',kz:'Алматы қ.',en:'Almaty',total:218985,kaz:133995},
+  {ru:'Карагандинская',kz:'Қарағанды',en:'Karaganda',total:40762,kaz:24828},
+  {ru:'Павлодарская',kz:'Павлодар',en:'Pavlodar',total:15656,kaz:6328},
+  {ru:'Костанайская',kz:'Қостанай',en:'Kostanay',total:19345,kaz:6675},
+  {ru:'С.-Казахстанская',kz:'Солт. ҚЗ',en:'N. Kazakhstan',total:6799,kaz:2438}
+].sort((a,b)=>(b.kaz/b.total)-(a.kaz/a.total));
+
+const dormData = [
+  {ru:'г. Алматы',kz:'Алматы қ.',en:'Almaty',need:41507,have:30728},
+  {ru:'г. Астана',kz:'Астана қ.',en:'Astana',need:23519,have:21829},
+  {ru:'Актюбинская',kz:'Ақтөбе',en:'Aktobe',need:8015,have:4122},
+  {ru:'Карагандинская',kz:'Қарағанды',en:'Karaganda',need:8696,have:8696},
+  {ru:'Костанайская',kz:'Қостанай',en:'Kostanay',need:4688,have:4247},
+  {ru:'г. Шымкент',kz:'Шымкент қ.',en:'Shymkent',need:4563,have:4391},
+  {ru:'Павлодарская',kz:'Павлодар',en:'Pavlodar',need:3057,have:2088},
+  {ru:'Жамбылская',kz:'Жамбыл',en:'Zhambyl',need:1973,have:1117}
+].sort((a,b)=>b.need-a.need);
+
+// ═══════════════════════════════════════════════════════════
+// RENDER HELPERS
+// ═══════════════════════════════════════════════════════════
+function hbar(containerId, rows, maxN, valFmt) {
+  const w = document.getElementById(containerId);
+  if (!w) return;
+  w.innerHTML = '';
+  rows.forEach((d,i) => {
+    const pct = (d.n / maxN * 100).toFixed(1);
+    const val = valFmt ? valFmt(d) : d.n.toLocaleString('ru');
+    w.innerHTML += `<div class="hbar-row">
+      <div class="hbar-name">${d[nk()]}</div>
+      <div class="hbar-track"><div class="hbar-fill ${i===0?'accent':''}" style="width:${pct}%"></div></div>
+      <div class="hbar-val">${val}</div>
+    </div>`;
+  });
+}
+
+function renderRegionDots() {
+  const w = document.getElementById('region-dots');
+  if (!w) return;
+  w.innerHTML = '';
+  const sorted = [...regionData].sort((a,b)=>b.vuz-a.vuz);
+  const max = sorted[0].vuz;
+  sorted.forEach(d => {
+    const size = Math.max(14, Math.sqrt(d.vuz/max)*80);
+    const div = document.createElement('div');
+    div.className = 'reg-dot-wrap';
+    div.title = `${d[nk()]}: ${d.vuz.toLocaleString()}`;
+    div.innerHTML = `<div class="reg-dot" style="width:${size}px;height:${size}px"></div>
+      <span class="reg-dot-name">${d[nk()]}</span>
+      <span class="reg-dot-val">${(d.vuz/1000).toFixed(0)}k</span>`;
+    w.appendChild(div);
+  });
+}
+
+function renderNat() {
+  const w = document.getElementById('nat-chart');
+  if (!w) return;
+  w.innerHTML = '';
+  const max = natData[0].n;
+  natData.forEach((d,i) => {
+    const pct = (d.n/max*100).toFixed(1);
+    w.innerHTML += `<div class="nat-row">
+      <div class="nat-name">${d[nk()]}</div>
+      <div class="nat-bar-wrap"><div class="nat-bar ${i===0?'top':''}" style="width:${pct}%"></div></div>
+      <div class="nat-val">${d.n.toLocaleString('ru')}</div>
+    </div>`;
+  });
+}
+
+function renderLangRegion() {
+  const w = document.getElementById('lang-region-chart');
+  if (!w) return;
+  w.innerHTML = '';
+  langRegions.slice(0,10).forEach((d,i) => {
+    const pct = (d.kaz/d.total*100).toFixed(1);
+    w.innerHTML += `<div class="hbar-row">
+      <div class="hbar-name">${d[nk()]}</div>
+      <div class="hbar-track"><div class="hbar-fill ${i===0?'accent':''}" style="width:${pct}%"></div></div>
+      <div class="hbar-val">${pct}%</div>
+    </div>`;
+  });
+}
+
+function renderKzLangRegion() {
+  const w = document.getElementById('kz-lang-region');
+  if (!w) return;
+  w.innerHTML = '';
+  langRegions.forEach(d => {
+    const pct = (d.kaz/d.total*100).toFixed(1);
+    const hi = parseFloat(pct) > 80;
+    w.innerHTML += `<div class="kz-spec-cell">
+      <div class="kz-spec-name">${d[nk()]}</div>
+      <div class="kz-spec-bar-wrap"><div class="kz-spec-bar ${hi?'hi':''}" style="width:${pct}%"></div></div>
+      <div class="kz-spec-nums"><span>${pct}%</span><span>${d.kaz.toLocaleString('ru')}</span></div>
+    </div>`;
+  });
+}
+
+function renderVuzSpec() {
+  const w = document.getElementById('vuz-spec-chart');
+  if (!w) return;
+  w.innerHTML = '';
+  const max = vuzSpecs[0].n;
+  vuzSpecs.forEach((d,i) => {
+    const pct = (d.n/max*100).toFixed(1);
+    const wp = Math.round(d.w/d.n*100);
+    w.innerHTML += `<div class="hbar-row">
+      <div class="hbar-name">${d[nk()]}</div>
+      <div class="hbar-track"><div class="hbar-fill ${i===0?'accent':''}" style="width:${pct}%"></div></div>
+      <div class="hbar-val">${(d.n/1000).toFixed(0)}k · <span style="color:var(--accent)">${wp}%♀</span></div>
+    </div>`;
+  });
+}
+
+function renderDorm() {
+  const w = document.getElementById('dorm-chart');
+  if (!w) return;
+  w.innerHTML = '';
+  const max = dormData[0].need;
+  dormData.forEach(d => {
+    const np = (d.need/max*100).toFixed(0);
+    const hp = (d.have/d.need*100).toFixed(0);
+    w.innerHTML += `<div class="dorm-row">
+      <div class="dorm-label">${d[nk()]}</div>
+      <div class="dorm-track" style="width:calc(${np}% * 0.7 + 30%)">
+        <div class="dorm-fill-need" style="width:100%"></div>
+        <div class="dorm-fill-have" style="width:${hp}%"></div>
+      </div>
+      <div class="dorm-val">${d.have.toLocaleString('ru')} / ${d.need.toLocaleString('ru')}</div>
+    </div>`;
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// WORLD MAP — D3 choropleth, countries coloured by student count
+// ISO numeric codes: https://en.wikipedia.org/wiki/ISO_3166-1_numeric
+// ═══════════════════════════════════════════════════════════
+const mapStudents = [
+  {iso:795, name_ru:'Туркменистан',       name_kz:'Түркіменістан',  name_en:'Turkmenistan',    n:6046},
+  {iso:860, name_ru:'Узбекистан',         name_kz:'Өзбекстан',      name_en:'Uzbekistan',      n:1362},
+  {iso:156, name_ru:'Китай',              name_kz:'Қытай',           name_en:'China',           n:1084},
+  {iso:356, name_ru:'Индия',              name_kz:'Үндістан',        name_en:'India',           n:897},
+  {iso:643, name_ru:'Россия',             name_kz:'Ресей',           name_en:'Russia',          n:876},
+  {iso:496, name_ru:'Монголия',           name_kz:'Монголия',        name_en:'Mongolia',        n:559},
+  {iso:417, name_ru:'Кыргызстан',         name_kz:'Қырғызстан',     name_en:'Kyrgyzstan',      n:390},
+  {iso:762, name_ru:'Таджикистан',        name_kz:'Тәжікстан',      name_en:'Tajikistan',      n:176},
+  {iso:31,  name_ru:'Азербайджан',        name_kz:'Әзербайжан',     name_en:'Azerbaijan',      n:122},
+  {iso:4,   name_ru:'Афганистан',         name_kz:'Ауғанстан',      name_en:'Afghanistan',     n:115},
+  {iso:826, name_ru:'Великобритания',     name_kz:'Ұлыбритания',    name_en:'United Kingdom',  n:102},
+  {iso:586, name_ru:'Пакистан',           name_kz:'Пәкістан',       name_en:'Pakistan',        n:93},
+  {iso:792, name_ru:'Турция',             name_kz:'Түркия',          name_en:'Turkey',          n:65},
+  {iso:566, name_ru:'Нигерия',            name_kz:'Нигерия',         name_en:'Nigeria',         n:35},
+  {iso:804, name_ru:'Украина',            name_kz:'Украина',         name_en:'Ukraine',         n:25},
+  {iso:276, name_ru:'Германия',           name_kz:'Германия',        name_en:'Germany',         n:19},
+  {iso:818, name_ru:'Египет',             name_kz:'Египет',          name_en:'Egypt',           n:17},
+  {iso:50,  name_ru:'Бангладеш',          name_kz:'Бангладеш',       name_en:'Bangladesh',      n:15},
+  {iso:887, name_ru:'Йемен',              name_kz:'Йемен',           name_en:'Yemen',           n:14},
+  {iso:840, name_ru:'США',                name_kz:'АҚШ',             name_en:'USA',             n:12},
+  {iso:268, name_ru:'Грузия',             name_kz:'Грузия',          name_en:'Georgia',         n:10},
+  {iso:112, name_ru:'Беларусь',           name_kz:'Беларусь',        name_en:'Belarus',         n:9},
+  {iso:51,  name_ru:'Армения',            name_kz:'Армения',         name_en:'Armenia',         n:6},
+  {iso:364, name_ru:'Иран',               name_kz:'Иран',            name_en:'Iran',            n:6},
+  {iso:360, name_ru:'Индонезия',          name_kz:'Индонезия',       name_en:'Indonesia',       n:5},
+  {iso:376, name_ru:'Израиль',            name_kz:'Израиль',         name_en:'Israel',          n:5},
+  {iso:408, name_ru:'Сев. Корея',         name_kz:'Сол. Корея',      name_en:'North Korea',     n:5},
+  {iso:410, name_ru:'Республика Корея',   name_kz:'Оңт. Корея',      name_en:'South Korea',     n:5},
+  {iso:392, name_ru:'Япония',             name_kz:'Жапония',         name_en:'Japan',           n:4},
+  {iso:288, name_ru:'Гана',               name_kz:'Гана',            name_en:'Ghana',           n:3},
+  {iso:104, name_ru:'Мьянма',             name_kz:'Мьянма',          name_en:'Myanmar',         n:2},
+  {iso:124, name_ru:'Канада',             name_kz:'Канада',          name_en:'Canada',          n:2},
+  {iso:368, name_ru:'Ирак',               name_kz:'Ирак',            name_en:'Iraq',            n:2},
+  {iso:504, name_ru:'Марокко',            name_kz:'Марокко',         name_en:'Morocco',         n:2},
+  {iso:616, name_ru:'Польша',             name_kz:'Польша',          name_en:'Poland',          n:2},
+  {iso:729, name_ru:'Судан',              name_kz:'Судан',           name_en:'Sudan',           n:2},
+  {iso:498, name_ru:'Молдова',            name_kz:'Молдова',         name_en:'Moldova',         n:1},
+  {iso:36,  name_ru:'Австралия',          name_kz:'Австралия',       name_en:'Australia',       n:1},
+  {iso:120, name_ru:'Камерун',            name_kz:'Камерун',         name_en:'Cameroon',        n:1},
+  {iso:148, name_ru:'Чад',                name_kz:'Чад',             name_en:'Chad',            n:1},
+  {iso:250, name_ru:'Франция',            name_kz:'Франция',         name_en:'France',          n:1},
+  {iso:270, name_ru:'Гамбия',             name_kz:'Гамбия',          name_en:'Gambia',          n:1},
+  {iso:400, name_ru:'Иордания',           name_kz:'Иордания',        name_en:'Jordan',          n:1},
+  {iso:404, name_ru:'Кения',              name_kz:'Кения',           name_en:'Kenya',           n:1},
+  {iso:440, name_ru:'Литва',              name_kz:'Литва',           name_en:'Lithuania',       n:1},
+  {iso:562, name_ru:'Нигер',              name_kz:'Нигер',           name_en:'Niger',           n:1},
+  {iso:608, name_ru:'Филиппины',          name_kz:'Филиппиндер',     name_en:'Philippines',     n:1},
+  {iso:620, name_ru:'Португалия',         name_kz:'Португалия',      name_en:'Portugal',        n:1},
+  {iso:634, name_ru:'Катар',              name_kz:'Катар',           name_en:'Qatar',           n:1},
+  {iso:682, name_ru:'Саудовская Аравия',  name_kz:'Сауд Арабиясы',   name_en:'Saudi Arabia',    n:1},
+  {iso:688, name_ru:'Сербия',             name_kz:'Сербия',          name_en:'Serbia',          n:1},
+  {iso:710, name_ru:'Южная Африка',       name_kz:'Оңт. Африка',     name_en:'South Africa',    n:1},
+  {iso:800, name_ru:'Уганда',             name_kz:'Уганда',          name_en:'Uganda',          n:1},
+  {iso:894, name_ru:'Замбия',             name_kz:'Замбия',          name_en:'Zambia',          n:1},
+];
+// ISO lookup map
+const mapByIso = {};
+mapStudents.forEach(d => { mapByIso[d.iso] = d; });
+const mapDataClean = mapStudents;
+
+let d3MapDrawn = false;
+
+function drawD3Map() {
+  if (d3MapDrawn) return;
+  const container = document.getElementById('d3-world-map');
+  if (!container) return;
+
+  const W = container.offsetWidth || 540;
+  const H = Math.round(W * 0.54);
+  container.style.height = H + 'px';
+
+  const svg = d3.select('#d3-world-map')
+    .append('svg')
+    .attr('width', W)
+    .attr('height', H)
+    .style('display','block');
+
+  const projection = d3.geoNaturalEarth1()
+    .scale(W / 6.2)
+    .translate([W / 2, H / 2]);
+
+  const path = d3.geoPath().projection(projection);
+
+  // colour scale: light cream → deep red
+  const maxN = d3.max(mapDataClean, d => d.n);
+  const colorScale = d3.scaleSequential()
+    .domain([0, maxN])
+    .interpolator(d3.interpolate('#f5e8e5', '#8b1a1a'));
+
+  // legend gradient
+  const lgEl = document.getElementById('map-legend-gradient');
+  if (lgEl) {
+    lgEl.style.background = `linear-gradient(to right, #f5e8e5, #c0392b, #8b1a1a)`;
+  }
+
+  const isoMap = {};
+  mapDataClean.forEach(d => { isoMap[d.iso] = d; });
+
+  const nameKey = () => currentLang === 'kz' ? 'name_kz' : currentLang === 'en' ? 'name_en' : 'name_ru';
+
+  // graticule lines
+  svg.append('path')
+    .datum(d3.geoGraticule()())
+    .attr('d', path)
+    .attr('fill','none')
+    .attr('stroke','#e4dfd6')
+    .attr('stroke-width', 0.3);
+
+  // sphere outline
+  svg.append('path')
+    .datum({type:'Sphere'})
+    .attr('d', path)
+    .attr('fill','none')
+    .attr('stroke','#ccc')
+    .attr('stroke-width', 0.5);
+
+  d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
+    const countries = topojson.feature(world, world.objects.countries);
+
+    svg.selectAll('.country')
+      .data(countries.features)
+      .enter().append('path')
+      .attr('class','country')
+      .attr('d', path)
+      .attr('fill', d => {
+        const id = +d.id;
+        if (id === 398) return '#a8c49a'; // Kazakhstan — green
+        const rec = isoMap[id];
+        return rec ? colorScale(rec.n) : '#dedad2';
+      })
+      .attr('stroke','#fff')
+      .attr('stroke-width', 0.35)
+      .on('mouseover', function(event, d) {
+        const rec = isoMap[+d.id];
+        if (!rec) return;
+        d3.select(this).attr('stroke','#111').attr('stroke-width', 1);
+        tooltip.style('display','block')
+          .html(`<strong>${rec[nameKey()]}</strong><br>${rec.n.toLocaleString('ru')} студентов`);
+      })
+      .on('mousemove', function(event) {
+        const [mx, my] = d3.pointer(event, container);
+        tooltip
+          .style('left', (mx + 10) + 'px')
+          .style('top',  (my - 28) + 'px');
+      })
+      .on('mouseout', function(event, d) {
+        const id = +d.id;
+        d3.select(this)
+          .attr('stroke','#fff')
+          .attr('stroke-width', 0.35);
+        tooltip.style('display','none');
+      });
+
+    // KZ label
+    const kaz = countries.features.find(d => +d.id === 398);
+    if (kaz) {
+      const c = path.centroid(kaz);
+      if (c && !isNaN(c[0])) {
+        svg.append('text')
+          .attr('x', c[0]).attr('y', c[1] + 3)
+          .attr('text-anchor','middle')
+          .attr('fill','#3a5e30')
+          .attr('font-family',"'DM Mono',monospace")
+          .attr('font-size', Math.max(7, W/80))
+          .attr('font-weight','700')
+          .attr('pointer-events','none')
+          .text('KZ');
+      }
+    }
+
+    d3MapDrawn = true;
+  }).catch(() => {
+    container.innerHTML = '<p style="padding:1rem;font:11px monospace;color:#999">Map unavailable</p>';
+  });
+
+  // tooltip
+  const tooltip = d3.select(container)
+    .append('div')
+    .style('position','absolute')
+    .style('display','none')
+    .style('background','#111')
+    .style('color','#fff')
+    .style('font-family',"'DM Mono',monospace")
+    .style('font-size','10px')
+    .style('padding','5px 8px')
+    .style('pointer-events','none')
+    .style('border-radius','2px')
+    .style('line-height','1.5')
+    .style('z-index','10');
+
+  // make container relative for tooltip positioning
+  container.style.position = 'relative';
+}
+
+// ═══════════════════════════════════════════════════════════
+// MAIN RENDER
+// ═══════════════════════════════════════════════════════════
+function renderAll() {
+  renderRegionDots();
+  renderNat();
+  renderLangRegion();
+  renderKzLangRegion();
+  renderVuzSpec();
+  renderDorm();
+  hbar('college-region-chart', colRegions.map(d=>({...d,n:d.kol})), colRegions[0].kol);
+  hbar('foreign-chart', foreignData, foreignData[0].n, d=>`${d.n.toLocaleString('ru')}`);
+  hbar('postgrad-chart', postgradData, postgradData[0].n);
+  // D3 map drawn once on first render
+  if (typeof d3 !== 'undefined' && typeof topojson !== 'undefined') drawD3Map();
+}
+
+// ═══════════════════════════════════════════════════════════
+// SCROLL REVEAL
+// ═══════════════════════════════════════════════════════════
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Trigger D3 map when section scrolls into view
+const mapObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && typeof d3 !== 'undefined' && typeof topojson !== 'undefined') {
+      drawD3Map();
+    }
+  });
+}, { threshold: 0.1 });
+const mapSection = document.getElementById('d3-world-map');
+if (mapSection) mapObserver.observe(mapSection);
+
+// INIT
+renderAll();
+</script>
+</body>
+</html>
