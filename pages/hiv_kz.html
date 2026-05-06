@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ВИЧ в Казахстане / HIV in Kazakhstan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#FFFFFF;--bg2:#F8F6F3;--bg3:#F2EFE9;
+  --ink:#0F0D0B;--ink2:#2C2825;--ink3:#6B6158;--ink4:#9B948C;
+  --red:#B84C3A;--red2:#8C3528;
+  --teal:#1E5E62;--teal2:#154447;
+  --gold:#8C6A2E;
+  --rule:rgba(15,13,11,.1);--rule2:rgba(15,13,11,.06);
+  --serif:'Playfair Display',Georgia,serif;
+  --body:'Source Serif 4',Georgia,serif;
+  --mono:'JetBrains Mono',monospace
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+
+/* LANG BAR */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;padding:0 3rem;height:48px}
+.lang-site{font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--ink3);text-transform:uppercase;text-decoration:none}
+.lang-site:hover{color:var(--teal)}
+.lang-right{display:flex;align-items:center;gap:1.5rem}
+.lang-back{font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--ink4);text-transform:uppercase;text-decoration:none;border:1px solid var(--rule);padding:.3rem .8rem;border-radius:2px;transition:all .15s}
+.lang-back:hover{color:var(--teal);border-color:var(--teal)}
+.lang-btns{display:flex;gap:0}
+.lang-btn{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--ink4);background:none;border:none;cursor:pointer;padding:.35rem .75rem;text-transform:uppercase;border-radius:2px;transition:all .15s}
+.lang-btn.active{color:var(--ink);background:var(--bg3)}
+.lang-btn:hover{color:var(--ink)}
+
+/* MASTHEAD — fully white */
+.masthead{margin-top:48px;min-height:calc(100vh - 48px);display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 6rem 0;background:var(--bg);border-bottom:1px solid var(--rule);position:relative}
+.masthead-topline{position:absolute;top:0;left:0;right:0;height:2px;background:var(--red)}
+.masthead-inner{max-width:960px;margin:0 auto;padding:0 3rem;width:100%}
+.masthead-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--ink4);text-transform:uppercase;margin-bottom:2.5rem;display:flex;align-items:center;gap:1.5rem}
+.masthead-eyebrow span{color:var(--red)}
+.masthead-eyebrow::after{content:'';flex:1;max-width:80px;height:1px;background:var(--rule)}
+.masthead-hed{font-family:var(--serif);font-size:clamp(3rem,6.5vw,5.8rem);font-weight:700;line-height:1.06;color:var(--ink);margin-bottom:2rem;letter-spacing:-.025em}
+.masthead-hed em{font-style:italic;color:var(--ink3)}
+.masthead-deck{font-size:.98rem;color:var(--ink3);max-width:520px;line-height:1.7;margin-bottom:3.5rem;font-weight:300}
+.masthead-meta{display:flex;align-items:center;gap:2.5rem}
+.masthead-author{font-family:var(--mono);font-size:10px;color:var(--ink4);letter-spacing:.14em;text-transform:uppercase}
+.masthead-scroll{font-family:var(--mono);font-size:9px;color:var(--ink4);letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:.5rem}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.sarrow{animation:bounce 2.2s infinite}
+
+/* TOP NUMBERS */
+.toprow{background:var(--bg2);border-bottom:1px solid var(--rule)}
+.toprow-inner{max-width:960px;margin:0 auto;padding:0 3rem;display:grid;grid-template-columns:repeat(4,1fr)}
+.tr-item{padding:2.2rem 1.5rem;border-right:1px solid var(--rule)}
+.tr-item:first-child{padding-left:0}
+.tr-item:last-child{border-right:none}
+.tr-num{font-family:var(--serif);font-size:2.4rem;font-weight:700;line-height:1;margin-bottom:.35rem}
+.tr-num.r{color:var(--red)}.tr-num.t{color:var(--teal)}.tr-num.g{color:var(--gold)}
+.tr-lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);line-height:1.45}
+
+/* SECTIONS */
+.sec{max-width:960px;margin:0 auto;padding:5rem 3rem}
+.sec-divider{border:none;border-top:1px solid var(--rule)}
+.bg2{background:var(--bg2)}.bg3{background:var(--bg3)}
+.sec-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:.9rem}
+.sec-num{font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:var(--ink4);text-transform:uppercase}
+.sec-tag{font-family:var(--mono);font-size:9px;letter-spacing:.15em;color:var(--ink4);text-transform:uppercase}
+.sec-rule{width:2rem;height:1.5px;background:var(--red)}
+.sec-hed{font-family:var(--serif);font-size:clamp(1.6rem,3.2vw,2.4rem);font-weight:700;line-height:1.15;color:var(--ink);margin-bottom:1.2rem;letter-spacing:-.02em;max-width:700px}
+.sec-intro{font-size:.98rem;color:var(--ink2);max-width:620px;line-height:1.85;margin-bottom:3rem}
+
+/* CHART FRAMES */
+.cframe{background:var(--bg);border:1px solid var(--rule);padding:1.75rem;margin-bottom:1.75rem}
+.cframe.shade{background:var(--bg2)}
+.ctitle{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--rule2)}
+.cnote{font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:.9rem;line-height:1.6}
+
+/* INSIGHT BLOCK */
+.insight{margin-top:1.1rem;padding:.85rem 1rem .85rem 1.1rem;background:var(--bg2);border-left:2px solid var(--teal);font-size:.82rem;color:var(--ink2);line-height:1.65}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem;margin-bottom:1.75rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.75rem;margin-bottom:1.75rem}
+
+/* REGION BARS */
+.rbars{display:flex;flex-direction:column;gap:.42rem}
+.rrow{display:grid;grid-template-columns:140px 1fr 50px;align-items:center;gap:.65rem}
+.rname{font-family:var(--body);font-size:.75rem;color:var(--ink2);text-align:right;line-height:1.2}
+.rbg{background:var(--bg3);height:9px;border-radius:1px;overflow:hidden}
+.rfill{height:100%;border-radius:1px}
+.rval{font-family:var(--mono);font-size:.68rem;color:var(--ink3)}
+.rval.hi{color:var(--red);font-weight:600}
+.who-note{margin-top:1.1rem;padding:.8rem 1rem;background:rgba(184,76,58,.06);border-left:2px solid var(--red);font-size:.8rem;color:var(--ink2);line-height:1.6}
+
+/* STAT CARDS */
+.scard{padding:1.75rem;border:1px solid var(--rule);background:var(--bg)}
+.scard-num{font-family:var(--serif);font-size:2.5rem;font-weight:700;line-height:1;margin-bottom:.35rem}
+.scard-lbl{font-size:.82rem;color:var(--ink2);line-height:1.55}
+
+/* INLINE BARS */
+.ibars{display:flex;flex-direction:column;gap:.8rem}
+.irow{display:grid;grid-template-columns:145px 1fr 46px;align-items:center;gap:.65rem}
+.iname{font-size:.78rem;color:var(--ink2);line-height:1.2}
+.ibg{background:var(--bg3);height:8px;border-radius:1px;overflow:hidden}
+.ifill{height:100%;border-radius:1px}
+.ival{font-family:var(--mono);font-size:.7rem;font-weight:600;text-align:right}
+
+/* PORTRAIT */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.pcard{padding:1.75rem;background:var(--bg)}
+.pcard.alt{background:var(--bg2)}
+.pera{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink4);margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:1px solid var(--rule2)}
+.pitems{display:flex;flex-direction:column;gap:.45rem}
+.pitem{font-size:.84rem;color:var(--ink2);padding-left:1rem;position:relative;line-height:1.45}
+.pitem::before{content:'·';position:absolute;left:0;color:var(--ink4)}
+
+/* GENDER */
+.gender-wrap{display:grid;grid-template-columns:1fr 1.3fr;gap:2rem;align-items:center}
+.gender-leg{display:flex;flex-direction:column;gap:1.2rem}
+.gpct{font-family:var(--serif);font-size:2.2rem;font-weight:700;line-height:1;margin-bottom:.2rem}
+.gpct.m{color:var(--teal)}.gpct.f{color:var(--gold)}
+.gdesc{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.gabs{font-size:.82rem;color:var(--ink4);margin-top:.12rem}
+
+/* TREEMAP */
+.treemap{display:flex;flex-wrap:wrap;gap:3px;padding:3px;background:var(--bg3);border-radius:2px}
+.tm-cell{border-radius:2px;display:flex;flex-direction:column;justify-content:flex-end;padding:.5rem .6rem;cursor:default;transition:opacity .15s;position:relative;overflow:hidden;min-height:50px}
+.tm-cell:hover{opacity:.88}
+.tm-name{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.85);line-height:1.2;margin-bottom:.15rem}
+.tm-val{font-family:var(--serif);font-size:1rem;font-weight:700;color:#fff;line-height:1}
+
+/* CASCADE */
+.cascade{display:flex;gap:1.25rem;align-items:flex-end;height:180px;margin:1.5rem 0}
+.cbar{flex:1;display:flex;flex-direction:column;align-items:center}
+.cfill{width:100%;border-radius:2px 2px 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:.45rem}
+.cpct{font-family:var(--mono);font-size:.75rem;color:rgba(255,255,255,.9);font-weight:500}
+.clabel{font-family:var(--mono);font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-top:.45rem;text-align:center;line-height:1.4}
+
+/* BUDGET */
+.budget-rows{display:flex;flex-direction:column;gap:.55rem}
+.budget-row{display:grid;grid-template-columns:210px 1fr 90px;align-items:center;gap:.65rem}
+.budget-name{font-size:.75rem;color:var(--ink2);line-height:1.2}
+.budget-bg{background:var(--bg3);height:9px;border-radius:1px;overflow:hidden}
+.budget-fill{height:100%;border-radius:1px}
+.budget-val{font-family:var(--mono);font-size:.68rem;color:var(--ink3);text-align:right}
+
+/* AGE PYRAMID */
+.pyramid-wrap{display:flex;flex-direction:column;gap:.35rem;padding:.5rem 0}
+.pyrow{display:grid;grid-template-columns:1fr 60px 1fr;align-items:center;gap:.4rem}
+.pyleft{display:flex;justify-content:flex-end}
+.pyright{display:flex;justify-content:flex-start}
+.pybar{height:18px;border-radius:1px}
+.pybar.m{background:var(--teal);opacity:.8}
+.pybar.f{background:var(--gold);opacity:.8}
+.pyage{font-family:var(--mono);font-size:.7rem;color:var(--ink3);text-align:center;line-height:1}
+.pyleg{display:flex;justify-content:center;gap:2rem;margin-top:1rem}
+.pylegitem{display:flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.68rem;color:var(--ink3)}
+.pylegdot{width:10px;height:10px;border-radius:1px}
+
+/* CONCLUSION */
+.conclusion{border-top:2px solid var(--ink);padding:4rem 0}
+.conc-inner{max-width:960px;margin:0 auto;padding:0 3rem}
+.conc-hed{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;line-height:1.12;margin-bottom:2rem;letter-spacing:-.02em;max-width:700px}
+.conc-body{font-size:1rem;color:var(--ink2);line-height:1.9;max-width:640px}
+.conc-body p+p{margin-top:1.2rem}
+.conc-points{margin:2rem 0;display:flex;flex-direction:column;gap:1rem}
+.conc-point{display:grid;grid-template-columns:2rem 1fr;gap:.75rem;align-items:start}
+.conc-point-num{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--red);line-height:1.1}
+.conc-point-text{font-size:.9rem;color:var(--ink2);line-height:1.7;padding-top:.1rem}
+
+/* FOOTER */
+.footer{background:var(--bg2);border-top:1px solid var(--rule);padding:2.5rem 0}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-src-label{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink4);margin-bottom:.75rem}
+.footer-src-list{display:flex;flex-direction:column;gap:.3rem}
+.footer-src-item{font-family:var(--mono);font-size:9.5px;color:var(--ink4);line-height:1.5}
+.footer-right{text-align:right}
+.footer-name{font-family:var(--serif);font-size:1rem;color:var(--ink2);margin-bottom:.3rem}
+.footer-url{font-family:var(--mono);font-size:9px;color:var(--ink4);letter-spacing:.1em}
+
+/* LANG HIDDEN */
+[data-lang]{display:none}
+[data-lang].active{display:block}
+span[data-lang]{display:none}
+span[data-lang].active{display:inline}
+
+@media(max-width:720px){
+  .toprow-inner{grid-template-columns:1fr 1fr}
+  .tr-item{padding:1.5rem 1rem}
+  .g2,.g3,.pgrid,.gender-wrap{grid-template-columns:1fr}
+  .sec{padding:3rem 1.5rem}
+  .masthead-inner{padding:0 1.5rem}
+  .rrow{grid-template-columns:90px 1fr 42px}
+  .irow{grid-template-columns:105px 1fr 40px}
+  .budget-row{grid-template-columns:120px 1fr 65px}
+  .lang-bar{padding:0 1.5rem}
+  .footer-inner{flex-direction:column;align-items:flex-start}
+  .footer-right{text-align:left}
+  .conc-inner{padding:0 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- LANG BAR -->
+<div class="lang-bar">
+  <a href="https://nurasyl.space/" class="lang-site">← nurasyl.space</a>
+  <div class="lang-right">
+    <a href="https://nurasyl.space/" class="lang-back">
+      <span data-lang="ru" class="active">На главную</span>
+      <span data-lang="kz">Басты бетке</span>
+      <span data-lang="en">Back to main</span>
+    </a>
+    <div class="lang-btns">
+      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" onclick="setLang('kz')">KZ</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-topline"></div>
+  <div class="masthead-inner">
+    <div class="masthead-eyebrow">
+      <span data-lang="ru" class="active">Данные · Казахстан · <span>ВИЧ / СПИД</span></span>
+      <span data-lang="kz">Деректер · Қазақстан · <span>АИТВ / ЖҚТБ</span></span>
+      <span data-lang="en">Data · Kazakhstan · <span>HIV / AIDS</span></span>
+    </div>
+    <h1 class="masthead-hed">
+      <span data-lang="ru" class="active">42 000 человек.<br><em>Невидимая эпидемия</em><br>Казахстана</span>
+      <span data-lang="kz">42 000 адам.<br><em>Қазақстанның</em><br>көзге көрінбейтін эпидемиясы</span>
+      <span data-lang="en">42,000 people.<br><em>Kazakhstan's</em><br>invisible epidemic</span>
+    </h1>
+    <p class="masthead-deck">
+      <span data-lang="ru" class="active">Исследование на основе официальных данных КНЦДИЗ, ЮНЭЙДС и Министерства здравоохранения РК.</span>
+      <span data-lang="kz">КНЦДИЗ, ЮНЭЙДС және ҚР Денсаулық сақтау министрлігінің ресми деректері негізіндегі зерттеу.</span>
+      <span data-lang="en">An analysis based on official data from NCDI, UNAIDS and the Ministry of Health of Kazakhstan.</span>
+    </p>
+    <div class="masthead-meta">
+      <div class="masthead-author">Nurasyl Abdrazakuly · nurasyl.space</div>
+      <div class="masthead-scroll">
+        <span data-lang="ru" class="active">Прокрутите вниз</span>
+        <span data-lang="kz">Төмен жылжытыңыз</span>
+        <span data-lang="en">Scroll down</span>
+        <span class="sarrow">↓</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOP NUMBERS -->
+<div class="toprow">
+  <div class="toprow-inner">
+    <div class="tr-item">
+      <div class="tr-num r">~42 000</div>
+      <div class="tr-lbl"><span data-lang="ru" class="active">оценочное число людей,<br>живущих с ВИЧ</span><span data-lang="kz">АИТВ-мен өмір сүретін<br>адамдардың бағалы саны</span><span data-lang="en">estimated people<br>living with HIV</span></div>
+    </div>
+    <div class="tr-item">
+      <div class="tr-num">35 988</div>
+      <div class="tr-lbl"><span data-lang="ru" class="active">официально на учёте<br>(конец 2024)</span><span data-lang="kz">ресми тіркелген<br>(2024 жыл соңы)</span><span data-lang="en">officially registered<br>(end of 2024)</span></div>
+    </div>
+    <div class="tr-item">
+      <div class="tr-num t">83%</div>
+      <div class="tr-lbl"><span data-lang="ru" class="active">знают о своём<br>статусе</span><span data-lang="kz">өз мәртебесін<br>біледі</span><span data-lang="en">aware of their<br>status</span></div>
+    </div>
+    <div class="tr-item">
+      <div class="tr-num">298</div>
+      <div class="tr-lbl"><span data-lang="ru" class="active">детей с ВИЧ<br>на наблюдении</span><span data-lang="kz">АИТВ-мен балалар<br>бақылауда</span><span data-lang="en">children with HIV<br>under observation</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- SECTION 1: GEOGRAPHY -->
+<!-- ══════════════════════════════════ -->
+<hr class="sec-divider">
+<div class="sec">
+  <div class="sec-eyebrow"><div class="sec-num">01</div><div class="sec-rule"></div><div class="sec-tag"><span data-lang="ru" class="active">Распространённость</span><span data-lang="kz">Таралуы</span><span data-lang="en">Prevalence</span></div></div>
+  <h2 class="sec-hed"><span data-lang="ru" class="active">Региональный разрыв в 15 раз</span><span data-lang="kz">Аймақтар арасындағы 15 еселік айырмашылық</span><span data-lang="en">A 15-fold regional gap</span></h2>
+  <p class="sec-intro"><span data-lang="ru" class="active">По данным на 1 апреля 2026 года средний показатель по стране — 0,35% среди населения 15–49 лет. За этой цифрой скрывается значительный разброс: ВКО превышает Кызылординскую область почти в 15 раз.</span><span data-lang="kz">2026 жылдың 1 сәуіріндегі деректер бойынша ел бойынша орта көрсеткіш 15–49 жас тобында 0,35% құрайды. Бұл санның артында үлкен айырмашылық жатыр: ШҚО Қызылорда облысынан шамамен 15 есе асады.</span><span data-lang="en">As of April 1, 2026, the national average is 0.35% among the 15–49 age group. Behind this figure lies a significant disparity: East Kazakhstan exceeds Kyzylorda region by nearly 15 times.</span></p>
+
+  <!-- VIZ 1: Regional bars -->
+  <div class="cframe">
+    <div class="ctitle"><span data-lang="ru" class="active">Распространённость ВИЧ по регионам РК — 01.04.2026, возраст 15–49 лет (%)</span><span data-lang="kz">ҚР өңірлері бойынша АИТВ таралуы — 01.04.2026, 15–49 жас (%)</span><span data-lang="en">HIV prevalence by region — 01.04.2026, ages 15–49 (%)</span></div>
+    <div class="rbars" id="regionBars"></div>
+    <div class="who-note"><strong><span data-lang="ru" class="active">ВКО (1,01%)</span><span data-lang="kz">ШҚО (1,01%)</span><span data-lang="en">East Kazakhstan (1.01%)</span></strong><span data-lang="ru" class="active"> превышает порог 1%, который ВОЗ использует как индикатор концентрированной эпидемии среди общего населения. Официального объявления эпидемии в регионе не было.</span><span data-lang="kz"> ЖЫО жалпы халық арасындағы шоғырланған эпидемияның индикаторы ретінде пайдаланатын 1% шегінен асады. Аймақта ресми эпидемия жариялау болған жоқ.</span><span data-lang="en"> exceeds the 1% threshold WHO uses as an indicator of a concentrated epidemic in the general population. No official epidemic declaration has been issued for the region.</span></div>
+    <div class="insight"><span data-lang="ru" class="active">Северо-восточные регионы — ВКО, Карагандинская, Павлодарская — исторически были центрами индустриального развития с высокой концентрацией населения и более ранним распространением инъекционного наркопотребления. Это отражается в сегодняшних показателях, даже несмотря на то, что доля инъекционного пути передачи сократилась по всей стране.</span><span data-lang="kz">Солтүстік-шығыс аймақтар — ШҚО, Қарағанды, Павлодар — тарихи тұрғыдан инъекциялық есірткі тұтынудың ертерек таралуымен индустриалды даму орталықтары болды. Бұл инъекциялық берілу үлесі бүкіл ел бойынша азайғанына қарамастан бүгінгі көрсеткіштерде көрінеді.</span><span data-lang="en">The northeastern regions — East Kazakhstan, Karaganda, Pavlodar — were historically industrial centres with dense populations and earlier spread of injection drug use. This legacy is reflected in today's figures, even as the injection transmission share has declined nationally.</span></div>
+    <div class="cnote"><span data-lang="ru" class="active">Источник: КНЦДИЗ МЗ РК, апрель 2026</span><span data-lang="kz">Дереккөз: ҚР ДСМ ҚТДИҒО, 2026 сәуір</span><span data-lang="en">Source: NCDI MH RK, April 2026</span></div>
+  </div>
+
+  <!-- VIZ 2: Absolute new cases H1 2025 -->
+  <div class="cframe shade">
+    <div class="ctitle"><span data-lang="ru" class="active">Новые случаи ВИЧ — 6 месяцев 2025 года, граждане РК (абсолютные числа)</span><span data-lang="kz">Жаңа АИТВ жағдайлары — 2025 жылдың 6 айы, ҚР азаматтары (абсолютті сандар)</span><span data-lang="en">New HIV cases — first 6 months of 2025, RK citizens (absolute numbers)</span></div>
+    <div style="height:270px;position:relative"><canvas id="absChart"></canvas></div>
+    <div class="insight"><span data-lang="ru" class="active">Алматы лидирует по абсолютному числу случаев — 598 за полгода, или почти каждый шестой новый случай в стране. Однако это отражает численность населения мегаполиса. В пересчёте на долю жителей ВКО остаётся эпицентром — показатель распространённости там в два раза выше, чем в Алматы.</span><span data-lang="kz">Алматы абсолютті жағдайлар санынан жетекші — жарты жылда 598, яғни елдегі жаңа жағдайлардың шамамен алтыдан бірі. Алайда бұл мегаполистің халық санын көрсетеді. Тұрғын үлесіне қайта есептегенде ШҚО эпицентр болып қала береді — таралу көрсеткіші Алматыдан екі есе жоғары.</span><span data-lang="en">Almaty leads in absolute case numbers — 598 in six months, nearly one in six new cases nationally. However, this reflects the city's population size. Per capita, East Kazakhstan remains the epicentre — its prevalence rate is twice that of Almaty.</span></div>
+    <div class="cnote"><span data-lang="ru" class="active">Источник: КНЦДИЗ МЗ РК, 2025 · Абсолютные числа отражают размер населения, а не интенсивность эпидемии</span><span data-lang="kz">Дереккөз: ҚР ДСМ ҚТДИҒО, 2025 · Абсолютті сандар халық санын көрсетеді, эпидемияның қарқындылығын емес</span><span data-lang="en">Source: NCDI MH RK, 2025 · Absolute figures reflect population size, not epidemic intensity</span></div>
+  </div>
+
+  <!-- VIZ 3: Almaty districts treemap -->
+  <div class="cframe">
+    <div class="ctitle"><span data-lang="ru" class="active">Распространённость ВИЧ по районам Алматы — 01.04.2026 (на 100 тыс. населения)</span><span data-lang="kz">Алматы аудандары бойынша АИТВ таралуы — 01.04.2026 (100 мың халыққа шаққанда)</span><span data-lang="en">HIV prevalence by district in Almaty — 01.04.2026 (per 100,000 population)</span></div>
+    <div id="treemap" style="width:100%;min-height:280px"></div>
+    <div class="insight"><span data-lang="ru" class="active">Турксибский район — 968,4 на 100 тыс. — почти в пять раз выше, чем Наурызбайский (196,7). Турксиб исторически является районом с высокой долей рабочего класса и более высоким уровнем уязвимости среди ключевых групп населения.</span><span data-lang="kz">Түрксіб ауданы — 100 мыңға 968,4 — Наурызбайдан (196,7) шамамен бес есе жоғары. Түрксіб тарихи тұрғыдан жұмысшы табының жоғары үлесі бар аудан және негізгі халық топтары арасында осалдықтың жоғары деңгейімен ерекшеленеді.</span><span data-lang="en">Turksib district — 968.4 per 100,000 — is nearly five times higher than Nauryzbaу (196.7). Turksib is historically a working-class district with a higher vulnerability among key population groups.</span></div>
+    <div class="cnote"><span data-lang="ru" class="active">Источник: Центр СПИД г. Алматы, апрель 2026</span><span data-lang="kz">Дереккөз: Алматы қ. ЖҚТБ орталығы, 2026 сәуір</span><span data-lang="en">Source: Almaty AIDS Center, April 2026</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- SECTION 2: TRANSMISSION -->
+<!-- ══════════════════════════════════ -->
+<hr class="sec-divider">
+<div class="bg2">
+<div class="sec">
+  <div class="sec-eyebrow"><div class="sec-num">02</div><div class="sec-rule"></div><div class="sec-tag"><span data-lang="ru" class="active">Пути передачи</span><span data-lang="kz">Берілу жолдары</span><span data-lang="en">Transmission routes</span></div></div>
+  <h2 class="sec-hed"><span data-lang="ru" class="active">18 лет трансформации эпидемии</span><span data-lang="kz">Эпидемияның 18 жылдық өзгерісі</span><span data-lang="en">18 years of epidemic transformation</span></h2>
+  <p class="sec-intro"><span data-lang="ru" class="active">В 2008 году инъекционные наркотики объясняли 66% случаев. К I кварталу 2026 года эта доля упала до 9,2%, а гетеросексуальный путь занял 70,8%. Одновременно доля гомосексуальных контактов выросла с 0,6% до 14,6%.</span><span data-lang="kz">2008 жылы инъекциялық есірткі жағдайлардың 66% түсіндірді. 2026 жылдың I тоқсанына қарай бұл үлес 9,2%-ға дейін төмендеді, ал гетеросексуалдық жол 70,8% алды. Сонымен қатар гомосексуалдық байланыстардың үлесі 0,6%-дан 14,6%-ға дейін өсті.</span><span data-lang="en">In 2008, injection drug use accounted for 66% of cases. By Q1 2026, this share fell to 9.2%, while heterosexual transmission reached 70.8%. The share of same-sex transmission rose from 0.6% to 14.6%.</span></p>
+
+  <!-- VIZ 4: Transmission line -->
+  <div class="cframe">
+    <div class="ctitle"><span data-lang="ru" class="active">Динамика путей передачи ВИЧ у взрослых, 2008–I кв. 2026 (%)</span><span data-lang="kz">Ересектер арасындағы АИТВ берілу жолдарының динамикасы, 2008–2026 I тоқ. (%)</span><span data-lang="en">HIV transmission route trends among adults, 2008–Q1 2026 (%)</span></div>
+    <div style="height:300px;position:relative"><canvas id="transmissionChart"></canvas></div>
+    <div class="insight"><span data-lang="ru" class="active">Снижение доли инъекционного пути не означает исчезновения рискованного поведения — оно меняет форму. Переход на синтетические наркотики (не инъекционные) частично объясняет статистику, но при этом создаёт новые сложности для профилактических программ, разработанных под прежнюю модель передачи.</span><span data-lang="kz">Инъекциялық жолдың үлесінің төмендеуі тәуекелді мінез-құлықтың жоғалуын білдірмейді — ол формасын өзгертеді. Синтетикалық есірткіге (инъекциялық емес) өту статистиканы ішінара түсіндіреді, бірақ алдыңғы берілу моделіне арналған профилактикалық бағдарламалар үшін жаңа күрделіліктер тудырады.</span><span data-lang="en">The decline in injection transmission does not mean risky behaviour is disappearing — it is changing form. The shift to synthetic (non-injectable) drugs partly explains the statistics, but creates new challenges for prevention programmes designed for the older transmission model.</span></div>
+    <div class="cnote"><span data-lang="ru" class="active">Источник: КНЦДИЗ МЗ РК · Данные за I кв. 2026 предварительные</span><span data-lang="kz">Дереккөз: ҚР ДСМ ҚТДИҒО · 2026 I тоқ. деректері алдын ала</span><span data-lang="en">Source: NCDI MH RK · Q1 2026 data are preliminary</span></div>
+  </div>
+
+  <div class="g2">
+    <!-- VIZ 5: Women transmission donut -->
+    <div class="cframe" style="margin-bottom:0">
+      <div class="ctitle"><span data-lang="ru" class="active">Пути передачи среди женщин (2022)</span><span data-lang="kz">Әйелдер арасындағы берілу жолдары (2022)</span><span data-lang="en">Transmission routes among women (2022)</span></div>
+      <div style="height:190px;position:relative"><canvas id="womenTransChart"></canvas></div>
+      <div class="insight"><span data-lang="ru" class="active">85% заражений среди женщин — гетеросексуальный контакт. Это означает, что женщины чаще инфицируются от партнёра, а не в результате собственного рискованного поведения, что ограничивает их возможности для самозащиты.</span><span data-lang="kz">Әйелдер арасындағы жұқтырулардың 85% — гетеросексуалдық байланыс. Бұл әйелдер жиі өз тәуекелді мінез-құлқы салдарынан емес, серіктестен жұқтыратынын білдіреді, бұл олардың өзін қорғау мүмкіндіктерін шектейді.</span><span data-lang="en">85% of infections among women occur through heterosexual contact. This means women are more often infected by a partner rather than through their own risk behaviour — which limits their ability to protect themselves.</span></div>
+      <div class="cnote"><span data-lang="ru" class="active">Источник: ЮНЭЙДС, Гендерная оценка, 2023</span><span data-lang="kz">Дереккөз: ЮНЭЙДС, Гендерлік бағалау, 2023</span><span data-lang="en">Source: UNAIDS Gender Assessment, 2023</span></div>
+    </div>
+
+    <!-- VIZ 6: Portrait before/after -->
+    <div class="cframe" style="margin-bottom:0">
+      <div class="ctitle"><span data-lang="ru" class="active">Социальный портрет человека с ВИЧ</span><span data-lang="kz">АИТВ-мен адамның әлеуметтік портреті</span><span data-lang="en">Social portrait of a person with HIV</span></div>
+      <div class="pgrid" style="margin-bottom:.75rem">
+        <div class="pcard">
+          <div class="pera"><span data-lang="ru" class="active">До 2015</span><span data-lang="kz">2015 жылға дейін</span><span data-lang="en">Before 2015</span></div>
+          <div class="pitems">
+            <div class="pitem"><span data-lang="ru" class="active">Потребители инъекционных наркотиков</span><span data-lang="kz">Инъекциялық есірткі тұтынушылар</span><span data-lang="en">Injection drug users</span></div>
+            <div class="pitem"><span data-lang="ru" class="active">Секс-работники</span><span data-lang="kz">Жыныстық қызметкерлер</span><span data-lang="en">Sex workers</span></div>
+            <div class="pitem"><span data-lang="ru" class="active">Лица в местах лишения свободы</span><span data-lang="kz">Бас бостандығынан айрылған адамдар</span><span data-lang="en">People in prison</span></div>
+          </div>
+        </div>
+        <div class="pcard alt">
+          <div class="pera"><span data-lang="ru" class="active">Сейчас</span><span data-lang="kz">Қазір</span><span data-lang="en">Now</span></div>
+          <div class="pitems">
+            <div class="pitem"><span data-lang="ru" class="active">Мужчины 30–49 лет с постоянным доходом</span><span data-lang="kz">Тұрақты табысы бар 30–49 жастағы ерлер</span><span data-lang="en">Men aged 30–49 with steady income</span></div>
+            <div class="pitem"><span data-lang="ru" class="active">Образованные, социально адаптированные</span><span data-lang="kz">Білімді, әлеуметтік бейімделген</span><span data-lang="en">Educated and socially integrated</span></div>
+            <div class="pitem"><span data-lang="ru" class="active">Незащищённые половые контакты</span><span data-lang="kz">Қорғанылмаған жыныстық байланыстар</span><span data-lang="en">Unprotected sexual contacts</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="cnote"><span data-lang="ru" class="active">По данным Центров СПИД Алматы и Астаны, 2023</span><span data-lang="kz">Алматы және Астана ЖҚТБ орталықтарының деректері бойынша, 2023</span><span data-lang="en">Based on data from Almaty and Astana AIDS Centers, 2023</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- SECTION 3: DEMOGRAPHICS -->
+<!-- ══════════════════════════════════ -->
+<hr class="sec-divider">
+<div class="sec">
+  <div class="sec-eyebrow"><div class="sec-num">03</div><div class="sec-rule"></div><div class="sec-tag"><span data-lang="ru" class="active">Демография</span><span data-lang="kz">Демография</span><span data-lang="en">Demographics</span></div></div>
+  <h2 class="sec-hed"><span data-lang="ru" class="active">Кто живёт с ВИЧ в Казахстане</span><span data-lang="kz">Қазақстанда АИТВ-мен кім өмір сүреді</span><span data-lang="en">Who is living with HIV in Kazakhstan</span></h2>
+  <p class="sec-intro"><span data-lang="ru" class="active">Шесть из десяти людей с ВИЧ — мужчины. Наибольшая концентрация новых случаев — в возрастной группе 30–39 лет. При этом 21% казахстанцев ежегодно проходит тестирование — вдвое выше минимума ВОЗ.</span><span data-lang="kz">АИТВ-мен ауыратындардың алты оның — еркектер. Жаңа жағдайлардың ең жоғары шоғырлануы 30–39 жас тобында. Сонымен бірге қазақстандықтардың 21%-ы жыл сайын тестілеуден өтеді — бұл ЖЫО минимумынан екі есе жоғары.</span><span data-lang="en">Six out of ten people with HIV are men. The highest concentration of new cases is in the 30–39 age group. At the same time, 21% of Kazakhstanis are tested annually — twice the WHO minimum.</span></p>
+
+  <div class="g2">
+    <!-- VIZ 7: Gender donut -->
+    <div class="cframe" style="margin-bottom:0">
+      <div class="ctitle"><span data-lang="ru" class="active">Гендерное распределение среди ЛЖВ</span><span data-lang="kz">АИТВ-мен өмір сүретіндер арасындағы гендерлік бөлу</span><span data-lang="en">Gender distribution among PLHIV</span></div>
+      <div class="gender-wrap">
+        <div class="gender-leg">
+          <div><div class="gpct m">61,7%</div><div class="gdesc"><span data-lang="ru" class="active">Мужчины</span><span data-lang="kz">Ерлер</span><span data-lang="en">Men</span></div><div class="gabs">18 740</div></div>
+          <div><div class="gpct f">38,3%</div><div class="gdesc"><span data-lang="ru" class="active">Женщины</span><span data-lang="kz">Әйелдер</span><span data-lang="en">Women</span></div><div class="gabs">12 244</div></div>
+        </div>
+        <div style="height:175px;position:relative"><canvas id="genderChart"></canvas></div>
+      </div>
+      <div class="insight"><span data-lang="ru" class="active">Гендерный разрыв постепенно сокращается: ещё несколько лет назад доля женщин среди новых случаев была ниже 30%. Рост до 38,3% отражает смещение эпидемии от инъекционного к половому пути — при котором женщины более уязвимы.</span><span data-lang="kz">Гендерлік алшақтық біртіндеп қысқаруда: бірнеше жыл бұрын жаңа жағдайлар арасындағы әйелдер үлесі 30%-дан төмен болды. 38,3%-ға дейін өсу эпидемияның инъекциялықтан жыныстық жолға ауысуын көрсетеді — бұл жолда әйелдер осалырақ.</span><span data-lang="en">The gender gap is gradually narrowing: a few years ago women accounted for less than 30% of new cases. The rise to 38.3% reflects the epidemic's shift from injection to sexual transmission — where women are more vulnerable.</span></div>
+      <div class="cnote"><span data-lang="ru" class="active">Источник: Министерство здравоохранения РК</span><span data-lang="kz">Дереккөз: ҚР Денсаулық сақтау министрлігі</span><span data-lang="en">Source: Ministry of Health of Kazakhstan</span></div>
+    </div>
+
+    <!-- VIZ 8: Age pyramid -->
+    <div class="cframe" style="margin-bottom:0">
+      <div class="ctitle"><span data-lang="ru" class="active">Новые случаи ВИЧ по возрасту и полу — 2022</span><span data-lang="kz">Жас және жыныс бойынша жаңа АИТВ жағдайлары — 2022</span><span data-lang="en">New HIV cases by age and sex — 2022</span></div>
+      <div class="pyramid-wrap" id="agePyramid"></div>
+      <div class="pyleg">
+        <div class="pylegitem"><div class="pylegdot" style="background:var(--teal)"></div><span data-lang="ru" class="active">Мужчины</span><span data-lang="kz">Ерлер</span><span data-lang="en">Men</span></div>
+        <div class="pylegitem"><div class="pylegdot" style="background:var(--gold)"></div><span data-lang="ru" class="active">Женщины</span><span data-lang="kz">Әйелдер</span><span data-lang="en">Women</span></div>
+      </div>
+      <div class="insight"><span data-lang="ru" class="active">Группа 30–39 лет — пик эпидемии. Это экономически активное население, что несёт дополнительную нагрузку на систему здравоохранения и производительность труда. Важно, что молодёжь 15–19 лет представлена минимально — результат профилактической работы с подростками.</span><span data-lang="kz">30–39 жас тобы — эпидемияның шыңы. Бұл экономикалық белсенді халық, бұл денсаулық сақтау жүйесіне және еңбек өнімділігіне қосымша жүктеме береді. Маңыздысы, 15–19 жастағы жастар өте аз — бұл жасөспірімдермен профилактикалық жұмыстың нәтижесі.</span><span data-lang="en">The 30–39 age group is the epidemic peak. This is economically active population, placing additional burden on the healthcare system and labour productivity. Notably, youth aged 15–19 are minimally represented — a result of adolescent prevention work.</span></div>
+      <div class="cnote"><span data-lang="ru" class="active">Источник: ЮНЭЙДС, Гендерная оценка, 2023</span><span data-lang="kz">Дереккөз: ЮНЭЙДС, Гендерлік бағалау, 2023</span><span data-lang="en">Source: UNAIDS Gender Assessment, 2023</span></div>
+    </div>
+  </div>
+
+  <!-- VIZ 9: Testing coverage -->
+  <div class="cframe shade">
+    <div class="ctitle"><span data-lang="ru" class="active">Охват тестированием на ВИЧ — сравнение с нормой ВОЗ</span><span data-lang="kz">АИТВ-ға тестілеумен қамту — ЖЫО нормасымен салыстыру</span><span data-lang="en">HIV testing coverage — comparison with WHO benchmark</span></div>
+    <div style="display:flex;gap:3rem;align-items:flex-end;flex-wrap:wrap;margin:1rem 0 1.25rem">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.5rem">
+        <div style="background:var(--bg3);width:64px;height:160px;border-radius:2px;overflow:hidden;display:flex;align-items:flex-end">
+          <div style="width:100%;height:10%;background:#C0CBCC;border-radius:2px 2px 0 0"></div>
+        </div>
+        <div style="font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--ink3)">10%</div>
+        <div style="font-family:var(--mono);font-size:8.5px;color:var(--ink4);text-align:center;text-transform:uppercase;letter-spacing:.08em;line-height:1.4"><span data-lang="ru" class="active">Минимум ВОЗ</span><span data-lang="kz">ЖЫО минимумы</span><span data-lang="en">WHO minimum</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.5rem">
+        <div style="background:var(--bg3);width:64px;height:160px;border-radius:2px;overflow:hidden;display:flex;align-items:flex-end">
+          <div style="width:100%;height:21%;background:var(--teal);opacity:.75;border-radius:2px 2px 0 0"></div>
+        </div>
+        <div style="font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--teal)">21%</div>
+        <div style="font-family:var(--mono);font-size:8.5px;color:var(--ink4);text-align:center;text-transform:uppercase;letter-spacing:.08em;line-height:1.4"><span data-lang="ru" class="active">Казахстан 2024</span><span data-lang="kz">Қазақстан 2024</span><span data-lang="en">Kazakhstan 2024</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.5rem">
+        <div style="background:var(--bg3);width:64px;height:160px;border-radius:2px;overflow:hidden;display:flex;align-items:flex-end">
+          <div style="width:100%;height:27%;background:var(--red);opacity:.75;border-radius:2px 2px 0 0"></div>
+        </div>
+        <div style="font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--red)">25–28%</div>
+        <div style="font-family:var(--mono);font-size:8.5px;color:var(--ink4);text-align:center;text-transform:uppercase;letter-spacing:.08em;line-height:1.4"><span data-lang="ru" class="active">г. Астана (ежегодно)</span><span data-lang="kz">Астана қ. (жыл сайын)</span><span data-lang="en">Astana city (annually)</span></div>
+      </div>
+    </div>
+    <div class="insight"><span data-lang="ru" class="active">В 2024 году в Казахстане проведено 4,64 млн исследований на ВИЧ — каждый пятый житель страны. Это вдвое выше минимального порога ВОЗ. Астана ежегодно тестирует четверть населения, что позволяет раньше выявлять случаи и снижать запоздалую диагностику.</span><span data-lang="kz">2024 жылы Қазақстанда 4,64 млн АИТВ-зерттеу жүргізілді — елдің әр бесінші тұрғыны. Бұл ЖЫО минимальды шегінен екі есе жоғары. Астана жыл сайын халықтың төрттен бірін тестілейді, бұл жағдайларды ертерек анықтауға және кешіктірілген диагностиканы азайтуға мүмкіндік береді.</span><span data-lang="en">In 2024, Kazakhstan conducted 4.64 million HIV tests — one in five residents. This is twice the WHO minimum threshold. Astana tests a quarter of its population annually, enabling earlier detection and reducing late diagnosis.</span></div>
+    <div class="cnote"><span data-lang="ru" class="active">Источник: Власть.кз, 2025; Центр СПИД Астаны, 2023 · В 2024 году в РК проведено 4 640 942 исследования на ВИЧ</span><span data-lang="kz">Дереккөз: Власть.kz, 2025; Астана ЖҚТБ орталығы, 2023 · 2024 жылы ҚР-да 4 640 942 АИТВ-зерттеу жүргізілді</span><span data-lang="en">Source: Vlast.kz, 2025; Astana AIDS Center, 2023 · Kazakhstan conducted 4,640,942 HIV tests in 2024</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- SECTION 4: GENDER -->
+<!-- ══════════════════════════════════ -->
+<hr class="sec-divider">
+<div class="bg2">
+<div class="sec">
+  <div class="sec-eyebrow"><div class="sec-num">04</div><div class="sec-rule"></div><div class="sec-tag"><span data-lang="ru" class="active">Гендерный разрез</span><span data-lang="kz">Гендерлік кесік</span><span data-lang="en">Gender dimension</span></div></div>
+  <h2 class="sec-hed"><span data-lang="ru" class="active">Барьеры, с которыми сталкиваются женщины</span><span data-lang="kz">Әйелдер тап болатын кедергілер</span><span data-lang="en">Barriers faced by women</span></h2>
+  <p class="sec-intro"><span data-lang="ru" class="active">Данные гендерной оценки ЮНЭЙДС 2023 года фиксируют системные нарушения прав женщин с ВИЧ при получении медицинской помощи в Казахстане.</span><span data-lang="kz">ЮНЭЙДС-тің 2023 жылғы гендерлік бағалау деректері Қазақстанда АИТВ-мен ауыратын әйелдердің медициналық көмек алудағы жүйелік құқық бұзушылықтарын тіркейді.</span><span data-lang="en">UNAIDS 2023 gender assessment data records systemic rights violations faced by women with HIV when accessing healthcare in Kazakhstan.</span></p>
+
+  <!-- VIZ 10: Gender barriers -->
+  <div class="g2" style="margin-bottom:1rem">
+    <div class="scard"><div class="scard-num" style="color:var(--red)">10,1%</div><div class="scard-lbl"><span data-lang="ru" class="active">женщин с ВИЧ получили отказ в медицинской помощи из-за ВИЧ-статуса за последние 12 месяцев</span><span data-lang="kz">АИТВ-мен ауыратын әйелдер соңғы 12 айда мәртебесіне байланысты медициналық көмектен бас тартылды</span><span data-lang="en">of women with HIV were denied medical care due to their HIV status in the past 12 months</span></div></div>
+    <div class="scard"><div class="scard-num" style="color:var(--red)">12,8%</div><div class="scard-lbl"><span data-lang="ru" class="active">ВИЧ-статус раскрыт медработниками без согласия пациентки</span><span data-lang="kz">медициналық қызметкерлер АИТВ мәртебесін келісімсіз ашты</span><span data-lang="en">had their HIV status disclosed by health workers without consent</span></div></div>
+    <div class="scard"><div class="scard-num" style="color:var(--gold)">54%</div><div class="scard-lbl"><span data-lang="ru" class="active">избегают районных поликлиник из страха огласки и стигматизации</span><span data-lang="kz">жария болу мен стигматизациядан қорқып аудандық емханаларды айналып өтеді</span><span data-lang="en">avoid local clinics due to fear of disclosure and stigmatisation</span></div></div>
+    <div class="scard"><div class="scard-num" style="color:var(--gold)">16,9%</div><div class="scard-lbl"><span data-lang="ru" class="active">откладывали начало АРТ, чтобы партнёр или семья не узнали о статусе</span><span data-lang="kz">серіктесі немесе отбасы мәртебені білмесін деп АРТ бастауды кейінге қалдырды</span><span data-lang="en">delayed starting ART to prevent partner or family from learning their status</span></div></div>
+    <div class="scard"><div class="scard-num" style="color:var(--red)">1,9%</div><div class="scard-lbl"><span data-lang="ru" class="active">стерилизация проведена без ведома или согласия пациентки</span><span data-lang="kz">стерилизация пациенттің білімінсіз немесе келісімінсіз жасалды</span><span data-lang="en">sterilisation performed without the patient's knowledge or consent</span></div></div>
+    <div class="scard"><div class="scard-num" style="color:var(--gold)">30,8%</div><div class="scard-lbl"><span data-lang="ru" class="active">секс-работниц сообщили о раскрытии ВИЧ-статуса без согласия — наивысший показатель среди всех групп</span><span data-lang="kz">жыныстық қызметкерлер келісімсіз АИТВ мәртебесінің ашылғанын хабарлады — барлық топтар арасындағы ең жоғары көрсеткіш</span><span data-lang="en">sex workers reported HIV status disclosure without consent — the highest rate among all groups</span></div></div>
+  </div>
+  <div class="insight"><span data-lang="ru" class="active">Страх огласки — один из главных факторов, препятствующих женщинам вовремя начать лечение. Каждая шестая откладывает терапию или избегает поликлиники не потому, что не хочет лечиться, а потому что не доверяет системе. Это не только этическая проблема — это разрыв в охвате лечением, который влияет на эффективность ответных мер на эпидемию.</span><span data-lang="kz">Жария болу қорқынышы — әйелдерге уақытында емдеуді бастауға кедергі болатын негізгі факторлардың бірі. Алтыдан бір әйел ем қабылдауды немесе емхананы болдырмайды, өйткені емделгісі келмейтіндіктен емес, жүйеге сенбейтіндіктен. Бұл тек этикалық мәселе ғана емес — бұл эпидемияға ден қою тиімділігіне әсер ететін емдеумен қамтудағы олқылық.</span><span data-lang="en">Fear of disclosure is one of the main barriers preventing women from starting treatment on time. One in six delays therapy or avoids a clinic not because she does not want treatment, but because she does not trust the system. This is not only an ethical problem — it is a gap in treatment coverage that affects the effectiveness of the epidemic response.</span></div>
+  <div class="cnote"><span data-lang="ru" class="active">Источник: Гендерная оценка национальных ответных мер на ВИЧ, ЮНЭЙДС, Казахстан, 2023</span><span data-lang="kz">Дереккөз: АИТВ-ға ұлттық ден қою шараларына гендерлік бағалау, ЮНЭЙДС, Қазақстан, 2023</span><span data-lang="en">Source: Gender assessment of national HIV responses, UNAIDS, Kazakhstan, 2023</span></div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- SECTION 5: TREATMENT -->
+<!-- ══════════════════════════════════ -->
+<hr class="sec-divider">
+<div class="sec">
+  <div class="sec-eyebrow"><div class="sec-num">05</div><div class="sec-rule"></div><div class="sec-tag"><span data-lang="ru" class="active">Лечение</span><span data-lang="kz">Емдеу</span><span data-lang="en">Treatment</span></div></div>
+  <h2 class="sec-hed"><span data-lang="ru" class="active">Охват АРТ растёт, но неодинаков между группами</span><span data-lang="kz">АРТ қамтуы өсуде, бірақ топтар арасында тең емес</span><span data-lang="en">ART coverage is growing, but uneven across groups</span></h2>
+  <p class="sec-intro"><span data-lang="ru" class="active">Число пациентов на АРТ в Алматы утроилось с 2016 по 2026 год. Охват среди секс-работников остаётся самым низким — 72%, при том что среди заключённых он достигает 94%.</span><span data-lang="kz">Алматыдағы АРТ-тегі пациенттер саны 2016 жылдан 2026 жылға дейін үш есеге өсті. Жыныстық қызметкерлер арасындағы қамту ең төмен — 72%, ал сотталғандар арасында 94%-ға жетеді.</span><span data-lang="en">The number of patients on ART in Almaty tripled from 2016 to 2026. Coverage among sex workers remains the lowest at 72%, while among prisoners it reaches 94%.</span></p>
+
+  <!-- VIZ 11: ART Almaty -->
+  <div class="cframe">
+    <div class="ctitle"><span data-lang="ru" class="active">Охват АРТ и неопределяемая вирусная нагрузка — г. Алматы, 2016–I кв. 2026</span><span data-lang="kz">АРТ қамтуы және анықталмайтын вирустық жүктеме — Алматы қ., 2016–2026 I тоқ.</span><span data-lang="en">ART coverage and undetectable viral load — Almaty, 2016–Q1 2026</span></div>
+    <div style="height:250px;position:relative"><canvas id="artChart"></canvas></div>
+    <div class="insight"><span data-lang="ru" class="active">К I кварталу 2026 года 5 430 человек в Алматы получают АРТ, из них 4 501 достигли неопределяемой вирусной нагрузки — это 83%. Такой человек перестаёт быть источником передачи вируса. Рост числа таких пациентов — один из ключевых факторов снижения заболеваемости на 14,4% в 2025 году.</span><span data-lang="kz">2026 жылдың I тоқсанына қарай Алматыда 5 430 адам АРТ алады, олардың 4 501-і анықталмайтын вирустық жүктемеге жетті — бұл 83%. Мұндай адам вирусты беру көзі болудан тоқтайды. Мұндай пациенттер санының өсуі — 2025 жылы аурушаңдықтың 14,4%-ға төмендеуінің негізгі факторларының бірі.</span><span data-lang="en">By Q1 2026, 5,430 people in Almaty receive ART, of whom 4,501 have achieved an undetectable viral load — 83%. Such a person ceases to be a source of transmission. The growing number of such patients is one of the key factors behind the 14.4% decline in incidence in 2025.</span></div>
+    <div class="cnote"><span data-lang="ru" class="active">Источник: Центр по профилактике и борьбе со СПИД г. Алматы (gcaids.kz)</span><span data-lang="kz">Дереккөз: Алматы қ. ЖҚТБ-мен күрес және алдын алу орталығы (gcaids.kz)</span><span data-lang="en">Source: Almaty AIDS Prevention and Control Center (gcaids.kz)</span></div>
+  </div>
+
+  <div class="g2">
+    <!-- VIZ 12: ART by group -->
+    <div class="cframe" style="margin-bottom:0">
+      <div class="ctitle"><span data-lang="ru" class="active">Охват АРТ по ключевым группам, 2022 (сортировка по убыванию)</span><span data-lang="kz">Негізгі топтар бойынша АРТ қамтуы, 2022 (кему бойынша)</span><span data-lang="en">ART coverage by key population group, 2022 (sorted descending)</span></div>
+      <div class="ibars" id="artGroupBars"></div>
+      <div class="insight"><span data-lang="ru" class="active">Секс-работники — группа с наименьшим охватом АРТ (72%), несмотря на то что 95% из них — женщины, наиболее уязвимые к нарушениям прав в системе здравоохранения. Барьеры для этой группы носят не медицинский, а социальный характер.</span><span data-lang="kz">Жыныстық қызметкерлер — АРТ қамтуы ең төмен топ (72%), олардың 95%-ы денсаулық сақтау жүйесіндегі құқық бұзушылықтарға ең осал әйелдер болғанына қарамастан. Бұл топқа кедергілер медициналық емес, әлеуметтік сипатта.</span><span data-lang="en">Sex workers have the lowest ART coverage (72%), even though 95% of them are women, who are most vulnerable to rights violations within the healthcare system. The barriers for this group are social, not medical, in nature.</span></div>
+      <div class="cnote"><span data-lang="ru" class="active">Источник: ЮНЭЙДС, Гендерная оценка, 2023</span><span data-lang="kz">Дереккөз: ЮНЭЙДС, Гендерлік бағалау, 2023</span><span data-lang="en">Source: UNAIDS Gender Assessment, 2023</span></div>
+    </div>
+
+    <!-- VIZ 13: Cascade -->
+    <div class="cframe" style="margin-bottom:0">
+      <div class="ctitle"><span data-lang="ru" class="active">Каскад помощи при ВИЧ — РК, 2024</span><span data-lang="kz">АИТВ-ға медициналық көмек каскады — ҚР, 2024</span><span data-lang="en">HIV care cascade — Kazakhstan, 2024</span></div>
+      <div class="cascade">
+        <div class="cbar"><div class="cfill" style="height:100%;background:var(--teal)"><span class="cpct">83%</span></div><div class="clabel"><span data-lang="ru" class="active">Знают<br>о статусе</span><span data-lang="kz">Мәртебесін<br>біледі</span><span data-lang="en">Know<br>status</span></div></div>
+        <div class="cbar"><div class="cfill" style="height:90%;background:var(--teal2)"><span class="cpct">90%</span></div><div class="clabel"><span data-lang="ru" class="active">Получают<br>АРТ</span><span data-lang="kz">АРТ<br>алады</span><span data-lang="en">On<br>ART</span></div></div>
+        <div class="cbar"><div class="cfill" style="height:92%;background:var(--red2)"><span class="cpct">92%</span></div><div class="clabel"><span data-lang="ru" class="active">Неопред.<br>нагрузка</span><span data-lang="kz">Анықталмайтын<br>жүктеме</span><span data-lang="en">Undetectable<br>VL</span></div></div>
+      </div>
+      <div class="insight"><span data-lang="ru" class="active">Казахстан близок к целевым показателям ЮНЭЙДС «95-95-95». Слабое звено — первый уровень: 17% людей, живущих с ВИЧ, не знают о своём статусе. Именно они — основные источники неконтролируемой передачи вируса.</span><span data-lang="kz">Қазақстан ЮНЭЙДС-тің «95-95-95» мақсатты көрсеткіштеріне жақын. Әлсіз буын — бірінші деңгей: АИТВ-мен өмір сүретіндердің 17%-ы өз мәртебесін білмейді. Олар дәл бақылаусыз вирус берудің негізгі көздері.</span><span data-lang="en">Kazakhstan is close to UNAIDS's 95-95-95 targets. The weak link is the first level: 17% of people living with HIV do not know their status. They are the primary sources of uncontrolled virus transmission.</span></div>
+      <div class="cnote"><span data-lang="ru" class="active">Источник: Власть.кз / Комитет санэпидконтроля МЗ РК, 2025</span><span data-lang="kz">Дереккөз: Власть.kz / ҚР ДСМ санитарлық-эпидемиологиялық бақылау комитеті, 2025</span><span data-lang="en">Source: Vlast.kz / Sanitary-Epidemiological Control Committee MH RK, 2025</span></div>
+    </div>
+  </div>
+
+  <!-- VIZ 14: Budget -->
+  <div class="cframe shade">
+    <div class="ctitle"><span data-lang="ru" class="active">Государственные расходы на ВИЧ — РК, 2022 (тыс. USD, сортировка по убыванию)</span><span data-lang="kz">АИТВ-ға мемлекеттік шығындар — ҚР, 2022 (мың USD, кему бойынша)</span><span data-lang="en">Government HIV expenditure — Kazakhstan, 2022 (thousand USD, sorted descending)</span></div>
+    <div class="budget-rows" id="budgetBars"></div>
+    <div class="insight"><span data-lang="ru" class="active">Почти половина всех расходов приходится на закупку антиретровирусных препаратов ($19,3 млн) — это правильный приоритет с точки зрения доказательной медицины. При этом расходы на социальную защиту ($160 тыс.) и мобилизацию сообществ ($108 тыс.) составляют менее 1% от бюджета, что не соответствует масштабу социальных барьеров, зафиксированных в гендерной оценке.</span><span data-lang="kz">Барлық шығындардың жартысына жуығы антиретровирустық препараттарды сатып алуға жұмсалады ($19,3 млн) — дәлелдерге негізделген медицина тұрғысынан бұл дұрыс басымдық. Сонымен бірге әлеуметтік қорғауға ($160 мың) және қоғамдастықты жұмылдыруға ($108 мың) жұмсалатын шығындар бюджеттің 1%-дан азын құрайды, бұл гендерлік бағалауда тіркелген әлеуметтік кедергілердің ауқымына сәйкес келмейді.</span><span data-lang="en">Nearly half of all spending goes to purchasing antiretroviral drugs ($19.3M) — the right priority from an evidence-based medicine perspective. Yet spending on social protection ($160K) and community mobilisation ($108K) amounts to less than 1% of the budget, which does not match the scale of social barriers recorded in the gender assessment.</span></div>
+    <div class="cnote"><span data-lang="ru" class="active">Источник: ЮНЭЙДС, Гендерная оценка, 2023 · Общий объём — 22,5 млрд тенге (88,8% республиканский бюджет + 11,2% международные доноры)</span><span data-lang="kz">Дереккөз: ЮНЭЙДС, Гендерлік бағалау, 2023 · Жалпы көлем — 22,5 млрд теңге (88,8% республикалық бюджет + 11,2% халықаралық донорлар)</span><span data-lang="en">Source: UNAIDS Gender Assessment, 2023 · Total: 22.5 billion KZT (88.8% state budget + 11.2% international donors)</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- SECTION 6: CHILDREN + DYNAMICS -->
+<!-- ══════════════════════════════════ -->
+<hr class="sec-divider">
+<div class="bg3">
+<div class="sec">
+  <div class="sec-eyebrow"><div class="sec-num">06</div><div class="sec-rule"></div><div class="sec-tag"><span data-lang="ru" class="active">Дети и динамика</span><span data-lang="kz">Балалар және динамика</span><span data-lang="en">Children and trends</span></div></div>
+  <h2 class="sec-hed"><span data-lang="ru" class="active">Почти нулевая передача от матери к ребёнку</span><span data-lang="kz">Анадан балаға берілу шамамен нөлге дейін</span><span data-lang="en">Near-zero mother-to-child transmission</span></h2>
+  <p class="sec-intro"><span data-lang="ru" class="active">При соблюдении протокола АРТ риск передачи ВИЧ от матери ребёнку снижается до 0–2%. За 5 лет в Астане не зафиксировано ни одного случая заражения новорождённого.</span><span data-lang="kz">АРТ хаттамасы сақталған кезде анадан балаға АИТВ берілу қаупі 0–2%-ға дейін төмендейді. Астанада 5 жыл ішінде жаңа туылған нәрестенің жұқтырылуының бірде-бір жағдайы тіркелмеді.</span><span data-lang="en">When the ART protocol is followed, the risk of mother-to-child HIV transmission falls to 0–2%. In Astana, not a single case of newborn infection was recorded over 5 years.</span></p>
+
+  <!-- VIZ 15: Children stats -->
+  <div class="g3">
+    <div class="scard"><div class="scard-num" style="color:var(--teal)">0</div><div class="scard-lbl"><span data-lang="ru" class="active">заражений новорождённых от матерей с ВИЧ за 5 лет в Астане</span><span data-lang="kz">5 жылда Астанада АИТВ-мен аналардан жаңа туылған нәрестелерге жұқтырылу</span><span data-lang="en">newborn infections from mothers with HIV over 5 years in Astana</span></div></div>
+    <div class="scard"><div class="scard-num" style="color:var(--red)">3 / 434</div><div class="scard-lbl"><span data-lang="ru" class="active">детей получили ВИЧ от матери в 2024 году. 431 ребёнок здоров.</span><span data-lang="kz">бала 2024 жылы анасынан АИТВ алды. 431 бала сау.</span><span data-lang="en">children acquired HIV from their mother in 2024. 431 children are healthy.</span></div></div>
+    <div class="scard"><div class="scard-num" style="color:var(--gold)">298</div><div class="scard-lbl"><span data-lang="ru" class="active">детей живут с ВИЧ в Казахстане и находятся на диспансерном наблюдении</span><span data-lang="kz">бала Қазақстанда АИТВ-мен өмір сүреді және диспансерлік бақылауда</span><span data-lang="en">children in Kazakhstan are living with HIV and under clinical observation</span></div></div>
+  </div>
+
+  <div class="cframe" style="margin-top:0">
+    <div class="ctitle"><span data-lang="ru" class="active">Динамика заболеваемости — снижение на 14,4% в 2025 году</span><span data-lang="kz">Аурушаңдық динамикасы — 2025 жылы 14,4%-ға төмендеу</span><span data-lang="en">Incidence trend — 14.4% decline in 2025</span></div>
+    <div style="display:flex;align-items:center;gap:3rem;flex-wrap:wrap;padding:1.5rem 0">
+      <div>
+        <div style="font-family:var(--serif);font-size:4rem;font-weight:700;color:var(--teal);line-height:1">−14,4%</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;margin-top:.4rem;line-height:1.5"><span data-lang="ru" class="active">снижение новых случаев<br>среди граждан РК<br>за 10 мес. 2025 к 2024</span><span data-lang="kz">ҚР азаматтары арасындағы<br>жаңа жағдайлардың азаюы<br>2025 жылдың 10 айы, 2024-ке қарағанда</span><span data-lang="en">decline in new cases<br>among RK citizens<br>10 months 2025 vs 2024</span></div>
+      </div>
+      <div style="width:1px;height:80px;background:var(--rule)"></div>
+      <div>
+        <div style="font-family:var(--serif);font-size:4rem;font-weight:700;color:var(--ink);line-height:1">20</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;margin-top:.4rem;line-height:1.5"><span data-lang="ru" class="active">случаев на 100 тыс.<br>населения — показатель<br>заболеваемости 2025</span><span data-lang="kz">100 мыңға жағдай —<br>2025 жылдың аурушаңдық<br>көрсеткіші</span><span data-lang="en">cases per 100,000<br>population — 2025<br>incidence rate</span></div>
+      </div>
+    </div>
+    <div class="insight"><span data-lang="ru" class="active">Снижение на 14,4% — значимый результат, но его нельзя трактовать как победу над эпидемией. Часть снижения может объяснятся изменениями в охвате тестированием и методологии подсчёта. Устойчивое снижение будет подтверждено только при сохранении тенденции на протяжении нескольких лет.</span><span data-lang="kz">14,4%-ға төмендеу — маңызды нәтиже, бірақ оны эпидемиядан жеңіс ретінде түсіндіруге болмайды. Төмендеудің бір бөлігі тестілеумен қамту мен есептеу әдіснамасындағы өзгерістермен түсіндірілуі мүмкін. Тұрақты төмендеу бірнеше жыл бойы тенденцияны сақтаған кезде ғана расталады.</span><span data-lang="en">The 14.4% decline is a meaningful result, but it cannot be interpreted as victory over the epidemic. Part of the decline may reflect changes in testing coverage and counting methodology. A sustained decline will be confirmed only if the trend holds for several consecutive years.</span></div>
+    <div class="cnote"><span data-lang="ru" class="active">Источник: Zakon.kz, ноябрь 2025 / Власть.кз, июль 2025</span><span data-lang="kz">Дереккөз: Zakon.kz, 2025 қараша / Власть.kz, 2025 шілде</span><span data-lang="en">Source: Zakon.kz, November 2025 / Vlast.kz, July 2025</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- CONCLUSION -->
+<!-- ══════════════════════════════════ -->
+<hr class="sec-divider">
+<div class="conclusion">
+  <div class="conc-inner">
+    <h2 class="conc-hed"><span data-lang="ru" class="active">Что говорят данные в совокупности</span><span data-lang="kz">Деректер жиынтығында не айтады</span><span data-lang="en">What the data say, taken together</span></h2>
+    <div class="conc-body">
+      <p><span data-lang="ru" class="active">Казахстан находится в переходной фазе эпидемии ВИЧ. Инфраструктура лечения работает: охват АРТ растёт, вирусная нагрузка подавляется, передача от матери к ребёнку сведена к минимуму. Показатель заболеваемости снизился на 14,4% в 2025 году. Это реальные достижения, подкреплённые государственными инвестициями.</span><span data-lang="kz">Қазақстан АИТВ эпидемиясының өтпелі кезеңінде. Емдеу инфрақұрылымы жұмыс істейді: АРТ қамтуы өсуде, вирустық жүктеме басылады, анадан балаға берілу минимумға дейін азайтылды. Аурушаңдық көрсеткіші 2025 жылы 14,4%-ға төмендеді. Мұнлар мемлекеттік инвестициялармен қамтамасыз етілген нақты жетістіктер.</span><span data-lang="en">Kazakhstan is in a transitional phase of the HIV epidemic. The treatment infrastructure is working: ART coverage is growing, viral loads are being suppressed, mother-to-child transmission has been minimised. The incidence rate declined 14.4% in 2025. These are real achievements, backed by state investment.</span></p>
+      <p><span data-lang="ru" class="active">Но за этими цифрами — структурные проблемы, которые данные тоже фиксируют. Эпидемия сместилась от маргинальных групп к широкому населению, и система профилактики пока не успела адаптироваться. Каждый шестой человек с ВИЧ не знает о своём статусе. Женщины откладывают лечение из-за страха огласки. Региональный разрыв не сокращается.</span><span data-lang="kz">Бірақ бұл сандардың артында деректер де тіркейтін құрылымдық мәселелер бар. Эпидемия маргиналды топтардан кең халыққа ауысты, ал профилактика жүйесі әлі бейімделе алмады. АИТВ-мен өмір сүретіндердің алтыдан бірі өз мәртебесін білмейді. Әйелдер жария болудан қорқып емдеуді кейінге қалдырады. Аймақтық алшақтық азаймайды.</span><span data-lang="en">But behind these figures lie structural problems that the data also record. The epidemic has shifted from marginalised groups to the general population, and the prevention system has not yet adapted. One in six people with HIV does not know their status. Women delay treatment due to fear of disclosure. The regional gap is not narrowing.</span></p>
+    </div>
+    <div class="conc-points">
+      <div class="conc-point"><div class="conc-point-num">1</div><div class="conc-point-text"><span data-lang="ru" class="active"><strong>ВКО превысила порог ВОЗ</strong> для концентрированной эпидемии (1,01%), однако официальной реакции на уровне чрезвычайной ситуации не последовало.</span><span data-lang="kz"><strong>ШҚО шоғырланған эпидемияға арналған ЖЫО шегін (1,01%) асты</strong>, алайда төтенше жағдай деңгейінде ресми ден қою болмады.</span><span data-lang="en"><strong>East Kazakhstan has exceeded the WHO threshold</strong> for a concentrated epidemic (1.01%), yet no emergency-level official response has followed.</span></div></div>
+      <div class="conc-point"><div class="conc-point-num">2</div><div class="conc-point-text"><span data-lang="ru" class="active"><strong>Социальные барьеры не менее важны, чем медицинские.</strong> 54% женщин с ВИЧ избегают государственной медицины — не потому что у неё нет доступа к препаратам, а потому что система не заслужила их доверия.</span><span data-lang="kz"><strong>Әлеуметтік кедергілер медициналықтан кем емес.</strong> АИТВ-мен ауыратын әйелдердің 54%-ы мемлекеттік медицинадан бас тартады — препараттарға қол жеткізбейтіндіктен емес, жүйе олардың сенімін ақтамағандықтан.</span><span data-lang="en"><strong>Social barriers matter as much as medical ones.</strong> 54% of women with HIV avoid state healthcare — not because they lack access to medication, but because the system has not earned their trust.</span></div></div>
+      <div class="conc-point"><div class="conc-point-num">3</div><div class="conc-point-text"><span data-lang="ru" class="active"><strong>Бюджет отражает приоритеты.</strong> Лечение получает $19,3 млн, социальная защита — $160 тыс. Дисбаланс говорит о том, что система лечит болезнь, но не устраняет условия, при которых она распространяется.</span><span data-lang="kz"><strong>Бюджет басымдықтарды көрсетеді.</strong> Емдеу $19,3 млн алады, әлеуметтік қорғау — $160 мың. Теңгерімсіздік жүйенің ауруды емдейтінін, бірақ оның таралу жағдайларын жойбайтынын көрсетеді.</span><span data-lang="en"><strong>The budget reflects priorities.</strong> Treatment receives $19.3M, social protection — $160K. The imbalance shows that the system treats the disease but does not address the conditions under which it spreads.</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-src-label"><span data-lang="ru" class="active">Источники данных</span><span data-lang="kz">Деректер көздері</span><span data-lang="en">Data sources</span></div>
+      <div class="footer-src-list">
+        <div class="footer-src-item">КНЦДИЗ МЗ РК, 2025–2026 · ЮНЭЙДС, Гендерная оценка, Казахстан, 2023</div>
+        <div class="footer-src-item">Центр СПИД г. Алматы (gcaids.kz) · Центр СПИД г. Астана</div>
+        <div class="footer-src-item">Комитет санэпидконтроля МЗ РК, 2025 · МЗ РК · kazaids.kz</div>
+        <div class="footer-src-item">Власть.кз, июль 2025 · Zakon.kz, ноябрь 2025 · NewTimes.kz, 2023 · Tengrinews.kz</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-name">Nurasyl Abdrazakuly</div>
+      <div class="footer-url"><a href="https://nurasyl.space/" style="color:inherit;text-decoration:none">nurasyl.space</a></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── LANGUAGE ──────────────────────────────────────────────
+function setLang(l){
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim().toLowerCase()===l));
+  document.querySelectorAll('[data-lang]').forEach(el=>el.classList.toggle('active',el.dataset.lang===l));
+}
+
+// ── REGION BARS (sorted desc) ─────────────────────────────
+const regions=[
+  {n:'ВКО',v:1.01,c:'#B84C3A'},{n:'Карагандинская',v:.80,c:'#8C6A2E'},{n:'Павлодарская',v:.75,c:'#8C6A2E'},
+  {n:'Костанайская',v:.63,c:'#8C6A2E'},{n:'СКО',v:.62,c:'#8C6A2E'},{n:'г. Алматы',v:.50,c:'#1E5E62'},
+  {n:'г. Астана',v:.34,c:'#1E5E62'},{n:'Алматинская',v:.29,c:'#1E5E62'},{n:'Жетысуская',v:.27,c:'#1E5E62'},
+  {n:'Акмолинская',v:.27,c:'#1E5E62'},{n:'г. Шымкент',v:.25,c:'#1E5E62'},{n:'ЗКО',v:.23,c:'#1E5E62'},
+  {n:'Жамбылская',v:.18,c:'#1E5E62'},{n:'Абайская',v:.18,c:'#1E5E62'},{n:'Атырауская',v:.14,c:'#1E5E62'},
+  {n:'Улытауская',v:.14,c:'#1E5E62'},{n:'Актюбинская',v:.13,c:'#1E5E62'},{n:'Мангистауская',v:.13,c:'#1E5E62'},
+  {n:'Туркестанская',v:.11,c:'#1E5E62'},{n:'Кызылординская',v:.07,c:'#1E5E62'}
+];
+const rb=document.getElementById('regionBars');
+regions.forEach(r=>{
+  const p=(r.v/1.01*100).toFixed(0);
+  rb.innerHTML+=`<div class="rrow"><div class="rname">${r.n}</div><div class="rbg"><div class="rfill" style="width:${p}%;background:${r.c}"></div></div><div class="rval" style="color:${r.c};font-weight:${r.v>=0.6?'600':'400'}">${r.v.toFixed(2)}</div></div>`;
+});
+
+// ── TREEMAP ───────────────────────────────────────────────
+const districts=[
+  {name:'Турксибский',nameKz:'Түрксіб',nameEn:'Turksib',v:968.4},
+  {name:'Жетысуский',nameKz:'Жетісу',nameEn:'Zhetysu',v:653.9},
+  {name:'Алмалинский',nameKz:'Алмалы',nameEn:'Almalinsky',v:627.4},
+  {name:'Бостандыкский',nameKz:'Бостандық',nameEn:'Bostandyk',v:617.7},
+  {name:'Ауэзовский',nameKz:'Ауезов',nameEn:'Auezon',v:438.4},
+  {name:'Медеуский',nameKz:'Медеу',nameEn:'Medeu',v:437.5},
+  {name:'Алатауский',nameKz:'Алатау',nameEn:'Alatau',v:253.2},
+  {name:'Наурызбайский',nameKz:'Наурызбай',nameEn:'Nauryzbay',v:196.7}
+];
+const total=districts.reduce((a,d)=>a+d.v,0);
+const colors=['#0E3E44','#1E5E62','#236A72','#2A7A84','#4E9AA2','#6AAEB5','#8CBEC4','#C8DDE0'];
+const tm=document.getElementById('treemap');
+const tmW=tm.offsetWidth||600; const tmH=280;
+// simple squarified treemap
+function buildTreemap(data,x,y,w,h){
+  const sorted=[...data].sort((a,b)=>b.v-a.v);
+  const totalV=sorted.reduce((s,d)=>s+d.v,0);
+  if(sorted.length===0)return[];
+  if(sorted.length===1){return[{...sorted[0],x,y,w,h}];}
+  // split into two groups
+  let cumV=0; let splitIdx=0;
+  for(let i=0;i<sorted.length;i++){
+    cumV+=sorted[i].v;
+    if(cumV/totalV>=0.5){splitIdx=i+1;break;}
+  }
+  if(splitIdx===0)splitIdx=1;
+  if(splitIdx>=sorted.length)splitIdx=sorted.length-1;
+  const group1=sorted.slice(0,splitIdx);
+  const group2=sorted.slice(splitIdx);
+  const ratio1=group1.reduce((s,d)=>s+d.v,0)/totalV;
+  const results=[];
+  if(w>=h){
+    const w1=w*ratio1;
+    results.push(...buildTreemap(group1,x,y,w1,h));
+    results.push(...buildTreemap(group2,x+w1,y,w-w1,h));
+  }else{
+    const h1=h*ratio1;
+    results.push(...buildTreemap(group1,x,y,w,h1));
+    results.push(...buildTreemap(group2,x,y+h1,w,h-h1));
+  }
+  return results;
+}
+function renderTreemap(){
+  const w=tm.clientWidth||600;
+  const cells=buildTreemap(districts,0,0,w,tmH);
+  tm.innerHTML='';
+  tm.style.position='relative';tm.style.height=tmH+'px';tm.style.background='var(--bg2)';
+  cells.forEach((c,i)=>{
+    const colorIdx=Math.round((1-(c.v/968.4))*7);
+    const div=document.createElement('div');
+    div.style.cssText=`position:absolute;left:${c.x+2}px;top:${c.y+2}px;width:${c.w-4}px;height:${c.h-4}px;background:${colors[Math.max(0,Math.min(7,colorIdx))]};border-radius:3px;display:flex;flex-direction:column;justify-content:flex-end;padding:8px 10px;cursor:default;transition:opacity .15s;overflow:hidden`;
+    const l=document.querySelector('.lang-btn.active')?.textContent.trim().toLowerCase()||'ru';
+    const nm=l==='kz'?c.nameKz:l==='en'?c.nameEn:c.name;
+    div.innerHTML=`<div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;color:rgba(255,255,255,.8);line-height:1.2;margin-bottom:3px">${nm}</div><div style="font-family:'Playfair Display',serif;font-size:${c.h>60?'1.2':'0.9'}rem;font-weight:700;color:#fff;line-height:1">${c.v}</div>`;
+    div.addEventListener('mouseenter',()=>div.style.opacity='.82');
+    div.addEventListener('mouseleave',()=>div.style.opacity='1');
+    tm.appendChild(div);
+  });
+}
+renderTreemap();
+window.addEventListener('resize',renderTreemap);
+
+// ── ABSOLUTE CASES (sorted desc) ─────────────────────────
+const absCtx=document.getElementById('absChart').getContext('2d');
+const absData=[{r:'г. Алматы',v:598},{r:'Карагандинская',v:414},{r:'г. Астана',v:357},{r:'ВКО',v:278},{r:'Алматинская',v:271},{r:'Павлодарская',v:235},{r:'Костанайская',v:172},{r:'г. Шымкент',v:167},{r:'Жамбылская',v:131},{r:'Акмолинская',v:125},{r:'Туркестанская',v:111},{r:'СКО',v:108},{r:'Жетысу',v:81},{r:'Атырауская',v:71},{r:'Абайская',v:56},{r:'Актюбинская',v:53},{r:'Мангистауская',v:52},{r:'Кызылординская',v:48},{r:'Улытауская',v:23}];
+new Chart(absCtx,{type:'bar',data:{labels:absData.map(d=>d.r),datasets:[{data:absData.map(d=>d.v),backgroundColor:absData.map((d,i)=>i<3?'rgba(184,76,58,.8)':i<5?'rgba(140,106,46,.7)':'rgba(30,94,98,.6)'),borderRadius:1}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#0F0D0B',titleFont:{family:"'JetBrains Mono',monospace",size:9},bodyFont:{family:"'JetBrains Mono',monospace",size:10},padding:10,callbacks:{label:ctx=>` ${ctx.raw} случаев`}}},scales:{x:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{family:"'JetBrains Mono',monospace",size:9},color:'#6B6158'}},y:{grid:{display:false},ticks:{font:{family:"'JetBrains Mono',monospace",size:9},color:'#2C2825'}}}}});
+
+// ── TRANSMISSION ──────────────────────────────────────────
+const tCtx=document.getElementById('transmissionChart').getContext('2d');
+new Chart(tCtx,{type:'line',data:{labels:['2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','I кв 2026'],datasets:[{label:'Гетеросексуальный',data:[26.9,32.9,38.1,54,55.4,57.5,53,62.9,64.9,59.9,61.7,58.2,62.3,65.7,61.7,66.2,67.4,75.1,70.8],borderColor:'#B84C3A',backgroundColor:'rgba(184,76,58,.06)',borderWidth:2,pointRadius:3,pointBackgroundColor:'#B84C3A',tension:.3,fill:false},{label:'Инъекц. наркотики',data:[66,64,57,40.6,40.8,36.4,41.1,34.4,31.7,27.9,26.9,24.4,14,14.6,16.8,16.9,18,17.6,9.2],borderColor:'#1E5E62',backgroundColor:'rgba(30,94,98,.06)',borderWidth:2,pointRadius:3,pointBackgroundColor:'#1E5E62',tension:.3,fill:false},{label:'Гомосексуальный',data:[0.6,0.8,1.2,1.6,1.5,2.6,3.4,8.1,8.2,10,9.7,14.1,13.6,14.6,16.3,12.4,10.3,6,14.6],borderColor:'#8C6A2E',backgroundColor:'rgba(140,106,46,.06)',borderWidth:2,pointRadius:3,pointBackgroundColor:'#8C6A2E',tension:.3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{font:{family:"'JetBrains Mono',monospace",size:9},color:'#6B6158',boxWidth:12,padding:14}},tooltip:{backgroundColor:'#0F0D0B',titleFont:{family:"'JetBrains Mono',monospace",size:9},bodyFont:{family:"'JetBrains Mono',monospace",size:10},padding:10}},scales:{x:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{family:"'JetBrains Mono',monospace",size:8},color:'#6B6158',maxRotation:50}},y:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{family:"'JetBrains Mono',monospace",size:9},color:'#6B6158'},title:{display:true,text:'%',font:{family:"'JetBrains Mono',monospace",size:9},color:'#6B6158'}}}}});
+
+// ── WOMEN TRANSMISSION ────────────────────────────────────
+const wtCtx=document.getElementById('womenTransChart').getContext('2d');
+new Chart(wtCtx,{type:'doughnut',data:{labels:['Гетеросексуальный','Инъекц. наркотики','Другое'],datasets:[{data:[85,9,6],backgroundColor:['#B84C3A','#1E5E62','#8C6A2E'],borderColor:'#FFFFFF',borderWidth:3,hoverOffset:5}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'bottom',labels:{font:{family:"'JetBrains Mono',monospace",size:9},color:'#6B6158',boxWidth:10,padding:12}},tooltip:{backgroundColor:'#0F0D0B',callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw}%`}}}}});
+
+// ── GENDER DONUT ──────────────────────────────────────────
+const gCtx=document.getElementById('genderChart').getContext('2d');
+new Chart(gCtx,{type:'doughnut',data:{labels:['Мужчины','Женщины'],datasets:[{data:[61.7,38.3],backgroundColor:['#1E5E62','#8C6A2E'],borderColor:'#FFFFFF',borderWidth:4,hoverOffset:5}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{backgroundColor:'#0F0D0B',callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw}%`}}}}});
+
+// ── AGE PYRAMID (sorted largest to smallest = 30–39 at top) ──
+const pyData=[{age:'30–39',m:930,f:432},{age:'40–49',m:763,f:371},{age:'20–29',m:477,f:164},{age:'50–59',m:255,f:180},{age:'60+',m:116,f:93},{age:'15–19',m:47,f:22}];
+const maxPy=930;
+const pyEl=document.getElementById('agePyramid');
+pyData.forEach(d=>{
+  const mw=(d.m/maxPy*130).toFixed(0);const fw=(d.f/maxPy*130).toFixed(0);
+  pyEl.innerHTML+=`<div class="pyrow"><div class="pyleft"><div class="pybar m" style="width:${mw}px;min-width:2px"></div></div><div class="pyage">${d.age}</div><div class="pyright"><div class="pybar f" style="width:${fw}px;min-width:2px"></div></div></div>`;
+});
+
+// ── ART ALMATY ────────────────────────────────────────────
+const aCtx=document.getElementById('artChart').getContext('2d');
+new Chart(aCtx,{type:'bar',data:{labels:['2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','I кв 2026'],datasets:[{label:'Получают АРТ',data:[1708,2044,2400,2691,3212,3430,3848,4360,4823,5309,5430],backgroundColor:'rgba(30,94,98,.7)',borderRadius:1,order:2},{label:'ВН <200',data:[1008,1285,1659,2046,2462,2876,2806,3448,3990,4381,4501],backgroundColor:'rgba(184,76,58,.7)',borderRadius:1,order:1}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{font:{family:"'JetBrains Mono',monospace",size:9},color:'#6B6158',boxWidth:12,padding:12}},tooltip:{backgroundColor:'#0F0D0B',titleFont:{family:"'JetBrains Mono',monospace",size:9},bodyFont:{family:"'JetBrains Mono',monospace",size:10},padding:10}},scales:{x:{grid:{display:false},ticks:{font:{family:"'JetBrains Mono',monospace",size:9},color:'#6B6158'}},y:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{family:"'JetBrains Mono',monospace",size:9},color:'#6B6158'}}}}});
+
+// ── ART BY GROUP (sorted desc) ────────────────────────────
+const artGrps=[{n:'Заключённые',v:94},{n:'МСМ',v:90},{n:'Женщины (ЛЖВ)',v:89},{n:'Мужчины (ЛЖВ)',v:86},{n:'ЛУИН',v:82},{n:'Трансгендеры',v:79},{n:'Секс-работники',v:72}];
+const artColors={94:'#1E5E62',90:'#1E5E62',89:'#1E5E62',86:'#8C6A2E',82:'#8C6A2E',79:'#8C6A2E',72:'#B84C3A'};
+const ab=document.getElementById('artGroupBars');
+artGrps.forEach(g=>{ab.innerHTML+=`<div class="irow"><div class="iname">${g.n}</div><div class="ibg"><div class="ifill" style="width:${g.v}%;background:${artColors[g.v]||'#1E5E62'}"></div></div><div class="ival" style="color:${artColors[g.v]||'#1E5E62'}">${g.v}%</div></div>`;});
+
+// ── BUDGET (sorted desc) ──────────────────────────────────
+const budget=[{n:'Антиретровирусная терапия',v:19296},{n:'Управление программами',v:17777},{n:'Тестирование и консультирование',v:4895},{n:'Лабораторный мониторинг',v:3378},{n:'Профилактика ВИЧ',v:2498},{n:'Презервативы и лубриканты',v:517},{n:'ППМР',v:453},{n:'Социальная защита',v:160},{n:'Мобилизация сообществ',v:108},{n:'ДКП (доконтактная профилактика)',v:35}];
+const maxB=19296;
+const budgetColors=['#1E5E62','#8C6A2E','#1E5E62','#1E5E62','#8C6A2E','#8C6A2E','#1E5E62','#B84C3A','#B84C3A','#B84C3A'];
+const bb=document.getElementById('budgetBars');
+budget.forEach((b,i)=>{
+  const p=(b.v/maxB*100).toFixed(0);
+  bb.innerHTML+=`<div class="budget-row"><div class="budget-name">${b.n}</div><div class="budget-bg"><div class="budget-fill" style="width:${p}%;background:${budgetColors[i]}"></div></div><div class="budget-val">$${b.v.toLocaleString()}</div></div>`;
+});
+</script>
+</body>
+</html>
