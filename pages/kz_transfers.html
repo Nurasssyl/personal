@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Деньги в движении — Казахстан 2021–2025 · nurasyl.space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+:root {
+  --bg: #f8f6f1;
+  --bg2: #f0ede6;
+  --ink: #1a1814;
+  --ink2: #4a4640;
+  --ink3: #8a8278;
+  --accent: #c0392b;
+  --accent2: #2980b9;
+  --accent3: #27ae60;
+  --gold: #b8860b;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'IBM Plex Sans', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+  --rule: #d4cfc8;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.6; }
+
+/* PROGRESS BAR */
+#progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); width: 0%; z-index: 1000; transition: width 0.1s linear; }
+
+/* LANG SWITCHER */
+.lang-bar { position: fixed; top: 12px; right: 20px; z-index: 999; display: flex; gap: 6px; }
+.lang-btn { font-family: var(--mono); font-size: 11px; padding: 4px 10px; border: 1px solid var(--ink); background: var(--bg); cursor: pointer; letter-spacing: 0.05em; transition: all 0.2s; }
+.lang-btn.active, .lang-btn:hover { background: var(--ink); color: var(--bg); }
+
+/* HERO */
+.hero { padding: 80px 0 60px; text-align: center; border-bottom: 1px solid var(--rule); max-width: 860px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+.hero-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; color: var(--ink3); text-transform: uppercase; margin-bottom: 20px; }
+.hero h1 { font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.15; font-weight: 400; margin-bottom: 24px; }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-lead { font-size: 1.1rem; color: var(--ink2); max-width: 640px; margin: 0 auto 40px; font-weight: 300; }
+.hero-stats { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; }
+.hero-stat { text-align: center; }
+.hero-stat .num { font-family: var(--serif); font-size: 2.4rem; font-weight: 700; color: var(--ink); line-height: 1; }
+.hero-stat .lbl { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--ink3); margin-top: 4px; text-transform: uppercase; }
+
+/* LAYOUT */
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 72px 0 60px; border-bottom: 1px solid var(--rule); }
+.section:last-of-type { border-bottom: none; }
+
+.section-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; color: var(--ink3); text-transform: uppercase; margin-bottom: 12px; }
+.section-num { color: var(--accent); margin-right: 8px; }
+.section h2 { font-family: var(--serif); font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 400; line-height: 1.25; margin-bottom: 16px; }
+.section-body { font-size: 0.97rem; color: var(--ink2); max-width: 680px; line-height: 1.8; margin-bottom: 32px; }
+.section-body p + p { margin-top: 12px; }
+.callout { font-family: var(--serif); font-style: italic; font-size: 1.15rem; color: var(--ink); border-left: 3px solid var(--accent); padding-left: 20px; margin: 28px 0; line-height: 1.6; }
+.chart-caption { font-family: var(--mono); font-size: 10px; color: var(--ink3); margin-top: 12px; text-align: right; }
+.source { font-family: var(--mono); font-size: 10px; color: var(--ink3); }
+
+/* CHART CONTAINERS */
+.chart-box { background: white; border: 1px solid var(--rule); padding: 28px 24px 20px; margin-bottom: 12px; position: relative; overflow: hidden; }
+.chart-title { font-family: var(--sans); font-weight: 600; font-size: 0.88rem; letter-spacing: 0.01em; color: var(--ink); margin-bottom: 4px; }
+.chart-sub { font-size: 0.78rem; color: var(--ink3); margin-bottom: 20px; }
+svg text { font-family: var(--sans); }
+
+/* TOOLTIP */
+.tooltip { position: fixed; background: var(--ink); color: white; padding: 10px 14px; font-family: var(--mono); font-size: 12px; border-radius: 2px; pointer-events: none; z-index: 500; opacity: 0; transition: opacity 0.15s; line-height: 1.5; max-width: 220px; }
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media(max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+/* LEGEND */
+.legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 16px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--ink2); cursor: pointer; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.legend-rect { width: 14px; height: 10px; flex-shrink: 0; }
+
+/* TABS */
+.tabs { display: flex; gap: 0; margin-bottom: 24px; border-bottom: 2px solid var(--rule); }
+.tab { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; padding: 8px 16px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; color: var(--ink3); transition: all 0.2s; }
+.tab.active { color: var(--ink); border-bottom-color: var(--accent); }
+
+/* ANNOTATION */
+.annotation-line { stroke: var(--ink3); stroke-dasharray: 3,3; stroke-width: 1; }
+.annotation-text { fill: var(--ink3); font-size: 10px; font-family: var(--sans); }
+.event-label { fill: var(--ink); font-size: 10px; font-family: var(--sans); font-weight: 600; }
+
+/* SCROLL REVEAL */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* FOOTER */
+.footer { padding: 48px 0; text-align: center; border-top: 1px solid var(--rule); }
+.footer p { font-family: var(--mono); font-size: 11px; color: var(--ink3); }
+
+/* RANK TABLE */
+.rank-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--bg2); }
+.rank-num { font-family: var(--mono); font-size: 12px; color: var(--ink3); width: 20px; }
+.rank-bar-wrap { flex: 1; height: 6px; background: var(--bg2); border-radius: 3px; }
+.rank-bar { height: 6px; border-radius: 3px; transition: width 0.6s ease; }
+.rank-name { width: 100px; font-size: 0.82rem; color: var(--ink); }
+.rank-val { font-family: var(--mono); font-size: 12px; color: var(--ink); white-space: nowrap; }
+
+/* HIGHLIGHT BOX */
+.highlight-box { background: var(--bg2); border-left: 4px solid var(--accent); padding: 20px 24px; margin: 24px 0; }
+.highlight-box .hl-num { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--accent); }
+.highlight-box .hl-text { font-size: 0.88rem; color: var(--ink2); margin-top: 4px; }
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<div class="tooltip" id="tooltip"></div>
+
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+  <button class="lang-btn" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('kz')">ҚАЗ</button>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow" data-i="eyebrow">Денежные переводы · Казахстан · 2021–2025</div>
+  <h1 data-i="hero_title">Деньги в <em>движении</em><br>Куда и откуда текут переводы Казахстана</h1>
+  <p class="hero-lead" data-i="hero_lead">За четыре года через платёжные системы прошло более 3,5 триллиона тенге. Это карта миграции, геополитики и трудовых связей страны — выраженная в цифрах.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">3,6 трлн</div><div class="lbl" data-i="stat1">тенге отправлено<br>2021–2025</div></div>
+    <div class="hero-stat"><div class="num">22</div><div class="lbl" data-i="stat2">страны<br>в данных</div></div>
+    <div class="hero-stat"><div class="num">2022</div><div class="lbl" data-i="stat3">переломный<br>год</div></div>
+    <div class="hero-stat"><div class="num">47</div><div class="lbl" data-i="stat4">месяцев<br>наблюдений</div></div>
+  </div>
+</div>
+
+<!-- SECTION 1: OVERVIEW -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">01</span><span data-i="s1_label">Общая картина</span></div>
+  <h2 data-i="s1_title">Двойной всплеск 2022 года</h2>
+  <div class="section-body">
+    <p data-i="s1_body1">До 2022 года денежные переводы из Казахстана шли стабильным потоком — 87–97 млрд тенге в месяц, с сезонным спадом в январе.</p>
+    <p data-i="s1_body2">В апреле–июне 2022 года входящий поток из России достиг исторического пика: в июне в Казахстан пришло почти столько же, сколько ушло — 92 млрд против 104 млрд. Казахстан стал транзитным узлом крупных финансовых потоков.</p>
+  </div>
+  <div class="callout" data-i="s1_callout">В июле 2022 года объём входящих переводов впервые превысил исходящие. Казахстан на один месяц стал нетто-получателем.</div>
+  
+  <div class="chart-box reveal">
+    <div class="chart-title" data-i="c1_title">Ежемесячные переводы: отправленные vs полученные</div>
+    <div class="chart-sub" data-i="c1_sub">Млрд тенге · сентябрь 2021 — июль 2025</div>
+    <svg id="chart-overview" style="width:100%;height:300px;display:block;"></svg>
+  </div>
+  <div class="chart-caption"><span data-i="src">Источник: Национальный банк Казахстана</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+</div>
+</div>
+
+<!-- SECTION 2: RUSSIA -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">02</span><span data-i="s2_label">Россия</span></div>
+  <h2 data-i="s2_title">Рекорд, разворот, новая норма</h2>
+  <div class="section-body">
+    <p data-i="s2_body1">В 2021 году казахстанцы стабильно отправляли в Россию 13–15 млрд тенге в месяц, а получали втрое меньше.</p>
+    <p data-i="s2_body2">С апреля по октябрь 2022 года поток развернулся. Пик — июнь 2022: 66,9 млрд тенге получено из России за один месяц. Казахстан принял больше, чем отправил.</p>
+    <p data-i="s2_body3">К 2023 году доля России в исходящих переводах выросла с 15% до 31%. Россия стабильно занимает второе место среди получателей казахстанских переводов.</p>
+  </div>
+  <div class="grid-2">
+    <div class="highlight-box">
+      <div class="hl-num">66,9 млрд</div>
+      <div class="hl-text" data-i="hl1">тенге получено из России в июне 2022 — исторический месячный максимум</div>
+    </div>
+    <div class="highlight-box" style="border-left-color:var(--accent2)">
+      <div class="hl-num" style="color:var(--accent2)">31,6%</div>
+      <div class="hl-text" data-i="hl2">доля России в отправленных переводах в 2025 году — рост с 15% в 2021</div>
+    </div>
+  </div>
+  <div class="chart-box reveal">
+    <div class="chart-title" data-i="c2_title">Россия: отправленные и полученные переводы</div>
+    <div class="chart-sub" data-i="c2_sub">Млрд тенге · с аннотациями ключевых событий</div>
+    <svg id="chart-russia" style="width:100%;height:320px;display:block;"></svg>
+  </div>
+  <div class="chart-caption"><span data-i="src">Источник: НБК</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+</div>
+</div>
+
+<!-- SECTION 3: TOP COUNTRIES RACE -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">03</span><span data-i="s3_label">Рейтинг направлений</span></div>
+  <h2 data-i="s3_title">Кто на вершине — и как менялся расклад</h2>
+  <div class="section-body">
+    <p data-i="s3_body1">Узбекистан — стабильный лидер по объёму отправленных переводов все пять лет. Это трудовые мигранты: по данным МОМ, в Казахстане работает более 1 млн граждан Узбекистана.</p>
+    <p data-i="s3_body2">Турция держалась на втором месте до 2023 года, затем Россия её обогнала. В 2021 году Кыргызстан был третьим — к 2025 году упал на пятое место.</p>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab(this,'2021')" data-i="tab2021">2021</div>
+    <div class="tab" onclick="switchTab(this,'2022')" data-i="tab2022">2022</div>
+    <div class="tab" onclick="switchTab(this,'2023')" data-i="tab2023">2023</div>
+    <div class="tab" onclick="switchTab(this,'2024')" data-i="tab2024">2024</div>
+    <div class="tab" onclick="switchTab(this,'2025')" data-i="tab2025">2025</div>
+  </div>
+  <div id="rank-chart" style="max-width:560px;"></div>
+  <div class="chart-caption" style="margin-top:16px;"><span data-i="src">Источник: НБК</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+
+  <br>
+  <div class="chart-box reveal">
+    <div class="chart-title" data-i="c3_title">Доля ключевых направлений в общем объёме отправленных переводов</div>
+    <div class="chart-sub" data-i="c3_sub">% от итогового объёма · по годам</div>
+    <div class="legend" id="legend-share"></div>
+    <svg id="chart-share" style="width:100%;height:280px;display:block;"></svg>
+  </div>
+  <div class="chart-caption"><span data-i="src">Источник: НБК</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+</div>
+</div>
+
+<!-- SECTION 4: NET FLOW -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">04</span><span data-i="s4_label">Чистый отток</span></div>
+  <h2 data-i="s4_title">Казахстан отдаёт больше, чем получает</h2>
+  <div class="section-body">
+    <p data-i="s4_body1">Казахстан — устойчивый нетто-отправитель переводов. Это структурная особенность: большая часть трудовых мигрантов в стране отправляет деньги домой, тогда как казахстанская диаспора за рубежом невелика.</p>
+    <p data-i="s4_body2">2023 год — пик чистого оттока: 660 млрд тенге. При этом общий объём переводов был меньше, чем в 2022. Просто входящий поток резко сжался после спада волны релокантов.</p>
+  </div>
+  <div class="chart-box reveal">
+    <div class="chart-title" data-i="c4_title">Годовой баланс: отправлено, получено, чистый отток</div>
+    <div class="chart-sub" data-i="c4_sub">Млрд тенге · 2021–2025 (2021 и 2025 — неполные годы)</div>
+    <svg id="chart-annual" style="width:100%;height:320px;display:block;"></svg>
+  </div>
+  <div class="chart-caption"><span data-i="src">Источник: НБК</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+</div>
+</div>
+
+<!-- SECTION 5: RECEIVED BY COUNTRY -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">05</span><span data-i="s5_label">Входящие переводы</span></div>
+  <h2 data-i="s5_title">Откуда приходят деньги</h2>
+  <div class="section-body">
+    <p data-i="s5_body1">Структура входящих переводов разительно отличается от исходящих. Россия — бесспорный лидер, но её доля сокращается: с 53% всех входящих в 2022 году до 24% в 2025-м.</p>
+    <p data-i="s5_body2">США, Германия и Южная Корея — стабильные источники диаспорных переводов. Казахстанцы, живущие в этих странах, регулярно поддерживают семьи дома. Интересно: Корея занимала второе место в 2021–2022 годах, затем уступила США.</p>
+  </div>
+  <div class="chart-box reveal">
+    <div class="chart-title" data-i="c5_title">Структура входящих переводов по годам</div>
+    <div class="chart-sub" data-i="c5_sub">Млрд тенге · ключевые страны-источники</div>
+    <svg id="chart-recv" style="width:100%;height:320px;display:block;"></svg>
+  </div>
+  <div class="chart-caption"><span data-i="src">Источник: НБК</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+</div>
+</div>
+
+<!-- SECTION 6: DIASPORA -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">06</span><span data-i="s6_label">Диаспора</span></div>
+  <h2 data-i="s6_title">США, Германия, Корея: диаспорные переводы</h2>
+  <div class="section-body">
+    <p data-i="s6_body1">Переводы из США, Германии и Южной Кореи отражают казахстанскую диаспору на западе и востоке. Все три направления показали всплеск в 2022 году — вероятно, родственники за рубежом помогали тем, кто оказался в трудной ситуации.</p>
+    <p data-i="s6_body2">После 2022 года — постепенное снижение. США стабилизировались около 2,5–3 млрд в месяц. Корея снижается заметнее: с 3–3,5 млрд в 2021–2023 годах до 1,1–1,5 млрд в 2025-м. Возможно, связано с окончанием трудовых контрактов.</p>
+  </div>
+  <div class="chart-box reveal">
+    <div class="chart-title" data-i="c6_title">Входящие переводы: диаспора на Западе и в Корее</div>
+    <div class="chart-sub" data-i="c6_sub">Млрд тенге в месяц</div>
+    <div class="legend" id="legend-diaspora"></div>
+    <svg id="chart-diaspora" style="width:100%;height:260px;display:block;"></svg>
+  </div>
+  <div class="chart-caption"><span data-i="src">Источник: НБК</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+</div>
+</div>
+
+<!-- SECTION 7: HEATMAP -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">07</span><span data-i="s7_label">Сезонность</span></div>
+  <h2 data-i="s7_title">Когда уходит больше всего денег</h2>
+  <div class="section-body">
+    <p data-i="s7_body1">Январь — стабильно слабый месяц: праздники, низкая деловая активность. С марта переводы растут и достигают пика в августе–сентябре — горячий сезон для трудовых мигрантов, которые активнее работают летом.</p>
+    <p data-i="s7_body2">На тепловой карте видно, как 2022 год выбивается из общей картины: почти все месяцы заметно темнее. Особенно апрель–август — первая волна релокации.</p>
+  </div>
+  <div class="chart-box reveal">
+    <div class="chart-title" data-i="c7_title">Тепловая карта: отправленные переводы по месяцам и годам</div>
+    <div class="chart-sub" data-i="c7_sub">Млрд тенге · тёмнее = больше</div>
+    <svg id="chart-heatmap" style="width:100%;height:200px;display:block;"></svg>
+  </div>
+  <div class="chart-caption"><span data-i="src">Источник: НБК</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+</div>
+</div>
+
+<!-- SECTION 8: STACKED AREA -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">08</span><span data-i="s8_label">Структура во времени</span></div>
+  <h2 data-i="s8_title">Как менялась география исходящих переводов</h2>
+  <div class="section-body">
+    <p data-i="s8_body1">На площадной диаграмме видно, как Кыргызстан — некогда третья по величине страна назначения — практически исчез из топ-5 к 2023 году. Возможно, часть потока переориентировалась на Узбекистан.</p>
+    <p data-i="s8_body2">Слой России стабильно растёт в абсолютных значениях, хотя 2024–2025 годы показывают некоторое снижение относительно пика 2023-го.</p>
+  </div>
+  <div class="chart-box reveal">
+    <div class="chart-title" data-i="c8_title">Структура отправленных переводов по странам</div>
+    <div class="chart-sub" data-i="c8_sub">Накопленная площадная диаграмма · млрд тенге в месяц</div>
+    <div class="legend" id="legend-stacked"></div>
+    <svg id="chart-stacked" style="width:100%;height:300px;display:block;"></svg>
+  </div>
+  <div class="chart-caption"><span data-i="src">Источник: НБК</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+</div>
+</div>
+
+<!-- SECTION 9: GEORGIA SPOTLIGHT -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">09</span><span data-i="s9_label">Грузия</span></div>
+  <h2 data-i="s9_title">Грузия: транзитный хаб или постоянный адрес?</h2>
+  <div class="section-body">
+    <p data-i="s9_body1">Переводы в Грузию выросли в 3,7 раза от допандемийного уровня к 2023 году. Тбилиси стал вторым по популярности городом релокации после Алматы — среди российских IT-специалистов, уехавших через Казахстан.</p>
+    <p data-i="s9_body2">С 2024 года цифры начали снижаться. Часть людей вернулась, часть уехала дальше — в Армению, ОАЭ, Европу. Грузия из «постоянного» превратилась в транзитное направление.</p>
+  </div>
+  <div class="chart-box reveal">
+    <div class="chart-title" data-i="c9_title">Переводы в Грузию: рост и охлаждение</div>
+    <div class="chart-sub" data-i="c9_sub">Млрд тенге в месяц · с трендовой линией</div>
+    <svg id="chart-georgia" style="width:100%;height:240px;display:block;"></svg>
+  </div>
+  <div class="chart-caption"><span data-i="src">Источник: НБК</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+</div>
+</div>
+
+<!-- SECTION 10: SCATTER -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">10</span><span data-i="s10_label">Баланс по странам</span></div>
+  <h2 data-i="s10_title">Отправили vs получили: асимметрия связей</h2>
+  <div class="section-body">
+    <p data-i="s10_body1">Страны выше диагонали — те, кому Казахстан отправляет больше, чем получает оттуда. Ниже диагонали — те, откуда приходит больше. Россия в 2022 году оказалась глубоко ниже — уникальный момент.</p>
+  </div>
+
+  <div class="tabs" style="margin-bottom:20px;">
+    <div class="tab active" onclick="switchScatterYear(this,'2022')" data-i="tab2022">2022</div>
+    <div class="tab" onclick="switchScatterYear(this,'2023')" data-i="tab2023">2023</div>
+    <div class="tab" onclick="switchScatterYear(this,'2024')" data-i="tab2024">2024</div>
+    <div class="tab" onclick="switchScatterYear(this,'2025')" data-i="tab2025">2025</div>
+  </div>
+  <div class="chart-box reveal">
+    <div class="chart-title" data-i="c10_title">Отправлено vs Получено по странам</div>
+    <div class="chart-sub" data-i="c10_sub">Млрд тенге · точки выше диагонали — Казахстан отправляет больше</div>
+    <svg id="chart-scatter" style="width:100%;height:300px;display:block;"></svg>
+  </div>
+  <div class="chart-caption"><span data-i="src">Источник: НБК</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+</div>
+</div>
+
+<!-- SECTION 11: SEASONALITY RADIAL -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">11</span><span data-i="s11_label">Ритм года</span></div>
+  <h2 data-i="s11_title">Переводы следуют трудовому календарю</h2>
+  <div class="section-body">
+    <p data-i="s11_body1">Среднемесячный профиль по данным 2022–2024 годов чётко показывает: январь — самый тихий месяц. Август — самый активный. Трудовые мигранты накапливают и отправляют деньги перед возвращением домой осенью.</p>
+  </div>
+  <div class="chart-box reveal" style="max-width:480px;margin:0 auto 12px;">
+    <div class="chart-title" data-i="c11_title">Сезонный профиль отправленных переводов</div>
+    <div class="chart-sub" data-i="c11_sub">Среднемесячный объём · млрд тенге · 2022–2024</div>
+    <svg id="chart-radial" style="width:100%;height:320px;display:block;"></svg>
+  </div>
+  <div class="chart-caption"><span data-i="src">Источник: НБК</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+</div>
+</div>
+
+<!-- SECTION 12: BUMPCHART -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">12</span><span data-i="s12_label">Позиции стран</span></div>
+  <h2 data-i="s12_title">Как менялись позиции стран-получателей</h2>
+  <div class="section-body">
+    <p data-i="s12_body1">График позиций наглядно показывает смену мест: Кыргызстан упал с 3-го на 5-е, Россия поднялась с 4-го на 2-е. Турция в 2021 году занимала второе место, в 2025 — третье.</p>
+  </div>
+  <div class="chart-box reveal">
+    <div class="chart-title" data-i="c12_title">Рейтинг стран по объёму исходящих переводов</div>
+    <div class="chart-sub" data-i="c12_sub">Позиция 1 = наибольший объём</div>
+    <svg id="chart-bump" style="width:100%;height:300px;display:block;"></svg>
+  </div>
+  <div class="chart-caption"><span data-i="src">Источник: НБК</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+</div>
+</div>
+
+<!-- SECTION 13: RECV STREAM -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">13</span><span data-i="s13_label">Динамика входящих</span></div>
+  <h2 data-i="s13_title">Схлопывание волны: входящие переводы 2022–2025</h2>
+  <div class="section-body">
+    <p data-i="s13_body1">Пик входящих переводов — июнь 2022 года: 91,9 млрд тенге. К июлю 2025 года — 21,3 млрд. Снижение в 4,3 раза за три года.</p>
+  </div>
+  <div class="chart-box reveal">
+    <div class="chart-title" data-i="c13_title">Динамика входящих переводов по источникам</div>
+    <div class="chart-sub" data-i="c13_sub">Млрд тенге в месяц · стековая диаграмма</div>
+    <div class="legend" id="legend-recv-stack"></div>
+    <svg id="chart-recv-stack" style="width:100%;height:300px;display:block;"></svg>
+  </div>
+  <div class="chart-caption"><span data-i="src">Источник: НБК</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+</div>
+</div>
+
+<!-- SECTION 14: RATIO -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">14</span><span data-i="s14_label">Соотношение</span></div>
+  <h2 data-i="s14_title">Отношение отправленных к полученным: возврат к норме</h2>
+  <div class="section-body">
+    <p data-i="s14_body1">В 2021 году Казахстан отправлял в 3,75 раза больше, чем получал. В 2022 году — только 1,52 раза, потому что входящий поток резко вырос. После 2022 года соотношение вновь растёт: в 2023 году — 3,13, в 2024 — 3,33.</p>
+  </div>
+  <div class="chart-box reveal">
+    <div class="chart-title" data-i="c14_title">Коэффициент: отправлено / получено</div>
+    <div class="chart-sub" data-i="c14_sub">Ежемесячно · 1.0 = паритет</div>
+    <svg id="chart-ratio" style="width:100%;height:260px;display:block;"></svg>
+  </div>
+  <div class="chart-caption"><span data-i="src">Источник: НБК</span> · Nurasyl Abdrazakuly · nurasyl.space</div>
+</div>
+</div>
+
+<!-- SECTION 15: CONCLUSION -->
+<div class="section">
+<div class="container">
+  <div class="section-label"><span class="section-num">15</span><span data-i="s15_label">Выводы</span></div>
+  <h2 data-i="s15_title">Что говорят данные</h2>
+  <div class="section-body">
+    <p data-i="s15_body1">Казахстан остаётся принимающей страной для трудовых мигрантов из Узбекистана, Кыргызстана и Таджикистана. Это структурная черта региональной экономики.</p>
+    <p data-i="s15_body2">2022 год стал аномалией в данных. Масштабный переток средств изменил структуру потоков — часть этих изменений оказалась устойчивой.</p>
+    <p data-i="s15_body3">Грузия была промежуточным пунктом. Диаспора в США, Германии и Корее — постоянная. Переводы — зеркало миграции.</p>
+  </div>
+  <div class="callout" data-i="s15_callout">Деньги не врут. Они идут туда, где живут люди — и уходят оттуда, где они работают.</div>
+</div>
+</div>
+
+<div style="text-align:center;padding:40px 0 20px;border-top:1px solid var(--rule);">
+  <a href="https://nurasyl.space" style="display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:0.08em;color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);padding:12px 28px;transition:all 0.2s;" onmouseover="this.style.background='var(--ink)';this.style.color='var(--bg)'" onmouseout="this.style.background='transparent';this.style.color='var(--ink)'">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1L1 7L6 13M1 7H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span data-i="back_btn">Вернуться на главную · nurasyl.space</span>
+  </a>
+</div>
+
+<div class="footer">
+  <div class="container">
+    <p data-i="footer1">Данные: Национальный банк Республики Казахстан · 2021–2025</p>
+    <p style="margin-top:6px;" data-i="footer2">Анализ и визуализация: Nurasyl Abdrazakuly · <a href="https://nurasyl.space" style="color:var(--ink3);">nurasyl.space</a></p>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const DATA = {"monthly_totals":[{"date":"2021-09","sent":97265.8,"recv":24101.7},{"date":"2021-10","sent":93486.6,"recv":23290.3},{"date":"2021-11","sent":87047.9,"recv":22892.6},{"date":"2021-12","sent":88423.3,"recv":27253.8},{"date":"2022-01","sent":45608.9,"recv":13594.7},{"date":"2022-02","sent":62763.5,"recv":17973.7},{"date":"2022-03","sent":81120.4,"recv":25583.6},{"date":"2022-04","sent":103563.8,"recv":52467.1},{"date":"2022-05","sent":98361.3,"recv":69177.5},{"date":"2022-06","sent":104378.2,"recv":91936.0},{"date":"2022-07","sent":86747.4,"recv":88164.4},{"date":"2022-08","sent":103249.7,"recv":71393.6},{"date":"2022-09","sent":93967.5,"recv":70646.4},{"date":"2022-10","sent":89324.6,"recv":74299.1},{"date":"2022-11","sent":90835.1,"recv":62904.4},{"date":"2022-12","sent":74596.4,"recv":43091.5},{"date":"2023-01","sent":49174.7,"recv":27576.7},{"date":"2023-02","sent":59544.1,"recv":25818.0},{"date":"2023-03","sent":74162.0,"recv":29853.5},{"date":"2023-04","sent":76556.8,"recv":26506.4},{"date":"2023-05","sent":90248.8,"recv":28197.5},{"date":"2023-06","sent":87798.7,"recv":26795.4},{"date":"2023-07","sent":88804.5,"recv":24242.9},{"date":"2023-08","sent":99054.9,"recv":22327.2},{"date":"2023-09","sent":93217.6,"recv":24422.7},{"date":"2023-10","sent":89636.7,"recv":23532.3},{"date":"2023-11","sent":81252.2,"recv":22530.6},{"date":"2023-12","sent":79826.8,"recv":27705.0},{"date":"2024-01","sent":52480.0,"recv":20617.7},{"date":"2024-02","sent":59275.2,"recv":19181.3},{"date":"2024-03","sent":59265.2,"recv":20061.6},{"date":"2024-04","sent":65855.3,"recv":20617.1},{"date":"2024-05","sent":73852.8,"recv":20589.7},{"date":"2024-06","sent":73024.7,"recv":19320.1},{"date":"2024-07","sent":81915.6,"recv":21636.0},{"date":"2024-08","sent":77262.2,"recv":19983.4},{"date":"2024-09","sent":63784.3,"recv":18478.4},{"date":"2024-10","sent":64809.1,"recv":18913.9},{"date":"2024-11","sent":60602.6,"recv":17810.7},{"date":"2024-12","sent":56813.4,"recv":19544.9},{"date":"2025-01","sent":40748.1,"recv":15846.0},{"date":"2025-02","sent":45008.2,"recv":15813.1},{"date":"2025-03","sent":47328.9,"recv":16733.5},{"date":"2025-04","sent":57434.9,"recv":19311.9},{"date":"2025-05","sent":65933.4,"recv":19059.3},{"date":"2025-06","sent":64712.2,"recv":18595.4},{"date":"2025-07","sent":70447.5,"recv":21265.0}],"russia_flow":[{"date":"2021-09","sent":13980.6,"recv":3550.8},{"date":"2021-10","sent":13148.8,"recv":3220.7},{"date":"2021-11","sent":12831.9,"recv":2867.6},{"date":"2021-12","sent":15145.0,"recv":4295.1},{"date":"2022-01","sent":7217.8,"recv":1623.5},{"date":"2022-02","sent":8668.4,"recv":2224.7},{"date":"2022-03","sent":12577.6,"recv":4562.2},{"date":"2022-04","sent":16913.3,"recv":18311.2},{"date":"2022-05","sent":18623.7,"recv":45569.1},{"date":"2022-06","sent":22495.7,"recv":66858.9},{"date":"2022-07","sent":15562.0,"recv":54619.1},{"date":"2022-08","sent":15575.2,"recv":33226.3},{"date":"2022-09","sent":17603.1,"recv":36017.4},{"date":"2022-10","sent":17570.0,"recv":42712.2},{"date":"2022-11","sent":20152.4,"recv":34209.0},{"date":"2022-12","sent":20406.5,"recv":20072.0},{"date":"2023-01","sent":13082.3,"recv":11207.0},{"date":"2023-02","sent":14995.7,"recv":10541.4},{"date":"2023-03","sent":20004.1,"recv":12230.8},{"date":"2023-04","sent":21169.6,"recv":10269.5},{"date":"2023-05","sent":19786.7,"recv":10604.5},{"date":"2023-06","sent":20049.7,"recv":10340.0},{"date":"2023-07","sent":19906.7,"recv":7870.7},{"date":"2023-08","sent":22439.3,"recv":7477.6},{"date":"2023-09","sent":21874.2,"recv":6913.8},{"date":"2023-10","sent":21897.3,"recv":6765.6},{"date":"2023-11","sent":22570.5,"recv":7023.9},{"date":"2023-12","sent":26509.3,"recv":7414.5},{"date":"2024-01","sent":17654.1,"recv":5541.1},{"date":"2024-02","sent":20878.3,"recv":5678.3},{"date":"2024-03","sent":20051.5,"recv":5638.5},{"date":"2024-04","sent":21278.5,"recv":5973.3},{"date":"2024-05","sent":20422.2,"recv":5939.1},{"date":"2024-06","sent":19632.1,"recv":5329.2},{"date":"2024-07","sent":19806.4,"recv":5822.3},{"date":"2024-08","sent":19019.7,"recv":5115.2},{"date":"2024-09","sent":14348.8,"recv":4448.6},{"date":"2024-10","sent":17763.6,"recv":4196.5},{"date":"2024-11","sent":19693.0,"recv":3959.0},{"date":"2024-12","sent":21016.0,"recv":4159.5},{"date":"2025-01","sent":15302.0,"recv":3212.7},{"date":"2025-02","sent":16544.3,"recv":3757.6},{"date":"2025-03","sent":16482.6,"recv":4232.2},{"date":"2025-04","sent":18140.0,"recv":4965.0},{"date":"2025-05","sent":17948.4,"recv":4621.4},{"date":"2025-06","sent":17476.3,"recv":4492.2},{"date":"2025-07","sent":17853.6,"recv":5285.7}],"sent_by_country":[{"date":"2021-09","Узбекистан":33847.6,"Россия":13980.6,"Турция":20036.2,"Грузия":2912.8,"Кыргызстан":12159.2,"Китай":3512.1,"Армения":4126.1,"Азербайджан":1362.6},{"date":"2021-10","Узбекистан":30501.8,"Россия":13148.8,"Турция":20780.9,"Грузия":3814.6,"Кыргызстан":11549.4,"Китай":3673.6,"Армения":3089.9,"Азербайджан":1494.2},{"date":"2021-11","Узбекистан":23070.0,"Россия":12831.9,"Турция":21396.5,"Грузия":5111.8,"Кыргызстан":10999.8,"Китай":4281.5,"Армения":3055.4,"Азербайджан":1211.9},{"date":"2021-12","Узбекистан":19907.8,"Россия":15145.0,"Турция":21690.4,"Грузия":6603.2,"Кыргызстан":10581.4,"Китай":4429.9,"Армения":2888.3,"Азербайджан":1741.9},{"date":"2022-01","Узбекистан":9346.2,"Россия":7217.8,"Турция":10367.2,"Грузия":3524.9,"Кыргызстан":8310.1,"Китай":1664.4,"Армения":1291.4,"Азербайджан":1019.9},{"date":"2022-02","Узбекистан":13572.9,"Россия":8668.4,"Турция":17768.3,"Грузия":5950.0,"Кыргызстан":8794.1,"Китай":1219.8,"Армения":1907.9,"Азербайджан":1202.6},{"date":"2022-03","Узбекистан":15723.6,"Россия":12577.6,"Турция":24166.1,"Грузия":3861.4,"Кыргызстан":16103.6,"Китай":2250.5,"Армения":640.7,"Азербайджан":1299.7},{"date":"2022-04","Узбекистан":24087.8,"Россия":16913.3,"Турция":25715.1,"Грузия":9632.5,"Кыргызстан":9902.9,"Китай":3867.8,"Армения":4239.5,"Азербайджан":1603.7},{"date":"2022-05","Узбекистан":31005.0,"Россия":18623.7,"Турция":19749.3,"Грузия":9120.7,"Кыргызстан":7233.5,"Китай":3764.6,"Армения":2196.2,"Азербайджан":1370.6},{"date":"2022-06","Узбекистан":36256.9,"Россия":22495.7,"Турция":20760.0,"Грузия":7808.5,"Кыргызстан":4806.9,"Китай":3321.7,"Армения":1664.1,"Азербайджан":1713.7},{"date":"2022-07","Узбекистан":33637.2,"Россия":15562.0,"Турция":17979.1,"Грузия":5010.7,"Кыргызстан":3314.0,"Китай":3483.8,"Армения":921.7,"Азербайджан":1201.8},{"date":"2022-08","Узбекистан":38098.8,"Россия":15575.2,"Турция":27048.4,"Грузия":5663.9,"Кыргызстан":4018.9,"Китай":4089.7,"Армения":1106.5,"Азербайджан":1389.5},{"date":"2022-09","Узбекистан":31413.4,"Россия":17603.1,"Турция":25600.5,"Грузия":4737.4,"Кыргызстан":3345.9,"Китай":3044.9,"Армения":0,"Азербайджан":1264.3},{"date":"2022-10","Узбекистан":25247.2,"Россия":17570.0,"Турция":28120.1,"Грузия":4077.6,"Кыргызстан":3066.1,"Китай":3159.1,"Армения":0,"Азербайджан":1228.2},{"date":"2022-11","Узбекистан":17773.1,"Россия":20152.4,"Турция":33241.1,"Грузия":5453.4,"Кыргызстан":2704.5,"Китай":3800.7,"Армения":871.3,"Азербайджан":1223.2},{"date":"2022-12","Узбекистан":13800.4,"Россия":20406.5,"Турция":21374.4,"Грузия":6090.6,"Кыргызстан":2307.1,"Китай":3409.3,"Армения":645.0,"Азербайджан":1292.6},{"date":"2023-01","Узбекистан":8206.3,"Россия":13082.3,"Турция":14697.3,"Грузия":4556.8,"Кыргызстан":1569.4,"Китай":1587.4,"Армения":527.1,"Азербайджан":952.0},{"date":"2023-02","Узбекистан":10106.0,"Россия":14995.7,"Турция":18683.8,"Грузия":6249.5,"Кыргызстан":1982.5,"Китай":2056.1,"Армения":0,"Азербайджан":935.7},{"date":"2023-03","Узбекистан":13940.1,"Россия":20004.1,"Турция":21020.7,"Грузия":7905.8,"Кыргызстан":2433.4,"Китай":2302.2,"Армения":0,"Азербайджан":1021.1},{"date":"2023-04","Узбекистан":19411.3,"Россия":21169.6,"Турция":16405.0,"Грузия":8893.4,"Кыргызстан":2231.9,"Китай":2476.3,"Армения":0,"Азербайджан":1120.1},{"date":"2023-05","Узбекистан":29895.3,"Россия":19786.7,"Турция":19088.1,"Грузия":9150.4,"Кыргызстан":2614.9,"Китай":2865.8,"Армения":645.0,"Азербайджан":1256.2},{"date":"2023-06","Узбекистан":31203.0,"Россия":20049.7,"Турция":16468.6,"Грузия":7683.0,"Кыргызстан":3035.8,"Китай":2589.0,"Армения":718.5,"Азербайджан":1117.0},{"date":"2023-07","Узбекистан":32329.8,"Россия":19906.7,"Турция":16354.3,"Грузия":7379.1,"Кыргызстан":2818.9,"Китай":3111.8,"Армения":897.4,"Азербайджан":1342.1},{"date":"2023-08","Узбекистан":33669.8,"Россия":22439.3,"Турция":20839.9,"Грузия":8641.2,"Кыргызстан":3613.6,"Китай":3206.3,"Армения":583.5,"Азербайджан":1215.6},{"date":"2023-09","Узбекистан":29022.6,"Россия":21874.2,"Турция":20262.8,"Грузия":8475.8,"Кыргызстан":3879.2,"Китай":3021.9,"Армения":744.8,"Азербайджан":1227.0},{"date":"2023-10","Узбекистан":25128.6,"Россия":21897.3,"Турция":21585.3,"Грузия":7920.2,"Кыргызстан":3475.5,"Китай":2757.3,"Армения":929.6,"Азербайджан":1149.6},{"date":"2023-11","Узбекистан":17684.8,"Россия":22570.5,"Турция":20302.8,"Грузия":8382.6,"Кыргызстан":2941.2,"Китай":3076.7,"Армения":877.6,"Азербайджан":1194.2},{"date":"2023-12","Узбекистан":14352.9,"Россия":26509.3,"Турция":18344.2,"Грузия":7284.1,"Кыргызстан":2817.8,"Китай":3542.9,"Армения":1025.7,"Азербайджан":1325.4},{"date":"2024-01","Узбекистан":8793.6,"Россия":17654.1,"Турция":12535.7,"Грузия":4231.4,"Кыргызстан":2007.1,"Китай":2529.6,"Армения":541.2,"Азербайджан":855.6},{"date":"2024-02","Узбекистан":9696.7,"Россия":20878.3,"Турция":16419.0,"Грузия":4800.3,"Кыргызстан":2166.2,"Китай":745.2,"Армения":665.4,"Азербайджан":840.5},{"date":"2024-03","Узбекистан":11223.0,"Россия":20051.5,"Турция":14756.2,"Грузия":5317.2,"Кыргызстан":2294.1,"Китай":1459.2,"Армения":581.0,"Азербайджан":922.1},{"date":"2024-04","Узбекистан":18029.2,"Россия":21278.5,"Турция":12566.2,"Грузия":5416.8,"Кыргызстан":2476.3,"Китай":1930.0,"Армения":496.4,"Азербайджан":995.0},{"date":"2024-05","Узбекистан":26621.7,"Россия":20422.2,"Турция":13267.8,"Грузия":4985.4,"Кыргызстан":2189.2,"Китай":1864.0,"Армения":734.6,"Азербайджан":953.9},{"date":"2024-06","Узбекистан":28669.8,"Россия":19632.1,"Турция":10621.5,"Грузия":4887.3,"Кыргызстан":2647.9,"Китай":2145.9,"Армения":740.1,"Азербайджан":884.3},{"date":"2024-07","Узбекистан":34186.1,"Россия":19806.4,"Турция":11714.5,"Грузия":4990.3,"Кыргызстан":3235.5,"Китай":2735.7,"Армения":1065.2,"Азербайджан":1110.3},{"date":"2024-08","Узбекистан":29970.6,"Россия":19019.7,"Турция":13218.8,"Грузия":4259.8,"Кыргызстан":2954.6,"Китай":2833.5,"Армения":1036.9,"Азербайджан":999.2},{"date":"2024-09","Узбекистан":22792.3,"Россия":14348.8,"Турция":12967.1,"Грузия":3829.2,"Кыргызстан":2389.9,"Китай":2756.2,"Армения":873.9,"Азербайджан":968.2},{"date":"2024-10","Узбекистан":19365.7,"Россия":17763.6,"Турция":14027.9,"Грузия":3639.6,"Кыргызстан":2403.5,"Китай":2558.1,"Армения":888.3,"Азербайджан":921.1},{"date":"2024-11","Узбекистан":14194.5,"Россия":19693.0,"Турция":13213.2,"Грузия":3933.6,"Кыргызстан":2170.6,"Китай":2669.9,"Армения":1191.4,"Азербайджан":946.5},{"date":"2024-12","Узбекистан":10529.3,"Россия":21016.0,"Турция":10933.2,"Грузия":3738.2,"Кыргызстан":2050.2,"Китай":2636.3,"Армения":1783.4,"Азербайджан":1140.2},{"date":"2025-01","Узбекистан":6904.2,"Россия":15302.0,"Турция":8586.3,"Грузия":2412.7,"Кыргызстан":1468.2,"Китай":1857.0,"Армения":683.9,"Азербайджан":1126.4},{"date":"2025-02","Узбекистан":8324.8,"Россия":16544.3,"Турция":10383.6,"Грузия":3146.5,"Кыргызстан":1445.9,"Китай":1006.7,"Армения":680.2,"Азербайджан":1037.2},{"date":"2025-03","Узбекистан":10421.6,"Россия":16482.6,"Турция":9992.5,"Грузия":3238.7,"Кыргызстан":1773.9,"Китай":1204.4,"Армения":716.2,"Азербайджан":1005.0},{"date":"2025-04","Узбекистан":17152.4,"Россия":18140.0,"Турция":10487.0,"Грузия":3541.6,"Кыргызстан":1945.3,"Китай":1498.6,"Армения":758.9,"Азербайджан":1177.2},{"date":"2025-05","Узбекистан":25694.2,"Россия":17948.4,"Турция":10647.5,"Грузия":3291.1,"Кыргызстан":2012.1,"Китай":1431.9,"Армения":814.8,"Азербайджан":1220.3},{"date":"2025-06","Узбекистан":26901.0,"Россия":17476.3,"Турция":8498.9,"Грузия":3482.0,"Кыргызстан":2054.5,"Китай":1569.9,"Армения":879.8,"Азербайджан":1008.5},{"date":"2025-07","Узбекистан":29940.2,"Россия":17853.6,"Турция":8743.1,"Грузия":4369.2,"Кыргызстан":2238.9,"Китай":1915.5,"Армения":1145.3,"Азербайджан":1100.7}],"recv_diaspora":[{"date":"2021-09","Соединенные Штаты Америки":3138.2,"Германия":1585.0,"Республика Корея":2736.7,"Соединенное Королевство":0,"Израиль":0},{"date":"2021-10","Соединенные Штаты Америки":2995.2,"Германия":1475.2,"Республика Корея":2868.1,"Соединенное Королевство":0,"Израиль":0},{"date":"2021-11","Соединенные Штаты Америки":2999.2,"Германия":1426.2,"Республика Корея":3033.4,"Соединенное Королевство":0,"Израиль":294.3},{"date":"2021-12","Соединенные Штаты Америки":3203.2,"Германия":1889.8,"Республика Корея":3485.4,"Соединенное Королевство":0,"Израиль":372.8},{"date":"2022-01","Соединенные Штаты Америки":1926.8,"Германия":955.0,"Республика Корея":2094.4,"Соединенное Королевство":0,"Израиль":203.3},{"date":"2022-02","Соединенные Штаты Америки":2467.9,"Германия":1229.9,"Республика Корея":2446.7,"Соединенное Королевство":0,"Израиль":237.7},{"date":"2022-03","Соединенные Штаты Америки":3734.2,"Германия":1856.7,"Республика Корея":3585.7,"Соединенное Королевство":0,"Израиль":372.3},{"date":"2022-04","Соединенные Штаты Америки":8316.1,"Германия":3268.0,"Республика Корея":5941.8,"Соединенное Королевство":0,"Израиль":0},{"date":"2022-05","Соединенные Штаты Америки":3331.6,"Германия":1407.3,"Республика Корея":2935.7,"Соединенное Королевство":0,"Израиль":0},{"date":"2022-06","Соединенные Штаты Америки":3467.6,"Германия":1470.7,"Республика Корея":3357.7,"Соединенное Королевство":0,"Израиль":0},{"date":"2022-07","Соединенные Штаты Америки":3608.6,"Германия":1448.9,"Республика Корея":3343.9,"Соединенное Королевство":0,"Израиль":0},{"date":"2022-08","Соединенные Штаты Америки":3986.5,"Германия":1514.1,"Республика Корея":3438.4,"Соединенное Королевство":0,"Израиль":364.6},{"date":"2022-09","Соединенные Штаты Америки":3746.1,"Германия":1507.5,"Республика Корея":3097.2,"Соединенное Королевство":0,"Израиль":368.3},{"date":"2022-10","Соединенные Штаты Америки":3476.2,"Германия":1237.8,"Республика Корея":2848.7,"Соединенное Королевство":0,"Израиль":337.9},{"date":"2022-11","Соединенные Штаты Америки":3257.3,"Германия":1336.0,"Республика Корея":3295.4,"Соединенное Королевство":0,"Израиль":368.2},{"date":"2022-12","Соединенные Штаты Америки":3238.2,"Германия":1691.7,"Республика Корея":3366.3,"Соединенное Королевство":0,"Израиль":345.4},{"date":"2023-01","Соединенные Штаты Америки":2634.0,"Германия":1228.3,"Республика Корея":2870.8,"Соединенное Королевство":0,"Израиль":276.3},{"date":"2023-02","Соединенные Штаты Америки":2517.9,"Германия":1277.6,"Республика Корея":2335.7,"Соединенное Королевство":0,"Израиль":243.2},{"date":"2023-03","Соединенные Штаты Америки":2909.0,"Германия":1522.3,"Республика Корея":2969.7,"Соединенное Королевство":0,"Израиль":288.3},{"date":"2023-04","Соединенные Штаты Америки":2698.5,"Германия":1450.0,"Республика Корея":2718.0,"Соединенное Королевство":0,"Израиль":281.7},{"date":"2023-05","Соединенные Штаты Америки":3122.2,"Германия":1487.3,"Республика Корея":2987.7,"Соединенное Королевство":0,"Израиль":317.4},{"date":"2023-06","Соединенные Штаты Америки":2754.6,"Германия":1370.6,"Республика Корея":3107.8,"Соединенное Королевство":0,"Израиль":309.0},{"date":"2023-07","Соединенные Штаты Америки":2931.1,"Германия":1474.5,"Республика Корея":3072.6,"Соединенное Королевство":0,"Израиль":263.7},{"date":"2023-08","Соединенные Штаты Америки":2419.7,"Германия":1287.1,"Республика Корея":2288.3,"Соединенное Королевство":0,"Израиль":256.8},{"date":"2023-09","Соединенные Штаты Америки":2903.3,"Германия":1471.9,"Республика Корея":2701.4,"Соединенное Королевство":0,"Израиль":0},{"date":"2023-10","Соединенные Штаты Америки":2899.8,"Германия":1504.9,"Республика Корея":2382.6,"Соединенное Королевство":0,"Израиль":269.6},{"date":"2023-11","Соединенные Штаты Америки":2445.9,"Германия":1290.1,"Республика Корея":2459.1,"Соединенное Королевство":0,"Израиль":203.6},{"date":"2023-12","Соединенные Штаты Америки":3182.7,"Германия":1788.0,"Республика Корея":2881.5,"Соединенное Королевство":0,"Израиль":0},{"date":"2024-01","Соединенные Штаты Америки":2357.1,"Германия":1260.8,"Республика Корея":2011.1,"Соединенное Королевство":0,"Израиль":0},{"date":"2024-02","Соединенные Штаты Америки":2326.0,"Германия":1261.5,"Республика Корея":1980.5,"Соединенное Королевство":0,"Израиль":0},{"date":"2024-03","Соединенные Штаты Америки":2547.9,"Германия":1402.1,"Республика Корея":2227.3,"Соединенное Королевство":0,"Израиль":0},{"date":"2024-04","Соединенные Штаты Америки":2509.5,"Германия":1502.5,"Республика Корея":2572.8,"Соединенное Королевство":0,"Израиль":0},{"date":"2024-05","Соединенные Штаты Америки":2603.9,"Германия":1404.8,"Республика Корея":2433.1,"Соединенное Королевство":0,"Израиль":227.7},{"date":"2024-06","Соединенные Штаты Америки":2632.8,"Германия":1442.5,"Республика Корея":2291.9,"Соединенное Королевство":0,"Израиль":230.2},{"date":"2024-07","Соединенные Штаты Америки":2849.2,"Германия":1593.7,"Республика Корея":2408.0,"Соединенное Королевство":0,"Израиль":0},{"date":"2024-08","Соединенные Штаты Америки":2844.7,"Германия":1571.4,"Республика Корея":2126.9,"Соединенное Королевство":0,"Израиль":252.6},{"date":"2024-09","Соединенные Штаты Америки":2749.0,"Германия":1464.8,"Республика Корея":1810.0,"Соединенное Королевство":0,"Израиль":0},{"date":"2024-10","Соединенные Штаты Америки":2852.5,"Германия":1518.5,"Республика Корея":1591.7,"Соединенное Королевство":0,"Израиль":233.9},{"date":"2024-11","Соединенные Штаты Америки":2798.0,"Германия":1390.8,"Республика Корея":1497.2,"Соединенное Королевство":0,"Израиль":221.0},{"date":"2024-12","Соединенные Штаты Америки":3346.3,"Германия":1722.2,"Республика Корея":1527.5,"Соединенное Королевство":0,"Израиль":239.3},{"date":"2025-01","Соединенные Штаты Америки":2687.8,"Германия":1234.1,"Республика Корея":1505.6,"Соединенное Королевство":0,"Израиль":213.7},{"date":"2025-02","Соединенные Штаты Америки":2350.4,"Германия":1231.2,"Республика Корея":1491.6,"Соединенное Королевство":0,"Израиль":209.5},{"date":"2025-03","Соединенные Штаты Америки":2861.5,"Германия":1402.3,"Республика Корея":1123.7,"Соединенное Королевство":0,"Израиль":259.1},{"date":"2025-04","Соединенные Штаты Америки":2967.4,"Германия":1716.1,"Республика Корея":1464.4,"Соединенное Королевство":0,"Израиль":240.6},{"date":"2025-05","Соединенные Штаты Америки":1829.3,"Германия":982.4,"Республика Корея":1087.2,"Соединенное Королевство":3579.5,"Израиль":0},{"date":"2025-06","Соединенные Штаты Америки":3054.2,"Германия":1579.7,"Республика Корея":1383.5,"Соединенное Королевство":0,"Израиль":202.6},{"date":"2025-07","Соединенные Штаты Америки":3241.7,"Германия":1790.3,"Республика Корея":1352.9,"Соединенное Королевство":0,"Израиль":293.1}],"annual":[{"year":2021,"sent":366223.5,"recv":97538.4,"net":268685.2},{"year":2022,"sent":1034516.9,"recv":681232.0,"net":353285.0},{"year":2023,"sent":969277.6,"recv":309508.2,"net":659769.4},{"year":2024,"sent":788940.4,"recv":236754.7,"net":552185.7},{"year":2025,"sent":391613.1,"recv":126624.2,"net":264988.9}],"seasonality":[{"month":1,"avg":49087.9},{"month":2,"avg":60527.6},{"month":3,"avg":71515.8},{"month":4,"avg":81992.0},{"month":5,"avg":87487.6},{"month":6,"avg":88400.5},{"month":7,"avg":85822.5},{"month":8,"avg":93188.9},{"month":9,"avg":83656.5},{"month":10,"avg":81256.8},{"month":11,"avg":77563.3},{"month":12,"avg":70412.2}],"shares_by_year":[{"year":2021,"Узбекистан":29.3,"Россия":15.0,"Турция":22.9,"Грузия":5.0,"Кыргызстан":12.4},{"year":2022,"Узбекистан":28.0,"Россия":18.7,"Турция":26.3,"Грузия":6.9,"Кыргызстан":7.1},{"year":2023,"Узбекистан":27.3,"Россия":25.2,"Турция":23.1,"Грузия":9.5,"Кыргызстан":3.4},{"year":2024,"Узбекистан":29.7,"Россия":29.4,"Турция":19.8,"Грузия":6.8,"Кыргызстан":3.7},{"year":2025,"Узбекистан":32.0,"Россия":30.6,"Турция":17.2,"Грузия":6.0,"Кыргызстан":3.3}],"heatmap":[{"year":2022,"month":1,"value":45608.9},{"year":2022,"month":2,"value":62763.5},{"year":2022,"month":3,"value":81120.4},{"year":2022,"month":4,"value":103563.8},{"year":2022,"month":5,"value":98361.3},{"year":2022,"month":6,"value":104378.2},{"year":2022,"month":7,"value":86747.4},{"year":2022,"month":8,"value":103249.7},{"year":2022,"month":9,"value":93967.5},{"year":2022,"month":10,"value":89324.6},{"year":2022,"month":11,"value":90835.1},{"year":2022,"month":12,"value":74596.4},{"year":2023,"month":1,"value":49174.7},{"year":2023,"month":2,"value":59544.1},{"year":2023,"month":3,"value":74162.0},{"year":2023,"month":4,"value":76556.8},{"year":2023,"month":5,"value":90248.8},{"year":2023,"month":6,"value":87798.7},{"year":2023,"month":7,"value":88804.5},{"year":2023,"month":8,"value":99054.9},{"year":2023,"month":9,"value":93217.6},{"year":2023,"month":10,"value":89636.7},{"year":2023,"month":11,"value":81252.2},{"year":2023,"month":12,"value":79826.8},{"year":2024,"month":1,"value":52480.0},{"year":2024,"month":2,"value":59275.2},{"year":2024,"month":3,"value":59265.2},{"year":2024,"month":4,"value":65855.3},{"year":2024,"month":5,"value":73852.8},{"year":2024,"month":6,"value":73024.7},{"year":2024,"month":7,"value":81915.6},{"year":2024,"month":8,"value":77262.2},{"year":2024,"month":9,"value":63784.3},{"year":2024,"month":10,"value":64809.1},{"year":2024,"month":11,"value":60602.6},{"year":2024,"month":12,"value":56813.4},{"year":2025,"month":1,"value":40748.1},{"year":2025,"month":2,"value":45008.2},{"year":2025,"month":3,"value":47328.9},{"year":2025,"month":4,"value":57434.9},{"year":2025,"month":5,"value":65933.4},{"year":2025,"month":6,"value":64712.2},{"year":2025,"month":7,"value":70447.5}],"recv_by_country_yr":[{"year":2021,"total":97538.4,"Россия":13934.2,"Соединенные Штаты Америки":12335.8,"Республика Корея":12123.6,"Германия":6376.2,"Узбекистан":20360.0,"Кыргызстан":12562.1,"Турция":4641.5},{"year":2022,"total":681232.0,"Россия":360005.4,"Соединенные Штаты Америки":44557.3,"Республика Корея":39752.0,"Германия":18923.6,"Узбекистан":53553.2,"Кыргызстан":94566.6,"Турция":17170.3},{"year":2023,"total":309508.2,"Россия":108659.4,"Соединенные Штаты Америки":33418.8,"Республика Корея":32775.2,"Германия":17152.6,"Узбекистан":33814.5,"Кыргызстан":15313.8,"Турция":19621.3},{"year":2024,"total":236754.7,"Россия":61800.5,"Соединенные Штаты Америки":32417.0,"Республика Корея":24478.0,"Германия":17535.6,"Узбекистан":23638.9,"Кыргызстан":10741.7,"Турция":20300.7},{"year":2025,"total":126624.2,"Россия":30566.8,"Соединенные Штаты Америки":18992.2,"Республика Корея":9409.0,"Германия":9936.1,"Узбекистан":13195.7,"Кыргызстан":4740.4,"Турция":12149.5}]};
+
+// ============================================================
+// TRANSLATIONS
+// ============================================================
+const T = {
+  ru: {
+    eyebrow: "Денежные переводы · Казахстан · 2021–2025",
+    hero_title: "Деньги в <em>движении</em><br>Куда и откуда текут переводы Казахстана",
+    hero_lead: "За четыре года через платёжные системы прошло более 3,5 триллиона тенге. Это карта миграции, геополитики и трудовых связей страны — выраженная в цифрах.",
+    stat1: "тенге отправлено<br>2021–2025", stat2: "страны<br>в данных", stat3: "переломный<br>год", stat4: "месяцев<br>наблюдений",
+    s1_label:"Общая картина", s1_title:"Двойной всплеск 2022 года",
+    s1_body1:"До 2022 года денежные переводы из Казахстана шли стабильным потоком — 87–97 млрд тенге в месяц, с сезонным спадом в январе.",
+    s1_body2:"В апреле–июне 2022 года входящий поток из России достиг исторического пика: в июне в Казахстан пришло почти столько же, сколько ушло — 92 млрд против 104 млрд. Казахстан стал транзитным узлом крупных финансовых потоков.",
+    s1_callout:"В июле 2022 года объём входящих переводов впервые превысил исходящие. Казахстан на один месяц стал нетто-получателем.",
+    c1_title:"Ежемесячные переводы: отправленные vs полученные", c1_sub:"Млрд тенге · сентябрь 2021 — июль 2025",
+    s2_label:"Россия", s2_title:"Рекорд, разворот, новая норма",
+    s2_body1:"В 2021 году казахстанцы стабильно отправляли в Россию 13–15 млрд тенге в месяц, а получали втрое меньше.",
+    s2_body2:"С апреля по октябрь 2022 года поток развернулся. Пик — июнь 2022: 66,9 млрд тенге получено из России за один месяц. Это беспрецедентное изменение за всё время наблюдений.",
+    s2_body3:"К 2023 году доля России в исходящих переводах выросла с 15% до 31%. Россия стабильно второй по объёму получатель казахстанских переводов.",
+    hl1:"тенге получено из России в июне 2022 — исторический месячный максимум",
+    hl2:"доля России в отправленных переводах в 2025 году — рост с 15% в 2021",
+    c2_title:"Россия: отправленные и полученные переводы", c2_sub:"Млрд тенге · ежемесячно",
+    s3_label:"Рейтинг направлений", s3_title:"Кто лидирует — и как менялся расклад",
+    s3_body1:"Узбекистан — стабильный лидер по объёму отправленных переводов все пять лет. По данным МОМ, в Казахстане работает свыше миллиона граждан Узбекистана.",
+    s3_body2:"Турция держалась на втором месте до 2023 года, затем Россия её обогнала. Кыргызстан в 2021 году был третьим — к 2025-му опустился на пятое.",
+    tab2021:"2021",tab2022:"2022",tab2023:"2023",tab2024:"2024",tab2025:"2025",
+    c3_title:"Доля ключевых направлений в общем объёме отправленных переводов", c3_sub:"% от итогового объёма · по годам",
+    s4_label:"Чистый отток", s4_title:"Казахстан отдаёт больше, чем получает",
+    s4_body1:"Казахстан — устойчивый нетто-отправитель переводов. Большая часть трудовых мигрантов в стране отправляет деньги домой.",
+    s4_body2:"2023 год — пик чистого оттока: 660 млрд тенге. Входящий поток к тому моменту резко сократился, а исходящий остался высоким.",
+    c4_title:"Годовой баланс: отправлено, получено, чистый отток", c4_sub:"Млрд тенге · 2021–2025",
+    s5_label:"Входящие переводы", s5_title:"Откуда приходят деньги",
+    s5_body1:"Россия — крупнейший источник входящих переводов, но её доля сокращается: с 53% в 2022 году до 24% в 2025-м.",
+    s5_body2:"США, Германия и Южная Корея — стабильные источники диаспорных переводов. Это казахстанцы, живущие за рубежом и поддерживающие семьи дома.",
+    c5_title:"Структура входящих переводов по годам", c5_sub:"Млрд тенге · ключевые страны-источники",
+    s6_label:"Диаспора", s6_title:"США, Германия, Корея: переводы от казахстанской диаспоры",
+    s6_body1:"Переводы из США, Германии и Южной Кореи отражают казахстанскую диаспору на западе и востоке. Все три направления показали всплеск в 2022 году.",
+    s6_body2:"После 2022 года — постепенное снижение. Корея снижается заметнее: с 3–3,5 млрд в месяц до 1,1–1,5 млрд в 2025-м.",
+    c6_title:"Входящие переводы: диаспора на Западе и в Корее", c6_sub:"Млрд тенге в месяц",
+    s7_label:"Сезонность", s7_title:"Когда уходит больше всего денег",
+    s7_body1:"Январь — стабильно слабый месяц. Август — самый активный. Трудовые мигранты накапливают и отправляют деньги перед возвращением домой осенью.",
+    s7_body2:"На тепловой карте видно, как 2022 год выбивается из общей картины: почти все месяцы заметно темнее соседних лет.",
+    c7_title:"Тепловая карта: отправленные переводы по месяцам и годам", c7_sub:"Млрд тенге · тёмнее = больше",
+    s8_label:"Структура во времени", s8_title:"Как менялась география исходящих переводов",
+    s8_body1:"Кыргызстан — некогда третья страна назначения — практически исчез из первой пятёрки к 2023 году.",
+    s8_body2:"Россия планомерно наращивала свою долю с 15% до 31% от общего объёма исходящих переводов.",
+    c8_title:"Структура отправленных переводов по странам", c8_sub:"Накопленная площадная диаграмма · млрд тенге в месяц",
+    s9_label:"Грузия", s9_title:"Грузия: промежуточный пункт или постоянный адрес?",
+    s9_body1:"Переводы в Грузию выросли в 3,7 раза к 2023 году. Тбилиси стал одним из популярных городов для переезда — особенно среди специалистов в сфере IT.",
+    s9_body2:"С 2024 года цифры начали снижаться. Часть людей вернулась, часть уехала дальше — в Армению, ОАЭ, Европу.",
+    c9_title:"Переводы в Грузию: рост и охлаждение", c9_sub:"Млрд тенге в месяц · с трендовой линией",
+    s10_label:"Баланс по странам", s10_title:"Отправлено vs получено: асимметрия связей",
+    s10_body1:"Страны выше диагонали — те, кому Казахстан отправляет больше, чем получает оттуда. Ниже диагонали — источники входящих потоков.",
+    c10_title:"Отправлено vs получено по странам", c10_sub:"Млрд тенге · точки выше диагонали — Казахстан отправляет больше",
+    s11_label:"Ритм года", s11_title:"Переводы следуют трудовому календарю",
+    s11_body1:"Январь — самый тихий месяц. Август — самый активный. Среднемесячный профиль по данным 2022–2024 годов чётко повторяет сезонность занятости.",
+    c11_title:"Сезонный профиль отправленных переводов", c11_sub:"Среднемесячный объём · млрд тенге · 2022–2024",
+    s12_label:"Позиции стран", s12_title:"Как менялись позиции стран-получателей",
+    s12_body1:"Кыргызстан опустился с 3-го места на 5-е. Россия поднялась с 4-го на 2-е. Узбекистан удерживает первое место все пять лет.",
+    c12_title:"Рейтинг стран по объёму исходящих переводов", c12_sub:"Позиция 1 = наибольший объём",
+    s13_label:"Динамика входящих", s13_title:"Сжатие потока: входящие переводы 2022–2025",
+    s13_body1:"Пик входящих переводов — июнь 2022 года: 91,9 млрд тенге. К июлю 2025 года — 21,3 млрд. Снижение в 4,3 раза за три года.",
+    c13_title:"Динамика входящих переводов по источникам", c13_sub:"Млрд тенге в месяц · накопленная диаграмма",
+    s14_label:"Соотношение", s14_title:"Отношение отправленных к полученным",
+    s14_body1:"В 2021 году Казахстан отправлял в 3,75 раза больше, чем получал. В 2022 году — только 1,52 раза. С 2023 года соотношение вернулось к прежним значениям.",
+    c14_title:"Коэффициент: отправлено / получено", c14_sub:"Ежемесячно · 1.0 = паритет",
+    s15_label:"Выводы", s15_title:"Что говорят данные",
+    s15_body1:"Казахстан остаётся принимающей страной для трудовых мигрантов из Узбекистана, Кыргызстана и Таджикистана. Это структурная черта региональной экономики.",
+    s15_body2:"2022 год стал аномалией в данных. Масштабный переток средств изменил структуру потоков — часть этих изменений оказалась устойчивой.",
+    s15_body3:"Грузия была промежуточным пунктом. Диаспора в США, Германии и Корее — постоянный и предсказуемый источник.",
+    s15_callout:"Деньги не врут. Они идут туда, где живут люди — и уходят оттуда, где они работают.",
+    src:"Источник: Национальный банк Казахстана",
+    footer1:"Данные: Национальный банк Республики Казахстан · 2021–2025",
+    footer2:"Анализ и визуализация: Nurasyl Abdrazakuly · nurasyl.space",
+    back_btn:"Вернуться на главную · nurasyl.space"
+  },
+  en: {
+    eyebrow:"Money Transfers · Kazakhstan · 2021–2025",
+    hero_title:"Money in <em>motion</em><br>Where Kazakhstan's transfers flow",
+    hero_lead:"Over four years, more than 3.5 trillion tenge moved through payment systems. This is a map of migration, labor ties and economic geography — expressed in numbers.",
+    stat1:"tenge sent<br>2021–2025", stat2:"countries<br>in dataset", stat3:"turning<br>point", stat4:"months<br>of data",
+    s1_label:"Overview", s1_title:"The double surge of 2022",
+    s1_body1:"Through 2021, transfers from Kazakhstan ran at a steady 87–97 billion tenge per month, with a seasonal dip in January.",
+    s1_body2:"In April–June 2022, the incoming flow from Russia reached a historic peak. In June, Kazakhstan received nearly as much as it sent — 92 billion vs 104 billion. The country briefly became a transit point for large financial flows.",
+    s1_callout:"In July 2022, incoming transfers exceeded outgoing for the first time. Kazakhstan became a net recipient for one month.",
+    c1_title:"Monthly transfers: sent vs received", c1_sub:"Billion tenge · September 2021 — July 2025",
+    s2_label:"Russia", s2_title:"Record, reversal, new normal",
+    s2_body1:"In 2021, Kazakhstanis steadily sent 13–15 billion tenge per month to Russia, receiving three times less in return.",
+    s2_body2:"From April to October 2022, the direction reversed. The peak — June 2022 — saw 66.9 billion tenge received from Russia in a single month. An unprecedented shift in the entire observation period.",
+    s2_body3:"By 2023, Russia's share of outgoing transfers had grown from 15% to 31%. It is now a stable second-largest destination.",
+    hl1:"tenge received from Russia in June 2022 — all-time monthly record",
+    hl2:"Russia's share of sent transfers in 2025 — up from 15% in 2021",
+    c2_title:"Russia: sent and received transfers", c2_sub:"Billion tenge · monthly",
+    s3_label:"Country rankings", s3_title:"Who leads — and how the order changed",
+    s3_body1:"Uzbekistan is the consistent leader for all five years. These are labor migrants — over 1 million Uzbek citizens work in Kazakhstan.",
+    s3_body2:"Turkey held second place until 2023, then Russia overtook it. Kyrgyzstan was third in 2021 and fell to fifth by 2025.",
+    tab2021:"2021",tab2022:"2022",tab2023:"2023",tab2024:"2024",tab2025:"2025",
+    c3_title:"Share of key destinations in total sent transfers", c3_sub:"% of total · by year",
+    s4_label:"Net outflow", s4_title:"Kazakhstan sends more than it receives",
+    s4_body1:"Kazakhstan is a consistent net sender of remittances. Most labor migrants in the country send earnings back home.",
+    s4_body2:"2023 saw the peak net outflow: 660 billion tenge. Incoming flows had sharply contracted while outgoing remained high.",
+    c4_title:"Annual balance: sent, received, net outflow", c4_sub:"Billion tenge · 2021–2025",
+    s5_label:"Incoming transfers", s5_title:"Where the money comes from",
+    s5_body1:"Russia leads incoming transfers, but its share is shrinking: from 53% in 2022 to 24% in 2025.",
+    s5_body2:"The US, Germany and South Korea are stable sources of diaspora remittances — Kazakhstanis living abroad supporting families at home.",
+    c5_title:"Structure of incoming transfers by year", c5_sub:"Billion tenge · key source countries",
+    s6_label:"Diaspora", s6_title:"USA, Germany, Korea: diaspora remittances",
+    s6_body1:"Transfers from the US, Germany and South Korea reflect the Kazakhstani diaspora in the West and East. All three showed a spike in 2022.",
+    s6_body2:"After 2022, a gradual decline. Korea drops more sharply — from 3–3.5 billion per month to 1.1–1.5 billion in 2025.",
+    c6_title:"Incoming transfers: Western diaspora and Korea", c6_sub:"Billion tenge per month",
+    s7_label:"Seasonality", s7_title:"Transfers follow the labor calendar",
+    s7_body1:"January is consistently the quietest month. August is the most active — migrants save up and send money before returning home in the fall.",
+    s7_body2:"The heatmap shows 2022 as a clear outlier — almost every month darker than neighboring years.",
+    c7_title:"Heatmap: sent transfers by month and year", c7_sub:"Billion tenge · darker = more",
+    s8_label:"Structure over time", s8_title:"How the geography of outgoing transfers changed",
+    s8_body1:"Kyrgyzstan — once the third-largest destination — nearly disappeared from the top five by 2023.",
+    s8_body2:"Russia's share grew steadily from 15% to 31% of total outgoing transfers.",
+    c8_title:"Structure of sent transfers by country", c8_sub:"Stacked area chart · billion tenge per month",
+    s9_label:"Georgia", s9_title:"Georgia: stopover or new home?",
+    s9_body1:"Transfers to Georgia grew 3.7x by 2023. Tbilisi became a popular city for relocation, especially among IT professionals.",
+    s9_body2:"Since 2024, the numbers have been declining. Some people returned; others moved further — to Armenia, the UAE, or Europe.",
+    c9_title:"Transfers to Georgia: rise and cooling", c9_sub:"Billion tenge per month · with trend line",
+    s10_label:"Country balance", s10_title:"Sent vs received: the asymmetry of ties",
+    s10_body1:"Countries above the diagonal are those Kazakhstan sends more to than it receives from. Below the diagonal — net sources of incoming flows.",
+    c10_title:"Sent vs received by country", c10_sub:"Billion tenge · above diagonal = Kazakhstan sends more",
+    s11_label:"Annual rhythm", s11_title:"Transfers follow the labor calendar",
+    s11_body1:"January is the quietest month. August is the most active. The average monthly profile for 2022–2024 mirrors seasonal employment patterns.",
+    c11_title:"Seasonal profile of sent transfers", c11_sub:"Average monthly volume · billion tenge · 2022–2024",
+    s12_label:"Country positions", s12_title:"How destination country rankings changed",
+    s12_body1:"Kyrgyzstan fell from 3rd to 5th. Russia rose from 4th to 2nd. Uzbekistan has held first place every year.",
+    c12_title:"Country rankings by outgoing transfer volume", c12_sub:"Rank 1 = highest volume",
+    s13_label:"Incoming dynamics", s13_title:"Flow contraction: incoming transfers 2022–2025",
+    s13_body1:"Peak incoming: June 2022 at 91.9 billion tenge. By July 2025: 21.3 billion. A 4.3x decline over three years.",
+    c13_title:"Incoming transfers by source country", c13_sub:"Billion tenge per month · stacked",
+    s14_label:"Ratio", s14_title:"Sent-to-received ratio",
+    s14_body1:"In 2021, Kazakhstan sent 3.75x more than it received. In 2022, only 1.52x. Since 2023, the ratio has returned to pre-2022 levels.",
+    c14_title:"Ratio: sent / received", c14_sub:"Monthly · 1.0 = parity",
+    s15_label:"Conclusions", s15_title:"What the data says",
+    s15_body1:"Kazakhstan remains a receiving country for labor migrants from Uzbekistan, Kyrgyzstan and Tajikistan. This is a structural feature of the regional economy.",
+    s15_body2:"2022 was an anomaly in the data. A large-scale reorientation of flows changed the structure — some of those changes proved lasting.",
+    s15_body3:"Georgia was a stopover. The diaspora in the US, Germany and Korea is stable and predictable.",
+    s15_callout:"Money doesn't lie. It flows where people live — and leaves where they work.",
+    src:"Source: National Bank of Kazakhstan",
+    footer1:"Data: National Bank of the Republic of Kazakhstan · 2021–2025",
+    footer2:"Analysis & visualisation: Nurasyl Abdrazakuly · nurasyl.space",
+    back_btn:"Back to home · nurasyl.space"
+  },
+  kz: {
+    eyebrow:"Ақша аударымдары · Қазақстан · 2021–2025",
+    hero_title:"Ақша <em>ағынында</em><br>Қазақстан аударымдары қайда және қайдан ағады",
+    hero_lead:"Төрт жыл ішінде төлем жүйелері арқылы 3,5 триллион теңгеден астам ақша өтті. Бұл — санда айқындалған халықтың қозғалысы, еңбек байланыстары және экономикалық география.",
+    stat1:"теңге жіберілді<br>2021–2025", stat2:"дерекқордағы<br>елдер", stat3:"өзгеріс<br>жылы", stat4:"бақылау<br>айлары",
+    s1_label:"Жалпы бейне", s1_title:"2022 жылдың қос өсімі",
+    s1_body1:"2022 жылға дейін Қазақстаннан ақша аударымдары тұрақты ағынмен жүрді — айына 87–97 млрд теңге, қаңтарда маусымдық төмендеумен.",
+    s1_body2:"2022 жылдың сәуір–маусымында Ресейден келетін ағын тарихи шыңға жетті: маусымда Қазақстанға кірген ақша шыққанмен шамалас болды — 92 млрд пен 104 млрд. Қазақстан ірі қаржы ағындарының өткізгіш тораптарының біріне айналды.",
+    s1_callout:"2022 жылдың шілдесінде кіріс аударымдар бірінші рет шығыстан асты. Қазақстан бір айға таза алушыға айналды.",
+    c1_title:"Ай сайынғы аударымдар: жіберілген және алынған", c1_sub:"Млрд теңге · 2021 қыркүйек — 2025 шілде",
+    s2_label:"Ресей", s2_title:"Рекорд, өзгеріс, жаңа тәртіп",
+    s2_body1:"2021 жылы қазақстандықтар Ресейге тұрақты айына 13–15 млрд теңге аударды, үш есе аз алды.",
+    s2_body2:"2022 жылдың сәуір–қазан айларында ағын кері бұрылды. Шың — 2022 жылдың маусымы: бір айда Ресейден 66,9 млрд теңге алынды. Бұл бүкіл бақылау кезеңіндегі теңдесі жоқ өзгеріс.",
+    s2_body3:"2023 жылға қарай Ресейдің шығыс аударымдардағы үлесі 15%-дан 31%-ға дейін өсті. Ресей екінші орынға тұрақтады.",
+    hl1:"2022 жылдың маусымында Ресейден алынған теңге — тарихи ай рекорды",
+    hl2:"2025 жылы жіберілген аударымдардағы Ресейдің үлесі — 2021 жылдағы 15%-дан өсті",
+    c2_title:"Ресей: жіберілген және алынған аударымдар", c2_sub:"Млрд теңге · ай сайын",
+    s3_label:"Елдер кестесі", s3_title:"Кім алда — және орындар қалай ауысты",
+    s3_body1:"Өзбекстан — бес жыл бойы жіберілген аударымдардың үздіксіз жетекшісі. Бұл — еңбек көшіп-қонушылары: Халықаралық еңбек ұйымының деректеріне сүйенсек, Қазақстанда миллионнан астам Өзбекстан азаматы жұмыс істейді.",
+    s3_body2:"Түркия 2023 жылға дейін екінші орында болды, содан кейін Ресей алға шықты. Қырғызстан 2021 жылы үшінші еді — 2025 жылы бесінші орынға түсті.",
+    tab2021:"2021",tab2022:"2022",tab2023:"2023",tab2024:"2024",tab2025:"2025",
+    c3_title:"Жіберілген аударымдардағы негізгі бағыттардың үлесі", c3_sub:"Жалпы көлемнің %-ы · жылдар бойынша",
+    s4_label:"Таза шығыс", s4_title:"Қазақстан алғаннан көп жібереді",
+    s4_body1:"Қазақстан — аударымдардың тұрақты таза жіберушісі. Елдегі еңбек көшіп-қонушыларының басым бөлігі табысын отбасына жіберіп отырады.",
+    s4_body2:"2023 жыл — таза шығыстың шыңы: 660 млрд теңге. Кіріс ағындары күрт қысқарды, ал шығыс жоғары деңгейде қалды.",
+    c4_title:"Жылдық қалдық: жіберілген, алынған, таза шығыс", c4_sub:"Млрд теңге · 2021–2025",
+    s5_label:"Кіріс аударымдар", s5_title:"Ақша қайдан келеді",
+    s5_body1:"Ресей кіріс аударымдарда жетекші, бірақ үлесі азаюда: 2022 жылдағы 53%-дан 2025 жылы 24%-ға дейін.",
+    s5_body2:"АҚШ, Германия және Оңтүстік Корея — шетелдегі отандастар жіберетін тұрақты аударымдар көзі.",
+    c5_title:"Жылдар бойынша кіріс аударымдардың құрылымы", c5_sub:"Млрд теңге · негізгі елдер",
+    s6_label:"Шетелдегі отандастар", s6_title:"АҚШ, Германия, Корея: шетелдегі отандастар аударымдары",
+    s6_body1:"АҚШ, Германия және Оңтүстік Кореядан аударымдар батыс пен шығыстағы қазақстандық қауымдастықты бейнелейді. Үшеуі де 2022 жылы өсімді көрсетті.",
+    s6_body2:"2022 жылдан кейін — біртіндеп азаю. Корея айқынырақ азайды: айына 3–3,5 млрд-тан 2025 жылы 1,1–1,5 млрд-қа дейін.",
+    c6_title:"Кіріс аударымдар: батыстағы отандастар және Корея", c6_sub:"Айына млрд теңге",
+    s7_label:"Маусымдылық", s7_title:"Ақша ең көп қашан жіберіледі",
+    s7_body1:"Қаңтар — үнемі ең тыныш ай. Тамыз — ең белсенді. Еңбек көшіп-қонушылары күзде үйге оралар алдында ақша жинақтайды және жіберіп отырады.",
+    s7_body2:"Жылу кестесінде 2022 жылдың жалпы суреттен қалай ерекшеленетіні анық көрінеді: барлық дерлік айлар қоюырақ.",
+    c7_title:"Жылу кестесі: айлар мен жылдар бойынша жіберілген аударымдар", c7_sub:"Млрд теңге · қоюырақ = көп",
+    s8_label:"Уақыт бойынша құрылым", s8_title:"Шығыс аударымдар географиясы қалай өзгерді",
+    s8_body1:"Қырғызстан — бір кездегі үшінші бағыт — 2023 жылға қарай алғашқы бестіктен шығарылып қалды.",
+    s8_body2:"Ресей үлесі жалпы шығыс аударымдарда 15%-дан 31%-ға дейін тұрақты өсті.",
+    c8_title:"Жіберілген аударымдардың елдер бойынша құрылымы", c8_sub:"Жинақталған аудан кестесі · айына млрд теңге",
+    s9_label:"Грузия", s9_title:"Грузия: аралық тоқтам ба, тұрақты мекен бе?",
+    s9_body1:"Грузияға аударымдар 2023 жылға қарай 3,7 есе өсті. Тбилиси, әсіресе АТ саласы мамандарының арасында, танымал қоныс аудару қаласына айналды.",
+    s9_body2:"2024 жылдан бастап сандар азая бастады. Бір бөлігі оралды, екіншілері Армения, БАӘ немесе Еуропаға кетті.",
+    c9_title:"Грузияға аударымдар: өсу және суыну", c9_sub:"Айына млрд теңге · үрдіс сызығымен",
+    s10_label:"Елдер бойынша қалдық", s10_title:"Жіберілген және алынған: байланыстардың теңсіздігі",
+    s10_body1:"Диагональдан жоғары елдер — Қазақстан алғаннан көп жіберетіндер. Төменде — кіріс ағындарының негізгі көздері.",
+    c10_title:"Елдер бойынша жіберілген және алынған аударымдар", c10_sub:"Млрд теңге · диагональдан жоғары — Қазақстан көбірек жібереді",
+    s11_label:"Жыл ырғағы", s11_title:"Аударымдар еңбек күнтізбесін ұстанады",
+    s11_body1:"Қаңтар — ең тыныш ай. Тамыз — ең белсенді. 2022–2024 жылдардағы орташа ай бейіні маусымдық жұмыс белсенділігін айқын көрсетеді.",
+    c11_title:"Жіберілген аударымдардың маусымдық бейіні", c11_sub:"Орташа ай көлемі · млрд теңге · 2022–2024",
+    s12_label:"Елдер орындары", s12_title:"Қабылдаушы елдер орындары қалай ауысты",
+    s12_body1:"Қырғызстан 3-ші орыннан 5-шіге түсті. Ресей 4-ші орыннан 2-шіге көтерілді. Өзбекстан бес жыл бойы бірінші орынды ұстап отыр.",
+    c12_title:"Шығыс аударымдар көлемі бойынша елдер кестесі", c12_sub:"1-орын = ең үлкен көлем",
+    s13_label:"Кіріс серпіні", s13_title:"Ағынның тарылуы: кіріс аударымдар 2022–2025",
+    s13_body1:"Кіріс аударымдардың шыңы — 2022 жылдың маусымы: 91,9 млрд теңге. 2025 жылдың шілдесіне — 21,3 млрд. Үш жылда 4,3 есе азаю.",
+    c13_title:"Кіріс аударымдардың серпіні", c13_sub:"Айына млрд теңге · жинақталған кесте",
+    s14_label:"Арақатынас", s14_title:"Жіберілген мен алынғанның арақатынасы",
+    s14_body1:"2021 жылы Қазақстан алғаннан 3,75 есе көп жіберді. 2022 жылы — тек 1,52 есе. 2023 жылдан бастап арақатынас 2022 жылға дейінгі деңгейге оралды.",
+    c14_title:"Арақатынас: жіберілген / алынған", c14_sub:"Ай сайын · 1.0 = тепе-теңдік",
+    s15_label:"Қорытынды", s15_title:"Деректер не айтады",
+    s15_body1:"Қазақстан Өзбекстан, Қырғызстан және Тәжікстаннан келген еңбек көшіп-қонушылары үшін қабылдаушы ел болып қала береді. Бұл — аймақтық экономиканың тұрақты белгісі.",
+    s15_body2:"2022 жыл деректердегі ерекше жыл болды. Ірі қаржы ағындарының бағыты өзгерді — кейбір өзгерістер тұрақты болып шықты.",
+    s15_body3:"Грузия аралық тоқтам болды. АҚШ, Германия және Кореядағы отандастар тұрақты және болжамды қайнар көз.",
+    s15_callout:"Ақша жалған айтпайды. Ол адамдар тұратын жерге ағады — және олар жұмыс істейтін жерден шығады.",
+    src:"Дерек көзі: Қазақстан Республикасының Ұлттық банкі",
+    footer1:"Деректер: Қазақстан Республикасының Ұлттық банкі · 2021–2025",
+    footer2:"Талдау және бейнелеу: Nurasyl Abdrazakuly · nurasyl.space",
+    back_btn:"Басты бетке оралу · nurasyl.space"
+  }
+};
+
+let currentLang = 'ru';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  const t = T[lang];
+  document.querySelectorAll('[data-i]').forEach(el => {
+    const key = el.getAttribute('data-i');
+    if (t[key] !== undefined && t[key] !== null) {
+      el.innerHTML = t[key];
+    }
+  });
+}
+
+// ============================================================
+// TOOLTIP
+// ============================================================
+const tooltip = document.getElementById('tooltip');
+function showTip(html, e) {
+  tooltip.innerHTML = html;
+  tooltip.style.opacity = 1;
+  moveTip(e);
+}
+function moveTip(e) {
+  let x = e.clientX + 14, y = e.clientY - 30;
+  if (x + 230 > window.innerWidth) x = e.clientX - 230;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+function hideTip() { tooltip.style.opacity = 0; }
+
+// ============================================================
+// COLORS
+// ============================================================
+const COLORS = {
+  'Узбекистан': '#2980b9',
+  'Россия': '#c0392b',
+  'Турция': '#e67e22',
+  'Грузия': '#27ae60',
+  'Кыргызстан': '#8e44ad',
+  'Китай': '#16a085',
+  'Армения': '#d35400',
+  'Азербайджан': '#7f8c8d',
+  'Соединенные Штаты Америки': '#2980b9',
+  'Германия': '#27ae60',
+  'Республика Корея': '#e67e22',
+  'Соединенное Королевство': '#8e44ad',
+  'Израиль': '#16a085',
+  'Кыргызстан recv': '#8e44ad',
+  'Турция recv': '#e67e22',
+};
+
+const MONTHS_RU = ['','Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
+const MONTHS_EN = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONTHS_KZ = ['','Қаң','Ақп','Нау','Сәу','Мам','Мау','Шіл','Там','Қыр','Қаз','Қар','Жел'];
+
+function monthLabel(m) {
+  if (currentLang === 'en') return MONTHS_EN[m];
+  if (currentLang === 'kz') return MONTHS_KZ[m];
+  return MONTHS_RU[m];
+}
+
+function fmtB(v) {
+  const unit = currentLang === 'en' ? ' bn' : currentLang === 'kz' ? ' млрд' : ' млрд';
+  return (v/1000).toFixed(1) + unit;
+}
+function fmtN(v) { return d3.format(',.1f')(v/1000); }
+
+// ============================================================
+// PROGRESS BAR
+// ============================================================
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('progress-bar').style.width = (window.scrollY / h * 100) + '%';
+});
+
+// ============================================================
+// SCROLL REVEAL
+// ============================================================
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ============================================================
+// HELPERS
+// ============================================================
+function getSVGDims(id) {
+  const el = document.getElementById(id);
+  const w = el.clientWidth || el.parentElement.clientWidth || 800;
+  const h = +el.getAttribute('height') || el.clientHeight || 300;
+  return { w, h };
+}
+
+function parseDate(d) { return new Date(d + '-01'); }
+
+// ============================================================
+// CHART 1: OVERVIEW LINE CHART
+// ============================================================
+function drawOverview() {
+  const el = document.getElementById('chart-overview');
+  const W = el.parentElement.clientWidth - 48;
+  const H = 300;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const m = { t: 20, r: 20, b: 40, l: 55 };
+  const w = W - m.l - m.r, h = H - m.t - m.b;
+  const svg = d3.select(el);
+  svg.selectAll('*').remove();
+  const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+
+  const data = DATA.monthly_totals;
+  const x = d3.scalePoint().domain(data.map(d => d.date)).range([0, w]);
+  const y = d3.scaleLinear().domain([0, d3.max(data, d => Math.max(d.sent, d.recv)) * 1.08]).range([h, 0]);
+
+  // Grid
+  g.append('g').attr('class','grid').selectAll('line')
+    .data(y.ticks(5)).join('line')
+    .attr('x1',0).attr('x2',w).attr('y1',d=>y(d)).attr('y2',d=>y(d))
+    .attr('stroke','#e8e4dd').attr('stroke-width',1);
+
+  // Area under sent
+  const areaSent = d3.area().x(d => x(d.date)).y0(h).y1(d => y(d.sent)).curve(d3.curveCatmullRom);
+  g.append('path').datum(data).attr('fill','#c0392b').attr('fill-opacity',0.08).attr('d',areaSent);
+
+  // Lines
+  const lineSent = d3.line().x(d => x(d.date)).y(d => y(d.sent)).curve(d3.curveCatmullRom);
+  const lineRecv = d3.line().x(d => x(d.date)).y(d => y(d.recv)).curve(d3.curveCatmullRom);
+
+  g.append('path').datum(data).attr('fill','none').attr('stroke','#c0392b').attr('stroke-width',2).attr('d',lineSent);
+  g.append('path').datum(data).attr('fill','none').attr('stroke','#2980b9').attr('stroke-width',2).attr('d',lineRecv);
+
+  // Annotation: July 2022 crossover
+  const julyIdx = data.findIndex(d => d.date === '2022-07');
+  if (julyIdx >= 0) {
+    const xPos = x(data[julyIdx].date);
+    g.append('line').attr('class','annotation-line').attr('x1',xPos).attr('x2',xPos).attr('y1',0).attr('y2',h);
+    g.append('text').attr('class','event-label').attr('x',xPos+4).attr('y',14).attr('font-size',10).attr('fill','#c0392b').text('Июл 2022 →');
+  }
+
+  // X axis - tick every 6 months
+  const tickDates = data.filter((d,i) => i % 6 === 0).map(d => d.date);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).tickValues(tickDates).tickFormat(d => d.slice(0,7))).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d => d/1000 + ' млрд')).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+
+  // Legend
+  const lg = g.append('g').attr('transform',`translate(${w-200},0)`);
+  lg.append('line').attr('x1',0).attr('x2',14).attr('y1',8).attr('y2',8).attr('stroke','#c0392b').attr('stroke-width',2);
+  lg.append('text').attr('x',18).attr('y',12).attr('font-size',11).attr('fill','#4a4640').text('Отправлено');
+  lg.append('line').attr('x1',100).attr('x2',114).attr('y1',8).attr('y2',8).attr('stroke','#2980b9').attr('stroke-width',2);
+  lg.append('text').attr('x',118).attr('y',12).attr('font-size',11).attr('fill','#4a4640').text('Получено');
+
+  // Hover
+  const bisect = d3.bisector(d => d.date).left;
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','none').attr('pointer-events','all')
+    .on('mousemove', function(event) {
+      const [mx] = d3.pointer(event, g.node());
+      const domain = data.map(d => d.date);
+      const closest = domain.reduce((a,b) => Math.abs(x(a)-mx) < Math.abs(x(b)-mx) ? a : b);
+      const d = data.find(dd => dd.date === closest);
+      showTip(`<b>${d.date}</b><br>Отправлено: ${fmtB(d.sent)}<br>Получено: ${fmtB(d.recv)}`, event);
+    })
+    .on('mouseleave', hideTip);
+}
+
+// ============================================================
+// CHART 2: RUSSIA FLOW
+// ============================================================
+function drawRussia() {
+  const el = document.getElementById('chart-russia');
+  const W = el.parentElement.clientWidth - 48;
+  const H = 320;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const m = { t: 20, r: 20, b: 40, l: 55 };
+  const w = W - m.l - m.r, h = H - m.t - m.b;
+  const svg = d3.select(el);
+  svg.selectAll('*').remove();
+  const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+
+  const data = DATA.russia_flow;
+  const x = d3.scalePoint().domain(data.map(d => d.date)).range([0, w]);
+  const y = d3.scaleLinear().domain([0, d3.max(data, d => Math.max(d.sent, d.recv)) * 1.05]).range([h, 0]);
+
+  g.append('g').selectAll('line').data(y.ticks(5)).join('line')
+    .attr('x1',0).attr('x2',w).attr('y1',d=>y(d)).attr('y2',d=>y(d))
+    .attr('stroke','#e8e4dd').attr('stroke-width',1);
+
+  const areaRecv = d3.area().x(d => x(d.date)).y0(h).y1(d => y(d.recv)).curve(d3.curveCatmullRom);
+  g.append('path').datum(data).attr('fill','#2980b9').attr('fill-opacity',0.12).attr('d',areaRecv);
+
+  const lineSent = d3.line().x(d => x(d.date)).y(d => y(d.sent)).curve(d3.curveCatmullRom);
+  const lineRecv = d3.line().x(d => x(d.date)).y(d => y(d.recv)).curve(d3.curveCatmullRom);
+  g.append('path').datum(data).attr('fill','none').attr('stroke','#c0392b').attr('stroke-width',2).attr('d',lineSent);
+  g.append('path').datum(data).attr('fill','none').attr('stroke','#2980b9').attr('stroke-width',2).attr('stroke-dasharray','4,3').attr('d',lineRecv);
+
+  // Annotation: peak June 2022
+  const peakDate = '2022-06';
+  const peakD = data.find(d => d.date === peakDate);
+  if (peakD) {
+    const xp = x(peakDate), yp = y(peakD.recv);
+    g.append('circle').attr('cx',xp).attr('cy',yp).attr('r',5).attr('fill','#2980b9').attr('opacity',0.8);
+    g.append('line').attr('x1',xp).attr('x2',xp+50).attr('y1',yp).attr('y2',yp-20).attr('stroke','#8a8278').attr('stroke-width',1);
+    g.append('text').attr('x',xp+52).attr('y',yp-22).attr('font-size',10).attr('fill','#2980b9').text('Пик: 66,9 млрд');
+  }
+
+  // Annotation: 2022 pivot
+  const warDate = '2022-04';
+  if (data.find(d => d.date === warDate)) {
+    const xw = x(warDate);
+    g.append('line').attr('class','annotation-line').attr('x1',xw).attr('x2',xw).attr('y1',0).attr('y2',h);
+    g.append('text').attr('x',xw+4).attr('y',26).attr('font-size',9).attr('fill','#8a8278').text('Апр 2022');
+  }
+
+  const tickDates = data.filter((d,i) => i % 6 === 0).map(d => d.date);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).tickValues(tickDates).tickFormat(d => d.slice(0,7))).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d => d/1000 + ' млрд')).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+
+  const lg = g.append('g').attr('transform',`translate(${w-250},0)`);
+  lg.append('line').attr('x1',0).attr('x2',14).attr('y1',8).attr('y2',8).attr('stroke','#c0392b').attr('stroke-width',2);
+  lg.append('text').attr('x',18).attr('y',12).attr('font-size',11).attr('fill','#4a4640').text('Отправлено в РФ');
+  lg.append('line').attr('x1',130).attr('x2',144).attr('y1',8).attr('y2',8).attr('stroke','#2980b9').attr('stroke-width',2).attr('stroke-dasharray','4,3');
+  lg.append('text').attr('x',148).attr('y',12).attr('font-size',11).attr('fill','#4a4640').text('Получено из РФ');
+
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','none').attr('pointer-events','all')
+    .on('mousemove', function(event) {
+      const [mx] = d3.pointer(event, g.node());
+      const domain = data.map(d => d.date);
+      const closest = domain.reduce((a,b) => Math.abs(x(a)-mx) < Math.abs(x(b)-mx) ? a : b);
+      const d = data.find(dd => dd.date === closest);
+      showTip(`<b>${d.date} · Россия</b><br>Отправлено: ${fmtB(d.sent)}<br>Получено: ${fmtB(d.recv)}`, event);
+    }).on('mouseleave', hideTip);
+}
+
+// ============================================================
+// RANK CHART (TABS)
+// ============================================================
+const rankData = {
+  2021: [['Узбекистан',107327],['Турция',83904],['Россия',55106],['Кыргызстан',45330],['Китай',13897]],
+  2022: [['Узбекистан',289962],['Турция',271890],['Россия',193366],['Кыргызстан',73296],['Грузия',70932]],
+  2023: [['Узбекистан',264951],['Россия',244285],['Турция',224053],['Грузия',92522],['Кыргызстан',32615]],
+  2024: [['Узбекистан',234073],['Россия',231564],['Турция',156241],['Грузия',54029],['Кыргызстан',29167]],
+  2025: [['Узбекистан',125339],['Россия',119747],['Турция',67339],['Грузия',23482],['Кыргызстан',12939]],
+};
+
+function drawRankChart(year) {
+  const container = document.getElementById('rank-chart');
+  const rows = rankData[year];
+  const max = rows[0][1];
+  container.innerHTML = rows.map((r, i) => `
+    <div class="rank-row">
+      <div class="rank-num">${i+1}</div>
+      <div class="rank-name">${r[0]}</div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:${r[1]/max*100}%;background:${COLORS[r[0]] || '#ccc'}"></div></div>
+      <div class="rank-val">${(r[1]/1000).toFixed(0)} млрд</div>
+    </div>
+  `).join('');
+}
+drawRankChart(2021);
+
+function switchTab(el, year) {
+  el.closest('.tabs').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  drawRankChart(parseInt(year));
+}
+
+// ============================================================
+// CHART 3: SHARE LINES
+// ============================================================
+function drawShare() {
+  const el = document.getElementById('chart-share');
+  const W = el.parentElement.clientWidth - 48;
+  const H = 280;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const m = { t: 20, r: 100, b: 40, l: 45 };
+  const w = W - m.l - m.r, h = H - m.t - m.b;
+  const svg = d3.select(el);
+  svg.selectAll('*').remove();
+  const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+
+  const countries = ['Узбекистан','Россия','Турция','Грузия','Кыргызстан'];
+  const years = [2021,2022,2023,2024,2025];
+  const x = d3.scalePoint().domain(years).range([0,w]).padding(0.2);
+  const y = d3.scaleLinear().domain([0,35]).range([h,0]);
+
+  g.append('g').selectAll('line').data(y.ticks(5)).join('line')
+    .attr('x1',0).attr('x2',w).attr('y1',d=>y(d)).attr('y2',d=>y(d))
+    .attr('stroke','#e8e4dd').attr('stroke-width',1);
+
+  countries.forEach(c => {
+    const lineD = d3.line().x(d => x(d.year)).y(d => y(d[c])).curve(d3.curveMonotoneX);
+    g.append('path').datum(DATA.shares_by_year).attr('fill','none').attr('stroke',COLORS[c]).attr('stroke-width',2.5).attr('d',lineD);
+    // dots
+    g.selectAll(`.dot-${c.slice(0,3)}`).data(DATA.shares_by_year).join('circle')
+      .attr('cx',d=>x(d.year)).attr('cy',d=>y(d[c])).attr('r',4).attr('fill',COLORS[c])
+      .on('mouseover',(ev,d) => showTip(`<b>${c} ${d.year}</b><br>${d[c]}%`, ev))
+      .on('mousemove',(ev) => moveTip(ev))
+      .on('mouseleave', hideTip);
+    // end label
+    const last = DATA.shares_by_year[DATA.shares_by_year.length-1];
+    g.append('text').attr('x',w+6).attr('y',y(last[c])+4).attr('font-size',10).attr('fill',COLORS[c]).text(c.slice(0,5));
+  });
+
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).tickFormat(d=>`'${String(d).slice(2)}`)).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',11).attr('fill','#8a8278'); });
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'%')).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+
+  // Legend
+  const legDiv = document.getElementById('legend-share');
+  legDiv.innerHTML = countries.map(c => `<div class="legend-item"><div class="legend-dot" style="background:${COLORS[c]}"></div>${c}</div>`).join('');
+}
+
+// ============================================================
+// CHART 4: ANNUAL BAR
+// ============================================================
+function drawAnnual() {
+  const el = document.getElementById('chart-annual');
+  const W = el.parentElement.clientWidth - 48;
+  const H = 320;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const m = { t: 20, r: 20, b: 40, l: 60 };
+  const w = W - m.l - m.r, h = H - m.t - m.b;
+  const svg = d3.select(el);
+  svg.selectAll('*').remove();
+  const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+
+  const data = DATA.annual;
+  const years = data.map(d => d.year);
+  const x0 = d3.scaleBand().domain(years).range([0,w]).padding(0.2);
+  const x1 = d3.scaleBand().domain(['sent','recv','net']).range([0,x0.bandwidth()]).padding(0.05);
+  const y = d3.scaleLinear().domain([0, d3.max(data, d => d.sent) * 1.08]).range([h,0]);
+
+  const barColors = { sent:'#c0392b', recv:'#2980b9', net:'#8a8278' };
+
+  g.append('g').selectAll('line').data(y.ticks(5)).join('line')
+    .attr('x1',0).attr('x2',w).attr('y1',d=>y(d)).attr('y2',d=>y(d))
+    .attr('stroke','#e8e4dd').attr('stroke-width',1);
+
+  data.forEach(d => {
+    ['sent','recv','net'].forEach(k => {
+      g.append('rect')
+        .attr('x', x0(d.year) + x1(k))
+        .attr('y', y(d[k]))
+        .attr('width', x1.bandwidth())
+        .attr('height', h - y(d[k]))
+        .attr('fill', barColors[k])
+        .attr('opacity', k === 'net' ? 0.5 : 0.85)
+        .on('mouseover', (ev) => showTip(`<b>${d.year}</b><br>${k === 'sent' ? 'Отправлено' : k === 'recv' ? 'Получено' : 'Чистый отток'}: ${(d[k]/1000).toFixed(0)} млрд`, ev))
+        .on('mousemove', moveTip).on('mouseleave', hideTip);
+    });
+    // value label on top of sent
+    g.append('text').attr('x', x0(d.year) + x0.bandwidth()/2).attr('y', y(d.sent)-5)
+      .attr('text-anchor','middle').attr('font-size',10).attr('fill','#8a8278').text((d.sent/1000000).toFixed(2)+'T');
+  });
+
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x0)).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',11).attr('fill','#8a8278'); });
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d => d/1000+'млрд')).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+
+  // Legend
+  const lg = g.append('g').attr('transform',`translate(0,-2)`);
+  [['Отправлено','sent'],['Получено','recv'],['Чистый отток','net']].forEach(([lbl,k],i) => {
+    lg.append('rect').attr('x',i*110).attr('y',0).attr('width',10).attr('height',10).attr('fill',barColors[k]).attr('opacity',k==='net'?0.5:0.85);
+    lg.append('text').attr('x',i*110+14).attr('y',9).attr('font-size',10).attr('fill','#4a4640').text(lbl);
+  });
+}
+
+// ============================================================
+// CHART 5: RECV BY COUNTRY
+// ============================================================
+function drawRecv() {
+  const el = document.getElementById('chart-recv');
+  const W = el.parentElement.clientWidth - 48;
+  const H = 320;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const m = { t: 20, r: 140, b: 40, l: 60 };
+  const w = W - m.l - m.r, h = H - m.t - m.b;
+  const svg = d3.select(el);
+  svg.selectAll('*').remove();
+  const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+
+  const data = DATA.recv_by_country_yr;
+  const countries = ['Россия','Соединенные Штаты Америки','Республика Корея','Германия','Узбекистан','Кыргызстан'];
+  const labels = {'Россия':'Россия','Соединенные Штаты Америки':'США','Республика Корея':'Корея','Германия':'Германия','Узбекистан':'Узбекистан','Кыргызстан':'Кыргызстан'};
+  const recvColors = {'Россия':'#c0392b','Соединенные Штаты Америки':'#2980b9','Республика Корея':'#e67e22','Германия':'#27ae60','Узбекистан':'#8e44ad','Кыргызстан':'#16a085'};
+
+  const years = data.map(d => d.year);
+  const x = d3.scaleBand().domain(years).range([0,w]).padding(0.25);
+  const x1 = d3.scaleBand().domain(countries).range([0,x.bandwidth()]).padding(0.05);
+  const maxVal = d3.max(data, d => d3.max(countries, c => d[c]));
+  const y = d3.scaleLinear().domain([0, maxVal * 1.1]).range([h,0]);
+
+  g.append('g').selectAll('line').data(y.ticks(5)).join('line')
+    .attr('x1',0).attr('x2',w).attr('y1',d=>y(d)).attr('y2',d=>y(d))
+    .attr('stroke','#e8e4dd').attr('stroke-width',1);
+
+  data.forEach(yr => {
+    countries.forEach(c => {
+      g.append('rect')
+        .attr('x', x(yr.year) + x1(c)).attr('y', y(yr[c]))
+        .attr('width', x1.bandwidth()).attr('height', h - y(yr[c]))
+        .attr('fill', recvColors[c]).attr('opacity', 0.8)
+        .on('mouseover', ev => showTip(`<b>${yr.year} · ${labels[c]}</b><br>${(yr[c]/1000).toFixed(1)} млрд`, ev))
+        .on('mousemove', moveTip).on('mouseleave', hideTip);
+    });
+  });
+
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x)).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',11).attr('fill','#8a8278'); });
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d/1000+'млрд')).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+
+  // Legend
+  const lg = g.append('g').attr('transform',`translate(${w+10},0)`);
+  countries.forEach((c,i) => {
+    lg.append('rect').attr('x',0).attr('y',i*18).attr('width',10).attr('height',10).attr('fill',recvColors[c]);
+    lg.append('text').attr('x',14).attr('y',i*18+9).attr('font-size',10).attr('fill','#4a4640').text(labels[c]);
+  });
+}
+
+// ============================================================
+// CHART 6: DIASPORA LINES
+// ============================================================
+function drawDiaspora() {
+  const el = document.getElementById('chart-diaspora');
+  const W = el.parentElement.clientWidth - 48;
+  const H = 260;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const m = { t: 10, r: 20, b: 40, l: 45 };
+  const w = W - m.l - m.r, h = H - m.t - m.b;
+  const svg = d3.select(el);
+  svg.selectAll('*').remove();
+  const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+
+  const data = DATA.recv_diaspora;
+  const countries = ['Соединенные Штаты Америки','Германия','Республика Корея'];
+  const labels = {'Соединенные Штаты Америки':'США','Германия':'Германия','Республика Корея':'Корея'};
+  const dColors = {'Соединенные Штаты Америки':'#2980b9','Германия':'#27ae60','Республика Корея':'#e67e22'};
+
+  const x = d3.scalePoint().domain(data.map(d => d.date)).range([0,w]);
+  const y = d3.scaleLinear().domain([0, 10000]).range([h,0]);
+
+  g.append('g').selectAll('line').data(y.ticks(5)).join('line')
+    .attr('x1',0).attr('x2',w).attr('y1',d=>y(d)).attr('y2',d=>y(d))
+    .attr('stroke','#e8e4dd').attr('stroke-width',1);
+
+  countries.forEach(c => {
+    const line = d3.line().x(d => x(d.date)).y(d => y(d[c])).curve(d3.curveCatmullRom).defined(d => d[c] > 0);
+    g.append('path').datum(data).attr('fill','none').attr('stroke',dColors[c]).attr('stroke-width',2).attr('d',line);
+  });
+
+  const tickDates = data.filter((d,i) => i % 8 === 0).map(d => d.date);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).tickValues(tickDates).tickFormat(d => d.slice(0,7))).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d/1000+'млрд')).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','none').attr('pointer-events','all')
+    .on('mousemove', function(event) {
+      const [mx] = d3.pointer(event, g.node());
+      const domain = data.map(d => d.date);
+      const closest = domain.reduce((a,b) => Math.abs(x(a)-mx) < Math.abs(x(b)-mx) ? a : b);
+      const d = data.find(dd => dd.date === closest);
+      showTip(`<b>${d.date}</b><br>США: ${(d['Соединенные Штаты Америки']/1000).toFixed(1)} млрд<br>Германия: ${(d['Германия']/1000).toFixed(1)} млрд<br>Корея: ${(d['Республика Корея']/1000).toFixed(1)} млрд`, event);
+    }).on('mouseleave', hideTip);
+
+  const legDiv = document.getElementById('legend-diaspora');
+  legDiv.innerHTML = countries.map(c => `<div class="legend-item"><div class="legend-rect" style="background:${dColors[c]};border-radius:2px"></div>${labels[c]}</div>`).join('');
+}
+
+// ============================================================
+// CHART 7: HEATMAP
+// ============================================================
+function drawHeatmap() {
+  const el = document.getElementById('chart-heatmap');
+  const W = el.parentElement.clientWidth - 48;
+  const H = 200;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const m = { t: 24, r: 20, b: 30, l: 40 };
+  const w = W - m.l - m.r, h = H - m.t - m.b;
+  const svg = d3.select(el);
+  svg.selectAll('*').remove();
+  const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+
+  const data = DATA.heatmap;
+  const years = [2022,2023,2024,2025];
+  const months = d3.range(1,13);
+  const xScale = d3.scaleBand().domain(months).range([0,w]).padding(0.04);
+  const yScale = d3.scaleBand().domain(years).range([0,h]).padding(0.04);
+  const color = d3.scaleSequential(d3.interpolateReds).domain([30000,110000]);
+
+  g.selectAll('rect').data(data).join('rect')
+    .attr('x', d => xScale(d.month))
+    .attr('y', d => yScale(d.year))
+    .attr('width', xScale.bandwidth())
+    .attr('height', yScale.bandwidth())
+    .attr('fill', d => color(d.value))
+    .attr('rx', 2)
+    .on('mouseover', (ev,d) => showTip(`<b>${MONTHS_RU[d.month]} ${d.year}</b><br>${(d.value/1000).toFixed(1)} млрд тенге`, ev))
+    .on('mousemove', moveTip).on('mouseleave', hideTip);
+
+  g.append('g').call(d3.axisTop(xScale).tickFormat(m => MONTHS_RU[m])).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+  g.append('g').call(d3.axisLeft(yScale)).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',11).attr('fill','#8a8278'); });
+}
+
+// ============================================================
+// CHART 8: STACKED AREA
+// ============================================================
+function drawStacked() {
+  const el = document.getElementById('chart-stacked');
+  const W = el.parentElement.clientWidth - 48;
+  const H = 300;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const m = { t: 10, r: 20, b: 40, l: 55 };
+  const w = W - m.l - m.r, h = H - m.t - m.b;
+  const svg = d3.select(el);
+  svg.selectAll('*').remove();
+  const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+
+  const countries = ['Узбекистан','Турция','Россия','Грузия','Кыргызстан','Китай'];
+  const data = DATA.sent_by_country;
+  const stack = d3.stack().keys(countries).value((d,k) => d[k] || 0);
+  const stacked = stack(data);
+
+  const x = d3.scalePoint().domain(data.map(d => d.date)).range([0,w]);
+  const y = d3.scaleLinear().domain([0, d3.max(stacked[stacked.length-1], d => d[1]) * 1.05]).range([h,0]);
+
+  const area = d3.area().x(d => x(d.data.date)).y0(d => y(d[0])).y1(d => y(d[1])).curve(d3.curveCatmullRom);
+
+  stacked.forEach((layer, i) => {
+    g.append('path').datum(layer).attr('fill', COLORS[countries[i]]).attr('fill-opacity', 0.75)
+      .attr('stroke', COLORS[countries[i]]).attr('stroke-width', 0.5)
+      .attr('d', area)
+      .on('mouseover', (ev) => { showTip(`<b>${countries[i]}</b>`, ev); })
+      .on('mousemove', moveTip).on('mouseleave', hideTip);
+  });
+
+  const tickDates = data.filter((d,i) => i % 6 === 0).map(d => d.date);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).tickValues(tickDates).tickFormat(d=>d.slice(0,7))).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d/1000+'млрд')).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+
+  const legDiv = document.getElementById('legend-stacked');
+  legDiv.innerHTML = countries.map(c => `<div class="legend-item"><div class="legend-rect" style="background:${COLORS[c]};border-radius:2px"></div>${c}</div>`).join('');
+}
+
+// ============================================================
+// CHART 9: GEORGIA
+// ============================================================
+function drawGeorgia() {
+  const el = document.getElementById('chart-georgia');
+  const W = el.parentElement.clientWidth - 48;
+  const H = 240;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const m = { t: 20, r: 20, b: 40, l: 50 };
+  const w = W - m.l - m.r, h = H - m.t - m.b;
+  const svg = d3.select(el);
+  svg.selectAll('*').remove();
+  const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+
+  const data = DATA.sent_by_country.map(d => ({date: d.date, val: d['Грузия'] || 0}));
+  const x = d3.scalePoint().domain(data.map(d => d.date)).range([0,w]);
+  const y = d3.scaleLinear().domain([0, d3.max(data, d => d.val) * 1.1]).range([h,0]);
+
+  g.append('g').selectAll('line').data(y.ticks(5)).join('line')
+    .attr('x1',0).attr('x2',w).attr('y1',d=>y(d)).attr('y2',d=>y(d))
+    .attr('stroke','#e8e4dd').attr('stroke-width',1);
+
+  // Smooth trend using D3 regression-like approach: draw moving average
+  const areaPath = d3.area().x(d=>x(d.date)).y0(h).y1(d=>y(d.val)).curve(d3.curveCatmullRom);
+  g.append('path').datum(data).attr('fill','#27ae60').attr('fill-opacity',0.15).attr('d',areaPath);
+
+  const linePath = d3.line().x(d=>x(d.date)).y(d=>y(d.val)).curve(d3.curveCatmullRom);
+  g.append('path').datum(data).attr('fill','none').attr('stroke','#27ae60').attr('stroke-width',2.5).attr('d',linePath);
+
+  // Peak annotation
+  const peak = data.reduce((a,b) => b.val > a.val ? b : a);
+  g.append('circle').attr('cx',x(peak.date)).attr('cy',y(peak.val)).attr('r',5).attr('fill','#27ae60');
+  g.append('text').attr('x',x(peak.date)+8).attr('y',y(peak.val)-4).attr('font-size',10).attr('fill','#27ae60').text(`Пик: ${(peak.val/1000).toFixed(1)} млрд`);
+
+  const tickDates = data.filter((d,i) => i % 8 === 0).map(d => d.date);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).tickValues(tickDates).tickFormat(d=>d.slice(0,7))).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d/1000+'млрд')).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+}
+
+// ============================================================
+// CHART 10: SCATTER
+// ============================================================
+let currentScatterYear = 2022;
+const scatterData = {
+  2022: {
+    'Узбекистан': {sent:289962, recv:53553},
+    'Россия': {sent:193366, recv:360005},
+    'Турция': {sent:271890, recv:17170},
+    'Грузия': {sent:70932, recv:0},
+    'Кыргызстан': {sent:73296, recv:94567},
+  },
+  2023: {
+    'Узбекистан': {sent:264951, recv:33815},
+    'Россия': {sent:244285, recv:108659},
+    'Турция': {sent:224053, recv:19621},
+    'Грузия': {sent:92522, recv:0},
+    'Кыргызстан': {sent:32615, recv:15314},
+  },
+  2024: {
+    'Узбекистан': {sent:234073, recv:23639},
+    'Россия': {sent:231564, recv:61801},
+    'Турция': {sent:156241, recv:20301},
+    'Грузия': {sent:54029, recv:0},
+    'Кыргызстан': {sent:29167, recv:10742},
+  },
+  2025: {
+    'Узбекистан': {sent:125339, recv:13196},
+    'Россия': {sent:119747, recv:30567},
+    'Турция': {sent:67339, recv:12150},
+    'Грузия': {sent:23482, recv:0},
+    'Кыргызстан': {sent:12939, recv:4740},
+  },
+};
+
+function drawScatter(year) {
+  const el = document.getElementById('chart-scatter');
+  const W = el.parentElement.clientWidth - 48;
+  const H = 300;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const m = { t: 20, r: 20, b: 50, l: 65 };
+  const w = W - m.l - m.r, h = H - m.t - m.b;
+  const svg = d3.select(el);
+  svg.selectAll('*').remove();
+  const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+
+  const pts = Object.entries(scatterData[year]).map(([k,v]) => ({name:k, ...v}));
+  const maxV = d3.max(pts, d => Math.max(d.sent, d.recv)) * 1.1;
+  const x = d3.scaleLinear().domain([0,maxV]).range([0,w]);
+  const y = d3.scaleLinear().domain([0,maxV]).range([h,0]);
+
+  // Grid
+  g.append('g').selectAll('.hg').data(y.ticks(5)).join('line')
+    .attr('x1',0).attr('x2',w).attr('y1',d=>y(d)).attr('y2',d=>y(d))
+    .attr('stroke','#e8e4dd').attr('stroke-width',1);
+
+  // Diagonal
+  g.append('line').attr('x1',0).attr('y1',h).attr('x2',x(maxV)).attr('y2',y(maxV))
+    .attr('stroke','#d4cfc8').attr('stroke-width',1.5).attr('stroke-dasharray','4,4');
+
+  // Circles
+  g.selectAll('circle').data(pts).join('circle')
+    .attr('cx', d => x(d.sent)).attr('cy', d => y(d.recv))
+    .attr('r', 10).attr('fill', d => COLORS[d.name] || '#ccc').attr('opacity', 0.75)
+    .on('mouseover', (ev,d) => showTip(`<b>${d.name}</b><br>Отправлено: ${(d.sent/1000).toFixed(0)} млрд<br>Получено: ${(d.recv/1000).toFixed(0)} млрд`, ev))
+    .on('mousemove', moveTip).on('mouseleave', hideTip);
+
+  g.selectAll('.lbl').data(pts).join('text')
+    .attr('x', d => x(d.sent)+12).attr('y', d => y(d.recv)+4)
+    .attr('font-size',10).attr('fill', d => COLORS[d.name] || '#555').text(d => d.name.slice(0,5));
+
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).ticks(5).tickFormat(d=>d/1000+'млрд')).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d/1000+'млрд')).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278'); });
+
+  g.append('text').attr('x',w/2).attr('y',h+34).attr('text-anchor','middle').attr('font-size',11).attr('fill','#8a8278').text('Отправлено →');
+  g.append('text').attr('transform','rotate(-90)').attr('x',-h/2).attr('y',-50).attr('text-anchor','middle').attr('font-size',11).attr('fill','#8a8278').text('← Получено');
+}
+drawScatter(2022);
+
+function switchScatterYear(el, year) {
+  el.closest('.tabs').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  currentScatterYear = parseInt(year);
+  drawScatter(currentScatterYear);
+}
+
+// ============================================================
+// CHART 11: RADIAL SEASONALITY
+// ============================================================
+function drawRadial() {
+  const el = document.getElementById('chart-radial');
+  const W = el.parentElement.clientWidth;
+  const H = 320;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const svg = d3.select(el);
+  svg.selectAll('*').remove();
+  const cx = W/2, cy = H/2, r = Math.min(W,H)/2 - 50;
+  const g = svg.append('g').attr('transform',`translate(${cx},${cy})`);
+
+  const data = DATA.seasonality;
+  const angleScale = d3.scaleLinear().domain([0,12]).range([0, 2*Math.PI]);
+  const maxVal = d3.max(data, d => d.avg);
+  const rScale = d3.scaleLinear().domain([0, maxVal]).range([r*0.2, r]);
+
+  // Grid circles
+  [0.25,0.5,0.75,1].forEach(f => {
+    g.append('circle').attr('r', r*0.2 + f*(r*0.8)).attr('fill','none').attr('stroke','#e8e4dd').attr('stroke-width',1);
+    if (f === 1) g.append('text').attr('x',4).attr('y',-(r*0.2+f*r*0.8)+12).attr('font-size',9).attr('fill','#8a8278').text(((maxVal*f)/1000).toFixed(0)+'млрд');
+  });
+
+  // Spokes
+  data.forEach((d,i) => {
+    const a = angleScale(i) - Math.PI/2;
+    g.append('line').attr('x1',0).attr('y1',0)
+      .attr('x2', Math.cos(a)*r).attr('y2', Math.sin(a)*r)
+      .attr('stroke','#e8e4dd').attr('stroke-width',1);
+  });
+
+  // Area
+  const radialArea = d3.areaRadial()
+    .angle((d,i) => angleScale(i))
+    .innerRadius(r*0.2)
+    .outerRadius(d => rScale(d.avg))
+    .curve(d3.curveCatmullRomClosed);
+
+  g.append('path').datum(data).attr('fill','#c0392b').attr('fill-opacity',0.2).attr('stroke','#c0392b').attr('stroke-width',2).attr('d',radialArea);
+
+  // Dots and labels
+  data.forEach((d,i) => {
+    const a = angleScale(i) - Math.PI/2;
+    const rx = Math.cos(a)*rScale(d.avg);
+    const ry = Math.sin(a)*rScale(d.avg);
+    g.append('circle').attr('cx',rx).attr('cy',ry).attr('r',4).attr('fill','#c0392b')
+      .on('mouseover',ev=>showTip(`<b>${MONTHS_RU[d.month]}</b><br>${(d.avg/1000).toFixed(1)} млрд (среднее)`,ev))
+      .on('mousemove',moveTip).on('mouseleave',hideTip);
+    const lx = Math.cos(a)*(r+22), ly = Math.sin(a)*(r+22);
+    g.append('text').attr('x',lx).attr('y',ly+4)
+      .attr('text-anchor','middle').attr('font-size',11).attr('fill','#4a4640').text(MONTHS_RU[d.month]);
+  });
+}
+
+// ============================================================
+// CHART 12: BUMP CHART
+// ============================================================
+function drawBump() {
+  const el = document.getElementById('chart-bump');
+  const W = el.parentElement.clientWidth - 48;
+  const H = 300;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const m = { t: 10, r: 120, b: 30, l: 80 };
+  const w = W - m.l - m.r, h = H - m.t - m.b;
+  const svg = d3.select(el);
+  svg.selectAll('*').remove();
+  const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+
+  const years = [2021,2022,2023,2024,2025];
+  const countries = ['Узбекистан','Турция','Россия','Кыргызстан','Грузия'];
+  const ranks = {};
+  years.forEach(yr => {
+    const sorted = [...countries].sort((a,b) => (rankData[yr].find(r=>r[0]===b)||[b,0])[1] - (rankData[yr].find(r=>r[0]===a)||[a,0])[1]);
+    countries.forEach(c => { if (!ranks[c]) ranks[c] = {}; ranks[c][yr] = sorted.indexOf(c)+1; });
+  });
+
+  const x = d3.scalePoint().domain(years).range([0,w]).padding(0.2);
+  const y = d3.scaleLinear().domain([1,5]).range([0,h]);
+
+  // Grid
+  [1,2,3,4,5].forEach(r => {
+    g.append('line').attr('x1',0).attr('x2',w).attr('y1',y(r)).attr('y2',y(r)).attr('stroke','#e8e4dd').attr('stroke-width',1);
+    g.append('text').attr('x',-8).attr('y',y(r)+4).attr('text-anchor','end').attr('font-size',11).attr('fill','#8a8278').text('#'+r);
+  });
+
+  countries.forEach(c => {
+    const lineD = d3.line().x(yr=>x(yr)).y(yr=>y(ranks[c][yr])).curve(d3.curveCatmullRom);
+    g.append('path').datum(years).attr('fill','none').attr('stroke',COLORS[c]).attr('stroke-width',2.5).attr('opacity',0.8).attr('d',lineD);
+    years.forEach(yr => {
+      g.append('circle').attr('cx',x(yr)).attr('cy',y(ranks[c][yr])).attr('r',6).attr('fill',COLORS[c]).attr('opacity',0.9)
+        .on('mouseover',ev=>showTip(`<b>${c}</b><br>${yr}: #${ranks[c][yr]}`,ev))
+        .on('mousemove',moveTip).on('mouseleave',hideTip);
+    });
+    // Label at end
+    const lastYr = years[years.length-1];
+    g.append('text').attr('x',w+8).attr('y',y(ranks[c][lastYr])+4).attr('font-size',10).attr('fill',COLORS[c]).text(c.slice(0,6));
+  });
+
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x)).call(ax => { ax.select('.domain').remove(); ax.selectAll('line').remove(); ax.selectAll('text').attr('font-size',11).attr('fill','#8a8278'); });
+}
+
+// ============================================================
+// CHART 13: RECV STACKED
+// ============================================================
+function drawRecvStack() {
+  const el = document.getElementById('chart-recv-stack');
+  const W = el.parentElement.clientWidth - 48;
+  const H = 300;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const m = { t: 10, r: 20, b: 40, l: 55 };
+  const w = W - m.l - m.r, h = H - m.t - m.b;
+  const svg = d3.select(el);
+  svg.selectAll('*').remove();
+  const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+
+  // Build recv data monthly
+  const recvMonthly = DATA.monthly_totals.map(d => {
+    const russiaRow = DATA.russia_flow.find(r => r.date === d.date);
+    const russiaRecv = russiaRow ? russiaRow.recv : 0;
+    const diasRow = DATA.recv_diaspora.find(r => r.date === d.date);
+    const diaspora = diasRow ? (diasRow['Соединенные Штаты Америки'] + diasRow['Германия'] + diasRow['Республика Корея']) : 0;
+    const other = d.recv - russiaRecv - diaspora;
+    return { date: d.date, russia: russiaRecv, diaspora, other: Math.max(0,other) };
+  });
+
+  const keys = ['russia','diaspora','other'];
+  const kColors = { russia:'#c0392b', diaspora:'#2980b9', other:'#8a8278' };
+  const stack = d3.stack().keys(keys).value((d,k) => d[k]);
+  const stacked = stack(recvMonthly);
+
+  const x = d3.scalePoint().domain(recvMonthly.map(d=>d.date)).range([0,w]);
+  const y = d3.scaleLinear().domain([0, d3.max(recvMonthly, d=>d.russia+d.diaspora+d.other)*1.05]).range([h,0]);
+  const area = d3.area().x(d=>x(d.data.date)).y0(d=>y(d[0])).y1(d=>y(d[1])).curve(d3.curveCatmullRom);
+
+  stacked.forEach((layer,i) => {
+    g.append('path').datum(layer).attr('fill',kColors[keys[i]]).attr('fill-opacity',0.75).attr('d',area);
+  });
+
+  const tickDates = recvMonthly.filter((d,i)=>i%8===0).map(d=>d.date);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).tickValues(tickDates).tickFormat(d=>d.slice(0,7))).call(ax=>{ax.select('.domain').remove();ax.selectAll('line').remove();ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278');});
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d/1000+'млрд')).call(ax=>{ax.select('.domain').remove();ax.selectAll('line').remove();ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278');});
+
+  const legDiv = document.getElementById('legend-recv-stack');
+  legDiv.innerHTML = [['russia','Россия'],['diaspora','Диаспора (США/Германия/Корея)'],['other','Прочие']].map(([k,l]) => `<div class="legend-item"><div class="legend-rect" style="background:${kColors[k]};border-radius:2px"></div>${l}</div>`).join('');
+}
+
+// ============================================================
+// CHART 14: RATIO
+// ============================================================
+function drawRatio() {
+  const el = document.getElementById('chart-ratio');
+  const W = el.parentElement.clientWidth - 48;
+  const H = 260;
+  el.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const m = { t: 20, r: 20, b: 40, l: 50 };
+  const w = W - m.l - m.r, h = H - m.t - m.b;
+  const svg = d3.select(el);
+  svg.selectAll('*').remove();
+  const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+
+  const data = DATA.monthly_totals.map(d => ({date: d.date, ratio: d.sent / d.recv}));
+  const x = d3.scalePoint().domain(data.map(d=>d.date)).range([0,w]);
+  const y = d3.scaleLinear().domain([0.5, d3.max(data,d=>d.ratio)*1.05]).range([h,0]);
+
+  g.append('g').selectAll('line').data(y.ticks(5)).join('line')
+    .attr('x1',0).attr('x2',w).attr('y1',d=>y(d)).attr('y2',d=>y(d))
+    .attr('stroke','#e8e4dd').attr('stroke-width',1);
+
+  // Parity line
+  g.append('line').attr('x1',0).attr('x2',w).attr('y1',y(1)).attr('y2',y(1))
+    .attr('stroke','#e67e22').attr('stroke-width',1.5).attr('stroke-dasharray','4,4');
+  g.append('text').attr('x',w+2).attr('y',y(1)+4).attr('font-size',9).attr('fill','#e67e22').text('паритет');
+
+  const area = d3.area().x(d=>x(d.date)).y0(y(1)).y1(d=>y(d.ratio)).curve(d3.curveCatmullRom);
+  g.append('path').datum(data).attr('fill','#c0392b').attr('fill-opacity',0.1).attr('d',area);
+
+  const line = d3.line().x(d=>x(d.date)).y(d=>y(d.ratio)).curve(d3.curveCatmullRom);
+  g.append('path').datum(data).attr('fill','none').attr('stroke','#c0392b').attr('stroke-width',2).attr('d',line);
+
+  const tickDates = data.filter((d,i)=>i%8===0).map(d=>d.date);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).tickValues(tickDates).tickFormat(d=>d.slice(0,7))).call(ax=>{ax.select('.domain').remove();ax.selectAll('line').remove();ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278');});
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'x')).call(ax=>{ax.select('.domain').remove();ax.selectAll('line').remove();ax.selectAll('text').attr('font-size',10).attr('fill','#8a8278');});
+
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','none').attr('pointer-events','all')
+    .on('mousemove',function(event){
+      const [mx]=d3.pointer(event,g.node());
+      const domain=data.map(d=>d.date);
+      const closest=domain.reduce((a,b)=>Math.abs(x(a)-mx)<Math.abs(x(b)-mx)?a:b);
+      const d=data.find(dd=>dd.date===closest);
+      showTip(`<b>${d.date}</b><br>Коэффициент: ${d.ratio.toFixed(2)}x`,event);
+    }).on('mouseleave',hideTip);
+}
+
+// ============================================================
+// INIT ALL CHARTS
+// ============================================================
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    drawOverview();
+    drawRussia();
+    drawShare();
+    drawAnnual();
+    drawRecv();
+    drawDiaspora();
+    drawHeatmap();
+    drawStacked();
+    drawGeorgia();
+    drawScatter(2022);
+    drawRadial();
+    drawBump();
+    drawRecvStack();
+    drawRatio();
+  }, 100);
+});
+
+window.addEventListener('resize', () => {
+  drawOverview();
+  drawRussia();
+  drawShare();
+  drawAnnual();
+  drawRecv();
+  drawDiaspora();
+  drawHeatmap();
+  drawStacked();
+  drawGeorgia();
+  drawScatter(currentScatterYear);
+  drawRadial();
+  drawBump();
+  drawRecvStack();
+  drawRatio();
+});
+</script>
+</body>
+</html>
