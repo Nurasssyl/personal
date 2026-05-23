@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Сбережения казахстанцев: 33,9 трлн тенге</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+/* ─── NYT DESIGN SYSTEM ─── */
+:root{
+  --white:#ffffff;
+  --ink:#121212;
+  --ink-2:#363636;
+  --ink-3:#727272;
+  --ink-4:#999;
+  --rule:#dfdfdf;
+  --rule-heavy:#121212;
+  --bg:#ffffff;
+  --bg-2:#f7f7f7;
+  --serif:'Libre Baskerville',georgia,'times new roman',serif;
+  --sans:'Public Sans',helvetica,arial,sans-serif;
+  --accent:#d0021b;
+  --blue:#326891;
+  --orange:#cc5500;
+  --green:#3a6b47;
+  --col:600px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+
+/* PROGRESS */
+#prog{position:fixed;top:0;left:0;height:3px;background:var(--accent);width:0;z-index:9999;transition:width .08s}
+
+/* LANG */
+#langbar{
+  position:sticky;top:0;z-index:999;
+  background:var(--bg);border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;justify-content:flex-end;
+  padding:7px 20px;gap:0;
+}
+.lbtn{
+  font-family:var(--sans);font-size:11px;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;
+  padding:5px 11px;border:1px solid var(--rule);
+  background:transparent;cursor:pointer;color:var(--ink-3);
+  border-left:none;transition:all .12s;
+}
+.lbtn:first-child{border-left:1px solid var(--rule);border-radius:3px 0 0 3px}
+.lbtn:last-child{border-radius:0 3px 3px 0}
+.lbtn.on{background:var(--ink);color:var(--white);border-color:var(--ink)}
+.lbtn:hover:not(.on){background:var(--bg-2)}
+
+/* ARTICLE COLUMN */
+.col{max-width:var(--col);margin:0 auto;padding:0 20px}
+.col-wide{max-width:940px;margin:0 auto;padding:0 20px}
+.col-full{max-width:1140px;margin:0 auto;padding:0 20px}
+
+/* HEADER */
+.story-kicker{
+  font-family:var(--sans);font-size:11px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);margin-top:40px;margin-bottom:10px;
+}
+.story-hed{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.18;
+  color:var(--ink);margin-bottom:16px;
+  letter-spacing:-.01em;
+}
+.story-dek{
+  font-family:var(--sans);font-size:1.1rem;font-weight:300;
+  line-height:1.58;color:var(--ink-2);margin-bottom:20px;
+}
+.byline-row{
+  border-top:3px solid var(--ink);padding-top:10px;
+  font-family:var(--sans);font-size:12px;font-weight:600;
+  letter-spacing:.04em;color:var(--ink-3);
+  display:flex;gap:20px;align-items:center;margin-bottom:0;
+  text-transform:uppercase;
+}
+
+/* BODY TEXT */
+.prose p{
+  font-family:var(--serif);font-size:1.07rem;line-height:1.78;
+  color:var(--ink);margin:22px 0;
+}
+.prose p:first-child{margin-top:36px}
+
+/* SECTION BREAK */
+.sec-label{
+  font-family:var(--sans);font-size:11px;font-weight:700;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ink-3);border-top:1px solid var(--rule);
+  padding-top:8px;margin:56px auto 10px;
+  max-width:var(--col);padding-left:20px;padding-right:20px;
+}
+.sec-hed{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(1.3rem,3vw,1.85rem);line-height:1.22;
+  color:var(--ink);margin:0 auto 6px;
+  max-width:var(--col);padding:0 20px;
+}
+.sec-dek{
+  font-family:var(--sans);font-size:.95rem;color:var(--ink-3);
+  font-weight:300;line-height:1.5;margin:0 auto 4px;
+  max-width:var(--col);padding:0 20px;
+}
+
+/* CHART CONTAINERS */
+.chart-outer{margin:28px auto 0;padding:0 20px}
+.chart-outer.col{max-width:var(--col)}
+.chart-outer.wide{max-width:940px}
+.chart-outer.full{max-width:1100px}
+
+.chart-label{
+  font-family:var(--sans);font-size:11px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink);
+  margin-bottom:3px;
+}
+.chart-sub{font-family:var(--sans);font-size:12px;color:var(--ink-3);margin-bottom:10px;line-height:1.4}
+.chart-note{font-family:var(--sans);font-size:11px;color:var(--ink-4);margin-top:6px;line-height:1.5;font-style:italic}
+
+/* STAT STRIP */
+.stat-strip{
+  display:flex;flex-wrap:wrap;gap:0;
+  border-top:3px solid var(--ink);border-bottom:1px solid var(--rule);
+  margin:32px auto;max-width:var(--col);padding:0 20px;
+}
+.stat-cell{
+  flex:1 1 120px;padding:18px 16px 16px;border-right:1px solid var(--rule);
+}
+.stat-cell:last-child{border-right:none}
+.stat-num{
+  font-family:var(--serif);font-size:2rem;font-weight:700;
+  color:var(--ink);line-height:1;margin-bottom:4px;
+}
+.stat-unit{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.stat-desc{font-family:var(--sans);font-size:11px;color:var(--ink-3);line-height:1.4}
+
+/* TABS */
+.tab-row{display:flex;border-bottom:2px solid var(--rule);margin-bottom:14px;overflow-x:auto}
+.tbtn{
+  font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.05em;
+  text-transform:uppercase;padding:7px 14px;border:none;background:none;
+  cursor:pointer;color:var(--ink-4);white-space:nowrap;
+  border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .12s;
+}
+.tbtn.on{color:var(--ink);border-bottom-color:var(--accent)}
+
+/* LEGEND */
+.legend{display:flex;flex-wrap:wrap;gap:12px 20px;margin-top:10px}
+.leg-item{display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:11px;color:var(--ink-3)}
+.leg-sq{width:10px;height:10px;flex-shrink:0}
+.leg-ln{width:22px;height:2px;flex-shrink:0}
+
+/* TOOLTIP */
+#tip{
+  position:fixed;pointer-events:none;display:none;z-index:9998;
+  background:var(--ink);color:var(--white);
+  padding:10px 14px;font-family:var(--sans);font-size:12px;line-height:1.55;
+  max-width:230px;box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+#tip b{font-weight:700}
+
+/* SOURCES */
+.sources{
+  border-top:1px solid var(--rule);margin-top:60px;padding-top:16px;
+  max-width:var(--col);margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px;
+}
+.sources p{font-family:var(--sans);font-size:12px;color:var(--ink-4);line-height:1.6;margin-bottom:8px}
+
+/* CONCLUSION */
+.conclusion{background:var(--bg-2);border-top:3px solid var(--ink);margin-top:56px;padding:40px 20px 48px}
+.conclusion-inner{max-width:var(--col);margin:0 auto}
+.conclusion h2{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--ink);margin-bottom:20px;line-height:1.3}
+.conclusion p{font-family:var(--sans);font-size:.97rem;color:var(--ink-2);line-height:1.7;margin-bottom:14px}
+.back-link{display:inline-block;margin-top:24px;font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:2px}
+.back-link:hover{color:var(--ink);border-color:var(--ink)}
+
+/* HIDDEN LANG */
+[data-ru],[data-kz],[data-en]{display:none}
+.show{display:block}
+span[data-ru],span[data-kz],span[data-en]{display:none}
+span.show{display:inline}
+
+svg text{font-family:'Public Sans',sans-serif}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="tip"></div>
+
+<!-- LANG BAR -->
+<div id="langbar">
+  <button class="lbtn on" onclick="setLang('ru')">РУС</button>
+  <button class="lbtn" onclick="setLang('kz')">ҚАЗ</button>
+  <button class="lbtn" onclick="setLang('en')">ENG</button>
+</div>
+
+<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<div class="col">
+  <div class="story-kicker">
+    <span data-ru class="show">Финансы · Казахстан · 2023–2026</span>
+    <span data-kz>Қаржы · Қазақстан · 2023–2026</span>
+    <span data-en>Finance · Kazakhstan · 2023–2026</span>
+  </div>
+  <h1 class="story-hed">
+    <span data-ru class="show">Сколько тенге хранят казахстанцы — и как это изменилось за три года</span>
+    <span data-kz>Қазақстандықтар қанша теңге сақтайды — және бұл үш жылда қалай өзгерді</span>
+    <span data-en>How much tenge Kazakhstanis save — and how it changed over three years</span>
+  </h1>
+  <p class="story-dek">
+    <span data-ru class="show">Депозиты выросли с 19,8 до 33,9 трлн. Тенге вытеснил доллар. Деньги сосредоточились в двух городах. Разбираемся, что стоит за этими цифрами.</span>
+    <span data-kz>Депозиттер 19,8-ден 33,9 трлн-ға дейін өсті. Теңге долларды ығыстырды. Ақша екі қалада шоғырланды. Осы сандардың артында не жатқанын зерттейміз.</span>
+    <span data-en>Deposits rose from 19.8 to 33.9 trillion. Tenge displaced the dollar. Money concentrated in two cities. We examine what lies behind these numbers.</span>
+  </p>
+  <div class="byline-row">
+    <span>Nurassyl Abdrazakuly</span>
+    <span>nurasyl.space</span>
+    <span>
+      <span data-ru class="show">Март 2026</span>
+      <span data-kz>Наурыз 2026</span>
+      <span data-en>March 2026</span>
+    </span>
+  </div>
+</div>
+
+<!-- ═══ STAT STRIP ═══ -->
+<div class="stat-strip">
+  <div class="stat-cell">
+    <div class="stat-num">33,9</div>
+    <div class="stat-unit"><span data-ru class="show">трлн ₸</span><span data-kz>трлн ₸</span><span data-en>trln ₸</span></div>
+    <div class="stat-desc"><span data-ru class="show">Все депозиты на март 2026</span><span data-kz>2026 наурызындағы барлық депозиттер</span><span data-en>Total deposits, March 2026</span></div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">+71%</div>
+    <div class="stat-unit"><span data-ru class="show">рост с 2023</span><span data-kz>2023-тен өсім</span><span data-en>growth since 2023</span></div>
+    <div class="stat-desc"><span data-ru class="show">За три года</span><span data-kz>Үш жылда</span><span data-en>Over three years</span></div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">69%</div>
+    <div class="stat-unit"><span data-ru class="show">физлица</span><span data-kz>жеке тұлғалар</span><span data-en>individuals</span></div>
+    <div class="stat-desc"><span data-ru class="show">Доля населения</span><span data-kz>Халық үлесі</span><span data-en>Household share</span></div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">81%</div>
+    <div class="stat-unit"><span data-ru class="show">тенге</span><span data-kz>теңге</span><span data-en>tenge</span></div>
+    <div class="stat-desc"><span data-ru class="show">В нацвалюте</span><span data-kz>Ұлттық валютада</span><span data-en>In national currency</span></div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">15%</div>
+    <div class="stat-unit"><span data-ru class="show">годовых</span><span data-kz>жылдық</span><span data-en>per annum</span></div>
+    <div class="stat-desc"><span data-ru class="show">Ставка по тенге</span><span data-kz>Теңге мөлшерлемесі</span><span data-en>Tenge deposit rate</span></div>
+  </div>
+</div>
+
+<!-- INTRO PROSE -->
+<div class="col prose">
+  <p><span data-ru class="show">За три года — с января 2023 по март 2026 — сбережения казахстанцев выросли почти вдвое. Но это не просто рост: изменилась сама природа накоплений. Тенговые вклады вытеснили валютные. Деньги физических лиц растут заметно быстрее корпоративных. А сберегательная культура — инструмент для долгосрочного накопления — только начинает формироваться.</span><span data-kz>Үш жылда — 2023 жылдың қаңтарынан 2026 жылдың наурызына дейін — қазақстандықтардың жинақтары шамамен екі есеге өсті. Бірақ бұл жай ғана өсу емес: жинақтардың табиғаты өзгерді. Теңгелік салымдар валюталықты ығыстырды. Жеке тұлғалардың ақшасы корпоративтікке қарағанда айтарлықтай жылдам өседі. Ал жинақтаушы мәдениет — ұзақ мерзімді жинаққа арналған құрал — қана қалыптасуда.</span><span data-en>Over three years — from January 2023 to March 2026 — Kazakhstanis' savings nearly doubled. But this is not mere growth: the nature of savings has changed. Tenge deposits have displaced foreign currency ones. Household money is growing noticeably faster than corporate deposits. And a savings culture — the tool for long-term accumulation — is only beginning to take shape.</span></p>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 1: TOTAL GROWTH — AREA CHART
+════════════════════════════════════════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Как росли сбережения</span><span data-kz>Жинақтар қалай өсті</span><span data-en>How savings grew</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Три года роста: с 19,8 до 33,9 трлн тенге</span>
+  <span data-kz>Үш жылдық өсу: 19,8-ден 33,9 трлн теңгеге дейін</span>
+  <span data-en>Three years of growth: from 19.8 to 33.9 trillion tenge</span>
+</div>
+<div class="chart-outer col">
+  <div class="tab-row" id="tabs1">
+    <button class="tbtn on" onclick="t1('all')"><span data-ru class="show">Все</span><span data-kz>Барлығы</span><span data-en>Total</span></button>
+    <button class="tbtn" onclick="t1('phys')"><span data-ru class="show">Физлица</span><span data-kz>Жеке тұлғалар</span><span data-en>Individuals</span></button>
+    <button class="tbtn" onclick="t1('corp')"><span data-ru class="show">Юрлица</span><span data-kz>Заңды тұлғалар</span><span data-en>Legal entities</span></button>
+  </div>
+  <div id="c1" style="width:100%;height:300px"></div>
+  <div class="legend" id="l1"></div>
+  <p class="chart-note"><span data-ru class="show">Остатки на конец месяца, трлн тенге.</span><span data-kz>Айдың соңындағы қалдықтар, трлн теңге.</span><span data-en>End-of-month balances, trillion tenge.</span></p>
+</div>
+
+<div class="col prose">
+  <p><span data-ru class="show">Деньги населения выросли с 13,3 до 23,5 трлн — плюс 77% за три года. Корпоративные — с 6,5 до 10,4 трлн, плюс 59%. Разрыв увеличивается: население копит активнее бизнеса. Ключевая причина — ставки по тенговым вкладам держатся на уровне 15%, тогда как по валютным — менее 1%.</span><span data-kz>Халық ақшасы 13,3-тен 23,5 трлн-ға дейін өсті — үш жылда 77% артық. Корпоративтік — 6,5-тен 10,4 трлн-ға, 59% артық. Алшақтық кеңейіп барады: халық бизнеске қарағанда белсендірек жинайды. Басты себеп — теңгелік салымдардың мөлшерлемелері 15% деңгейінде, ал валюталық бойынша — 1%-дан аз.</span><span data-en>Household deposits rose from 13.3 to 23.5 trillion — up 77% in three years. Corporate deposits went from 6.5 to 10.4 trillion, up 59%. The gap is widening: households save more actively than businesses. The key reason — tenge deposit rates stay around 15%, while foreign currency rates are below 1%.</span></p>
+</div>
+
+<!-- ════════
+     SECTION 2: DEDOLLARIZATION — LINE CHART
+════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Тенге против доллара</span><span data-kz>Теңге долларға қарсы</span><span data-en>Tenge vs dollar</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Доля валютных вкладов упала с 31% до 18%</span>
+  <span data-kz>Валюталық салымдардың үлесі 31%-дан 18%-ға дейін төмендеді</span>
+  <span data-en>Foreign currency deposit share fell from 31% to 18%</span>
+</div>
+<div class="chart-outer col">
+  <div id="c2" style="width:100%;height:260px"></div>
+  <p class="chart-note"><span data-ru class="show">Доля иностранной валюты в депозитах физлиц, %.</span><span data-kz>Жеке тұлғалар депозиттеріндегі шетел валютасының үлесі, %.</span><span data-en>Foreign currency share of individual deposits, %.</span></p>
+</div>
+
+<div class="col prose">
+  <p><span data-ru class="show">В начале 2023 года каждый третий тенге у населения лежал в валюте. К марту 2026 — уже каждый шестой. Это не случайность: 15% годовых по тенге против 0,8% по доллару — разрыв в 19 раз. При такой разнице хранить сбережения в валюте означает сознательно отказываться от доходности.</span><span data-kz>2023 жылдың басында халықтың әрбір үшінші теңгесі валютада жатты. 2026 жылдың наурызына қарай — енді әрбір алтыншысы. Бұл кездейсоқтық емес: теңге бойынша жылдық 15% долларға қарсы 0,8% — 19 есе айырма. Мұндай айырмашылықта жинақтарды валютада сақтау табысты әдейі бас тартуды білдіреді.</span><span data-en>At the start of 2023, one in three tenge of household savings was held in foreign currency. By March 2026 — one in six. This is not accidental: 15% annually in tenge versus 0.8% in dollars — a 19-fold gap. With such a difference, keeping savings in foreign currency means consciously forgoing returns.</span></p>
+</div>
+
+<!-- ════════
+     SECTION 3: RATES — DUAL AXIS LINE
+════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Процентные ставки</span><span data-kz>Пайыздық мөлшерлемелер</span><span data-en>Interest rates</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Разрыв в ставках: тенге даёт в 19 раз больше</span>
+  <span data-kz>Мөлшерлемелер айырмасы: теңге 19 есе көп береді</span>
+  <span data-en>The rate gap: tenge pays 19 times more</span>
+</div>
+<div class="chart-outer col">
+  <div class="tab-row" id="tabs3">
+    <button class="tbtn on" onclick="t3('phys')"><span data-ru class="show">Физлица</span><span data-kz>Жеке тұлғалар</span><span data-en>Individuals</span></button>
+    <button class="tbtn" onclick="t3('corp')"><span data-ru class="show">Юрлица</span><span data-kz>Заңды тұлғалар</span><span data-en>Legal entities</span></button>
+  </div>
+  <div id="c3" style="width:100%;height:260px"></div>
+  <p class="chart-note"><span data-ru class="show">Средневзвешенные ставки по привлечённым депозитам, % годовых.</span><span data-kz>Тартылған депозиттер бойынша орташа салмақталған мөлшерлемелер, жылдық %.</span><span data-en>Weighted average rates on attracted deposits, % per annum.</span></p>
+</div>
+
+<!-- ════════
+     SECTION 4: DEPOSIT TYPES — STACKED AREA
+════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Типы вкладов</span><span data-kz>Салым түрлері</span><span data-en>Deposit types</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Сберегательные растут быстрее всех — но остаются в меньшинстве</span>
+  <span data-kz>Жинақтаушы депозиттер ең жылдам өседі — бірақ азшылықта қалады</span>
+  <span data-en>Savings deposits grow fastest — but remain a minority</span>
+</div>
+<div class="chart-outer col">
+  <div class="tab-row" id="tabs4">
+    <button class="tbtn on" onclick="t4('phys')"><span data-ru class="show">Физлица</span><span data-kz>Жеке тұлғалар</span><span data-en>Individuals</span></button>
+    <button class="tbtn" onclick="t4('corp')"><span data-ru class="show">Юрлица</span><span data-kz>Заңды тұлғалар</span><span data-en>Legal entities</span></button>
+  </div>
+  <div id="c4" style="width:100%;height:280px"></div>
+  <div class="legend" id="l4"></div>
+  <p class="chart-note"><span data-ru class="show">Остатки по типу вклада, трлн тенге. Сберегательные выросли на +164% у физлиц.</span><span data-kz>Салым түрі бойынша қалдықтар, трлн теңге. Жинақтаушы жеке тұлғаларда +164% өсті.</span><span data-en>Balances by deposit type, trillion tenge. Savings deposits grew +164% for individuals.</span></p>
+</div>
+
+<div class="col prose">
+  <p><span data-ru class="show">Казахстанцы выбирают срочные вклады — не сберегательные. 88% денег физлиц лежат в срочных и условных вкладах. Сберегательные, при всём росте на 164%, занимают только 12%. Объяснение простое: срочный вклад можно закрыть досрочно, потеряв часть процентов. Сберегательный — нет. В условиях неопределённости люди ценят доступ к деньгам.</span><span data-kz>Қазақстандықтар мерзімді салымдарды таңдайды — жинақтаушыны емес. Жеке тұлғалар ақшасының 88%-ы мерзімді және шартты салымдарда жатыр. Жинақтаушы, бүкіл 164% өсімімен, тек 12% алады. Түсіндірмесі қарапайым: мерзімді салымды мерзімінен бұрын жабуға болады, пайыздың бір бөлігін жоғалтып. Жинақтаушыны — жоқ. Белгісіздік жағдайында адамдар ақшаға қол жеткізуді бағалайды.</span><span data-en>Kazakhstanis choose time deposits — not savings ones. 88% of household money sits in time and conditional deposits. Savings deposits, despite 164% growth, account for only 12%. The explanation is simple: a time deposit can be closed early, losing some interest. A savings deposit cannot. Under uncertainty, people value access to their money.</span></p>
+</div>
+
+<!-- ════════
+     SECTION 5: WAFFLE CHART — DEPOSIT STRUCTURE
+════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Структура сейчас</span><span data-kz>Қазіргі құрылым</span><span data-en>Current structure</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Каждый тенге вкладов: кто и как</span>
+  <span data-kz>Салымдардың әрбір теңгесі: кім және қалай</span>
+  <span data-en>Every tenge of deposits: who and how</span>
+</div>
+<div class="chart-outer wide">
+  <div id="c5" style="width:100%;height:220px"></div>
+  <p class="chart-note"><span data-ru class="show">Структура 33,9 трлн тенге на март 2026 по типу вкладчика и валюте.</span><span data-kz>2026 жылдың наурызындағы 33,9 трлн теңгенің депозитар түрі мен валюта бойынша құрылымы.</span><span data-en>Structure of 33.9 trillion tenge in March 2026 by depositor type and currency.</span></p>
+</div>
+
+<!-- ════════
+     SECTION 6: REGIONS BAR — RANKED
+════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Где хранят больше всего</span><span data-kz>Ең көп қай жерде сақтайды</span><span data-en>Where most is stored</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Алматы держит 40% всех депозитов страны</span>
+  <span data-kz>Алматы елдің барлық депозиттерінің 40%-ын ұстайды</span>
+  <span data-en>Almaty holds 40% of all national deposits</span>
+</div>
+<div class="chart-outer wide">
+  <div class="tab-row" id="tabs6">
+    <button class="tbtn on" onclick="t6('total')"><span data-ru class="show">Всего</span><span data-kz>Барлығы</span><span data-en>Total</span></button>
+    <button class="tbtn" onclick="t6('phys')"><span data-ru class="show">Физлица</span><span data-kz>Жеке тұлғалар</span><span data-en>Individuals</span></button>
+    <button class="tbtn" onclick="t6('fx_share')"><span data-ru class="show">Доля валюты</span><span data-kz>Валюта үлесі</span><span data-en>FX share</span></button>
+  </div>
+  <div id="c6" style="width:100%;height:320px"></div>
+  <p class="chart-note"><span data-ru class="show">Наведите на бар для деталей. Данные на 01.03.2026.</span><span data-kz>Толық ақпарат үшін барға апарыңыз. 01.03.2026 жағдайы бойынша.</span><span data-en>Hover over a bar for details. Data as of 01.03.2026.</span></p>
+</div>
+
+<div class="col prose">
+  <p><span data-ru class="show">Алматы — не просто крупнейший депозитный центр. Это центр частных денег: 71,5% вкладов — физлица. Астана устроена иначе: 55% — юридические лица. Это отражает их экономическую роль: Алматы — город частного бизнеса и личных накоплений, Астана — центр корпоративной и государственной финансовой активности.</span><span data-kz>Алматы — жай ғана ең ірі депозиттік орталық емес. Бұл жеке ақшаның орталығы: салымдардың 71,5%-ы — жеке тұлғалар. Астана әртүрлі ұйымдастырылған: 55% — заңды тұлғалар. Бұл олардың экономикалық рөлін көрсетеді: Алматы — жеке бизнес пен жеке жинақтар қаласы, Астана — корпоративтік және мемлекеттік қаржылық белсенділіктің орталығы.</span><span data-en>Almaty is not merely the largest deposit center. It is the center of private money: 71.5% of deposits belong to individuals. Astana is structured differently: 55% are legal entities. This reflects their economic roles: Almaty is the city of private business and personal savings, Astana the center of corporate and state financial activity.</span></p>
+</div>
+
+<!-- ════════
+     SECTION 7: SLOPE CHART — ALMATY vs ASTANA
+════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Два финансовых центра</span><span data-kz>Екі қаржы орталығы</span><span data-en>Two financial centers</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Алматы — частные деньги, Астана — корпоративные</span>
+  <span data-kz>Алматы — жеке ақша, Астана — корпоративтік</span>
+  <span data-en>Almaty — private money, Astana — corporate</span>
+</div>
+<div class="chart-outer col">
+  <div id="c7" style="width:100%;height:280px"></div>
+  <p class="chart-note"><span data-ru class="show">Структура депозитов по типу вкладчика и валюте, март 2026.</span><span data-kz>Депозитар түрі мен валюта бойынша депозиттер құрылымы, наурыз 2026.</span><span data-en>Deposit structure by depositor type and currency, March 2026.</span></p>
+</div>
+
+<!-- ════════
+     SECTION 8: GROWTH LOLLIPOP
+════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Кто рос быстрее всех</span><span data-kz>Кім ең жылдам өсті</span><span data-en>Who grew fastest</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Новые регионы: рост от 200% до 300%</span>
+  <span data-kz>Жаңа аймақтар: 200%-дан 300%-ға дейін өсім</span>
+  <span data-en>New regions: growth from 200% to 300%</span>
+</div>
+<div class="chart-outer col">
+  <div id="c8" style="width:100%;height:480px"></div>
+  <p class="chart-note"><span data-ru class="show">Рост к уровню января 2023, %. Размер круга — текущий объём депозитов.</span><span data-kz>2023 жылдың қаңтарына қарағандағы өсім, %. Шеңбердің өлшемі — депозиттердің ағымдағы көлемі.</span><span data-en>Growth vs January 2023, %. Circle size — current deposit volume.</span></p>
+</div>
+
+<div class="col prose">
+  <p><span data-ru class="show">Жетісу, Абай, Ұлытау и Туркестанская область — четыре новых региона — показывают рост от 197% до 297%. Но важна оговорка: база маленькая. Абсолютный прирост в Алматы — 4,9 трлн тенге — больше, чем совокупные депозиты любого другого региона. Алматинская область стоит особняком: рост всего 14% — объясняется низкой долей формальных банковских сбережений среди жителей пригородов.</span><span data-kz>Жетісу, Абай, Ұлытау және Түркістан облысы — төрт жаңа аймақ — 197%-дан 297%-ға дейін өсім көрсетеді. Бірақ ескерту маңызды: негіз аз. Алматыдағы абсолютті өсім — 4,9 трлн теңге — кез келген басқа аймақтың жиынтық депозиттерінен көп. Алматы облысы ерекше тұрады: бар болғаны 14% өсім — қала маңы тұрғындарының ресми банктік жинақтарының төмен үлесімен түсіндіріледі.</span><span data-en>Zhetysu, Abay, Ulytau, and Turkestan Oblast — four new regions — show growth from 197% to 297%. But the caveat matters: the base is small. Almaty's absolute increase — 4.9 trillion tenge — exceeds the combined deposits of any other region. Almaty Oblast stands apart: growth of just 14% — explained by low formal banking penetration among suburban residents.</span></p>
+</div>
+
+<!-- ════════
+     SECTION 9: HEATMAP — FX BY REGION OVER TIME
+════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Валюта по регионам</span><span data-kz>Аймақтар бойынша валюта</span><span data-en>FX by region</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Где хранят в долларах: карта дедолларизации</span>
+  <span data-kz>Долларда қайда сақтайды: дедолларландыру картасы</span>
+  <span data-en>Where dollars are held: a dedollarization map</span>
+</div>
+<div class="chart-outer wide">
+  <div id="c9" style="width:100%;height:360px;overflow-x:auto"></div>
+  <p class="chart-note"><span data-ru class="show">Доля иностранной валюты в депозитах по регионам, %. Данные на январь и март каждого года.</span><span data-kz>Аймақтар бойынша депозиттердегі шетел валютасының үлесі, %. Деректер әр жылдың қаңтары мен наурызы бойынша.</span><span data-en>Share of foreign currency in deposits by region, %. Data for January and March of each year.</span></p>
+</div>
+
+<!-- ════════
+     SECTION 10: SBER SHARE HORIZONTAL
+════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Сберегательная культура</span><span data-kz>Жинақтаушы мәдениет</span><span data-en>Savings culture</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Север копит консервативно, юг — гибко</span>
+  <span data-kz>Солтүстік консервативті жинайды, оңтүстік — икемді</span>
+  <span data-en>North saves conservatively, south — flexibly</span>
+</div>
+<div class="chart-outer col">
+  <div id="c10" style="width:100%;height:400px"></div>
+  <p class="chart-note"><span data-ru class="show">Доля сберегательных вкладов в депозитах физлиц, %. Март 2026.</span><span data-kz>Жеке тұлғалар депозиттеріндегі жинақтаушы салымдардың үлесі, %. 2026 жылдың наурызы.</span><span data-en>Share of savings deposits among individuals, %. March 2026.</span></p>
+</div>
+
+<div class="col prose">
+  <p><span data-ru class="show">Костанайская (18,4%), ВКО (17,5%) и СКО (17,1%) — лидеры по доле сберегательных вкладов. Туркестанская — всего 3,8%. Одна из гипотез: в регионах с традиционно индустриальной экономикой население привыкло к культуре длинных накоплений. На юге — где структура занятости более нестабильна — деньги хранят в более ликвидных форматах.</span><span data-kz>Қостанай (18,4%), ШҚО (17,5%) және СҚО (17,1%) — жинақтаушы салымдар үлесі бойынша көшбасшылар. Түркістан — бар болғаны 3,8%. Болжамдардың бірі: дәстүрлі өнеркәсіптік экономикасы бар аймақтарда халық ұзақ жинақтар мәдениетіне үйренген. Оңтүстікте — жұмыспен қамту құрылымы тұрақсызырақ — ақшаны өтімдірек форматтарда сақтайды.</span><span data-en>Kostanay (18.4%), East Kazakhstan (17.5%), and North Kazakhstan (17.1%) — the leaders in savings deposit share. Turkestan — just 3.8%. One hypothesis: in regions with traditionally industrial economies, residents are accustomed to a culture of long savings. In the south — where employment is more precarious — money is kept in more liquid formats.</span></p>
+</div>
+
+<!-- ════════
+     SECTION 11: SCATTER — FX vs GROWTH
+════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Закономерность</span><span data-kz>Заңдылық</span><span data-en>A pattern</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Больше валюты — меньше рост</span>
+  <span data-kz>Валюта көп болған сайын — өсім аз</span>
+  <span data-en>More foreign currency — less growth</span>
+</div>
+<div class="chart-outer col">
+  <div id="c11" style="width:100%;height:340px"></div>
+  <p class="chart-note"><span data-ru class="show">Ось X: доля валютных депозитов, %. Ось Y: рост с янв.2023, %. Размер — объём депозитов в трлн ₸.</span><span data-kz>X осі: валюталық депозиттер үлесі, %. Y осі: 2023 ж. қаңтарынан өсім, %. Өлшемі — трлн ₸ депозиттер көлемі.</span><span data-en>X-axis: FX deposit share, %. Y-axis: growth vs Jan 2023, %. Size — deposit volume in trillion ₸.</span></p>
+</div>
+
+<!-- ════════
+     SECTION 12: RATES BY TERM — BAR
+════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Ставки по срокам</span><span data-kz>Мерзім бойынша мөлшерлемелер</span><span data-en>Rates by term</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Короткие вклады — выгоднее длинных</span>
+  <span data-kz>Қысқа салымдар — ұзындарынан тиімдірек</span>
+  <span data-en>Short deposits are more profitable than long ones</span>
+</div>
+<div class="chart-outer col">
+  <div class="tab-row" id="tabs12">
+    <button class="tbtn on" onclick="t12('phys')"><span data-ru class="show">Физлица</span><span data-kz>Жеке тұлғалар</span><span data-en>Individuals</span></button>
+    <button class="tbtn" onclick="t12('corp')"><span data-ru class="show">Юрлица</span><span data-kz>Заңды тұлғалар</span><span data-en>Legal entities</span></button>
+  </div>
+  <div id="c12" style="width:100%;height:260px"></div>
+  <p class="chart-note"><span data-ru class="show">Средневзвешенные ставки по тенге на март 2026, % годовых.</span><span data-kz>2026 жылдың наурызындағы теңге бойынша орташа салмақталған мөлшерлемелер, жылдық %.</span><span data-en>Weighted average tenge rates, March 2026, % per annum.</span></p>
+</div>
+
+<div class="col prose">
+  <p><span data-ru class="show">Парадокс ставок: депозиты на 1–3 месяца дают 17,95% годовых — больше, чем на год или пять лет. Это связано с политикой Нацбанка: в условиях борьбы с инфляцией краткосрочные ставки держатся высокими. Для вкладчика это значит: оптимальная стратегия — «перекладываться» каждые 1–3 месяца, а не фиксировать деньги надолго.</span><span data-kz>Мөлшерлемелердің парадоксы: 1–3 айлық депозиттер жылдық 17,95% береді — бір немесе бес жылдан артық. Бұл Ұлттық банктің саясатына байланысты: инфляциямен күресу жағдайында қысқа мерзімді мөлшерлемелер жоғары ұсталады. Салымшы үшін бұл оңтайлы стратегия — ақшаны ұзақ уақытқа бекітпей, әр 1–3 сайын «ауыстырып» отыру дегенді білдіреді.</span><span data-en>A rate paradox: 1–3 month deposits yield 17.95% annually — more than one-year or five-year ones. This reflects National Bank policy: in the fight against inflation, short-term rates are kept high. For depositors, the optimal strategy is to "roll over" every 1–3 months rather than locking money in for long periods.</span></p>
+</div>
+
+<!-- ════════
+     SECTION 13: SMALL MULTIPLES — REGION SPARKLINES
+════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Все регионы</span><span data-kz>Барлық аймақтар</span><span data-en>All regions</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Динамика по каждому региону: 39 месяцев</span>
+  <span data-kz>Әрбір аймақтың динамикасы: 39 ай</span>
+  <span data-en>Each region's trajectory: 39 months</span>
+</div>
+<div class="chart-outer full">
+  <div id="c13" style="width:100%"></div>
+  <p class="chart-note"><span data-ru class="show">Остатки депозитов по регионам, трлн тенге. Янв.2023 — Март.2026.</span><span data-kz>Аймақтар бойынша депозит қалдықтары, трлн теңге. 2023 қаң. — 2026 нау.</span><span data-en>Deposit balances by region, trillion tenge. Jan 2023 — Mar 2026.</span></p>
+</div>
+
+<!-- ════════
+     SECTION 14: PHYS vs CORP SHARE OVER TIME — 100% STACKED
+════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Кто вкладывает больше</span><span data-kz>Кім көбірек салады</span><span data-en>Who deposits more</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Доля физлиц растёт каждый год</span>
+  <span data-kz>Жеке тұлғалардың үлесі жыл сайын өседі</span>
+  <span data-en>Individual deposit share rises every year</span>
+</div>
+<div class="chart-outer col">
+  <div id="c14" style="width:100%;height:240px"></div>
+  <p class="chart-note"><span data-ru class="show">Доля физлиц и юрлиц в общем объёме депозитов, %.</span><span data-kz>Жалпы депозиттер көлеміндегі жеке және заңды тұлғалардың үлесі, %.</span><span data-en>Share of individuals and legal entities in total deposit volume, %.</span></p>
+</div>
+
+<!-- ════════
+     SECTION 15: DOT PLOT — CONCENTRATION
+════════ -->
+<div class="sec-label col">
+  <span data-ru class="show">Концентрация</span><span data-kz>Шоғырлану</span><span data-en>Concentration</span>
+</div>
+<div class="sec-hed">
+  <span data-ru class="show">Два города — больше половины всех депозитов страны</span>
+  <span data-kz>Екі қала — елдің барлық депозиттерінің жартысынан астамы</span>
+  <span data-en>Two cities — more than half of all national deposits</span>
+</div>
+<div class="chart-outer col">
+  <div id="c15" style="width:100%;height:300px"></div>
+  <p class="chart-note"><span data-ru class="show">Накопленная доля регионов в общем объёме депозитов, отсортировано по убыванию. Март 2026.</span><span data-kz>Аймақтардың жалпы депозиттер көлеміндегі жиынтық үлесі, кему ретімен. 2026 наурыз.</span><span data-en>Cumulative share of regions in total deposits, sorted descending. March 2026.</span></p>
+</div>
+
+<!-- CONCLUSION -->
+<div class="conclusion">
+  <div class="conclusion-inner">
+    <h2>
+      <span data-ru class="show">Что всё это значит</span>
+      <span data-kz>Мұның бәрі не білдіреді</span>
+      <span data-en>What it all means</span>
+    </h2>
+    <p>
+      <span data-ru class="show">Депозиты Казахстана за три года изменились структурно. Доверие к тенге восстановлено — не словами, а ставками: 15% годовых против менее 1% по валюте. Население перекладывает деньги из долларов в тенге не из патриотизма, а из рационального расчёта.</span>
+      <span data-kz>Үш жылда Қазақстанның депозиттері құрылымдық жағынан өзгерді. Теңгеге деген сенім қалпына келтірілді — сөзбен емес, мөлшерлемелермен: жылдық 15% валюта бойынша 1%-дан азға қарсы. Халық ақшасын долларлардан теңгеге патриотизмнен емес, рационалды есептен ауыстырады.</span>
+      <span data-en>Kazakhstan's deposits changed structurally over three years. Trust in tenge has been restored — not through words, but through rates: 15% annually against less than 1% in foreign currency. People move money from dollars to tenge not out of patriotism, but rational calculation.</span>
+    </p>
+    <p>
+      <span data-ru class="show">Концентрация остаётся острой проблемой: Алматы и Астана держат 60% всех депозитов. Остальные 18 регионов — оставшиеся 40%. Финансовая инфраструктура страны по-прежнему тяготеет к двум полюсам.</span>
+      <span data-kz>Шоғырлану өткір мәселе болып қалады: Алматы мен Астана барлық депозиттердің 60%-ын ұстайды. Қалған 18 аймақ — 40%-ды. Елдің қаржылық инфрақұрылымы әлі де екі полюске қарай ауытқиды.</span>
+      <span data-en>Concentration remains a sharp problem: Almaty and Astana hold 60% of all deposits. The remaining 18 regions — 40%. The country's financial infrastructure still gravitates toward two poles.</span>
+    </p>
+    <p>
+      <span data-ru class="show">Сберегательная культура формируется — медленно. Рост сберегательных вкладов на 164% выглядит впечатляюще, но их доля в 12% говорит о том, что длинные деньги в Казахстане пока не стали нормой.</span>
+      <span data-kz>Жинақтаушы мәдениет қалыптасуда — баяу. Жинақтаушы салымдардың 164% өсімі әсерлі көрінеді, бірақ олардың 12% үлесі Қазақстандағы ұзақ ақшаның әлі де норма болмағанын айтады.</span>
+      <span data-en>A savings culture is forming — slowly. The 164% growth in savings deposits looks impressive, but a 12% share tells us that long-term money has not yet become the norm in Kazakhstan.</span>
+    </p>
+    <a href="https://nurasyl.space" class="back-link">
+      <span data-ru class="show">← Вернуться на главную nurasyl.space</span>
+      <span data-kz>← Басты бетке оралу nurasyl.space</span>
+      <span data-en>← Back to nurasyl.space</span>
+    </a>
+  </div>
+</div>
+
+<div class="sources">
+  <p><span data-ru class="show">Аналитика: Nurassyl Abdrazakuly · nurasyl.space</span><span data-kz>Аналитика: Nurassyl Abdrazakuly · nurasyl.space</span><span data-en>Analysis: Nurassyl Abdrazakuly · nurasyl.space</span></p>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════
+const D = {"ts": [{"date": "01.01.2023", "total": 19.8423, "phys": 13.3023, "corp": 6.5399, "phys_nat": 9.1386, "phys_fx": 4.1638, "corp_nat": 4.6958, "corp_fx": 1.8441}, {"date": "01.02.2023", "total": 19.8197, "phys": 13.5091, "corp": 6.3105, "phys_nat": 9.3301, "phys_fx": 4.179, "corp_nat": 4.5295, "corp_fx": 1.781}, {"date": "01.03.2023", "total": 19.4658, "phys": 13.4438, "corp": 6.0221, "phys_nat": 9.4661, "phys_fx": 3.9777, "corp_nat": 4.4067, "corp_fx": 1.6153}, {"date": "01.04.2023", "total": 19.9755, "phys": 13.6053, "corp": 6.3703, "phys_nat": 9.6858, "phys_fx": 3.9195, "corp_nat": 4.7202, "corp_fx": 1.6501}, {"date": "01.05.2023", "total": 19.8937, "phys": 13.6463, "corp": 6.2474, "phys_nat": 9.7888, "phys_fx": 3.8575, "corp_nat": 4.6204, "corp_fx": 1.627}, {"date": "01.06.2023", "total": 20.0113, "phys": 13.7278, "corp": 6.2835, "phys_nat": 9.9363, "phys_fx": 3.7915, "corp_nat": 4.6092, "corp_fx": 1.6743}, {"date": "01.07.2023", "total": 20.3958, "phys": 14.0459, "corp": 6.35, "phys_nat": 10.3158, "phys_fx": 3.73, "corp_nat": 4.861, "corp_fx": 1.489}, {"date": "01.08.2023", "total": 20.692, "phys": 14.2096, "corp": 6.4824, "phys_nat": 10.5801, "phys_fx": 3.6295, "corp_nat": 4.9311, "corp_fx": 1.5513}, {"date": "01.09.2023", "total": 20.782, "phys": 14.3303, "corp": 6.4517, "phys_nat": 10.7805, "phys_fx": 3.5498, "corp_nat": 4.99, "corp_fx": 1.4617}, {"date": "01.10.2023", "total": 20.9846, "phys": 14.6756, "corp": 6.309, "phys_nat": 11.0887, "phys_fx": 3.5869, "corp_nat": 4.8291, "corp_fx": 1.4799}, {"date": "01.11.2023", "total": 21.5259, "phys": 14.8466, "corp": 6.6793, "phys_nat": 11.3305, "phys_fx": 3.5161, "corp_nat": 5.1514, "corp_fx": 1.5279}, {"date": "01.12.2023", "total": 21.6951, "phys": 14.9998, "corp": 6.6954, "phys_nat": 11.5627, "phys_fx": 3.4371, "corp_nat": 5.1374, "corp_fx": 1.558}, {"date": "01.01.2024", "total": 23.14, "phys": 16.163, "corp": 6.9771, "phys_nat": 12.4055, "phys_fx": 3.7575, "corp_nat": 5.4348, "corp_fx": 1.5423}, {"date": "01.02.2024", "total": 23.2219, "phys": 16.0836, "corp": 7.1383, "phys_nat": 12.4843, "phys_fx": 3.5992, "corp_nat": 5.6998, "corp_fx": 1.4385}, {"date": "01.03.2024", "total": 23.5348, "phys": 16.32, "corp": 7.2148, "phys_nat": 12.7112, "phys_fx": 3.6087, "corp_nat": 5.6017, "corp_fx": 1.6131}, {"date": "01.04.2024", "total": 24.0688, "phys": 16.4256, "corp": 7.6432, "phys_nat": 12.8732, "phys_fx": 3.5524, "corp_nat": 5.9975, "corp_fx": 1.6457}, {"date": "01.05.2024", "total": 23.9, "phys": 16.5278, "corp": 7.3722, "phys_nat": 13.0183, "phys_fx": 3.5095, "corp_nat": 5.8377, "corp_fx": 1.5345}, {"date": "01.06.2024", "total": 24.3001, "phys": 16.755, "corp": 7.5451, "phys_nat": 13.2481, "phys_fx": 3.5069, "corp_nat": 5.9377, "corp_fx": 1.6073}, {"date": "01.07.2024", "total": 24.9744, "phys": 17.2027, "corp": 7.7717, "phys_nat": 13.5399, "phys_fx": 3.6628, "corp_nat": 6.199, "corp_fx": 1.5727}, {"date": "01.08.2024", "total": 25.6555, "phys": 17.5025, "corp": 8.153, "phys_nat": 13.9016, "phys_fx": 3.6008, "corp_nat": 6.4485, "corp_fx": 1.7045}, {"date": "01.09.2024", "total": 25.9155, "phys": 17.7688, "corp": 8.1467, "phys_nat": 14.2038, "phys_fx": 3.565, "corp_nat": 6.475, "corp_fx": 1.6717}, {"date": "01.10.2024", "total": 26.0435, "phys": 18.0013, "corp": 8.0421, "phys_nat": 14.4594, "phys_fx": 3.542, "corp_nat": 6.4452, "corp_fx": 1.5969}, {"date": "01.11.2024", "total": 26.718, "phys": 18.327, "corp": 8.3911, "phys_nat": 14.7733, "phys_fx": 3.5536, "corp_nat": 6.7483, "corp_fx": 1.6428}, {"date": "01.12.2024", "total": 27.456, "phys": 18.6975, "corp": 8.7584, "phys_nat": 14.8538, "phys_fx": 3.8438, "corp_nat": 6.7861, "corp_fx": 1.9723}, {"date": "01.01.2025", "total": 29.1877, "phys": 19.5961, "corp": 9.5916, "phys_nat": 15.5019, "phys_fx": 4.0942, "corp_nat": 7.5959, "corp_fx": 1.9957}, {"date": "01.02.2025", "total": 29.1987, "phys": 19.5903, "corp": 9.6084, "phys_nat": 15.527, "phys_fx": 4.0633, "corp_nat": 7.5929, "corp_fx": 2.0154}, {"date": "01.03.2025", "total": 29.1474, "phys": 19.6195, "corp": 9.528, "phys_nat": 15.493, "phys_fx": 4.1265, "corp_nat": 7.4524, "corp_fx": 2.0756}, {"date": "01.04.2025", "total": 29.062, "phys": 19.7474, "corp": 9.3146, "phys_nat": 15.6409, "phys_fx": 4.1066, "corp_nat": 7.3654, "corp_fx": 1.9492}, {"date": "01.05.2025", "total": 29.9958, "phys": 20.109, "corp": 9.8869, "phys_nat": 16.0076, "phys_fx": 4.1014, "corp_nat": 7.7618, "corp_fx": 2.1251}, {"date": "01.06.2025", "total": 30.2101, "phys": 20.2085, "corp": 10.0016, "phys_nat": 16.2349, "phys_fx": 3.9735, "corp_nat": 7.8423, "corp_fx": 2.1594}, {"date": "01.07.2025", "total": 30.7651, "phys": 20.6102, "corp": 10.1549, "phys_nat": 16.7184, "phys_fx": 3.8919, "corp_nat": 8.0833, "corp_fx": 2.0716}, {"date": "01.08.2025", "total": 31.2064, "phys": 21.0011, "corp": 10.2053, "phys_nat": 17.0894, "phys_fx": 3.9117, "corp_nat": 7.9573, "corp_fx": 2.248}, {"date": "01.09.2025", "total": 31.5375, "phys": 21.2762, "corp": 10.2613, "phys_nat": 17.3852, "phys_fx": 3.891, "corp_nat": 7.9423, "corp_fx": 2.319}, {"date": "01.10.2025", "total": 32.3674, "phys": 21.5797, "corp": 10.7877, "phys_nat": 17.6957, "phys_fx": 3.8841, "corp_nat": 8.4355, "corp_fx": 2.3522}, {"date": "01.11.2025", "total": 33.1465, "phys": 21.8841, "corp": 11.2623, "phys_nat": 17.8639, "phys_fx": 4.0202, "corp_nat": 8.7492, "corp_fx": 2.5132}, {"date": "01.12.2025", "total": 32.8045, "phys": 21.9012, "corp": 10.9033, "phys_nat": 17.9124, "phys_fx": 3.9888, "corp_nat": 8.3441, "corp_fx": 2.5592}, {"date": "01.01.2026", "total": 34.5119, "phys": 22.9503, "corp": 11.5616, "phys_nat": 18.7858, "phys_fx": 4.1645, "corp_nat": 9.094, "corp_fx": 2.4676}, {"date": "01.02.2026", "total": 34.3186, "phys": 23.2719, "corp": 11.0467, "phys_nat": 19.0622, "phys_fx": 4.2097, "corp_nat": 8.6002, "corp_fx": 2.4465}, {"date": "01.03.2026", "total": 33.8997, "phys": 23.5113, "corp": 10.3884, "phys_nat": 19.3644, "phys_fx": 4.1469, "corp_nat": 7.9755, "corp_fx": 2.4128}], "dep_ts": [{"date": "01.01.2023", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 12.2062}, {"date": "01.01.2023", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.0794}, {"date": "01.01.2023", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0167}, {"date": "01.01.2023", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 6.4532}, {"date": "01.01.2023", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.0845}, {"date": "01.01.2023", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0022}, {"date": "01.02.2023", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 12.3818}, {"date": "01.02.2023", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.1112}, {"date": "01.02.2023", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0162}, {"date": "01.02.2023", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 6.2234}, {"date": "01.02.2023", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.0847}, {"date": "01.02.2023", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0025}, {"date": "01.03.2023", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 12.3025}, {"date": "01.03.2023", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.1253}, {"date": "01.03.2023", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.016}, {"date": "01.03.2023", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 5.9302}, {"date": "01.03.2023", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.0899}, {"date": "01.03.2023", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.002}, {"date": "01.04.2023", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 12.4687}, {"date": "01.04.2023", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.1214}, {"date": "01.04.2023", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0152}, {"date": "01.04.2023", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 6.2755}, {"date": "01.04.2023", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.0928}, {"date": "01.04.2023", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0019}, {"date": "01.05.2023", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 12.5023}, {"date": "01.05.2023", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.1278}, {"date": "01.05.2023", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0162}, {"date": "01.05.2023", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 6.184}, {"date": "01.05.2023", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.0615}, {"date": "01.05.2023", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0019}, {"date": "01.06.2023", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 12.5721}, {"date": "01.06.2023", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.1388}, {"date": "01.06.2023", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0169}, {"date": "01.06.2023", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 6.2185}, {"date": "01.06.2023", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.063}, {"date": "01.06.2023", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0019}, {"date": "01.07.2023", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 12.8436}, {"date": "01.07.2023", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.1829}, {"date": "01.07.2023", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0193}, {"date": "01.07.2023", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 6.2641}, {"date": "01.07.2023", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.0835}, {"date": "01.07.2023", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0024}, {"date": "01.08.2023", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 12.9722}, {"date": "01.08.2023", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.2189}, {"date": "01.08.2023", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0185}, {"date": "01.08.2023", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 6.4093}, {"date": "01.08.2023", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.071}, {"date": "01.08.2023", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0021}, {"date": "01.09.2023", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 13.0346}, {"date": "01.09.2023", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.2768}, {"date": "01.09.2023", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0189}, {"date": "01.09.2023", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 6.3754}, {"date": "01.09.2023", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.0755}, {"date": "01.09.2023", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0008}, {"date": "01.10.2023", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 13.3095}, {"date": "01.10.2023", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.3465}, {"date": "01.10.2023", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0196}, {"date": "01.10.2023", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 6.1835}, {"date": "01.10.2023", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.1246}, {"date": "01.10.2023", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0009}, {"date": "01.11.2023", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 13.4247}, {"date": "01.11.2023", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.4076}, {"date": "01.11.2023", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0143}, {"date": "01.11.2023", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 6.6095}, {"date": "01.11.2023", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.0683}, {"date": "01.11.2023", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0014}, {"date": "01.12.2023", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 13.5226}, {"date": "01.12.2023", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.463}, {"date": "01.12.2023", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0142}, {"date": "01.12.2023", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 6.5829}, {"date": "01.12.2023", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.1106}, {"date": "01.12.2023", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0019}, {"date": "01.01.2024", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 14.6224}, {"date": "01.01.2024", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.526}, {"date": "01.01.2024", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0146}, {"date": "01.01.2024", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 6.9011}, {"date": "01.01.2024", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.0733}, {"date": "01.01.2024", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0026}, {"date": "01.02.2024", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 14.4847}, {"date": "01.02.2024", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.5834}, {"date": "01.02.2024", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0155}, {"date": "01.02.2024", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 7.0604}, {"date": "01.02.2024", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.0752}, {"date": "01.02.2024", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0026}, {"date": "01.03.2024", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 14.6731}, {"date": "01.03.2024", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.6296}, {"date": "01.03.2024", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0172}, {"date": "01.03.2024", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 7.0956}, {"date": "01.03.2024", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.1166}, {"date": "01.03.2024", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0026}, {"date": "01.04.2024", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 14.7298}, {"date": "01.04.2024", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.6816}, {"date": "01.04.2024", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0142}, {"date": "01.04.2024", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 7.4319}, {"date": "01.04.2024", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.2083}, {"date": "01.04.2024", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.003}, {"date": "01.05.2024", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 14.7328}, {"date": "01.05.2024", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.7804}, {"date": "01.05.2024", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0146}, {"date": "01.05.2024", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 7.1702}, {"date": "01.05.2024", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.199}, {"date": "01.05.2024", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0031}, {"date": "01.06.2024", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 14.883}, {"date": "01.06.2024", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.8578}, {"date": "01.06.2024", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0142}, {"date": "01.06.2024", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 7.3595}, {"date": "01.06.2024", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.1824}, {"date": "01.06.2024", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0032}, {"date": "01.07.2024", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 15.2773}, {"date": "01.07.2024", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 1.912}, {"date": "01.07.2024", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0134}, {"date": "01.07.2024", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 7.5741}, {"date": "01.07.2024", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.1944}, {"date": "01.07.2024", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0032}, {"date": "01.08.2024", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 15.4652}, {"date": "01.08.2024", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 2.0239}, {"date": "01.08.2024", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0134}, {"date": "01.08.2024", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 7.9662}, {"date": "01.08.2024", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.184}, {"date": "01.08.2024", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0028}, {"date": "01.09.2024", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 15.6335}, {"date": "01.09.2024", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 2.1236}, {"date": "01.09.2024", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0117}, {"date": "01.09.2024", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 7.9498}, {"date": "01.09.2024", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.1942}, {"date": "01.09.2024", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0027}, {"date": "01.10.2024", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 15.7678}, {"date": "01.10.2024", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 2.2233}, {"date": "01.10.2024", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0102}, {"date": "01.10.2024", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 7.8474}, {"date": "01.10.2024", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.1918}, {"date": "01.10.2024", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0029}, {"date": "01.11.2024", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 15.9629}, {"date": "01.11.2024", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 2.3531}, {"date": "01.11.2024", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.011}, {"date": "01.11.2024", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 8.1982}, {"date": "01.11.2024", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.19}, {"date": "01.11.2024", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0029}, {"date": "01.12.2024", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 16.2337}, {"date": "01.12.2024", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 2.4521}, {"date": "01.12.2024", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0118}, {"date": "01.12.2024", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 8.5505}, {"date": "01.12.2024", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.2044}, {"date": "01.12.2024", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0035}, {"date": "01.01.2025", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 17.0202}, {"date": "01.01.2025", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 2.5643}, {"date": "01.01.2025", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0116}, {"date": "01.01.2025", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 9.3604}, {"date": "01.01.2025", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.2262}, {"date": "01.01.2025", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0051}, {"date": "01.02.2025", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 16.9522}, {"date": "01.02.2025", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 2.6267}, {"date": "01.02.2025", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0114}, {"date": "01.02.2025", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 9.3816}, {"date": "01.02.2025", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.223}, {"date": "01.02.2025", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0038}, {"date": "01.03.2025", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 16.8488}, {"date": "01.03.2025", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 2.759}, {"date": "01.03.2025", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0117}, {"date": "01.03.2025", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 9.1881}, {"date": "01.03.2025", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.3358}, {"date": "01.03.2025", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.004}, {"date": "01.04.2025", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 16.8368}, {"date": "01.04.2025", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 2.8988}, {"date": "01.04.2025", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0118}, {"date": "01.04.2025", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 9.0934}, {"date": "01.04.2025", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.2171}, {"date": "01.04.2025", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0041}, {"date": "01.05.2025", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 17.0257}, {"date": "01.05.2025", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 3.0713}, {"date": "01.05.2025", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.012}, {"date": "01.05.2025", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 9.6392}, {"date": "01.05.2025", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.2436}, {"date": "01.05.2025", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0041}, {"date": "01.06.2025", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 17.0035}, {"date": "01.06.2025", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 3.1933}, {"date": "01.06.2025", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0116}, {"date": "01.06.2025", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 9.7594}, {"date": "01.06.2025", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.2384}, {"date": "01.06.2025", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0039}, {"date": "01.07.2025", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 17.304}, {"date": "01.07.2025", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 3.2937}, {"date": "01.07.2025", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0126}, {"date": "01.07.2025", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 9.9011}, {"date": "01.07.2025", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.2498}, {"date": "01.07.2025", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.004}, {"date": "01.08.2025", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 17.5603}, {"date": "01.08.2025", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 3.4258}, {"date": "01.08.2025", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0149}, {"date": "01.08.2025", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 9.9558}, {"date": "01.08.2025", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.2446}, {"date": "01.08.2025", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0049}, {"date": "01.09.2025", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 17.6788}, {"date": "01.09.2025", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 3.582}, {"date": "01.09.2025", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0155}, {"date": "01.09.2025", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 9.9984}, {"date": "01.09.2025", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.2577}, {"date": "01.09.2025", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0052}, {"date": "01.10.2025", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 17.8682}, {"date": "01.10.2025", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 3.6949}, {"date": "01.10.2025", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0166}, {"date": "01.10.2025", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 10.531}, {"date": "01.10.2025", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.2518}, {"date": "01.10.2025", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0048}, {"date": "01.11.2025", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 18.1185}, {"date": "01.11.2025", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 3.7476}, {"date": "01.11.2025", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.018}, {"date": "01.11.2025", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 10.989}, {"date": "01.11.2025", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.2687}, {"date": "01.11.2025", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0047}, {"date": "01.12.2025", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 18.0252}, {"date": "01.12.2025", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 3.8589}, {"date": "01.12.2025", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0171}, {"date": "01.12.2025", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 10.6505}, {"date": "01.12.2025", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.2484}, {"date": "01.12.2025", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0043}, {"date": "01.01.2026", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 19.2507}, {"date": "01.01.2026", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 3.6848}, {"date": "01.01.2026", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0147}, {"date": "01.01.2026", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 11.3102}, {"date": "01.01.2026", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.2466}, {"date": "01.01.2026", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0048}, {"date": "01.02.2026", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 19.952}, {"date": "01.02.2026", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 3.2895}, {"date": "01.02.2026", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0304}, {"date": "01.02.2026", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 10.7857}, {"date": "01.02.2026", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.2564}, {"date": "01.02.2026", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0046}, {"date": "01.03.2026", "agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 20.6554}, {"date": "01.03.2026", "agent": "Физические лица", "deposit_type": "сберегательные", "amount": 2.8465}, {"date": "01.03.2026", "agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0093}, {"date": "01.03.2026", "agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 10.1281}, {"date": "01.03.2026", "agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.255}, {"date": "01.03.2026", "agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0053}], "fx_ts": [{"date": "01.01.2023", "agent": "Физические лица", "fx_share": 31.3, "nat_share": 68.7}, {"date": "01.01.2023", "agent": "Юридические лица", "fx_share": 28.2, "nat_share": 71.8}, {"date": "01.02.2023", "agent": "Физические лица", "fx_share": 30.93, "nat_share": 69.07}, {"date": "01.02.2023", "agent": "Юридические лица", "fx_share": 28.22, "nat_share": 71.78}, {"date": "01.03.2023", "agent": "Физические лица", "fx_share": 29.59, "nat_share": 70.41}, {"date": "01.03.2023", "agent": "Юридические лица", "fx_share": 26.82, "nat_share": 73.18}, {"date": "01.04.2023", "agent": "Физические лица", "fx_share": 28.81, "nat_share": 71.19}, {"date": "01.04.2023", "agent": "Юридические лица", "fx_share": 25.9, "nat_share": 74.1}, {"date": "01.05.2023", "agent": "Физические лица", "fx_share": 28.27, "nat_share": 71.73}, {"date": "01.05.2023", "agent": "Юридические лица", "fx_share": 26.04, "nat_share": 73.96}, {"date": "01.06.2023", "agent": "Физические лица", "fx_share": 27.62, "nat_share": 72.38}, {"date": "01.06.2023", "agent": "Юридические лица", "fx_share": 26.65, "nat_share": 73.35}, {"date": "01.07.2023", "agent": "Физические лица", "fx_share": 26.56, "nat_share": 73.44}, {"date": "01.07.2023", "agent": "Юридические лица", "fx_share": 23.45, "nat_share": 76.55}, {"date": "01.08.2023", "agent": "Физические лица", "fx_share": 25.54, "nat_share": 74.46}, {"date": "01.08.2023", "agent": "Юридические лица", "fx_share": 23.93, "nat_share": 76.07}, {"date": "01.09.2023", "agent": "Физические лица", "fx_share": 24.77, "nat_share": 75.23}, {"date": "01.09.2023", "agent": "Юридические лица", "fx_share": 22.66, "nat_share": 77.34}, {"date": "01.10.2023", "agent": "Физические лица", "fx_share": 24.44, "nat_share": 75.56}, {"date": "01.10.2023", "agent": "Юридические лица", "fx_share": 23.46, "nat_share": 76.54}, {"date": "01.11.2023", "agent": "Физические лица", "fx_share": 23.68, "nat_share": 76.32}, {"date": "01.11.2023", "agent": "Юридические лица", "fx_share": 22.88, "nat_share": 77.12}, {"date": "01.12.2023", "agent": "Физические лица", "fx_share": 22.91, "nat_share": 77.09}, {"date": "01.12.2023", "agent": "Юридические лица", "fx_share": 23.27, "nat_share": 76.73}, {"date": "01.01.2024", "agent": "Физические лица", "fx_share": 23.25, "nat_share": 76.75}, {"date": "01.01.2024", "agent": "Юридические лица", "fx_share": 22.1, "nat_share": 77.9}, {"date": "01.02.2024", "agent": "Физические лица", "fx_share": 22.38, "nat_share": 77.62}, {"date": "01.02.2024", "agent": "Юридические лица", "fx_share": 20.15, "nat_share": 79.85}, {"date": "01.03.2024", "agent": "Физические лица", "fx_share": 22.11, "nat_share": 77.89}, {"date": "01.03.2024", "agent": "Юридические лица", "fx_share": 22.36, "nat_share": 77.64}, {"date": "01.04.2024", "agent": "Физические лица", "fx_share": 21.63, "nat_share": 78.37}, {"date": "01.04.2024", "agent": "Юридические лица", "fx_share": 21.53, "nat_share": 78.47}, {"date": "01.05.2024", "agent": "Физические лица", "fx_share": 21.23, "nat_share": 78.77}, {"date": "01.05.2024", "agent": "Юридические лица", "fx_share": 20.82, "nat_share": 79.18}, {"date": "01.06.2024", "agent": "Физические лица", "fx_share": 20.93, "nat_share": 79.07}, {"date": "01.06.2024", "agent": "Юридические лица", "fx_share": 21.3, "nat_share": 78.7}, {"date": "01.07.2024", "agent": "Физические лица", "fx_share": 21.29, "nat_share": 78.71}, {"date": "01.07.2024", "agent": "Юридические лица", "fx_share": 20.24, "nat_share": 79.76}, {"date": "01.08.2024", "agent": "Физические лица", "fx_share": 20.57, "nat_share": 79.43}, {"date": "01.08.2024", "agent": "Юридические лица", "fx_share": 20.91, "nat_share": 79.09}, {"date": "01.09.2024", "agent": "Физические лица", "fx_share": 20.06, "nat_share": 79.94}, {"date": "01.09.2024", "agent": "Юридические лица", "fx_share": 20.52, "nat_share": 79.48}, {"date": "01.10.2024", "agent": "Физические лица", "fx_share": 19.68, "nat_share": 80.32}, {"date": "01.10.2024", "agent": "Юридические лица", "fx_share": 19.86, "nat_share": 80.14}, {"date": "01.11.2024", "agent": "Физические лица", "fx_share": 19.39, "nat_share": 80.61}, {"date": "01.11.2024", "agent": "Юридические лица", "fx_share": 19.58, "nat_share": 80.42}, {"date": "01.12.2024", "agent": "Физические лица", "fx_share": 20.56, "nat_share": 79.44}, {"date": "01.12.2024", "agent": "Юридические лица", "fx_share": 22.52, "nat_share": 77.48}, {"date": "01.01.2025", "agent": "Физические лица", "fx_share": 20.89, "nat_share": 79.11}, {"date": "01.01.2025", "agent": "Юридические лица", "fx_share": 20.81, "nat_share": 79.19}, {"date": "01.02.2025", "agent": "Физические лица", "fx_share": 20.74, "nat_share": 79.26}, {"date": "01.02.2025", "agent": "Юридические лица", "fx_share": 20.98, "nat_share": 79.02}, {"date": "01.03.2025", "agent": "Физические лица", "fx_share": 21.03, "nat_share": 78.97}, {"date": "01.03.2025", "agent": "Юридические лица", "fx_share": 21.78, "nat_share": 78.22}, {"date": "01.04.2025", "agent": "Физические лица", "fx_share": 20.8, "nat_share": 79.2}, {"date": "01.04.2025", "agent": "Юридические лица", "fx_share": 20.93, "nat_share": 79.07}, {"date": "01.05.2025", "agent": "Физические лица", "fx_share": 20.4, "nat_share": 79.6}, {"date": "01.05.2025", "agent": "Юридические лица", "fx_share": 21.49, "nat_share": 78.51}, {"date": "01.06.2025", "agent": "Физические лица", "fx_share": 19.66, "nat_share": 80.34}, {"date": "01.06.2025", "agent": "Юридические лица", "fx_share": 21.59, "nat_share": 78.41}, {"date": "01.07.2025", "agent": "Физические лица", "fx_share": 18.88, "nat_share": 81.12}, {"date": "01.07.2025", "agent": "Юридические лица", "fx_share": 20.4, "nat_share": 79.6}, {"date": "01.08.2025", "agent": "Физические лица", "fx_share": 18.63, "nat_share": 81.37}, {"date": "01.08.2025", "agent": "Юридические лица", "fx_share": 22.03, "nat_share": 77.97}, {"date": "01.09.2025", "agent": "Физические лица", "fx_share": 18.29, "nat_share": 81.71}, {"date": "01.09.2025", "agent": "Юридические лица", "fx_share": 22.6, "nat_share": 77.4}, {"date": "01.10.2025", "agent": "Физические лица", "fx_share": 18.0, "nat_share": 82.0}, {"date": "01.10.2025", "agent": "Юридические лица", "fx_share": 21.8, "nat_share": 78.2}, {"date": "01.11.2025", "agent": "Физические лица", "fx_share": 18.37, "nat_share": 81.63}, {"date": "01.11.2025", "agent": "Юридические лица", "fx_share": 22.31, "nat_share": 77.69}, {"date": "01.12.2025", "agent": "Физические лица", "fx_share": 18.21, "nat_share": 81.79}, {"date": "01.12.2025", "agent": "Юридические лица", "fx_share": 23.47, "nat_share": 76.53}, {"date": "01.01.2026", "agent": "Физические лица", "fx_share": 18.15, "nat_share": 81.85}, {"date": "01.01.2026", "agent": "Юридические лица", "fx_share": 21.34, "nat_share": 78.66}, {"date": "01.02.2026", "agent": "Физические лица", "fx_share": 18.09, "nat_share": 81.91}, {"date": "01.02.2026", "agent": "Юридические лица", "fx_share": 22.15, "nat_share": 77.85}, {"date": "01.03.2026", "agent": "Физические лица", "fx_share": 17.64, "nat_share": 82.36}, {"date": "01.03.2026", "agent": "Юридические лица", "fx_share": 23.23, "nat_share": 76.77}], "rates_ts": [{"date": "01.01.2023", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.28}, {"date": "01.01.2023", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.86}, {"date": "01.01.2023", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.43}, {"date": "01.01.2023", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 0.98}, {"date": "01.02.2023", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.73}, {"date": "01.02.2023", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.84}, {"date": "01.02.2023", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.46}, {"date": "01.02.2023", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 0.95}, {"date": "01.03.2023", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.51}, {"date": "01.03.2023", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.87}, {"date": "01.03.2023", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.49}, {"date": "01.03.2023", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 0.71}, {"date": "01.04.2023", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.51}, {"date": "01.04.2023", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.84}, {"date": "01.04.2023", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.49}, {"date": "01.04.2023", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 0.78}, {"date": "01.05.2023", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.86}, {"date": "01.05.2023", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.83}, {"date": "01.05.2023", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.54}, {"date": "01.05.2023", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 0.83}, {"date": "01.06.2023", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.86}, {"date": "01.06.2023", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.79}, {"date": "01.06.2023", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.54}, {"date": "01.06.2023", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 1.18}, {"date": "01.07.2023", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.97}, {"date": "01.07.2023", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.85}, {"date": "01.07.2023", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.59}, {"date": "01.07.2023", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 1.82}, {"date": "01.08.2023", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.93}, {"date": "01.08.2023", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.88}, {"date": "01.08.2023", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.62}, {"date": "01.08.2023", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.18}, {"date": "01.09.2023", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.94}, {"date": "01.09.2023", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.84}, {"date": "01.09.2023", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.65}, {"date": "01.09.2023", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.11}, {"date": "01.10.2023", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 14.01}, {"date": "01.10.2023", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.86}, {"date": "01.10.2023", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.6}, {"date": "01.10.2023", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.18}, {"date": "01.11.2023", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.96}, {"date": "01.11.2023", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.84}, {"date": "01.11.2023", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.24}, {"date": "01.11.2023", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.28}, {"date": "01.12.2023", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.87}, {"date": "01.12.2023", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.87}, {"date": "01.12.2023", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.62}, {"date": "01.12.2023", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.74}, {"date": "01.01.2024", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.71}, {"date": "01.01.2024", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.88}, {"date": "01.01.2024", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.56}, {"date": "01.01.2024", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.64}, {"date": "01.02.2024", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.96}, {"date": "01.02.2024", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.87}, {"date": "01.02.2024", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.33}, {"date": "01.02.2024", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.58}, {"date": "01.03.2024", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.6}, {"date": "01.03.2024", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.88}, {"date": "01.03.2024", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 13.97}, {"date": "01.03.2024", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.58}, {"date": "01.04.2024", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.77}, {"date": "01.04.2024", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.89}, {"date": "01.04.2024", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 13.62}, {"date": "01.04.2024", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.69}, {"date": "01.05.2024", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.68}, {"date": "01.05.2024", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.91}, {"date": "01.05.2024", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 13.66}, {"date": "01.05.2024", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.51}, {"date": "01.06.2024", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.63}, {"date": "01.06.2024", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.92}, {"date": "01.06.2024", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 13.66}, {"date": "01.06.2024", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.63}, {"date": "01.07.2024", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.57}, {"date": "01.07.2024", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.91}, {"date": "01.07.2024", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 13.48}, {"date": "01.07.2024", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.68}, {"date": "01.08.2024", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.5}, {"date": "01.08.2024", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.91}, {"date": "01.08.2024", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 13.24}, {"date": "01.08.2024", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.61}, {"date": "01.09.2024", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.45}, {"date": "01.09.2024", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.91}, {"date": "01.09.2024", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 13.12}, {"date": "01.09.2024", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.51}, {"date": "01.10.2024", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.38}, {"date": "01.10.2024", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.88}, {"date": "01.10.2024", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 13.15}, {"date": "01.10.2024", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.59}, {"date": "01.11.2024", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.27}, {"date": "01.11.2024", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.9}, {"date": "01.11.2024", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 13.12}, {"date": "01.11.2024", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.53}, {"date": "01.12.2024", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.19}, {"date": "01.12.2024", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.92}, {"date": "01.12.2024", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 13.15}, {"date": "01.12.2024", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.47}, {"date": "01.01.2025", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.16}, {"date": "01.01.2025", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.91}, {"date": "01.01.2025", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.03}, {"date": "01.01.2025", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.58}, {"date": "01.02.2025", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.48}, {"date": "01.02.2025", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.88}, {"date": "01.02.2025", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.08}, {"date": "01.02.2025", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.54}, {"date": "01.03.2025", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.32}, {"date": "01.03.2025", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.9}, {"date": "01.03.2025", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 14.18}, {"date": "01.03.2025", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.58}, {"date": "01.04.2025", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.56}, {"date": "01.04.2025", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.9}, {"date": "01.04.2025", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 15.0}, {"date": "01.04.2025", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.42}, {"date": "01.05.2025", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 13.99}, {"date": "01.05.2025", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.86}, {"date": "01.05.2025", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 15.41}, {"date": "01.05.2025", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.72}, {"date": "01.06.2025", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 14.24}, {"date": "01.06.2025", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.94}, {"date": "01.06.2025", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 15.39}, {"date": "01.06.2025", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.71}, {"date": "01.07.2025", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 14.24}, {"date": "01.07.2025", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.93}, {"date": "01.07.2025", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 15.44}, {"date": "01.07.2025", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.78}, {"date": "01.08.2025", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 14.3}, {"date": "01.08.2025", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.91}, {"date": "01.08.2025", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 15.45}, {"date": "01.08.2025", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.68}, {"date": "01.09.2025", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 14.32}, {"date": "01.09.2025", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.89}, {"date": "01.09.2025", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 15.43}, {"date": "01.09.2025", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.63}, {"date": "01.10.2025", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 14.37}, {"date": "01.10.2025", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.91}, {"date": "01.10.2025", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 15.43}, {"date": "01.10.2025", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.6}, {"date": "01.11.2025", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 14.58}, {"date": "01.11.2025", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.58}, {"date": "01.11.2025", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 16.33}, {"date": "01.11.2025", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.56}, {"date": "01.12.2025", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 14.77}, {"date": "01.12.2025", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.92}, {"date": "01.12.2025", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 16.84}, {"date": "01.12.2025", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.37}, {"date": "01.01.2026", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 14.83}, {"date": "01.01.2026", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.89}, {"date": "01.01.2026", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 16.85}, {"date": "01.01.2026", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.34}, {"date": "01.02.2026", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 15.34}, {"date": "01.02.2026", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.89}, {"date": "01.02.2026", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 16.8}, {"date": "01.02.2026", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.29}, {"date": "01.03.2026", "agent": "Физические лица", "currency": "Национальная валюта", "rate": 15.06}, {"date": "01.03.2026", "agent": "Физические лица", "currency": "Иностранная валюта", "rate": 0.78}, {"date": "01.03.2026", "agent": "Юридические лица", "currency": "Национальная валюта", "rate": 16.79}, {"date": "01.03.2026", "agent": "Юридические лица", "currency": "Иностранная валюта", "rate": 2.33}], "regions": {"Акмолинская область": {"total": 0.6572, "total23": 0.305, "phys": 0.4996, "corp": 0.1575, "fx": 0.0494, "fx_share": 7.5, "phys_share": 76.0, "growth_pct": 115.4, "sber_share": 11.8, "sroch_share": 88.1, "vostreb_share": 0.0, "sparkline": [0.305, 0.3148, 0.3023, 0.3096, 0.315, 0.3256, 0.3414, 0.3413, 0.3378, 0.3647, 0.3858, 0.386, 0.4238, 0.4248, 0.418, 0.4275, 0.4224, 0.4246, 0.4389, 0.4437, 0.4498, 0.4922, 0.4445, 0.4562, 0.4967, 0.5027, 0.4853, 0.4971, 0.5093, 0.5257, 0.5561, 0.5518, 0.5501, 0.571, 0.5957, 0.5885, 0.66, 0.6426, 0.6572]}, "Актюбинская область": {"total": 0.9362, "total23": 0.5366, "phys": 0.721, "corp": 0.2152, "fx": 0.1294, "fx_share": 13.8, "phys_share": 77.0, "growth_pct": 74.5, "sber_share": 11.0, "sroch_share": 89.0, "vostreb_share": 0.0, "sparkline": [0.5366, 0.5163, 0.4947, 0.5326, 0.5289, 0.5141, 0.5869, 0.5626, 0.5927, 0.6312, 0.6945, 0.6899, 0.7451, 0.7222, 0.6921, 0.6883, 0.6733, 0.6989, 0.7615, 0.7592, 0.8066, 0.7784, 0.7979, 0.8331, 0.9762, 0.9911, 0.951, 0.8992, 0.9073, 0.929, 0.9315, 0.9071, 0.9394, 0.9216, 0.973, 0.9398, 1.0269, 0.9328, 0.9362]}, "Алматинская область": {"total": 0.2559, "total23": 0.2242, "phys": 0.2188, "corp": 0.0371, "fx": 0.0144, "fx_share": 5.6, "phys_share": 85.5, "growth_pct": 14.1, "sber_share": 5.9, "sroch_share": 94.0, "vostreb_share": 0.0, "sparkline": [0.2242, 0.2317, 0.2263, 0.2273, 0.2271, 0.2337, 0.2376, 0.1958, 0.1716, 0.1777, 0.1794, 0.1788, 0.1914, 0.1902, 0.2077, 0.2131, 0.2072, 0.2048, 0.2117, 0.2188, 0.2309, 0.236, 0.2301, 0.2395, 0.2419, 0.2382, 0.2367, 0.2375, 0.2425, 0.2411, 0.2397, 0.2434, 0.2474, 0.2479, 0.2469, 0.2486, 0.2477, 0.2495, 0.2559]}, "Атырауская область": {"total": 0.8814, "total23": 0.5582, "phys": 0.6646, "corp": 0.2168, "fx": 0.1825, "fx_share": 20.7, "phys_share": 75.4, "growth_pct": 57.9, "sber_share": 11.3, "sroch_share": 88.7, "vostreb_share": 0.0, "sparkline": [0.5582, 0.571, 0.5691, 0.5906, 0.5963, 0.599, 0.5756, 0.5825, 0.5936, 0.6082, 0.6432, 0.6213, 0.6583, 0.6454, 0.6574, 0.6919, 0.7056, 0.7071, 0.7431, 0.7438, 0.7465, 0.7391, 0.7781, 0.8038, 0.8461, 0.849, 0.8508, 0.8728, 0.8684, 0.8361, 0.8346, 0.8474, 0.8557, 0.9051, 0.8913, 0.8536, 0.8881, 0.8925, 0.8814]}, "Восточно-Казахстанская область": {"total": 1.2327, "total23": 0.6757, "phys": 0.8039, "corp": 0.4288, "fx": 0.2987, "fx_share": 24.2, "phys_share": 65.2, "growth_pct": 82.4, "sber_share": 17.5, "sroch_share": 82.4, "vostreb_share": 0.0, "sparkline": [0.6757, 0.6248, 0.6105, 0.6129, 0.5837, 0.5889, 0.6053, 0.6657, 0.6862, 0.7097, 0.7107, 0.7471, 0.79, 0.7883, 0.8144, 0.834, 0.7949, 0.8369, 0.8348, 0.9367, 0.9241, 0.8109, 0.8596, 1.0775, 1.1082, 1.0204, 1.0228, 1.0956, 1.2366, 1.2372, 1.2325, 1.3858, 1.2703, 1.2856, 1.3807, 1.3301, 1.2624, 1.2832, 1.2327]}, "Жамбылская область": {"total": 0.5335, "total23": 0.2988, "phys": 0.4821, "corp": 0.0514, "fx": 0.0405, "fx_share": 7.6, "phys_share": 90.4, "growth_pct": 78.5, "sber_share": 9.7, "sroch_share": 90.3, "vostreb_share": 0.0, "sparkline": [0.2988, 0.3075, 0.3099, 0.3227, 0.3086, 0.3194, 0.2961, 0.302, 0.3027, 0.3098, 0.3151, 0.3189, 0.3729, 0.3569, 0.3722, 0.3651, 0.3635, 0.3694, 0.3759, 0.3921, 0.3954, 0.4078, 0.4084, 0.4088, 0.4446, 0.4421, 0.4493, 0.4435, 0.4582, 0.4672, 0.472, 0.4823, 0.4845, 0.488, 0.4989, 0.4971, 0.5282, 0.5323, 0.5335]}, "Западно-Казахстанская область": {"total": 0.7675, "total23": 0.4022, "phys": 0.661, "corp": 0.1065, "fx": 0.1081, "fx_share": 14.1, "phys_share": 86.1, "growth_pct": 90.8, "sber_share": 12.3, "sroch_share": 87.7, "vostreb_share": 0.0, "sparkline": [0.4022, 0.4081, 0.4112, 0.4231, 0.4471, 0.4459, 0.4509, 0.4565, 0.4632, 0.4741, 0.4709, 0.4741, 0.5166, 0.5137, 0.5316, 0.5402, 0.5375, 0.5414, 0.5613, 0.5789, 0.6025, 0.5992, 0.6357, 0.6338, 0.6793, 0.6725, 0.6661, 0.6871, 0.7061, 0.7058, 0.7104, 0.7054, 0.7129, 0.7514, 0.7415, 0.7252, 0.7824, 0.7904, 0.7675]}, "Карагандинская область": {"total": 1.764, "total23": 0.9119, "phys": 1.3646, "corp": 0.3993, "fx": 0.3049, "fx_share": 17.3, "phys_share": 77.4, "growth_pct": 93.4, "sber_share": 16.0, "sroch_share": 84.0, "vostreb_share": 0.0, "sparkline": [0.9119, 0.923, 0.9228, 0.9137, 0.9131, 0.915, 0.9468, 1.0418, 1.05, 1.0527, 1.0639, 1.1121, 1.2092, 1.1823, 1.1398, 1.1564, 1.1577, 1.1711, 1.2229, 1.235, 1.2433, 1.2793, 1.2998, 1.3328, 1.4413, 1.4297, 1.4261, 1.4123, 1.4486, 1.5357, 1.4858, 1.5155, 1.5122, 1.6307, 1.6126, 1.5788, 1.6367, 1.8403, 1.764]}, "Костанайская область": {"total": 1.1653, "total23": 0.6626, "phys": 0.9694, "corp": 0.1959, "fx": 0.0969, "fx_share": 8.3, "phys_share": 83.2, "growth_pct": 75.9, "sber_share": 18.4, "sroch_share": 81.6, "vostreb_share": 0.0, "sparkline": [0.6626, 0.6526, 0.6371, 0.6648, 0.6882, 0.6782, 0.7066, 0.717, 0.7226, 0.7667, 0.7699, 0.7648, 0.8259, 0.7962, 0.8086, 0.8417, 0.8521, 0.8616, 0.8589, 0.884, 0.9055, 0.9324, 0.9359, 0.9575, 0.9782, 0.973, 0.9652, 0.9543, 0.9821, 0.9866, 1.0192, 1.0641, 1.0696, 1.1119, 1.1549, 1.1461, 1.1526, 1.1533, 1.1653]}, "Кызылординская область": {"total": 0.4543, "total23": 0.2056, "phys": 0.3733, "corp": 0.081, "fx": 0.0436, "fx_share": 9.6, "phys_share": 82.2, "growth_pct": 121.0, "sber_share": 9.2, "sroch_share": 90.7, "vostreb_share": 0.0, "sparkline": [0.2056, 0.2171, 0.217, 0.2219, 0.2268, 0.222, 0.2588, 0.2574, 0.2503, 0.2621, 0.2607, 0.2628, 0.2871, 0.2948, 0.3396, 0.3441, 0.3411, 0.3216, 0.3449, 0.3581, 0.3582, 0.3817, 0.3907, 0.393, 0.4299, 0.4337, 0.4181, 0.4248, 0.4334, 0.4432, 0.4449, 0.4345, 0.4385, 0.4368, 0.4417, 0.4358, 0.4551, 0.4468, 0.4543]}, "Мангистауская область": {"total": 0.8341, "total23": 0.5484, "phys": 0.6627, "corp": 0.1714, "fx": 0.1192, "fx_share": 14.3, "phys_share": 79.5, "growth_pct": 52.1, "sber_share": 11.4, "sroch_share": 88.6, "vostreb_share": 0.0, "sparkline": [0.5484, 0.5526, 0.4992, 0.5093, 0.5372, 0.5163, 0.4874, 0.5255, 0.5465, 0.5579, 0.5668, 0.5859, 0.5974, 0.6117, 0.6197, 0.6394, 0.6222, 0.6544, 0.6531, 0.7137, 0.6936, 0.6806, 0.7003, 0.7192, 0.7346, 0.7545, 0.7812, 0.796, 0.8127, 0.7897, 0.8121, 0.8682, 0.884, 0.8996, 0.9131, 0.9815, 0.914, 0.9291, 0.8341]}, "Область Абай": {"total": 0.4549, "total23": 0.1518, "phys": 0.4123, "corp": 0.0427, "fx": 0.0312, "fx_share": 6.9, "phys_share": 90.6, "growth_pct": 199.7, "sber_share": 12.1, "sroch_share": 87.9, "vostreb_share": 0.0, "sparkline": [0.1518, 0.1577, 0.1747, 0.2496, 0.2483, 0.2467, 0.2533, 0.2628, 0.2617, 0.2737, 0.2782, 0.2835, 0.3017, 0.3034, 0.3024, 0.3032, 0.3037, 0.3127, 0.3216, 0.3253, 0.3313, 0.3404, 0.3439, 0.3464, 0.3632, 0.3727, 0.3889, 0.3881, 0.3906, 0.4045, 0.4142, 0.414, 0.4183, 0.4227, 0.4286, 0.4331, 0.4546, 0.4612, 0.4549]}, "Область Жетісу": {"total": 0.3222, "total23": 0.0812, "phys": 0.2841, "corp": 0.0382, "fx": 0.0298, "fx_share": 9.2, "phys_share": 88.2, "growth_pct": 297.0, "sber_share": 12.4, "sroch_share": 87.6, "vostreb_share": 0.0, "sparkline": [0.0812, 0.0836, 0.0917, 0.0969, 0.0982, 0.0982, 0.1007, 0.1474, 0.1695, 0.1783, 0.1847, 0.1826, 0.1946, 0.1961, 0.1968, 0.1996, 0.2021, 0.2031, 0.2082, 0.2178, 0.2206, 0.2192, 0.2263, 0.2346, 0.2511, 0.2527, 0.255, 0.2567, 0.2623, 0.2624, 0.2698, 0.2722, 0.2806, 0.2881, 0.2949, 0.3019, 0.3349, 0.3397, 0.3222]}, "Область Ұлытау": {"total": 0.173, "total23": 0.0582, "phys": 0.1625, "corp": 0.0105, "fx": 0.0161, "fx_share": 9.3, "phys_share": 94.0, "growth_pct": 197.2, "sber_share": 11.8, "sroch_share": 88.2, "vostreb_share": 0.0, "sparkline": [0.0582, 0.0598, 0.0623, 0.0972, 0.0982, 0.0992, 0.1057, 0.106, 0.1071, 0.1086, 0.1105, 0.1137, 0.1181, 0.1209, 0.1229, 0.1236, 0.1227, 0.121, 0.1235, 0.1217, 0.1226, 0.1223, 0.1264, 0.1284, 0.1405, 0.1399, 0.1415, 0.1409, 0.1421, 0.1445, 0.1449, 0.1472, 0.1462, 0.1596, 0.1561, 0.1509, 0.16, 0.1752, 0.173]}, "Павлодарская область": {"total": 1.0217, "total23": 0.5848, "phys": 0.7903, "corp": 0.2314, "fx": 0.0851, "fx_share": 8.3, "phys_share": 77.3, "growth_pct": 74.7, "sber_share": 16.7, "sroch_share": 83.3, "vostreb_share": 0.0, "sparkline": [0.5848, 0.598, 0.5929, 0.616, 0.619, 0.6349, 0.6343, 0.6242, 0.61, 0.6295, 0.628, 0.6579, 0.6632, 0.6706, 0.6738, 0.6776, 0.6894, 0.7246, 0.7163, 0.7545, 0.7497, 0.7618, 0.7818, 0.7989, 0.8133, 0.817, 0.8216, 0.8323, 0.8543, 0.8392, 0.8865, 0.8904, 0.8934, 0.9058, 0.9353, 0.9463, 0.9835, 1.0029, 1.0217]}, "Северо-Казахстанская область": {"total": 0.6197, "total23": 0.3068, "phys": 0.5182, "corp": 0.1015, "fx": 0.0377, "fx_share": 6.1, "phys_share": 83.6, "growth_pct": 102.0, "sber_share": 17.1, "sroch_share": 82.8, "vostreb_share": 0.0, "sparkline": [0.3068, 0.3188, 0.3154, 0.333, 0.3315, 0.3348, 0.3468, 0.352, 0.3529, 0.3674, 0.3662, 0.3731, 0.3977, 0.3987, 0.4042, 0.4123, 0.4168, 0.4199, 0.4322, 0.4443, 0.4534, 0.4633, 0.4739, 0.4693, 0.5004, 0.4962, 0.5028, 0.5077, 0.5151, 0.5241, 0.5372, 0.5411, 0.5292, 0.5543, 0.575, 0.5726, 0.601, 0.6118, 0.6197]}, "Туркестанская область": {"total": 0.3408, "total23": 0.0951, "phys": 0.3006, "corp": 0.0402, "fx": 0.0191, "fx_share": 5.6, "phys_share": 88.2, "growth_pct": 258.2, "sber_share": 3.8, "sroch_share": 96.2, "vostreb_share": 0.0, "sparkline": [0.0951, 0.0971, 0.1047, 0.1251, 0.1308, 0.1261, 0.135, 0.1494, 0.1383, 0.1527, 0.1502, 0.157, 0.1718, 0.1677, 0.1755, 0.1782, 0.1813, 0.1873, 0.2064, 0.2168, 0.2243, 0.2225, 0.2347, 0.2151, 0.2438, 0.2396, 0.2516, 0.2452, 0.2443, 0.2531, 0.2793, 0.2759, 0.3025, 0.3152, 0.3334, 0.314, 0.3981, 0.3434, 0.3408]}, "г.Алматы": {"total": 13.425, "total23": 8.2207, "phys": 9.602, "corp": 3.823, "fx": 3.4339, "fx_share": 25.6, "phys_share": 71.5, "growth_pct": 63.3, "sber_share": 10.9, "sroch_share": 89.1, "vostreb_share": 0.1, "sparkline": [8.2207, 8.4325, 8.0503, 8.2938, 8.2593, 8.3247, 8.5354, 8.7042, 8.6598, 8.8631, 9.117, 9.0778, 9.6838, 9.6234, 9.7246, 10.0273, 9.8928, 10.2135, 10.333, 10.4763, 10.7288, 10.815, 11.0813, 11.2708, 11.8587, 11.9247, 11.9473, 11.8612, 12.0675, 12.184, 12.3304, 12.4723, 12.5917, 12.8401, 13.2919, 13.1667, 13.8478, 13.5438, 13.425]}, "г.Астана": {"total": 6.753, "total23": 4.4317, "phys": 3.0214, "corp": 3.7316, "fx": 1.3605, "fx_share": 20.1, "phys_share": 44.7, "growth_pct": 52.4, "sber_share": 11.3, "sroch_share": 88.6, "vostreb_share": 0.1, "sparkline": [4.4317, 4.1578, 4.2794, 4.2285, 4.1201, 4.1746, 4.1069, 3.9993, 4.0454, 3.7543, 3.8967, 3.9776, 4.1397, 4.3392, 4.4472, 4.4635, 4.5472, 4.4633, 4.7459, 4.9542, 4.8004, 4.8121, 4.981, 5.1089, 5.5093, 5.5259, 5.4933, 5.3809, 5.7751, 5.7514, 6.0194, 6.039, 6.2826, 6.4793, 6.5418, 6.4572, 6.8938, 6.8421, 6.753]}, "г.Шымкент": {"total": 1.3072, "total23": 0.5828, "phys": 0.9987, "corp": 0.3085, "fx": 0.1586, "fx_share": 12.1, "phys_share": 76.4, "growth_pct": 124.3, "sber_share": 12.3, "sroch_share": 87.7, "vostreb_share": 0.0, "sparkline": [0.5828, 0.595, 0.5945, 0.6069, 0.6162, 0.614, 0.6843, 0.6986, 0.7202, 0.7421, 0.7336, 0.7301, 0.8519, 0.8754, 0.8864, 0.9419, 0.8667, 0.8628, 0.8804, 0.8806, 0.9279, 0.9493, 0.9876, 1.0283, 1.1306, 1.1229, 1.0929, 1.1287, 1.1394, 1.1494, 1.1444, 1.1489, 1.1284, 1.1526, 1.1391, 1.1367, 1.2844, 1.3057, 1.3072]}}, "heatmap": [{"date": "01.01.2023", "region": "Акмолинская область", "fx_share": 12.3}, {"date": "01.01.2023", "region": "Актюбинская область", "fx_share": 23.3}, {"date": "01.01.2023", "region": "Алматинская область", "fx_share": 11.1}, {"date": "01.01.2023", "region": "Атырауская область", "fx_share": 38.4}, {"date": "01.01.2023", "region": "Восточно-Казахстанская область", "fx_share": 15.2}, {"date": "01.01.2023", "region": "Жамбылская область", "fx_share": 11.5}, {"date": "01.01.2023", "region": "Западно-Казахстанская область", "fx_share": 20.2}, {"date": "01.01.2023", "region": "Карагандинская область", "fx_share": 19.9}, {"date": "01.01.2023", "region": "Костанайская область", "fx_share": 15.5}, {"date": "01.01.2023", "region": "Кызылординская область", "fx_share": 18.2}, {"date": "01.01.2023", "region": "Мангистауская область", "fx_share": 36.8}, {"date": "01.01.2023", "region": "Область Абай", "fx_share": 9.2}, {"date": "01.01.2023", "region": "Область Жетісу", "fx_share": 17.7}, {"date": "01.01.2023", "region": "Область Ұлытау", "fx_share": 20.1}, {"date": "01.01.2023", "region": "Павлодарская область", "fx_share": 16.9}, {"date": "01.01.2023", "region": "Северо-Казахстанская область", "fx_share": 10.0}, {"date": "01.01.2023", "region": "Туркестанская область", "fx_share": 12.9}, {"date": "01.01.2023", "region": "г.Алматы", "fx_share": 38.0}, {"date": "01.01.2023", "region": "г.Астана", "fx_share": 32.7}, {"date": "01.01.2023", "region": "г.Шымкент", "fx_share": 18.4}, {"date": "01.03.2023", "region": "Акмолинская область", "fx_share": 11.6}, {"date": "01.03.2023", "region": "Актюбинская область", "fx_share": 18.9}, {"date": "01.03.2023", "region": "Алматинская область", "fx_share": 11.2}, {"date": "01.03.2023", "region": "Атырауская область", "fx_share": 37.1}, {"date": "01.03.2023", "region": "Восточно-Казахстанская область", "fx_share": 15.7}, {"date": "01.03.2023", "region": "Жамбылская область", "fx_share": 11.4}, {"date": "01.03.2023", "region": "Западно-Казахстанская область", "fx_share": 19.4}, {"date": "01.03.2023", "region": "Карагандинская область", "fx_share": 17.6}, {"date": "01.03.2023", "region": "Костанайская область", "fx_share": 14.7}, {"date": "01.03.2023", "region": "Кызылординская область", "fx_share": 16.4}, {"date": "01.03.2023", "region": "Мангистауская область", "fx_share": 29.1}, {"date": "01.03.2023", "region": "Область Абай", "fx_share": 14.8}, {"date": "01.03.2023", "region": "Область Жетісу", "fx_share": 15.3}, {"date": "01.03.2023", "region": "Область Ұлытау", "fx_share": 18.1}, {"date": "01.03.2023", "region": "Павлодарская область", "fx_share": 14.7}, {"date": "01.03.2023", "region": "Северо-Казахстанская область", "fx_share": 9.6}, {"date": "01.03.2023", "region": "Туркестанская область", "fx_share": 11.2}, {"date": "01.03.2023", "region": "г.Алматы", "fx_share": 38.2}, {"date": "01.03.2023", "region": "г.Астана", "fx_share": 28.6}, {"date": "01.03.2023", "region": "г.Шымкент", "fx_share": 17.5}, {"date": "01.07.2023", "region": "Акмолинская область", "fx_share": 9.8}, {"date": "01.07.2023", "region": "Актюбинская область", "fx_share": 22.5}, {"date": "01.07.2023", "region": "Алматинская область", "fx_share": 8.0}, {"date": "01.07.2023", "region": "Атырауская область", "fx_share": 25.3}, {"date": "01.07.2023", "region": "Восточно-Казахстанская область", "fx_share": 14.6}, {"date": "01.07.2023", "region": "Жамбылская область", "fx_share": 10.1}, {"date": "01.07.2023", "region": "Западно-Казахстанская область", "fx_share": 16.5}, {"date": "01.07.2023", "region": "Карагандинская область", "fx_share": 16.8}, {"date": "01.07.2023", "region": "Костанайская область", "fx_share": 13.0}, {"date": "01.07.2023", "region": "Кызылординская область", "fx_share": 21.0}, {"date": "01.07.2023", "region": "Мангистауская область", "fx_share": 20.3}, {"date": "01.07.2023", "region": "Область Абай", "fx_share": 8.3}, {"date": "01.07.2023", "region": "Область Жетісу", "fx_share": 16.4}, {"date": "01.07.2023", "region": "Область Ұлытау", "fx_share": 18.6}, {"date": "01.07.2023", "region": "Павлодарская область", "fx_share": 16.1}, {"date": "01.07.2023", "region": "Северо-Казахстанская область", "fx_share": 8.1}, {"date": "01.07.2023", "region": "Туркестанская область", "fx_share": 8.0}, {"date": "01.07.2023", "region": "г.Алматы", "fx_share": 35.0}, {"date": "01.07.2023", "region": "г.Астана", "fx_share": 23.6}, {"date": "01.07.2023", "region": "г.Шымкент", "fx_share": 20.3}, {"date": "01.01.2024", "region": "Акмолинская область", "fx_share": 8.8}, {"date": "01.01.2024", "region": "Актюбинская область", "fx_share": 26.6}, {"date": "01.01.2024", "region": "Алматинская область", "fx_share": 6.7}, {"date": "01.01.2024", "region": "Атырауская область", "fx_share": 24.5}, {"date": "01.01.2024", "region": "Восточно-Казахстанская область", "fx_share": 24.0}, {"date": "01.01.2024", "region": "Жамбылская область", "fx_share": 16.9}, {"date": "01.01.2024", "region": "Западно-Казахстанская область", "fx_share": 15.5}, {"date": "01.01.2024", "region": "Карагандинская область", "fx_share": 15.0}, {"date": "01.01.2024", "region": "Костанайская область", "fx_share": 13.4}, {"date": "01.01.2024", "region": "Кызылординская область", "fx_share": 14.9}, {"date": "01.01.2024", "region": "Мангистауская область", "fx_share": 17.7}, {"date": "01.01.2024", "region": "Область Абай", "fx_share": 7.2}, {"date": "01.01.2024", "region": "Область Жетісу", "fx_share": 11.4}, {"date": "01.01.2024", "region": "Область Ұлытау", "fx_share": 16.2}, {"date": "01.01.2024", "region": "Павлодарская область", "fx_share": 15.0}, {"date": "01.01.2024", "region": "Северо-Казахстанская область", "fx_share": 8.4}, {"date": "01.01.2024", "region": "Туркестанская область", "fx_share": 7.1}, {"date": "01.01.2024", "region": "г.Алматы", "fx_share": 30.0}, {"date": "01.01.2024", "region": "г.Астана", "fx_share": 20.5}, {"date": "01.01.2024", "region": "г.Шымкент", "fx_share": 18.1}, {"date": "01.03.2024", "region": "Акмолинская область", "fx_share": 9.0}, {"date": "01.03.2024", "region": "Актюбинская область", "fx_share": 21.5}, {"date": "01.03.2024", "region": "Алматинская область", "fx_share": 5.8}, {"date": "01.03.2024", "region": "Атырауская область", "fx_share": 27.1}, {"date": "01.03.2024", "region": "Восточно-Казахстанская область", "fx_share": 20.8}, {"date": "01.03.2024", "region": "Жамбылская область", "fx_share": 7.4}, {"date": "01.03.2024", "region": "Западно-Казахстанская область", "fx_share": 15.6}, {"date": "01.03.2024", "region": "Карагандинская область", "fx_share": 13.9}, {"date": "01.03.2024", "region": "Костанайская область", "fx_share": 12.0}, {"date": "01.03.2024", "region": "Кызылординская область", "fx_share": 25.5}, {"date": "01.03.2024", "region": "Мангистауская область", "fx_share": 16.8}, {"date": "01.03.2024", "region": "Область Абай", "fx_share": 6.8}, {"date": "01.03.2024", "region": "Область Жетісу", "fx_share": 9.7}, {"date": "01.03.2024", "region": "Область Ұлытау", "fx_share": 15.5}, {"date": "01.03.2024", "region": "Павлодарская область", "fx_share": 13.3}, {"date": "01.03.2024", "region": "Северо-Казахстанская область", "fx_share": 7.8}, {"date": "01.03.2024", "region": "Туркестанская область", "fx_share": 6.7}, {"date": "01.03.2024", "region": "г.Алматы", "fx_share": 29.8}, {"date": "01.03.2024", "region": "г.Астана", "fx_share": 18.3}, {"date": "01.03.2024", "region": "г.Шымкент", "fx_share": 24.1}, {"date": "01.07.2024", "region": "Акмолинская область", "fx_share": 8.7}, {"date": "01.07.2024", "region": "Актюбинская область", "fx_share": 20.2}, {"date": "01.07.2024", "region": "Алматинская область", "fx_share": 6.4}, {"date": "01.07.2024", "region": "Атырауская область", "fx_share": 25.5}, {"date": "01.07.2024", "region": "Восточно-Казахстанская область", "fx_share": 21.0}, {"date": "01.07.2024", "region": "Жамбылская область", "fx_share": 8.5}, {"date": "01.07.2024", "region": "Западно-Казахстанская область", "fx_share": 14.7}, {"date": "01.07.2024", "region": "Карагандинская область", "fx_share": 14.6}, {"date": "01.07.2024", "region": "Костанайская область", "fx_share": 13.2}, {"date": "01.07.2024", "region": "Кызылординская область", "fx_share": 19.5}, {"date": "01.07.2024", "region": "Мангистауская область", "fx_share": 18.1}, {"date": "01.07.2024", "region": "Область Абай", "fx_share": 6.4}, {"date": "01.07.2024", "region": "Область Жетісу", "fx_share": 9.2}, {"date": "01.07.2024", "region": "Область Ұлытау", "fx_share": 13.8}, {"date": "01.07.2024", "region": "Павлодарская область", "fx_share": 12.4}, {"date": "01.07.2024", "region": "Северо-Казахстанская область", "fx_share": 6.6}, {"date": "01.07.2024", "region": "Туркестанская область", "fx_share": 5.1}, {"date": "01.07.2024", "region": "г.Алматы", "fx_share": 28.0}, {"date": "01.07.2024", "region": "г.Астана", "fx_share": 17.7}, {"date": "01.07.2024", "region": "г.Шымкент", "fx_share": 18.1}, {"date": "01.01.2025", "region": "Акмолинская область", "fx_share": 7.3}, {"date": "01.01.2025", "region": "Актюбинская область", "fx_share": 21.6}, {"date": "01.01.2025", "region": "Алматинская область", "fx_share": 7.2}, {"date": "01.01.2025", "region": "Атырауская область", "fx_share": 27.7}, {"date": "01.01.2025", "region": "Восточно-Казахстанская область", "fx_share": 26.5}, {"date": "01.01.2025", "region": "Жамбылская область", "fx_share": 9.4}, {"date": "01.01.2025", "region": "Западно-Казахстанская область", "fx_share": 15.7}, {"date": "01.01.2025", "region": "Карагандинская область", "fx_share": 14.2}, {"date": "01.01.2025", "region": "Костанайская область", "fx_share": 10.6}, {"date": "01.01.2025", "region": "Кызылординская область", "fx_share": 19.3}, {"date": "01.01.2025", "region": "Мангистауская область", "fx_share": 16.8}, {"date": "01.01.2025", "region": "Область Абай", "fx_share": 7.5}, {"date": "01.01.2025", "region": "Область Жетісу", "fx_share": 9.6}, {"date": "01.01.2025", "region": "Область Ұлытау", "fx_share": 13.9}, {"date": "01.01.2025", "region": "Павлодарская область", "fx_share": 12.1}, {"date": "01.01.2025", "region": "Северо-Казахстанская область", "fx_share": 6.5}, {"date": "01.01.2025", "region": "Туркестанская область", "fx_share": 3.8}, {"date": "01.01.2025", "region": "г.Алматы", "fx_share": 26.7}, {"date": "01.01.2025", "region": "г.Астана", "fx_share": 19.7}, {"date": "01.01.2025", "region": "г.Шымкент", "fx_share": 15.0}, {"date": "01.03.2025", "region": "Акмолинская область", "fx_share": 8.4}, {"date": "01.03.2025", "region": "Актюбинская область", "fx_share": 22.4}, {"date": "01.03.2025", "region": "Алматинская область", "fx_share": 7.1}, {"date": "01.03.2025", "region": "Атырауская область", "fx_share": 26.4}, {"date": "01.03.2025", "region": "Восточно-Казахстанская область", "fx_share": 25.4}, {"date": "01.03.2025", "region": "Жамбылская область", "fx_share": 11.5}, {"date": "01.03.2025", "region": "Западно-Казахстанская область", "fx_share": 15.0}, {"date": "01.03.2025", "region": "Карагандинская область", "fx_share": 15.2}, {"date": "01.03.2025", "region": "Костанайская область", "fx_share": 11.9}, {"date": "01.03.2025", "region": "Кызылординская область", "fx_share": 19.6}, {"date": "01.03.2025", "region": "Мангистауская область", "fx_share": 17.8}, {"date": "01.03.2025", "region": "Область Абай", "fx_share": 7.8}, {"date": "01.03.2025", "region": "Область Жетісу", "fx_share": 9.7}, {"date": "01.03.2025", "region": "Область Ұлытау", "fx_share": 13.3}, {"date": "01.03.2025", "region": "Павлодарская область", "fx_share": 12.5}, {"date": "01.03.2025", "region": "Северо-Казахстанская область", "fx_share": 7.0}, {"date": "01.03.2025", "region": "Туркестанская область", "fx_share": 3.7}, {"date": "01.03.2025", "region": "г.Алматы", "fx_share": 27.7}, {"date": "01.03.2025", "region": "г.Астана", "fx_share": 18.9}, {"date": "01.03.2025", "region": "г.Шымкент", "fx_share": 15.9}, {"date": "01.07.2025", "region": "Акмолинская область", "fx_share": 7.5}, {"date": "01.07.2025", "region": "Актюбинская область", "fx_share": 19.7}, {"date": "01.07.2025", "region": "Алматинская область", "fx_share": 7.4}, {"date": "01.07.2025", "region": "Атырауская область", "fx_share": 23.3}, {"date": "01.07.2025", "region": "Восточно-Казахстанская область", "fx_share": 33.3}, {"date": "01.07.2025", "region": "Жамбылская область", "fx_share": 8.8}, {"date": "01.07.2025", "region": "Западно-Казахстанская область", "fx_share": 14.5}, {"date": "01.07.2025", "region": "Карагандинская область", "fx_share": 12.5}, {"date": "01.07.2025", "region": "Костанайская область", "fx_share": 9.6}, {"date": "01.07.2025", "region": "Кызылординская область", "fx_share": 17.9}, {"date": "01.07.2025", "region": "Мангистауская область", "fx_share": 18.7}, {"date": "01.07.2025", "region": "Область Абай", "fx_share": 6.6}, {"date": "01.07.2025", "region": "Область Жетісу", "fx_share": 8.4}, {"date": "01.07.2025", "region": "Область Ұлытау", "fx_share": 11.0}, {"date": "01.07.2025", "region": "Павлодарская область", "fx_share": 12.9}, {"date": "01.07.2025", "region": "Северо-Казахстанская область", "fx_share": 5.7}, {"date": "01.07.2025", "region": "Туркестанская область", "fx_share": 4.2}, {"date": "01.07.2025", "region": "г.Алматы", "fx_share": 25.1}, {"date": "01.07.2025", "region": "г.Астана", "fx_share": 16.3}, {"date": "01.07.2025", "region": "г.Шымкент", "fx_share": 13.1}, {"date": "01.01.2026", "region": "Акмолинская область", "fx_share": 7.3}, {"date": "01.01.2026", "region": "Актюбинская область", "fx_share": 21.3}, {"date": "01.01.2026", "region": "Алматинская область", "fx_share": 5.6}, {"date": "01.01.2026", "region": "Атырауская область", "fx_share": 23.6}, {"date": "01.01.2026", "region": "Восточно-Казахстанская область", "fx_share": 23.6}, {"date": "01.01.2026", "region": "Жамбылская область", "fx_share": 8.0}, {"date": "01.01.2026", "region": "Западно-Казахстанская область", "fx_share": 14.8}, {"date": "01.01.2026", "region": "Карагандинская область", "fx_share": 11.0}, {"date": "01.01.2026", "region": "Костанайская область", "fx_share": 8.4}, {"date": "01.01.2026", "region": "Кызылординская область", "fx_share": 9.3}, {"date": "01.01.2026", "region": "Мангистауская область", "fx_share": 21.8}, {"date": "01.01.2026", "region": "Область Абай", "fx_share": 6.7}, {"date": "01.01.2026", "region": "Область Жетісу", "fx_share": 8.6}, {"date": "01.01.2026", "region": "Область Ұлытау", "fx_share": 8.8}, {"date": "01.01.2026", "region": "Павлодарская область", "fx_share": 9.3}, {"date": "01.01.2026", "region": "Северо-Казахстанская область", "fx_share": 5.9}, {"date": "01.01.2026", "region": "Туркестанская область", "fx_share": 14.1}, {"date": "01.01.2026", "region": "г.Алматы", "fx_share": 26.0}, {"date": "01.01.2026", "region": "г.Астана", "fx_share": 16.9}, {"date": "01.01.2026", "region": "г.Шымкент", "fx_share": 11.5}, {"date": "01.03.2026", "region": "Акмолинская область", "fx_share": 7.5}, {"date": "01.03.2026", "region": "Актюбинская область", "fx_share": 13.8}, {"date": "01.03.2026", "region": "Алматинская область", "fx_share": 5.6}, {"date": "01.03.2026", "region": "Атырауская область", "fx_share": 20.7}, {"date": "01.03.2026", "region": "Восточно-Казахстанская область", "fx_share": 24.2}, {"date": "01.03.2026", "region": "Жамбылская область", "fx_share": 7.6}, {"date": "01.03.2026", "region": "Западно-Казахстанская область", "fx_share": 14.1}, {"date": "01.03.2026", "region": "Карагандинская область", "fx_share": 17.3}, {"date": "01.03.2026", "region": "Костанайская область", "fx_share": 8.3}, {"date": "01.03.2026", "region": "Кызылординская область", "fx_share": 9.6}, {"date": "01.03.2026", "region": "Мангистауская область", "fx_share": 14.3}, {"date": "01.03.2026", "region": "Область Абай", "fx_share": 6.9}, {"date": "01.03.2026", "region": "Область Жетісу", "fx_share": 9.2}, {"date": "01.03.2026", "region": "Область Ұлытау", "fx_share": 9.3}, {"date": "01.03.2026", "region": "Павлодарская область", "fx_share": 8.3}, {"date": "01.03.2026", "region": "Северо-Казахстанская область", "fx_share": 6.1}, {"date": "01.03.2026", "region": "Туркестанская область", "fx_share": 5.6}, {"date": "01.03.2026", "region": "г.Алматы", "fx_share": 25.6}, {"date": "01.03.2026", "region": "г.Астана", "fx_share": 20.1}, {"date": "01.03.2026", "region": "г.Шымкент", "fx_share": 12.1}], "dep_national": [{"agent": "Физические лица", "deposit_type": "срочные и условные", "amount": 20.6554, "share": 87.9}, {"agent": "Физические лица", "deposit_type": "сберегательные", "amount": 2.8465, "share": 12.1}, {"agent": "Физические лица", "deposit_type": "вклады до востребования", "amount": 0.0093, "share": 0.0}, {"agent": "Юридические лица", "deposit_type": "срочные и условные", "amount": 10.1281, "share": 97.5}, {"agent": "Юридические лица", "deposit_type": "сберегательные", "amount": 0.255, "share": 2.5}, {"agent": "Юридические лица", "deposit_type": "вклады до востребования", "amount": 0.0053, "share": 0.1}], "growth": [{"region": "Область Жетісу", "growth_pct": 297.0, "total": 0.3222, "total23": 0.0812}, {"region": "Туркестанская область", "growth_pct": 258.2, "total": 0.3408, "total23": 0.0951}, {"region": "Область Абай", "growth_pct": 199.7, "total": 0.4549, "total23": 0.1518}, {"region": "Область Ұлытау", "growth_pct": 197.2, "total": 0.173, "total23": 0.0582}, {"region": "г.Шымкент", "growth_pct": 124.3, "total": 1.3072, "total23": 0.5828}, {"region": "Кызылординская область", "growth_pct": 121.0, "total": 0.4543, "total23": 0.2056}, {"region": "Акмолинская область", "growth_pct": 115.4, "total": 0.6572, "total23": 0.305}, {"region": "Северо-Казахстанская область", "growth_pct": 102.0, "total": 0.6197, "total23": 0.3068}, {"region": "Карагандинская область", "growth_pct": 93.4, "total": 1.764, "total23": 0.9119}, {"region": "Западно-Казахстанская область", "growth_pct": 90.8, "total": 0.7675, "total23": 0.4022}, {"region": "Восточно-Казахстанская область", "growth_pct": 82.4, "total": 1.2327, "total23": 0.6757}, {"region": "Жамбылская область", "growth_pct": 78.5, "total": 0.5335, "total23": 0.2988}, {"region": "Костанайская область", "growth_pct": 75.9, "total": 1.1653, "total23": 0.6626}, {"region": "Павлодарская область", "growth_pct": 74.7, "total": 1.0217, "total23": 0.5848}, {"region": "Актюбинская область", "growth_pct": 74.5, "total": 0.9362, "total23": 0.5366}, {"region": "г.Алматы", "growth_pct": 63.3, "total": 13.425, "total23": 8.2207}, {"region": "Атырауская область", "growth_pct": 57.9, "total": 0.8814, "total23": 0.5582}, {"region": "г.Астана", "growth_pct": 52.4, "total": 6.753, "total23": 4.4317}, {"region": "Мангистауская область", "growth_pct": 52.1, "total": 0.8341, "total23": 0.5484}, {"region": "Алматинская область", "growth_pct": 14.1, "total": 0.2559, "total23": 0.2242}], "rates_latest": [{"agent": "Физические лица", "currency": "Национальная валюта", "term": "от 1 до 3 месяцев", "rate": 17.95}, {"agent": "Физические лица", "currency": "Национальная валюта", "term": "до 1 месяца", "rate": 16.09}, {"agent": "Физические лица", "currency": "Национальная валюта", "term": "от 5 лет и более", "rate": 1.91}, {"agent": "Физические лица", "currency": "Национальная валюта", "term": "до востребования/без разбивки по срокам", "rate": 0.07}, {"agent": "Физические лица", "currency": "Национальная валюта", "term": "от 3 месяцев до 1 года", "rate": 14.68}, {"agent": "Физические лица", "currency": "Национальная валюта", "term": "от 1 года до 5 лет", "rate": 14.16}, {"agent": "Физические лица", "currency": "Национальная валюта", "term": "до востребования/без разбивки по срокам", "rate": 4.56}, {"agent": "Физические лица", "currency": "Иностранная валюта", "term": "от 3 месяцев до 1 года", "rate": 0.95}, {"agent": "Физические лица", "currency": "Иностранная валюта", "term": "до востребования/без разбивки по срокам", "rate": 0.99}, {"agent": "Физические лица", "currency": "Иностранная валюта", "term": "до 1 месяца", "rate": 0.63}, {"agent": "Физические лица", "currency": "Иностранная валюта", "term": "от 1 года до 5 лет", "rate": 0.88}, {"agent": "Физические лица", "currency": "Иностранная валюта", "term": "до востребования/без разбивки по срокам", "rate": 7.19}, {"agent": "Физические лица", "currency": "Иностранная валюта", "term": "от 1 до 3 месяцев", "rate": 0.93}, {"agent": "Физические лица", "currency": "Иностранная валюта", "term": "от 5 лет и более", "rate": 0.1}, {"agent": "Юридические лица", "currency": "Национальная валюта", "term": "до 1 месяца", "rate": 16.9}, {"agent": "Юридические лица", "currency": "Национальная валюта", "term": "от 3 месяцев до 1 года", "rate": 16.3}, {"agent": "Юридические лица", "currency": "Национальная валюта", "term": "от 1 до 3 месяцев", "rate": 16.93}, {"agent": "Юридические лица", "currency": "Национальная валюта", "term": "от 1 года до 5 лет", "rate": 15.83}, {"agent": "Юридические лица", "currency": "Национальная валюта", "term": "до востребования/без разбивки по срокам", "rate": 10.77}, {"agent": "Юридические лица", "currency": "Национальная валюта", "term": "до востребования/без разбивки по срокам", "rate": 0.1}, {"agent": "Юридические лица", "currency": "Национальная валюта", "term": "от 5 лет и более", "rate": 11.31}, {"agent": "Юридические лица", "currency": "Иностранная валюта", "term": "до востребования/без разбивки по срокам", "rate": 2.69}, {"agent": "Юридические лица", "currency": "Иностранная валюта", "term": "от 5 лет и более", "rate": 0.65}, {"agent": "Юридические лица", "currency": "Иностранная валюта", "term": "от 1 года до 5 лет", "rate": 2.24}, {"agent": "Юридические лица", "currency": "Иностранная валюта", "term": "от 1 до 3 месяцев", "rate": 2.54}, {"agent": "Юридические лица", "currency": "Иностранная валюта", "term": "до 1 месяца", "rate": 2.22}, {"agent": "Юридические лица", "currency": "Иностранная валюта", "term": "до востребования/без разбивки по срокам", "rate": 0.05}, {"agent": "Юридические лица", "currency": "Иностранная валюта", "term": "от 3 месяцев до 1 года", "rate": 2.78}], "all_dates": ["01.01.2023", "01.02.2023", "01.03.2023", "01.04.2023", "01.05.2023", "01.06.2023", "01.07.2023", "01.08.2023", "01.09.2023", "01.10.2023", "01.11.2023", "01.12.2023", "01.01.2024", "01.02.2024", "01.03.2024", "01.04.2024", "01.05.2024", "01.06.2024", "01.07.2024", "01.08.2024", "01.09.2024", "01.10.2024", "01.11.2024", "01.12.2024", "01.01.2025", "01.02.2025", "01.03.2025", "01.04.2025", "01.05.2025", "01.06.2025", "01.07.2025", "01.08.2025", "01.09.2025", "01.10.2025", "01.11.2025", "01.12.2025", "01.01.2026", "01.02.2026", "01.03.2026"], "quarterly": ["01.01.2023", "01.03.2023", "01.07.2023", "01.01.2024", "01.03.2024", "01.07.2024", "01.01.2025", "01.03.2025", "01.07.2025", "01.01.2026", "01.03.2026"]};
+
+// ═══════════════════════════════════════════
+// LANG
+// ═══════════════════════════════════════════
+let LANG = 'ru';
+function setLang(l){
+  LANG=l;
+  document.querySelectorAll('[data-ru],[data-kz],[data-en]').forEach(el=>{
+    const isSpan = el.tagName==='SPAN';
+    el.classList.remove('show');
+    if(el.hasAttribute('data-'+l)) el.classList.add('show');
+  });
+  document.querySelectorAll('.lbtn').forEach((b,i)=>{
+    b.classList.toggle('on',['ru','kz','en'][i]===l);
+  });
+  renderAll();
+}
+
+// ═══════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════
+function pd(s){ const[d,m,y]=s.split('.'); return new Date(+y,+m-1,+d); }
+function fmt(v,dec=2){ return v.toFixed(dec); }
+
+const TIP = document.getElementById('tip');
+function tip(html,ev){
+  TIP.innerHTML=html; TIP.style.display='block';
+  let x=ev.clientX+14,y=ev.clientY+14;
+  if(x+240>innerWidth) x=ev.clientX-250;
+  if(y+100>innerHeight) y=ev.clientY-110;
+  TIP.style.left=x+'px'; TIP.style.top=y+'px';
+}
+function noTip(){ TIP.style.display='none'; }
+document.addEventListener('mousemove',e=>{ if(TIP.style.display!=='none'){let x=e.clientX+14,y=e.clientY+14;if(x+240>innerWidth)x=e.clientX-250;TIP.style.left=x+'px';TIP.style.top=y+'px';}});
+
+const REG = {
+  'г.Алматы':{ru:'Алматы',kz:'Алматы',en:'Almaty'},
+  'г.Астана':{ru:'Астана',kz:'Астана',en:'Astana'},
+  'г.Шымкент':{ru:'Шымкент',kz:'Шымкент',en:'Shymkent'},
+  'Карагандинская область':{ru:'Карагандинская',kz:'Қарағанды',en:'Karaganda'},
+  'Алматинская область':{ru:'Алматинская',kz:'Алматы обл.',en:'Almaty obl.'},
+  'Актюбинская область':{ru:'Актюбинская',kz:'Ақтөбе',en:'Aktobe'},
+  'Атырауская область':{ru:'Атырауская',kz:'Атырау',en:'Atyrau'},
+  'Восточно-Казахстанская область':{ru:'ВКО',kz:'ШҚО',en:'East KZ'},
+  'Западно-Казахстанская область':{ru:'ЗКО',kz:'БҚО',en:'West KZ'},
+  'Жамбылская область':{ru:'Жамбылская',kz:'Жамбыл',en:'Zhambyl'},
+  'Костанайская область':{ru:'Костанайская',kz:'Қостанай',en:'Kostanay'},
+  'Кызылординская область':{ru:'Кызылординская',kz:'Қызылорда',en:'Kyzylorda'},
+  'Мангистауская область':{ru:'Мангистауская',kz:'Маңғыстау',en:'Mangystau'},
+  'Павлодарская область':{ru:'Павлодарская',kz:'Павлодар',en:'Pavlodar'},
+  'Северо-Казахстанская область':{ru:'СКО',kz:'СҚО',en:'North KZ'},
+  'Туркестанская область':{ru:'Туркестанская',kz:'Түркістан',en:'Turkestan'},
+  'Акмолинская область':{ru:'Акмолинская',kz:'Ақмола',en:'Akmola'},
+  'Область Абай':{ru:'Область Абай',kz:'Абай обл.',en:'Abay reg.'},
+  'Область Жетісу':{ru:'Жетісу',kz:'Жетісу',en:'Zhetysu'},
+  'Область Ұлытау':{ru:'Ұлытау',kz:'Ұлытау',en:'Ulytau'}
+};
+function rn(k){ return (REG[k]||{})[LANG]||k; }
+
+const L = {
+  phys:      {ru:'Физлица',kz:'Жеке тұлғалар',en:'Individuals'},
+  corp:      {ru:'Юрлица',kz:'Заңды тұлғалар',en:'Legal entities'},
+  tenge:     {ru:'Тенге',kz:'Теңге',en:'Tenge'},
+  fx:        {ru:'Валюта',kz:'Валюта',en:'FX'},
+  sroch:     {ru:'Срочные и условные',kz:'Мерзімді және шартты',en:'Time & conditional'},
+  sber:      {ru:'Сберегательные',kz:'Жинақтаушы',en:'Savings'},
+  vostreb:   {ru:'До востребования',kz:'Талап бойынша',en:'Demand'},
+  total:     {ru:'Всего',kz:'Барлығы',en:'Total'},
+  growth:    {ru:'Рост с 2023',kz:'2023-тен өсім',en:'Growth vs 2023'},
+  trln:      {ru:'трлн',kz:'трлн',en:'trln'},
+};
+function t(k){ return (L[k]||{})[LANG]||k; }
+
+// NYT COLORS
+const C = {
+  phys:'#326891',
+  corp:'#d0021b',
+  tenge:'#326891',
+  fx:'#cc5500',
+  sroch:'#326891',
+  sber:'#3a6b47',
+  vostreb:'#aaaaaa',
+  gray:'#aaaaaa',
+  lightBlue:'#c4d9ea',
+  lightRed:'#f5c0c0',
+};
+
+function makeSvg(el,W,H,m){
+  el.innerHTML='';
+  const svg=d3.select(el).append('svg').attr('width',W).attr('height',H);
+  const g=svg.append('g').attr('transform',`translate(${m.l},${m.t})`);
+  return {svg,g,w:W-m.l-m.r,h:H-m.t-m.b};
+}
+
+function axisStyle(sel){
+  sel.selectAll('text').style('font-size','11px').style('font-family','Public Sans,sans-serif').style('fill','#727272');
+  sel.select('.domain').style('stroke','#dfdfdf');
+  sel.selectAll('.tick line').style('stroke','#dfdfdf');
+}
+
+function gridH(g,yScale,w,ticks=5){
+  g.append('g').call(d3.axisLeft(yScale).ticks(ticks).tickSize(-w).tickFormat(''))
+    .selectAll('line').style('stroke','#ebebeb').style('stroke-dasharray','none');
+  g.select('.domain').remove();
+}
+
+// ═══════════════════════════════════════════
+// CHART 1: AREA CHART — TOTAL GROWTH
+// ═══════════════════════════════════════════
+let c1Tab='all';
+function t1(v){ c1Tab=v; document.querySelectorAll('#tabs1 .tbtn').forEach((b,i)=>b.classList.toggle('on',['all','phys','corp'][i]===v)); drawC1(); }
+
+function drawC1(){
+  const el=document.getElementById('c1');
+  const W=el.offsetWidth||600, H=300, m={t:16,r:60,b:36,l:52};
+  const {svg,g,w,h}=makeSvg(el,W,H,m);
+  const dates=D.all_dates.map(pd);
+  const x=d3.scaleTime().domain(d3.extent(dates)).range([0,w]);
+
+  let series=[];
+  if(c1Tab==='all'){
+    series=[
+      {key:'phys',label:t('phys'),color:C.phys,get:d=>d.phys*1000},
+      {key:'corp',label:t('corp'),color:C.corp,get:d=>d.corp*1000,dash:'5,3'},
+    ];
+  } else if(c1Tab==='phys'){
+    series=[
+      {key:'nat',label:t('tenge'),color:C.tenge,get:d=>d.phys_nat*1000},
+      {key:'fx',label:t('fx'),color:C.fx,get:d=>d.phys_fx*1000,dash:'5,3'},
+    ];
+  } else {
+    series=[
+      {key:'nat',label:t('tenge'),color:C.corp,get:d=>d.corp_nat*1000},
+      {key:'fx',label:t('fx'),color:'#cc7700',get:d=>d.corp_fx*1000,dash:'5,3'},
+    ];
+  }
+
+  const maxV=d3.max(D.ts,d=>d3.max(series,s=>s.get(d)));
+  const y=d3.scaleLinear().domain([0,maxV*1.08]).range([h,0]);
+
+  gridH(g,y,w);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).ticks(8).tickFormat(d3.timeFormat('%m/%y'))).call(axisStyle);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d>=1000?(d/1000).toFixed(1)+'T':d+'G')).call(axisStyle);
+
+  const line=d3.line().x(d=>x(d.date)).y(d=>y(d.val)).curve(d3.curveMonotoneX);
+  series.forEach(s=>{
+    const pts=D.ts.map(d=>({date:pd(d.date),val:s.get(d)}));
+    // Area fill under first series
+    if(!s.dash){
+      const area=d3.area().x(d=>x(d.date)).y0(h).y1(d=>y(d.val)).curve(d3.curveMonotoneX);
+      g.append('path').datum(pts).attr('fill',s.color).attr('fill-opacity',.08).attr('d',area);
+    }
+    g.append('path').datum(pts).attr('fill','none').attr('stroke',s.color).attr('stroke-width',2)
+      .attr('stroke-dasharray',s.dash||'none').attr('d',line);
+    const last=pts[pts.length-1];
+    g.append('text').attr('x',x(last.date)+4).attr('y',y(last.val)).attr('dy','.35em')
+      .style('font-size','10px').style('fill',s.color).style('font-family','Public Sans,sans-serif').style('font-weight','600')
+      .text((last.val/1000).toFixed(1)+'T');
+  });
+
+  // Hover
+  const bisect=d3.bisector(d=>d.date).left;
+  const vl=g.append('line').attr('stroke','#dfdfdf').attr('stroke-width',1).attr('y1',0).attr('y2',h).style('display','none');
+  g.append('rect').attr('width',w).attr('height',h).attr('fill','none').attr('pointer-events','all')
+    .on('mousemove',function(ev){
+      const [mx]=d3.pointer(ev);
+      const dt=x.invert(mx);
+      vl.style('display',null).attr('x1',mx).attr('x2',mx);
+      const i=Math.min(bisect(D.ts.map(d=>({...d,date:pd(d.date)})),dt),D.ts.length-1);
+      const dd=D.ts[i];
+      let html=`<b>${dd.date}</b><br>`;
+      series.forEach(s=>{ html+=`<span style="color:${s.color}">●</span> ${s.label}: ${(s.get(dd)/1000).toFixed(2)} ${t('trln')}<br>`; });
+      tip(html,ev);
+    }).on('mouseleave',()=>{ vl.style('display','none'); noTip(); });
+
+  // Legend
+  const lel=document.getElementById('l1');
+  lel.innerHTML='';
+  series.forEach(s=>{
+    lel.innerHTML+=`<div class="leg-item"><div class="leg-ln" style="background:${s.color};border-top:2px ${s.dash?'dashed':'solid'} ${s.color}"></div>${s.label}</div>`;
+  });
+}
+
+// ═══════════════════════════════════════════
+// CHART 2: LINE — DEDOLLARIZATION
+// ═══════════════════════════════════════════
+function drawC2(){
+  const el=document.getElementById('c2');
+  const W=el.offsetWidth||600, H=260, m={t:16,r:90,b:36,l:48};
+  const {svg,g,w,h}=makeSvg(el,W,H,m);
+  const x=d3.scaleTime().domain([pd(D.all_dates[0]),pd(D.all_dates[D.all_dates.length-1])]).range([0,w]);
+  const y=d3.scaleLinear().domain([0,36]).range([h,0]);
+
+  gridH(g,y,w);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).ticks(8).tickFormat(d3.timeFormat('%m/%y'))).call(axisStyle);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'%')).call(axisStyle);
+
+  ['Физические лица','Юридические лица'].forEach((agent,i)=>{
+    const color=i===0?C.phys:C.corp;
+    const pts=D.fx_ts.filter(d=>d.agent===agent).map(d=>({date:pd(d.date),val:d.fx_share})).sort((a,b)=>a.date-b.date);
+    const line=d3.line().x(d=>x(d.date)).y(d=>y(d.val)).curve(d3.curveMonotoneX);
+    g.append('path').datum(pts).attr('fill','none').attr('stroke',color).attr('stroke-width',2).attr('d',line);
+    const last=pts[pts.length-1];
+    const lbl=i===0?t('phys'):t('corp');
+    g.append('text').attr('x',x(last.date)+4).attr('y',y(last.val)).attr('dy','.35em')
+      .style('font-size','10px').style('fill',color).style('font-family','Public Sans,sans-serif').style('font-weight','600')
+      .text(lbl+' '+last.val+'%');
+  });
+}
+
+// ═══════════════════════════════════════════
+// CHART 3: RATES LINE
+// ═══════════════════════════════════════════
+let c3Tab='phys';
+function t3(v){ c3Tab=v; document.querySelectorAll('#tabs3 .tbtn').forEach((b,i)=>b.classList.toggle('on',['phys','corp'][i]===v)); drawC3(); }
+
+function drawC3(){
+  const el=document.getElementById('c3');
+  const W=el.offsetWidth||600, H=260, m={t:16,r:80,b:36,l:48};
+  const {svg,g,w,h}=makeSvg(el,W,H,m);
+  const agentKey=c3Tab==='phys'?'Физические лица':'Юридические лица';
+  const r=D.rates_ts.filter(d=>d.agent===agentKey);
+  const x=d3.scaleTime().domain([pd(D.all_dates[0]),pd(D.all_dates[D.all_dates.length-1])]).range([0,w]);
+  const maxR=d3.max(r,d=>d.rate)||20;
+  const y=d3.scaleLinear().domain([0,maxR*1.1]).range([h,0]);
+
+  gridH(g,y,w);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).ticks(8).tickFormat(d3.timeFormat('%m/%y'))).call(axisStyle);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'%')).call(axisStyle);
+
+  [['Национальная валюта',C.tenge,t('tenge')],['Иностранная валюта',C.fx,t('fx')]].forEach(([curr,color,lbl])=>{
+    const pts=r.filter(d=>d.currency===curr).map(d=>({date:pd(d.date),val:d.rate})).sort((a,b)=>a.date-b.date);
+    if(!pts.length) return;
+    const area=d3.area().x(d=>x(d.date)).y0(h).y1(d=>y(d.val)).curve(d3.curveMonotoneX);
+    if(curr==='Национальная валюта') g.append('path').datum(pts).attr('fill',color).attr('fill-opacity',.07).attr('d',area);
+    const line=d3.line().x(d=>x(d.date)).y(d=>y(d.val)).curve(d3.curveMonotoneX);
+    g.append('path').datum(pts).attr('fill','none').attr('stroke',color).attr('stroke-width',2)
+      .attr('stroke-dasharray',curr==='Иностранная валюта'?'5,3':'none').attr('d',line);
+    const last=pts[pts.length-1];
+    g.append('text').attr('x',x(last.date)+4).attr('y',y(last.val)).attr('dy','.35em')
+      .style('font-size','10px').style('fill',color).style('font-weight','600').style('font-family','Public Sans,sans-serif')
+      .text(lbl+' '+last.val.toFixed(1)+'%');
+  });
+}
+
+// ═══════════════════════════════════════════
+// CHART 4: STACKED AREA — DEPOSIT TYPES
+// ═══════════════════════════════════════════
+let c4Tab='phys';
+function t4(v){ c4Tab=v; document.querySelectorAll('#tabs4 .tbtn').forEach((b,i)=>b.classList.toggle('on',['phys','corp'][i]===v)); drawC4(); }
+
+function drawC4(){
+  const el=document.getElementById('c4');
+  const W=el.offsetWidth||600, H=280, m={t:16,r:20,b:36,l:52};
+  const {svg,g,w,h}=makeSvg(el,W,H,m);
+  const agentKey=c4Tab==='phys'?'Физические лица':'Юридические лица';
+  const types=['срочные и условные','сберегательные','вклады до востребования'];
+  const colors=[C.sroch,C.sber,C.vostreb];
+  const x=d3.scaleTime().domain([pd(D.all_dates[0]),pd(D.all_dates[D.all_dates.length-1])]).range([0,w]);
+
+  const byDate={};
+  D.dep_ts.filter(d=>d.agent===agentKey).forEach(d=>{
+    if(!byDate[d.date]) byDate[d.date]={date:d.date};
+    byDate[d.date][d.deposit_type]=d.amount*1000;
+  });
+  const rows=D.all_dates.map(d=>({...byDate[d],date:d,...Object.fromEntries(types.map(t=>([t,byDate[d]?.[t]||0])))}));
+
+  const stackGen=d3.stack().keys(types).order(d3.stackOrderNone).offset(d3.stackOffsetNone);
+  const stacked=stackGen(rows);
+  const maxV=d3.max(stacked[stacked.length-1],d=>d[1]);
+  const y=d3.scaleLinear().domain([0,maxV*1.08]).range([h,0]);
+
+  gridH(g,y,w);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).ticks(8).tickFormat(d3.timeFormat('%m/%y'))).call(axisStyle);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d>=1000?(d/1000).toFixed(1)+'T':d+'G')).call(axisStyle);
+
+  const area=d3.area().x(d=>x(pd(rows[d.index].date))).y0(d=>y(d[0])).y1(d=>y(d[1])).curve(d3.curveMonotoneX);
+  stacked.forEach((layer,i)=>{
+    layer.forEach((d,j)=>{ d.index=j; });
+    g.append('path').datum(layer).attr('fill',colors[i]).attr('fill-opacity',.85).attr('d',area);
+  });
+
+  const lel=document.getElementById('l4');
+  lel.innerHTML=types.map((tp,i)=>`<div class="leg-item"><div class="leg-sq" style="background:${colors[i]};opacity:.85"></div>${t(tp==='срочные и условные'?'sroch':tp==='сберегательные'?'sber':'vostreb')}</div>`).join('');
+}
+
+// ═══════════════════════════════════════════
+// CHART 5: HORIZONTAL STACKED BAR (WAFFLE-LIKE)
+// ═══════════════════════════════════════════
+function drawC5(){
+  const el=document.getElementById('c5');
+  el.innerHTML='';
+  const W=el.offsetWidth||900, H=220;
+  const svg=d3.select(el).append('svg').attr('width',W).attr('height',H);
+
+  const segments=[
+    {label:t('phys')+' + '+t('tenge'), pct:57.1, color:C.phys, opacity:1},
+    {label:t('phys')+' + '+t('fx'),    pct:12.3, color:C.fx,   opacity:.9},
+    {label:t('corp')+' + '+t('tenge'), pct:24.6, color:C.corp, opacity:1},
+    {label:t('corp')+' + '+t('fx'),    pct:5.9,  color:'#993300', opacity:.85},
+  ];
+
+  // Bar
+  let cx=40;
+  const bH=60, bY=70, totalW=W-80;
+  segments.forEach(s=>{
+    const bW=s.pct/100*totalW;
+    svg.append('rect').attr('x',cx).attr('y',bY).attr('width',bW).attr('height',bH)
+      .attr('fill',s.color).attr('fill-opacity',s.opacity);
+    if(bW>50){
+      svg.append('text').attr('x',cx+bW/2).attr('y',bY+bH/2).attr('dy','.35em').attr('text-anchor','middle')
+        .style('font-size','12px').style('font-weight','700').style('fill','white').style('font-family','Public Sans,sans-serif')
+        .text(s.pct+'%');
+    }
+    // Label below
+    svg.append('text').attr('x',cx+bW/2).attr('y',bY+bH+18).attr('text-anchor','middle')
+      .style('font-size','10px').style('fill','#727272').style('font-family','Public Sans,sans-serif')
+      .text(s.label);
+    cx+=bW;
+  });
+  svg.append('text').attr('x',40).attr('y',52).style('font-size','11px').style('fill','#121212').style('font-weight','700').style('font-family','Public Sans,sans-serif')
+    .text('33,9 '+t('trln')+' ₸ — 01.03.2026');
+}
+
+// ═══════════════════════════════════════════
+// CHART 6: HORIZONTAL BAR — REGIONS
+// ═══════════════════════════════════════════
+let c6Tab='total';
+function t6(v){ c6Tab=v; document.querySelectorAll('#tabs6 .tbtn').forEach((b,i)=>b.classList.toggle('on',['total','phys','fx_share'][i]===v)); drawC6(); }
+
+function drawC6(){
+  const el=document.getElementById('c6');
+  const W=el.offsetWidth||900, H=320, m={t:8,r:70,b:8,l:130};
+  const {svg,g,w,h}=makeSvg(el,W,H,m);
+
+  const regs=Object.entries(D.regions);
+  let sorted,getVal,fmt_,color_;
+  if(c6Tab==='total'){
+    sorted=regs.sort((a,b)=>b[1].total-a[1].total);
+    getVal=d=>d[1].total; fmt_=v=>v.toFixed(2)+' T'; color_=(d,i)=>i<2?C.phys:'#9ab8cc';
+  } else if(c6Tab==='phys'){
+    sorted=regs.sort((a,b)=>b[1].phys-a[1].phys);
+    getVal=d=>d[1].phys; fmt_=v=>v.toFixed(2)+' T'; color_=(d,i)=>i<2?C.phys:'#9ab8cc';
+  } else {
+    sorted=regs.sort((a,b)=>b[1].fx_share-a[1].fx_share);
+    getVal=d=>d[1].fx_share; fmt_=v=>v.toFixed(1)+'%'; color_=(d,i)=>d3.interpolateOranges(.25+getVal(d)/30*.6);
+  }
+
+  const vals=sorted.map(getVal);
+  const rowH=h/sorted.length;
+  const y=d3.scaleBand().domain(sorted.map(d=>d[0])).range([0,h]).padding(.22);
+  const x=d3.scaleLinear().domain([0,d3.max(vals)*1.06]).range([0,w]);
+
+  g.append('g').call(d3.axisLeft(y).tickFormat(rn)).call(axisStyle);
+  g.select('.domain').remove();
+
+  sorted.forEach((d,i)=>{
+    const val=getVal(d);
+    const by=y(d[0]), bh=y.bandwidth();
+    g.append('rect').attr('x',0).attr('y',by).attr('width',x(val)).attr('height',bh)
+      .attr('fill',color_(d,i)).attr('rx',1)
+      .on('mouseover',ev=>{
+        const reg=d[1];
+        tip(`<b>${rn(d[0])}</b><br>${t('total')}: ${reg.total.toFixed(2)} ${t('trln')}<br>${t('phys')}: ${reg.phys_share}%<br>${t('fx')}: ${reg.fx_share}%<br>${t('growth')}: +${reg.growth_pct}%`,ev);
+        d3.select(ev.target).attr('fill-opacity',.7);
+      }).on('mouseleave',ev=>{ noTip(); d3.select(ev.target).attr('fill-opacity',1); });
+    g.append('text').attr('x',x(val)+4).attr('y',by+bh/2).attr('dy','.35em')
+      .style('font-size','11px').style('fill','#363636').style('font-family','Public Sans,sans-serif').style('font-weight','500')
+      .text(fmt_(val));
+  });
+}
+
+// ═══════════════════════════════════════════
+// CHART 7: GROUPED BAR — ALMATY vs ASTANA
+// ═══════════════════════════════════════════
+function drawC7(){
+  const el=document.getElementById('c7');
+  const W=el.offsetWidth||600, H=280, m={t:36,r:20,b:40,l:52};
+  const {svg,g,w,h}=makeSvg(el,W,H,m);
+
+  const cities=['г.Алматы','г.Астана'];
+  const metrics=[
+    {key:'phys_share',label:t('phys'),color:C.phys},
+    {key:'fx_share',label:t('fx'),color:C.fx},
+    {key:'sber_share',label:t('sber'),color:C.sber},
+  ];
+  const x0=d3.scaleBand().domain(metrics.map(m=>m.key)).range([0,w]).padding(.28);
+  const x1=d3.scaleBand().domain(cities).range([0,x0.bandwidth()]).padding(.1);
+  const y=d3.scaleLinear().domain([0,100]).range([h,0]);
+
+  gridH(g,y,w);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x0).tickFormat(k=>metrics.find(m=>m.key===k).label)).call(axisStyle);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'%')).call(axisStyle);
+
+  metrics.forEach(metric=>{
+    cities.forEach(city=>{
+      const val=D.regions[city][metric.key];
+      const ci=cities.indexOf(city);
+      const fill=ci===0?metric.color:d3.color(metric.color).copy({opacity:.45});
+      g.append('rect').attr('x',x0(metric.key)+x1(city)).attr('y',y(val))
+        .attr('width',x1.bandwidth()).attr('height',h-y(val)).attr('fill',fill).attr('rx',1)
+        .on('mouseover',ev=>tip(`<b>${rn(city)}</b><br>${metric.label}: ${val.toFixed(1)}%`,ev))
+        .on('mouseleave',noTip);
+      g.append('text').attr('x',x0(metric.key)+x1(city)+x1.bandwidth()/2).attr('y',y(val)-4)
+        .attr('text-anchor','middle').style('font-size','10px').style('fill','#363636').style('font-family','Public Sans,sans-serif')
+        .text(val.toFixed(0)+'%');
+    });
+  });
+
+  // City legend
+  cities.forEach((city,i)=>{
+    const clr=i===0?'#326891':'rgba(50,104,145,.45)';
+    svg.append('rect').attr('x',m.l+i*140).attr('y',8).attr('width',10).attr('height',10).attr('fill',clr);
+    svg.append('text').attr('x',m.l+i*140+14).attr('y',17).style('font-size','11px').style('font-family','Public Sans,sans-serif').style('fill','#363636').text(rn(city)+' ('+D.regions[city].total.toFixed(1)+'T)');
+  });
+}
+
+// ═══════════════════════════════════════════
+// CHART 8: LOLLIPOP — GROWTH
+// ═══════════════════════════════════════════
+function drawC8(){
+  const el=document.getElementById('c8');
+  const W=el.offsetWidth||600, H=480, m={t:8,r:80,b:8,l:148};
+  const {svg,g,w,h}=makeSvg(el,W,H,m);
+
+  const sorted=[...D.growth].sort((a,b)=>a.growth_pct-b.growth_pct);
+  const y=d3.scaleBand().domain(sorted.map(d=>d.region)).range([h,0]).padding(.35);
+  const x=d3.scaleLinear().domain([0,d3.max(sorted,d=>d.growth_pct)*1.05]).range([0,w]);
+  const rScale=d3.scaleSqrt().domain([0,d3.max(sorted,d=>d.total)]).range([3,14]);
+
+  g.append('g').call(d3.axisLeft(y).tickFormat(rn)).call(axisStyle);
+  g.select('.domain').remove();
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).ticks(5).tickFormat(d=>d+'%')).call(axisStyle);
+  g.append('g').attr('class','grid').call(d3.axisBottom(x).ticks(5).tickSize(-h).tickFormat('')).attr('transform',`translate(0,${h})`)
+    .selectAll('line').style('stroke','#ebebeb');
+  g.select('.grid .domain').remove();
+
+  sorted.forEach(d=>{
+    const cy=y(d.region)+y.bandwidth()/2;
+    const color=d.growth_pct>200?C.corp:d.growth_pct>80?C.fx:C.phys;
+    g.append('line').attr('x1',0).attr('x2',x(d.growth_pct)).attr('y1',cy).attr('y2',cy)
+      .attr('stroke','#dfdfdf').attr('stroke-width',1);
+    g.append('circle').attr('cx',x(d.growth_pct)).attr('cy',cy).attr('r',rScale(d.total))
+      .attr('fill',color).attr('fill-opacity',.9)
+      .on('mouseover',ev=>tip(`<b>${rn(d.region)}</b><br>+${d.growth_pct}%<br>${d.total23.toFixed(2)} → ${d.total.toFixed(2)} ${t('trln')}`,ev))
+      .on('mouseleave',noTip);
+    g.append('text').attr('x',x(d.growth_pct)+rScale(d.total)+3).attr('y',cy).attr('dy','.35em')
+      .style('font-size','10px').style('fill',color).style('font-weight','600').style('font-family','Public Sans,sans-serif')
+      .text('+'+d.growth_pct+'%');
+  });
+}
+
+// ═══════════════════════════════════════════
+// CHART 9: HEATMAP — FX BY REGION OVER TIME
+// ═══════════════════════════════════════════
+function drawC9(){
+  const el=document.getElementById('c9');
+  el.innerHTML='';
+  const regions=Object.keys(D.regions).sort((a,b)=>D.regions[b].fx_share-D.regions[a].fx_share);
+  const qdates=D.quarterly;
+  const cellW=Math.max(28,Math.floor((el.offsetWidth||900)/qdates.length));
+  const cellH=16;
+  const ml=130, mt=24, W=ml+cellW*qdates.length+10, H=mt+regions.length*cellH+30;
+  const svg=d3.select(el).append('svg').attr('width',W).attr('height',H);
+  const color=d3.scaleSequential(d3.interpolateBlues).domain([3,28]);
+
+  svg.selectAll('.rlbl').data(regions).join('text').attr('class','rlbl')
+    .attr('x',ml-4).attr('y',(d,i)=>mt+i*cellH+cellH/2).attr('dy','.35em').attr('text-anchor','end')
+    .style('font-size','10px').style('fill','#363636').style('font-family','Public Sans,sans-serif')
+    .text(d=>rn(d));
+
+  svg.selectAll('.dlbl').data(qdates).join('text').attr('class','dlbl')
+    .attr('x',(d,i)=>ml+i*cellW+cellW/2).attr('y',14).attr('text-anchor','middle')
+    .style('font-size','9px').style('fill','#999').style('font-family','Public Sans,sans-serif')
+    .text(d=>d.slice(3,10));
+
+  const hmap=D.heatmap;
+  regions.forEach((reg,ri)=>{
+    qdates.forEach((dt,di)=>{
+      const row=hmap.find(d=>d.region===reg&&d.date===dt);
+      const val=row?row.fx_share:0;
+      svg.append('rect').attr('x',ml+di*cellW+1).attr('y',mt+ri*cellH+1)
+        .attr('width',cellW-2).attr('height',cellH-2).attr('fill',color(val)).attr('rx',1)
+        .on('mouseover',ev=>tip(`<b>${rn(reg)}</b><br>${dt}: ${val.toFixed(1)}% ${t('fx')}`,ev))
+        .on('mouseleave',noTip);
+      if(cellW>34){
+        svg.append('text').attr('x',ml+di*cellW+cellW/2).attr('y',mt+ri*cellH+cellH/2).attr('dy','.35em').attr('text-anchor','middle')
+          .style('font-size','9px').style('fill',val>15?'white':'#363636').style('font-family','Public Sans,sans-serif')
+          .text(val.toFixed(0)+'%');
+      }
+    });
+  });
+}
+
+// ═══════════════════════════════════════════
+// CHART 10: HORIZONTAL BAR — SBER SHARE
+// ═══════════════════════════════════════════
+function drawC10(){
+  const el=document.getElementById('c10');
+  const W=el.offsetWidth||600, H=400, m={t:8,r:60,b:8,l:148};
+  const {svg,g,w,h}=makeSvg(el,W,H,m);
+
+  const regs=Object.entries(D.regions).sort((a,b)=>b[1].sber_share-a[1].sber_share);
+  const y=d3.scaleBand().domain(regs.map(d=>d[0])).range([0,h]).padding(.22);
+  const x=d3.scaleLinear().domain([0,20]).range([0,w]);
+  const colorScale=d3.scaleSequential(d3.interpolateGreens).domain([2,20]);
+
+  g.append('g').call(d3.axisLeft(y).tickFormat(rn)).call(axisStyle);
+  g.select('.domain').remove();
+
+  regs.forEach(([reg,data])=>{
+    const val=data.sber_share;
+    const by=y(reg), bh=y.bandwidth();
+    g.append('rect').attr('x',0).attr('y',by).attr('width',x(val)).attr('height',bh)
+      .attr('fill',colorScale(val)).attr('rx',1)
+      .on('mouseover',ev=>tip(`<b>${rn(reg)}</b><br>${t('sber')}: ${val.toFixed(1)}%`,ev))
+      .on('mouseleave',noTip);
+    g.append('text').attr('x',x(val)+4).attr('y',by+bh/2).attr('dy','.35em')
+      .style('font-size','11px').style('fill','#363636').style('font-family','Public Sans,sans-serif')
+      .text(val.toFixed(1)+'%');
+  });
+
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).ticks(4).tickFormat(d=>d+'%')).call(axisStyle);
+  g.select('.domain').remove();
+}
+
+// ═══════════════════════════════════════════
+// CHART 11: SCATTER — FX vs GROWTH
+// ═══════════════════════════════════════════
+function drawC11(){
+  const el=document.getElementById('c11');
+  const W=el.offsetWidth||600, H=340, m={t:20,r:20,b:50,l:56};
+  const {svg,g,w,h}=makeSvg(el,W,H,m);
+
+  const regs=Object.entries(D.regions);
+  const x=d3.scaleLinear().domain([0,30]).range([0,w]);
+  const y=d3.scaleLinear().domain([0,d3.max(regs,d=>d[1].growth_pct)*1.06]).range([h,0]);
+  const r=d3.scaleSqrt().domain([0,d3.max(regs,d=>d[1].total)]).range([3,22]);
+
+  gridH(g,y,w);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).ticks(6).tickFormat(d=>d+'%')).call(axisStyle);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'%')).call(axisStyle);
+
+  // axis labels
+  g.append('text').attr('x',w/2).attr('y',h+40).attr('text-anchor','middle').style('font-size','11px').style('fill','#999').style('font-family','Public Sans,sans-serif')
+    .text({'ru':'Доля валютных депозитов, %','kz':'Валюталық депозиттер үлесі, %','en':'FX deposit share, %'}[LANG]);
+
+  regs.forEach(([reg,data])=>{
+    const highlight=reg==='г.Алматы'||reg==='г.Астана';
+    const cx=x(data.fx_share), cy=y(data.growth_pct), rv=r(data.total);
+    g.append('circle').attr('cx',cx).attr('cy',cy).attr('r',rv)
+      .attr('fill',highlight?C.phys:'#9ab8cc').attr('fill-opacity',highlight?.9:.55)
+      .attr('stroke',highlight?C.phys:'#ccc').attr('stroke-width',highlight?1.5:.5)
+      .on('mouseover',ev=>tip(`<b>${rn(reg)}</b><br>${t('fx')}: ${data.fx_share}%<br>+${data.growth_pct}%<br>${data.total.toFixed(2)} ${t('trln')}`,ev))
+      .on('mouseleave',noTip);
+    if(highlight||data.total>1.2){
+      g.append('text').attr('x',cx+rv+3).attr('y',cy).attr('dy','.35em')
+        .style('font-size','10px').style('fill',highlight?C.phys:'#727272').style('font-family','Public Sans,sans-serif')
+        .text(rn(reg));
+    }
+  });
+}
+
+// ═══════════════════════════════════════════
+// CHART 12: BAR — RATES BY TERM
+// ═══════════════════════════════════════════
+let c12Tab='phys';
+function t12(v){ c12Tab=v; document.querySelectorAll('#tabs12 .tbtn').forEach((b,i)=>b.classList.toggle('on',['phys','corp'][i]===v)); drawC12(); }
+
+function drawC12(){
+  const el=document.getElementById('c12');
+  const W=el.offsetWidth||600, H=260, m={t:16,r:20,b:80,l:52};
+  const {svg,g,w,h}=makeSvg(el,W,H,m);
+
+  const agentKey=c12Tab==='phys'?'Физические лица':'Юридические лица';
+  const terms=['до 1 месяца','от 1 до 3 месяцев','от 3 месяцев до 1 года','от 1 года до 5 лет','от 5 лет и более'];
+  const termLabels={'до 1 месяца':{ru:'до 1 мес.',kz:'1 айға дейін',en:'<1 month'},'от 1 до 3 месяцев':{ru:'1–3 мес.',kz:'1–3 ай',en:'1–3 mo'},'от 3 месяцев до 1 года':{ru:'3–12 мес.',kz:'3–12 ай',en:'3–12 mo'},'от 1 года до 5 лет':{ru:'1–5 лет',kz:'1–5 жыл',en:'1–5 yr'},'от 5 лет и более':{ru:'5+ лет',kz:'5+ жыл',en:'5+ yr'}};
+
+  const data=terms.map(term=>{
+    const rows=D.rates_latest.filter(d=>d.agent===agentKey&&d.currency==='Национальная валюта'&&d.term===term);
+    return {term,label:(termLabels[term]||{})[LANG]||term,rate:rows.length?rows[0].rate:0};
+  });
+
+  const x=d3.scaleBand().domain(data.map(d=>d.term)).range([0,w]).padding(.3);
+  const y=d3.scaleLinear().domain([0,d3.max(data,d=>d.rate)*1.12]).range([h,0]);
+
+  gridH(g,y,w);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).tickFormat(k=>(termLabels[k]||{})[LANG]||k))
+    .selectAll('text').style('font-size','11px').style('fill','#727272').style('font-family','Public Sans,sans-serif')
+    .attr('transform','rotate(-30)').attr('text-anchor','end').attr('dy','0.2em').attr('dx','-0.5em');
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'%')).call(axisStyle);
+  g.select('.domain').remove();
+
+  data.forEach(d=>{
+    const isMax=d.rate===d3.max(data,dd=>dd.rate);
+    g.append('rect').attr('x',x(d.term)).attr('y',y(d.rate)).attr('width',x.bandwidth()).attr('height',h-y(d.rate))
+      .attr('fill',isMax?C.corp:C.phys).attr('fill-opacity',isMax?1:.7).attr('rx',1)
+      .on('mouseover',ev=>tip(`<b>${d.label}</b><br>${d.rate.toFixed(2)}% — ${t('tenge')}`,ev))
+      .on('mouseleave',noTip);
+    if(d.rate>0) g.append('text').attr('x',x(d.term)+x.bandwidth()/2).attr('y',y(d.rate)-5)
+      .attr('text-anchor','middle').style('font-size','11px').style('fill','#363636').style('font-weight','700').style('font-family','Public Sans,sans-serif')
+      .text(d.rate.toFixed(1)+'%');
+  });
+}
+
+// ═══════════════════════════════════════════
+// CHART 13: SMALL MULTIPLES — SPARKLINES
+// ═══════════════════════════════════════════
+function drawC13(){
+  const el=document.getElementById('c13');
+  el.innerHTML='';
+  const allRegs=Object.entries(D.regions).sort((a,b)=>b[1].total-a[1].total);
+  const cols=4, rows=Math.ceil(allRegs.length/cols);
+  const W=el.offsetWidth||1100;
+  const cellW=Math.floor((W)/cols)-8, cellH=90;
+  const totalH=rows*cellH+8;
+  const svg=d3.select(el).append('svg').attr('width',W).attr('height',totalH);
+
+  const globalMax=d3.max(allRegs,d=>d3.max(d[1].sparkline));
+
+  allRegs.forEach(([reg,data],i)=>{
+    const col=i%cols, row=Math.floor(i/cols);
+    const ox=col*(cellW+8)+4, oy=row*cellH+4;
+    const g=svg.append('g').attr('transform',`translate(${ox},${oy})`);
+    const px=8,py=22,pw=cellW-px*2,ph=cellH-py-18;
+    g.append('rect').attr('width',cellW).attr('height',cellH).attr('fill',i<2?'#f0f5fa':'#fafafa').attr('rx',2);
+    g.append('text').attr('x',px).attr('y',13).style('font-size','11px').style('font-weight','700').style('fill',i<2?C.phys:'#363636').style('font-family','Public Sans,sans-serif').text(rn(reg));
+    g.append('text').attr('x',cellW-px).attr('y',13).attr('text-anchor','end').style('font-size','10px').style('fill','#999').style('font-family','Public Sans,sans-serif').text(data.total.toFixed(2)+'T');
+
+    const y=d3.scaleLinear().domain([0,globalMax*1.05]).range([ph,0]);
+    const x=d3.scaleLinear().domain([0,data.sparkline.length-1]).range([0,pw]);
+    const line=d3.line().x((d,ii)=>x(ii)).y(d=>y(d)).curve(d3.curveMonotoneX);
+    const area=d3.area().x((d,ii)=>x(ii)).y0(ph).y1(d=>y(d)).curve(d3.curveMonotoneX);
+    g.append('path').datum(data.sparkline).attr('transform',`translate(${px},${py})`).attr('fill',i<2?C.phys:'#9ab8cc').attr('fill-opacity',.15).attr('d',area);
+    g.append('path').datum(data.sparkline).attr('transform',`translate(${px},${py})`).attr('fill','none').attr('stroke',i<2?C.phys:'#9ab8cc').attr('stroke-width',1.5).attr('d',line);
+
+    const last=data.sparkline[data.sparkline.length-1];
+    const first=data.sparkline[0];
+    const pct=((last-first)/first*100).toFixed(0);
+    g.append('text').attr('x',px).attr('y',cellH-4).style('font-size','10px').style('fill',Number(pct)>0?C.sber:'#cc5500').style('font-family','Public Sans,sans-serif').text('+'+pct+'%');
+  });
+}
+
+// ═══════════════════════════════════════════
+// CHART 14: 100% STACKED BAR — PHYS vs CORP
+// ═══════════════════════════════════════════
+function drawC14(){
+  const el=document.getElementById('c14');
+  const W=el.offsetWidth||600, H=240, m={t:16,r:90,b:36,l:12};
+  const {svg,g,w,h}=makeSvg(el,W,H,m);
+
+  const annual=['01.01.2023','01.01.2024','01.01.2025','01.01.2026','01.03.2026'];
+  const x=d3.scaleBand().domain(annual).range([0,w]).padding(.25);
+  const y=d3.scaleLinear().domain([0,100]).range([h,0]);
+
+  gridH(g,y,w,4);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).tickFormat(d=>d.slice(3))).call(axisStyle);
+  g.append('g').call(d3.axisLeft(y).ticks(4).tickFormat(d=>d+'%')).call(axisStyle);
+
+  annual.forEach(date=>{
+    const row=D.ts.find(d=>d.date===date);
+    if(!row) return;
+    const total=row.total;
+    const physPct=row.phys/total*100;
+    const corpPct=row.corp/total*100;
+    const bx=x(date), bw=x.bandwidth();
+    // Phys bar (top, from 0% to physPct in data = top portion)
+    // y(100)=0, y(corpPct)=boundary, y(0)=h
+    // Phys occupies top: y=0 to y(corpPct)
+    const boundary=y(corpPct); // pixel where phys ends and corp begins
+    // Phys rect: top of chart down to boundary
+    g.append('rect').attr('x',bx).attr('y',0).attr('width',bw).attr('height',boundary)
+      .attr('fill',C.phys).attr('fill-opacity',.85);
+    // Corp rect: boundary to bottom
+    g.append('rect').attr('x',bx).attr('y',boundary).attr('width',bw).attr('height',h-boundary)
+      .attr('fill',C.corp).attr('fill-opacity',.85);
+    // Phys label: center of phys rect
+    const physCy = boundary/2;
+    g.append('text').attr('x',bx+bw/2).attr('y',physCy).attr('text-anchor','middle').attr('dy','.35em')
+      .style('font-size','12px').style('fill','white').style('font-weight','700').style('font-family','Public Sans,sans-serif')
+      .text(physPct.toFixed(0)+'%');
+    // Corp label: center of corp rect
+    const corpCy = boundary + (h-boundary)/2;
+    g.append('text').attr('x',bx+bw/2).attr('y',corpCy).attr('text-anchor','middle').attr('dy','.35em')
+      .style('font-size','12px').style('fill','white').style('font-weight','700').style('font-family','Public Sans,sans-serif')
+      .text(corpPct.toFixed(0)+'%');
+  });
+
+  // Legend
+  [[C.phys,t('phys')],[C.corp,t('corp')]].forEach(([clr,lbl],i)=>{
+    svg.append('rect').attr('x',W-m.r+4).attr('y',m.t+i*18).attr('width',10).attr('height',10).attr('fill',clr).attr('fill-opacity',.8);
+    svg.append('text').attr('x',W-m.r+18).attr('y',m.t+i*18+9).style('font-size','11px').style('fill','#363636').style('font-family','Public Sans,sans-serif').text(lbl);
+  });
+}
+
+// ═══════════════════════════════════════════
+// CHART 15: PARETO / CUMULATIVE — CONCENTRATION
+// ═══════════════════════════════════════════
+function drawC15(){
+  const el=document.getElementById('c15');
+  const W=el.offsetWidth||600, H=300, m={t:16,r:60,b:50,l:52};
+  const {svg,g,w,h}=makeSvg(el,W,H,m);
+
+  const sorted=Object.entries(D.regions).sort((a,b)=>b[1].total-a[1].total);
+  const totalAll=sorted.reduce((s,d)=>s+d[1].total,0);
+  let cum=0;
+  const pts=sorted.map((d,i)=>{
+    cum+=d[1].total;
+    return {region:d[0],rank:i+1,cumShare:cum/totalAll*100,own:d[1].total/totalAll*100};
+  });
+
+  const x=d3.scaleLinear().domain([1,pts.length]).range([0,w]);
+  const y=d3.scaleLinear().domain([0,105]).range([h,0]);
+
+  gridH(g,y,w,5);
+  g.append('g').attr('transform',`translate(0,${h})`).call(d3.axisBottom(x).ticks(pts.length).tickFormat(d=>d)).call(axisStyle);
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickFormat(d=>d+'%')).call(axisStyle);
+
+  // Area under curve
+  const area=d3.area().x(d=>x(d.rank)).y0(h).y1(d=>y(d.cumShare));
+  g.append('path').datum(pts).attr('fill',C.phys).attr('fill-opacity',.08).attr('d',area);
+
+  // Line
+  const line=d3.line().x(d=>x(d.rank)).y(d=>y(d.cumShare));
+  g.append('path').datum(pts).attr('fill','none').attr('stroke',C.phys).attr('stroke-width',2).attr('d',line);
+
+  // Dots
+  pts.forEach(d=>{
+    g.append('circle').attr('cx',x(d.rank)).attr('cy',y(d.cumShare)).attr('r',4)
+      .attr('fill',d.rank<=2?C.corp:d.rank<=5?C.fx:C.phys).attr('stroke','white').attr('stroke-width',1.5)
+      .on('mouseover',ev=>tip(`<b>${rn(d.region)}</b><br>${t('total')}: ${(d.own).toFixed(1)}%<br>${{'ru':'Накоплено','kz':'Жиналды','en':'Cumulative'}[LANG]}: ${d.cumShare.toFixed(1)}%`,ev))
+      .on('mouseleave',noTip);
+  });
+
+  // Reference lines
+  [50,80].forEach(pct=>{
+    g.append('line').attr('x1',0).attr('x2',w).attr('y1',y(pct)).attr('y2',y(pct))
+      .attr('stroke','#dfdfdf').attr('stroke-dasharray','4,3').attr('stroke-width',1);
+    g.append('text').attr('x',w+3).attr('y',y(pct)).attr('dy','.35em')
+      .style('font-size','10px').style('fill','#aaa').style('font-family','Public Sans,sans-serif')
+      .text(pct+'%');
+  });
+
+  // X labels
+  g.append('text').attr('x',w/2).attr('y',h+40).attr('text-anchor','middle')
+    .style('font-size','11px').style('fill','#999').style('font-family','Public Sans,sans-serif')
+    .text({'ru':'Регионы, ранжированные по объёму депозитов','kz':'Депозиттер көлемі бойынша ранжирленген аймақтар','en':'Regions ranked by deposit volume'}[LANG]);
+}
+
+// ═══════════════════════════════════════════
+// PROGRESS
+// ═══════════════════════════════════════════
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement.scrollHeight-innerHeight;
+  document.getElementById('prog').style.width=(scrollY/h*100)+'%';
+});
+
+// ═══════════════════════════════════════════
+// RENDER ALL
+// ═══════════════════════════════════════════
+function renderAll(){
+  drawC1(); drawC2(); drawC3(); drawC4(); drawC5();
+  drawC6(); drawC7(); drawC8(); drawC9(); drawC10();
+  drawC11(); drawC12(); drawC13(); drawC14(); drawC15();
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  // Init lang spans
+  document.querySelectorAll('[data-ru],[data-kz],[data-en]').forEach(el=>{
+    if(el.hasAttribute('data-ru')) el.classList.add('show');
+  });
+  setTimeout(renderAll,100);
+});
+window.addEventListener('resize',()=>{ clearTimeout(window._rt); window._rt=setTimeout(renderAll,250); });
+</script>
+</body>
+</html>
