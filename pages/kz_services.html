@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Торговля услугами Казахстана - 2024-2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#ffffff; --bg2:#f8f6f1; --ink:#1a1814; --ink2:#4a4640; --ink3:#9a948a;
+  --red:#c8380a; --blue:#1a6fa8; --green:#2a8a4a; --gold:#c8960a; --purple:#6a3a9a;
+  --rule:#e0dbd2;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'IBM Plex Sans',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --max:860px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:#fff;color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;}
+
+/* PROGRESS */
+#pbar{position:fixed;top:0;left:0;height:3px;background:var(--red);width:0;z-index:1000;transition:width .1s;}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:#fff;border-bottom:1px solid var(--rule);
+  padding:13px 0;
+}
+.nav-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);}
+.lang-btns{display:flex;gap:6px;}
+.lb{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid var(--rule);background:none;cursor:pointer;padding:5px 10px;color:var(--ink3);transition:all .2s;}
+.lb.on{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+/* HERO - light background */
+.hero-wrap{background:var(--bg2);padding:90px 0 70px;border-bottom:2px solid var(--ink);}
+.hero{max-width:var(--max);margin:0 auto;}
+.hero-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:20px;}
+.hero-h1{font-family:var(--serif);font-size:58px;line-height:1.04;font-weight:900;color:var(--ink);margin-bottom:28px;white-space:nowrap;}
+.hero-h1 em{color:var(--red);font-style:normal;}
+.hero-lead{font-size:17px;color:var(--ink2);max-width:640px;line-height:1.8;margin-bottom:48px;}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--rule);padding-top:32px;}
+.hs{padding-right:24px;border-right:1px solid var(--rule);}
+.hs:last-child{border-right:none;}
+.hs-val{font-family:var(--serif);font-size:38px;font-weight:700;line-height:1;color:var(--red);}
+.hs-lbl{font-family:var(--mono);font-size:9px;color:var(--ink3);margin-top:6px;letter-spacing:.06em;}
+
+/* CENTERED CONTENT WRAPPER */
+.sec{max-width:var(--max);margin:0 auto;padding:70px 0;border-bottom:1px solid var(--rule);
+  opacity:0;transform:translateY(22px);transition:opacity .65s,transform .65s;}
+.sec.vis{opacity:1;transform:none;}
+.sec-wrap{padding:70px 0;border-bottom:1px solid var(--rule);}
+.sec-wrap.bg2{background:var(--bg2);}
+
+/* SECTION HEADER */
+.sec-num{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--ink3);text-transform:uppercase;margin-bottom:4px;}
+.sec-h2{font-family:var(--serif);font-size:30px;font-weight:700;line-height:1.2;margin-bottom:6px;}
+.sec-dek{font-size:13px;color:var(--ink3);font-style:italic;margin-bottom:28px;}
+
+/* NARRATIVE */
+.narr{font-size:15px;color:var(--ink2);line-height:1.85;margin-bottom:28px;max-width:640px;}
+.narr strong{color:var(--ink);font-weight:600;}
+.pull{border-left:4px solid var(--red);padding:18px 24px;background:var(--bg2);
+  font-family:var(--serif);font-size:19px;font-style:italic;line-height:1.55;
+  color:var(--ink);margin:28px 0;}
+.callout{background:var(--ink);color:#fff;padding:22px 28px;
+  font-family:var(--serif);font-size:18px;font-style:italic;line-height:1.5;margin:28px 0;}
+
+/* GRID HELPERS */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;}
+.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;}
+.stat-box{padding:20px;border:1px solid var(--rule);}
+.sb-val{font-family:var(--serif);font-size:34px;font-weight:700;line-height:1;}
+.sb-lbl{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:6px;}
+
+/* SOURCE */
+.src{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:20px;}
+
+/* TOOLTIP */
+#tip{position:fixed;pointer-events:none;z-index:999;background:var(--ink);color:#fff;
+  padding:8px 12px;font-size:11px;font-family:var(--mono);max-width:220px;line-height:1.5;display:none;}
+
+/* ---- VIZ: HORIZONTAL BAR ---- */
+.hbar-row{margin-bottom:11px;cursor:default;}
+.hbar-meta{display:flex;justify-content:space-between;margin-bottom:3px;}
+.hbar-name{font-size:12px;color:var(--ink2);}
+.hbar-delta{font-size:11px;font-family:var(--mono);}
+.hbar-track{height:22px;background:#ede9e2;position:relative;overflow:hidden;}
+.hbar-fill{height:100%;width:0;transition:width 1.4s cubic-bezier(.22,.68,0,1.2);}
+.hbar-val{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10px;color:#fff;}
+
+/* ---- VIZ: TREEMAP ---- */
+#treemap{width:100%;height:380px;position:relative;}
+.tm-cell{position:absolute;padding:10px;border:2px solid #fff;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  overflow:hidden;cursor:pointer;transition:filter .2s;}
+.tm-cell:hover{filter:brightness(1.1);}
+.tm-label{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.9);line-height:1.3;}
+.tm-val{font-family:var(--serif);font-size:16px;font-weight:700;color:#fff;}
+
+/* ---- VIZ: BALANCE ---- */
+.bal-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.bal-name{width:120px;font-size:12px;color:var(--ink2);text-align:right;flex-shrink:0;}
+.bal-sep{width:2px;background:var(--ink);flex-shrink:0;height:20px;}
+.bal-diff{font-family:var(--mono);font-size:10px;width:62px;text-align:right;flex-shrink:0;}
+
+/* ---- VIZ: LOLLIPOP ---- */
+.lol-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.lol-name{width:130px;font-size:12px;color:var(--ink2);text-align:right;flex-shrink:0;}
+.lol-track{flex:1;height:2px;background:var(--rule);position:relative;}
+.lol-line{position:absolute;top:0;left:0;height:100%;transition:width 1.3s ease;}
+.lol-dot{position:absolute;top:-5px;width:12px;height:12px;border-radius:50%;right:0;border:2px solid #fff;}
+.lol-val{font-family:var(--mono);font-size:11px;color:var(--ink2);width:68px;}
+
+/* ---- VIZ: RANK BARS ---- */
+.rank-item{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.rank-num{font-family:var(--mono);font-size:11px;color:var(--ink3);width:18px;text-align:right;flex-shrink:0;}
+.rank-name{width:160px;font-size:12px;color:var(--ink2);flex-shrink:0;}
+.rank-track{flex:1;height:20px;background:#ede9e2;position:relative;}
+.rank-fill{height:100%;transition:width 1.3s ease;}
+.rank-val{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10px;color:#fff;}
+
+/* ---- VIZ: DUAL ROWS (engineering) ---- */
+.eng-item{margin-bottom:18px;}
+.eng-head{display:flex;justify-content:space-between;margin-bottom:4px;}
+.eng-country{font-size:13px;color:var(--ink2);font-weight:500;}
+.eng-delta{font-family:var(--mono);font-size:11px;}
+.eng-row{height:11px;background:#ede9e2;position:relative;margin-bottom:3px;}
+.eng-bar{height:100%;}
+
+/* ---- VIZ: WFALL (construction) ---- */
+.wfall-item{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.wfall-name{width:170px;font-size:12px;color:var(--ink2);flex-shrink:0;}
+.wfall-track{flex:1;height:28px;background:#ede9e2;position:relative;}
+.wfall-fill{height:100%;transition:width 1.3s ease;}
+.wfall-val{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10px;}
+
+/* ---- CONCLUSION ---- */
+.concl-wrap{background:var(--ink);padding:80px 0;}
+.concl-h2{font-family:var(--serif);font-size:42px;font-weight:900;line-height:1.1;color:#fff;margin-bottom:30px;}
+.concl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:44px;}
+.cstat{border:1px solid rgba(255,255,255,.15);padding:22px;}
+.cstat-val{font-family:var(--serif);font-size:36px;font-weight:700;color:var(--red);line-height:1;margin-bottom:6px;}
+.cstat-lbl{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.5);letter-spacing:.08em;}
+.concl-body{font-size:15px;color:rgba(255,255,255,.8);line-height:1.9;max-width:680px;margin-bottom:36px;}
+.back-link{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.15em;text-transform:uppercase;color:#fff;text-decoration:none;
+  border:1px solid rgba(255,255,255,.35);padding:11px 22px;transition:all .2s;}
+.back-link:hover{background:#fff;color:var(--ink);}
+
+/* FOOTER */
+footer{padding:32px 0;background:#fff;}
+.ft-inner{max-width:var(--max);margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;border-top:2px solid var(--ink);padding-top:28px;}
+.ft-brand{font-family:var(--serif);font-size:17px;font-style:italic;}
+.ft-meta{font-family:var(--mono);font-size:10px;color:var(--ink3);text-align:right;line-height:1.9;}
+
+/* LANG */
+.t{display:none;}.t.on{display:inline;}
+.tb{display:none;}.tb.on{display:block;}
+
+/* CHART LABEL */
+.chart-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;}
+
+@media(max-width:960px){
+  :root{--max:calc(100% - 48px);}
+  .hero-stats{grid-template-columns:repeat(2,1fr);gap:20px;}
+  .two,.three,.concl-grid{grid-template-columns:1fr;}
+  .hero-h1{font-size:40px;}
+}
+</style>
+</head>
+<body>
+<div id="pbar"></div>
+<div id="tip"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">
+      <span class="t on ru">Казахстан - Торговля услугами</span>
+      <span class="t kz">Казакстан - Кызметтер саудасы</span>
+      <span class="t en">Kazakhstan - Services Trade</span>
+    </span>
+    <div class="lang-btns" id="LB">
+      <button class="lb on" data-l="ru">РУС</button>
+      <button class="lb" data-l="kz">ҚАЗ</button>
+      <button class="lb" data-l="en">ENG</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-wrap">
+  <div class="hero">
+    <div class="hero-eyebrow">
+      <span class="t on ru">Национальный банк РК - I квартал 2025</span>
+      <span class="t kz">ҚР Улттык банкi - 2025 жыл I токсан</span>
+      <span class="t en">National Bank of Kazakhstan - Q1 2025</span>
+    </div>
+    <div class="hero-h1">
+      <span class="t on ru">Торговля услугами <em>Казахстана</em></span>
+      <span class="t kz">Казакстаннын кызметтер <em>саудасы</em></span>
+      <span class="t en">Kazakhstan Services <em>Trade</em></span>
+    </div>
+    <div class="hero-lead">
+      <span class="t on ru">За I квартал 2025 года экспорт услуг вырос до $12,8 млрд. Страна зарабатывает на транзите и туризме, но платит в разы больше за технологии, инжиниринг и деловые услуги. Дефицит - $1,2 млрд.</span>
+      <span class="t kz">2025 жылдын I токсанында кызметтер экспорты $12.8 млрд-ка дейiн ости. Ел транзит пен туризмнен табады, бiрак технологиялар мен инженерлiк кызметтерге кобiрек толейдi.</span>
+      <span class="t en">In Q1 2025, services exports grew to $12.8 billion. The country earns from transit and tourism, but pays far more for technology, engineering and business services. Deficit: $1.2 billion.</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hs"><div class="hs-val">$12.8B</div><div class="hs-lbl"><span class="t on ru">Экспорт услуг 2025</span><span class="t kz">Кызметтер экспорты 2025</span><span class="t en">Services export 2025</span></div></div>
+      <div class="hs"><div class="hs-val" style="color:var(--blue)">$14.0B</div><div class="hs-lbl"><span class="t on ru">Импорт услуг 2025</span><span class="t kz">Кызметтер импорты 2025</span><span class="t en">Services import 2025</span></div></div>
+      <div class="hs"><div class="hs-val" style="color:var(--ink2)">-$1.2B</div><div class="hs-lbl"><span class="t on ru">Торговый баланс</span><span class="t kz">Сауда балансы</span><span class="t en">Trade balance</span></div></div>
+      <div class="hs"><div class="hs-val" style="color:var(--green)">+8.0%</div><div class="hs-lbl"><span class="t on ru">Рост экспорта г/г</span><span class="t kz">Экспорт осiмi ж/ж</span><span class="t en">Export growth YoY</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==== S1: HORIZONTAL BARS ==== -->
+<div class="sec-wrap">
+<div class="sec" id="s1">
+  <div class="sec-num">01</div>
+  <div class="sec-h2"><span class="t on ru">Структура торговли: транспорт и поездки держат половину</span><span class="t kz">Сауда курылымы: колiк пен сапарлар жартысын устайды</span><span class="t en">Trade structure: transport and travel hold half</span></div>
+  <div class="sec-dek"><span class="t on ru">тыс. долл. США, I кв. 2025, по убыванию</span><span class="t kz">мын. АКШ долл., 2025 I токсан</span><span class="t en">thousands USD, Q1 2025, descending</span></div>
+  <div class="narr">
+    <span class="t on ru">Транспорт и поездки - это <strong>67 центов из каждого доллара</strong> экспорта услуг. Оба сектора выросли: транспорт +5%, поездки +12%. IT-услуги (ТКИ) показали взрывной рост +36%, но пока занимают лишь 11%. Деловые услуги - третий по размеру экспорт, но с катастрофическим дефицитом: импорт в 3.5 раза превышает экспорт.</span>
+    <span class="t kz">Колiк пен сапарлар кызметтер экспортынын <strong>эрбiр долларынан 67 цент</strong>. Екеуi де осtі: колiк +5%, сапарлар +12%. IT-кызметтерi +36% осtі, бiрак азiрше тек 11% алады.</span>
+    <span class="t en">Transport and travel account for <strong>67 cents of every dollar</strong> of services exports. Both grew: transport +5%, travel +12%. IT services (ICT) posted explosive +36% growth but hold only 11%. Business services are the third-largest export but have a catastrophic deficit: imports are 3.5x exports.</span>
+  </div>
+  <div class="two">
+    <div>
+      <div class="chart-label" style="color:var(--blue)"><span class="t on ru">Экспорт 2025</span><span class="t kz">Экспорт 2025</span><span class="t en">Export 2025</span></div>
+      <div id="hbar-exp"></div>
+    </div>
+    <div>
+      <div class="chart-label" style="color:var(--red)"><span class="t on ru">Импорт 2025</span><span class="t kz">Импорт 2025</span><span class="t en">Import 2025</span></div>
+      <div id="hbar-imp"></div>
+    </div>
+  </div>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S2: TREEMAP ==== -->
+<div class="sec-wrap bg2">
+<div class="sec" id="s2">
+  <div class="sec-num">02</div>
+  <div class="sec-h2"><span class="t on ru">Карта экспорта: два сектора поглощают всё остальное</span><span class="t kz">Экспорт картасы: екi сектор баска барлыгын сiнiредi</span><span class="t en">Export map: two sectors absorb everything else</span></div>
+  <div class="sec-dek"><span class="t on ru">Площадь = доля в совокупном экспорте услуг, I кв. 2025</span><span class="t kz">Аудан = жалпы кызметтер экспортындагы улес, 2025 I токсан</span><span class="t en">Area = share of total services export, Q1 2025</span></div>
+  <div class="narr">
+    <span class="t on ru">Страхование, роялти и строительный экспорт вместе - <strong>менее 3%</strong> от общего объема. Казахстан продает за рубеж по факту три вещи: перевозку грузов, туристические расходы иностранцев и, всё активнее, IT-услуги. Всё остальное - минорные позиции.</span>
+    <span class="t kz">Сактандыру, роялти жане курылыс экспорты бiрге - жалпы колемнен <strong>3%-дан аз</strong>. Казакстан шетелге нактi уш нарсе сатады: жук тасымалы, шетелдiктердiн туристiк шыгыны жане IT кызметтерi.</span>
+    <span class="t en">Insurance, royalties and construction export together amount to <strong>less than 3%</strong> of total. Kazakhstan effectively sells three things abroad: freight carriage, foreign tourist spending, and increasingly, IT services. Everything else is a minor position.</span>
+  </div>
+  <div id="treemap"></div>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S3: BALANCE CHART ==== -->
+<div class="sec-wrap">
+<div class="sec" id="s3">
+  <div class="sec-num">03</div>
+  <div class="sec-h2"><span class="t on ru">Баланс: где Казахстан зарабатывает, а где проигрывает</span><span class="t kz">Баланс: кайда табады, кайда жiбередi</span><span class="t en">Balance: where Kazakhstan earns and where it loses</span></div>
+  <div class="sec-dek"><span class="t on ru">Экспорт (синий) vs импорт (красный), I кв. 2025, по абсолютному балансу</span><span class="t kz">Экспорт (кок) vs импорт (кызыл), 2025 I токсан</span><span class="t en">Export (blue) vs import (red), Q1 2025, by absolute balance</span></div>
+  <div class="narr">
+    <span class="t on ru">Из 10 категорий услуг только <strong>три в профиците</strong>: транспорт (+$2.2 млрд), поездки (+$958 млн) и страхование (+$224 млн). Все остальное - дефицит. Особенно глубокий - деловые услуги (-$1.99 млрд). Страна покупает чужие компетенции, которых у нее нет.</span>
+    <span class="t kz">10 санаттын тек <strong>ушеуi профициттi</strong>: колiк (+$2.2 млрд), сапарлар (+$958 млн) жане сактандыру (+$224 млн). Баска барлыгы тапшылыкта. Ен терен - iскерлiк кызметтер (-$1.99 млрд).</span>
+    <span class="t en">Of 10 service categories, only <strong>three are in surplus</strong>: transport (+$2.2B), travel (+$958M), and insurance (+$224M). Everything else is in deficit. The deepest is business services (-$1.99B). The country buys competencies it does not have.</span>
+  </div>
+  <div id="balance-chart"></div>
+  <div class="pull">
+    <span class="t on ru">"В деловых услугах Казахстан платит в 3.5 раза больше, чем зарабатывает. Это не торговый разрыв - это структурная зависимость."</span>
+    <span class="t kz">"Iскерлiк кызметтерде Казакстан 3.5 есе кобiрек толейдi. Бул сауда алшактыгы емес - курылымдык тауелдiлiк."</span>
+    <span class="t en">"In business services, Kazakhstan pays 3.5x more than it earns. This is not a trade gap - it is a structural dependency."</span>
+  </div>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S4: TRANSPORT - DOT SCATTER (canvas) ==== -->
+<div class="sec-wrap bg2">
+<div class="sec" id="s4">
+  <div class="sec-num">04</div>
+  <div class="sec-h2"><span class="t on ru">Транспорт: $4.5 млрд зарабатываются на грузах</span><span class="t kz">Колiк: $4.5 млрд жуктен табылады</span><span class="t en">Transport: $4.5 billion earned from freight</span></div>
+  <div class="sec-dek"><span class="t on ru">Три компонента транспортных услуг: позиция относительно паритета (диагональ = баланс = 0)</span><span class="t kz">Колiк кызметтерiнiн уш компонентi: четте катынас (диагональ = баланс = 0)</span><span class="t en">Three transport service components: position relative to parity (diagonal = balance = 0)</span></div>
+  <div class="narr">
+    <span class="t on ru">Казахстан - транзитная страна: через нее проходят товары из Китая в Европу по Транскаспийскому маршруту. Грузовые перевозки дают <strong>$4.5 млрд экспорта</strong> при $3 млрд импорта. Пассажирский транспорт тоже в профиците: $313 млн экспорт против $111 млн импорта. Оба показателя выросли г/г.</span>
+    <span class="t kz">Казакстан - транзиттiк ел: Транскаспий маршруты арылы Кытайдан Еуропага тауарлар откедi. Жук тасымалы <strong>$4.5 млрд экспорт</strong> береди, $3 млрд импортта. Жол журушi колiк те профициттi.</span>
+    <span class="t en">Kazakhstan is a transit country: goods from China to Europe pass through it via the Trans-Caspian route. Freight gives <strong>$4.5B export</strong> against $3B import. Passenger transport is also in surplus: $313M export vs $111M import. Both grew YoY.</span>
+  </div>
+  <canvas id="transport-canvas" width="860" height="320"></canvas>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S5: TRAVEL - LOLLIPOP ==== -->
+<div class="sec-wrap">
+<div class="sec" id="s5">
+  <div class="sec-num">05</div>
+  <div class="sec-h2"><span class="t on ru">Туризм: казахстанцы тратят за рубежом в 1.4 раза больше</span><span class="t kz">Туризм: казакстандыктар шетелде 1.4 есе кобiрек жумсайды</span><span class="t en">Travel: Kazakhstanis spend 1.4x more abroad</span></div>
+  <div class="sec-dek"><span class="t on ru">Личные поездки, I кв. 2025, тыс. долл., по убыванию</span><span class="t kz">Жеке сапарлар, 2025 I токсан, мын. долл.</span><span class="t en">Personal travel, Q1 2025, thousands USD, descending</span></div>
+  <div class="narr">
+    <span class="t on ru">Из каждых $10, потраченных казахстанцами за рубежом, <strong>$4 уходят в Россию, Киргизию и Узбекистан</strong> - соседние страны с понятным языком и доступными ценами. Иностранные туристы в Казахстане тратят меньше, и большинство из них тоже соседи. Дальнее зарубежье как источник въездного туризма пока незначительно.</span>
+    <span class="t kz">Казакстандыктар шетелде жумсаган <strong>эрбiр $10-нан $4 Ресейге, Кыргызстанга жане Озбекстанга</strong> кетедi. Шетелдiк туристер аз жумсайды жане копшiлiгi - колшi кошпелiлер.</span>
+    <span class="t en">Of every $10 Kazakhstanis spend abroad, <strong>$4 goes to Russia, Kyrgyzstan and Uzbekistan</strong> - neighbors with familiar languages and affordable prices. Foreign tourists in Kazakhstan spend less, and most are also neighbors. Long-haul inbound tourism is still minimal.</span>
+  </div>
+  <div class="two">
+    <div>
+      <div class="chart-label" style="color:var(--blue)"><span class="t on ru">Иностранцы в Казахстане (экспорт)</span><span class="t kz">Шетелдiктер Казакстанда</span><span class="t en">Foreigners in Kazakhstan (export)</span></div>
+      <div id="lol-exp"></div>
+    </div>
+    <div>
+      <div class="chart-label" style="color:var(--red)"><span class="t on ru">Казахстанцы за рубежом (импорт)</span><span class="t kz">Казакстандыктар шетелде</span><span class="t en">Kazakhstanis abroad (import)</span></div>
+      <div id="lol-imp"></div>
+    </div>
+  </div>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S6: IT - DONUT + STATS ==== -->
+<div class="sec-wrap bg2">
+<div class="sec" id="s6">
+  <div class="sec-num">06</div>
+  <div class="sec-h2"><span class="t on ru">IT-сектор: единственная категория с ускорением</span><span class="t kz">IT секторы: жылдамдайтын жалгыз санат</span><span class="t en">IT sector: the one category accelerating</span></div>
+  <div class="sec-dek"><span class="t on ru">Телекоммуникационные, компьютерные, информационные услуги, I кв. 2025</span><span class="t kz">Телеком, компьютерлiк, акпараттык кызметтер, 2025 I токсан</span><span class="t en">Telecom, computer, information services, Q1 2025</span></div>
+  <div class="narr">
+    <span class="t on ru">Компьютерные услуги выросли с $840 млн до <strong>$1.14 млрд (+36%)</strong> - это крупнейший относительный рост среди всех категорий. Телеком при этом просел: -6%. Возможная причина - переток IT-специалистов из России и Украины в Казахстан после 2022 года: они регистрируют компании и экспортируют услуги через казахстанские юрлица.</span>
+    <span class="t kz">Компьютерлiк кызметтер $840 млн-нан <strong>$1.14 млрд-га (+36%)</strong> осtі - барлык санаттар арасында ен iрi салыстырмалы осу. Телеком -6% тусти. Ыктимал себеп - 2022 жылдан бери Ресей мен Украинадан IT-мамандарынын Казакстанга коcуi.</span>
+    <span class="t en">Computer services grew from $840M to <strong>$1.14B (+36%)</strong> - the largest relative growth across all categories. Telecom fell 6%. A likely driver: IT specialists relocating from Russia and Ukraine to Kazakhstan post-2022, registering companies and exporting services through Kazakhstani entities.</span>
+  </div>
+  <div class="two" style="align-items:center;">
+    <div>
+      <svg id="it-donut" viewBox="0 0 240 240" width="240" height="240"></svg>
+      <div id="it-donut-legend" style="margin-top:16px;"></div>
+    </div>
+    <div>
+      <div class="three">
+        <div class="stat-box"><div class="sb-val" style="color:var(--green)">+35.6%</div><div class="sb-lbl"><span class="t on ru">Рост экспорта ТКИ</span><span class="t kz">АКТ экспорт осiмi</span><span class="t en">ICT export growth</span></div></div>
+        <div class="stat-box"><div class="sb-val" style="color:var(--blue)">$1.36B</div><div class="sb-lbl"><span class="t on ru">Экспорт ТКИ 2025</span><span class="t kz">АКТ экспорт 2025</span><span class="t en">ICT export 2025</span></div></div>
+        <div class="stat-box"><div class="sb-val" style="color:var(--red)">$735M</div><div class="sb-lbl"><span class="t on ru">Импорт ТКИ 2025</span><span class="t kz">АКТ импорт 2025</span><span class="t en">ICT import 2025</span></div></div>
+      </div>
+      <div style="margin-top:24px;" id="it-bars-countries"></div>
+    </div>
+  </div>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S7: SLOPE CHART (business travel) ==== -->
+<div class="sec-wrap">
+<div class="sec" id="s7">
+  <div class="sec-num">07</div>
+  <div class="sec-h2"><span class="t on ru">Деловые поездки: Китай обгоняет Россию</span><span class="t kz">Iскерлiк сапарлар: Кытай Ресейдi оздi</span><span class="t en">Business travel: China overtakes Russia</span></div>
+  <div class="sec-dek"><span class="t on ru">Экспорт деловых поездок, топ-10 стран, 2024 vs 2025, тыс. долл.</span><span class="t kz">Iскерлiк сапарлар экспорты, топ-10 ел, 2024 vs 2025, мын. долл.</span><span class="t en">Business travel export, top-10 countries, 2024 vs 2025, thousands USD</span></div>
+  <div class="narr">
+    <span class="t on ru">Деловой туризм из Китая в Казахстан вырос за год на <strong>67%</strong> - с $45 до $75 млн. Китай вышел на первое место, обогнав Россию ($59 млн в 2024, снизилась до $56 млн). Рост китайских деловых визитов - отражение активизации Пояса и Пути, нефтегазовых и агропроектов. США упали с $10 до $8 млн.</span>
+    <span class="t kz">Казакстанга Кытайдан iскерлiк туризм <strong>67%-га</strong> осtі - $45 млн-нан $75 млн-га. Кытай бiрiншi орынга шыкты, Ресейдi оздi. Кытайлык iскерлiк визиттер осуi - «Бiр белдеу» белсендiлiгiнiн кeрiнiсi.</span>
+    <span class="t en">Business tourism from China to Kazakhstan grew <strong>67%</strong> - from $45M to $75M. China topped the ranking, overtaking Russia ($59M in 2024, down to $56M). Growth in Chinese business visits reflects Belt and Road activity, oil & gas and agro projects. The USA fell from $10M to $8M.</span>
+  </div>
+  <svg id="slope-svg" width="860" height="400" viewBox="0 0 860 400"></svg>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S8: CONSTRUCTION - PAIRED BARS ==== -->
+<div class="sec-wrap bg2">
+<div class="sec" id="s8">
+  <div class="sec-num">08</div>
+  <div class="sec-h2"><span class="t on ru">Строительство: импорт за год вырос на 63%</span><span class="t kz">Курылыс: импорт бiр жылда 63%-га осtі</span><span class="t en">Construction: imports grew 63% in one year</span></div>
+  <div class="sec-dek"><span class="t on ru">Строительные услуги, 2024 vs 2025, тыс. долл. США</span><span class="t kz">Курылыс кызметтерi, 2024 vs 2025, мын. АКШ долл.</span><span class="t en">Construction services, 2024 vs 2025, thousands USD</span></div>
+  <div class="narr">
+    <span class="t on ru">Импорт строительных услуг прыгнул с $379 до $619 млн. Это крупный, однозначный сигнал: в стране идут масштабные стройки с иностранными подрядчиками. Скорее всего - энергетические или промышленные объекты. Экспорт строительных услуг, напротив, упал на 30%. Казахстан строит, используя чужой инжиниринг.</span>
+    <span class="t kz">Курылыс кызметтерiн импорт $379 млн-нан $619 млн-га секiрдi. Бул - елде шетелдiк мердiгерлермен iрi курылыстар журiп жатканынын белгiсi. Экспорт 30%-га тустi.</span>
+    <span class="t en">Construction services imports jumped from $379M to $619M. This is a clear, unambiguous signal: large-scale construction is underway in the country with foreign contractors - most likely energy or industrial facilities. Construction services export, by contrast, fell 30%.</span>
+  </div>
+  <div id="construction-paired"></div>
+  <div class="callout">
+    <span class="t on ru">"Казахстан строит за счет иностранных инженеров. Разрыв между импортом ($619 млн) и экспортом ($34 млн) - $585 млн. Это цена за отсутствие собственных строительных компетенций."</span>
+    <span class="t kz">"Казакстан шетелдiк инженерлер есебiнен салады. Импорт ($619 млн) пен экспорт ($34 млн) арасындагы алшактык - $585 млн. Бул - оз курылыс кузiреттiлiгiнiн жоктыгынын багасы."</span>
+    <span class="t en">"Kazakhstan builds with foreign engineers. The gap between import ($619M) and export ($34M) is $585M. This is the price of lacking domestic construction competencies."</span>
+  </div>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S9: IP ROYALTIES - RANK BARS ==== -->
+<div class="sec-wrap">
+<div class="sec" id="s9">
+  <div class="sec-num">09</div>
+  <div class="sec-h2"><span class="t on ru">Роялти и IP: платим всем, зарабатываем копейки</span><span class="t kz">Роялти жане IP: барлыгына толеймiз, тиынга гана табамыз</span><span class="t en">Royalties and IP: we pay everyone, earn almost nothing</span></div>
+  <div class="sec-dek"><span class="t on ru">IP-импорт 2025, тыс. долл., по убыванию</span><span class="t kz">IP-импорт 2025, мын. долл., азаю бойынша</span><span class="t en">IP import 2025, thousands USD, descending</span></div>
+  <div class="narr">
+    <span class="t on ru">Казахстан тратит на роялти $478 млн и зарабатывает $37 млн. Соотношение - <strong>13 к 1</strong>. Россия ($75 млн) и США ($64 млн) - крупнейшие получатели. Ирландия ($57 млн) и Кипр ($34 млн) - транзитные юрисдикции: там зарегистрированы европейские и американские компании с активами в Казахстане. Страна потребляет технологии, которые не создает.</span>
+    <span class="t kz">Казакстан роялтiге $478 млн жумсайды, $37 млн табады. Катынас - <strong>13-ке 1</strong>. Ресей ($75 млн) мен АКШ ($64 млн) - ен iрi алушылар. Ирландия мен Кипр - транзиттiк юрисдикциялар.</span>
+    <span class="t en">Kazakhstan spends $478M on royalties and earns $37M. Ratio: <strong>13 to 1</strong>. Russia ($75M) and the USA ($64M) are the largest recipients. Ireland ($57M) and Cyprus ($34M) are transit jurisdictions: European and American companies with assets in Kazakhstan are registered there. The country consumes technologies it does not create.</span>
+  </div>
+  <div id="ip-rank"></div>
+  <div class="pull">
+    <span class="t on ru">"Из $478 млн IP-платежей только $37 млн возвращается как экспорт. Страна потребляет технологии, которые не создает."</span>
+    <span class="t kz">"$478 млн IP-толемдерiнен тек $37 млн гана экспорт ретiнде кайтады. Ел жасамаган технологияларды тутынады."</span>
+    <span class="t en">"Of $478M in IP payments, only $37M returns as export. The country consumes technologies it does not create."</span>
+  </div>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S10: ENGINEERING - DUAL BARS ==== -->
+<div class="sec-wrap bg2">
+<div class="sec" id="s10">
+  <div class="sec-num">10</div>
+  <div class="sec-h2"><span class="t on ru">Инженерия: США нарастили поставки в 2.5 раза</span><span class="t kz">Инженерия: АКШ жеткiзiлiмдi 2.5 есе кобейттi</span><span class="t en">Engineering: USA scaled up supply 2.5x</span></div>
+  <div class="sec-dek"><span class="t on ru">Импорт архитектурных и инженерных услуг, 2024 vs 2025, тыс. долл.</span><span class="t kz">Архитектуралык жане инженерлiк кызметтер импорты, 2024 vs 2025, мын. долл.</span><span class="t en">Import of architectural and engineering services, 2024 vs 2025, thousands USD</span></div>
+  <div class="narr">
+    <span class="t on ru">Импорт инженерных услуг из США вырос с $63 до $161 млн - рост на <strong>$98 млн (+157%)</strong>. Крупнейший единичный скачок во всей статистике торговли услугами. Вероятная причина - проектирование энергетических или промышленных объектов с американскими компаниями. Россия, напротив, упала с $74 до $30 млн: геополитика меняет карту инжиниринга.</span>
+    <span class="t kz">АКШ-тан инженерлiк кызметтер $63 млн-нан $161 млн-га дейiн осtі - <strong>$98 млн (+157%)</strong> осу. Ресей $74 млн-нан $30 млн-га дейiн тустi: геосаясат инженерлiк картасын озгертедi.</span>
+    <span class="t en">US engineering services imports grew from $63M to $161M - a <strong>$98M (+157%)</strong> jump. The single largest increase across all services trade statistics. The likely cause: design of energy or industrial facilities with US companies. Russia fell from $74M to $30M: geopolitics is redrawing the engineering map.</span>
+  </div>
+  <div id="eng-bars"></div>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S11: BUSINESS SERVICES - ICON BARS ==== -->
+<div class="sec-wrap">
+<div class="sec" id="s11">
+  <div class="sec-num">11</div>
+  <div class="sec-h2"><span class="t on ru">Деловые услуги: из чего складывается дефицит в $2 млрд</span><span class="t kz">Iскерлiк кызметтер: $2 млрд тапшылык неден туракты</span><span class="t en">Business services: what makes up the $2B deficit</span></div>
+  <div class="sec-dek"><span class="t on ru">Компоненты деловых услуг, импорт 2025, млн долл., по убыванию</span><span class="t kz">Iскерлiк кызметтер компоненттерi, импорт 2025, млн долл.</span><span class="t en">Business services components, import 2025, mln USD, descending</span></div>
+  <div class="narr">
+    <span class="t on ru">Инженерные и архитектурные услуги - самая дорогая статья импорта ($860 млн). Следом - реклама и маркетинг ($568 млн), управленческий консалтинг ($464 млн). Это не роскошь - это функциональные дыры в казахстанской экономике: проектирование больших объектов, международный маркетинг, управление крупными организациями. Всё это закупается за рубежом.</span>
+    <span class="t kz">Инженерлiк жане архитектуралык кызметтер - ен кымбат импорт ($860 млн). Одан сон - жарнама мен маркетинг ($568 млн), баскару консалтингi ($464 млн). Бул казак экономикасындагы функционалдык алшактыктар.</span>
+    <span class="t en">Engineering and architectural services are the most expensive import item ($860M). Then advertising and marketing ($568M), management consulting ($464M). These are not luxuries - they are functional gaps in the Kazakhstani economy: designing large facilities, international marketing, managing large organizations. All purchased abroad.</span>
+  </div>
+  <div id="biz-icon-bars"></div>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S12: FINANCE - RADIAL BARS ==== -->
+<div class="sec-wrap bg2">
+<div class="sec" id="s12">
+  <div class="sec-num">12</div>
+  <div class="sec-h2"><span class="t on ru">Финансы и страхование: профицит сохраняется, но под давлением</span><span class="t kz">Каржы жане сактандыру: профицит сакталады, бiрак кысымда</span><span class="t en">Finance and insurance: surplus holds, but under pressure</span></div>
+  <div class="sec-dek"><span class="t on ru">Экспорт и импорт, 2024 vs 2025, млн долл.</span><span class="t kz">Экспорт жане импорт, 2024 vs 2025, млн долл.</span><span class="t en">Export and import, 2024 vs 2025, mln USD</span></div>
+  <div class="narr">
+    <span class="t on ru">Финансовые услуги - аномальная история: экспорт <strong>упал на 7.8%</strong>, с $895 до $825 млн, при росте импорта на 8.2%. Профицит сохраняется ($115 млн), но сужается. Страхование движется в противоположную сторону: экспорт +9.8%, импорт -14.6%. Казахстанские страховщики продают полисы за рубеж всё активнее.</span>
+    <span class="t kz">Каржылык кызметтер - аномальды жагдай: экспорт <strong>7.8%-га тустi</strong>, $895 млн-нан $825 млн-га. Профицит сакталады ($115 млн), бiрак тарылуда. Сактандыру карама-карсы багытта: экспорт +9.8%, импорт -14.6%.</span>
+    <span class="t en">Financial services is an anomalous story: export <strong>fell 7.8%</strong>, from $895M to $825M, with imports rising 8.2%. The surplus holds ($115M) but narrows. Insurance moves in the opposite direction: export +9.8%, import -14.6%. Kazakhstani insurers are selling policies abroad more actively.</span>
+  </div>
+  <svg id="fin-slope" width="860" height="260" viewBox="0 0 860 260"></svg>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S13: GOVT SERVICES - STRIPE CHART ==== -->
+<div class="sec-wrap">
+<div class="sec" id="s13">
+  <div class="sec-num">13</div>
+  <div class="sec-h2"><span class="t on ru">Государственные услуги: экспорт превышает импорт в 1.4 раза</span><span class="t kz">Мемлекеттiк кызметтер: экспорт импорттан 1.4 есе жогары</span><span class="t en">Government services: export exceeds import 1.4x</span></div>
+  <div class="sec-dek"><span class="t on ru">Государственные услуги, экспорт vs импорт, 2024-2025, тыс. долл.</span><span class="t kz">Мемлекеттiк кызметтер, экспорт vs импорт, 2024-2025, мын. долл.</span><span class="t en">Government services, export vs import, 2024-2025, thousands USD</span></div>
+  <div class="narr">
+    <span class="t on ru">Государственные услуги - небольшой, но устойчиво профицитный сектор. Экспорт ($282 млн) превышает импорт ($200 млн). За год: экспорт чуть снизился (-1%), импорт вырос (+13%). Типичное содержание этой категории - посольства, консульства, дипломатические представительства за рубежом.</span>
+    <span class="t kz">Мемлекеттiк кызметтер - шагын, бiрак туракты профициттi сектор. Экспорт ($282 млн) импорттан ($200 млн) жогары. Бiр жылда: экспорт азайды (-1%), импорт осtі (+13%).</span>
+    <span class="t en">Government services is a small but consistently surplus sector. Export ($282M) exceeds import ($200M). Over the year: export slightly decreased (-1%), import grew (+13%). Typical content of this category: embassies, consulates, diplomatic missions abroad.</span>
+  </div>
+  <div id="govt-chart"></div>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S14: YOY CHANGE - DOT PLOT ==== -->
+<div class="sec-wrap bg2">
+<div class="sec" id="s14">
+  <div class="sec-num">14</div>
+  <div class="sec-h2"><span class="t on ru">Динамика 2024-2025: кто вырос, кто упал</span><span class="t kz">2024-2025 динамикасы: кiм осtі, кiм тустi</span><span class="t en">2024-2025 dynamics: who grew, who fell</span></div>
+  <div class="sec-dek"><span class="t on ru">Изменение экспорта г/г, %</span><span class="t kz">Экспорт осiмi ж/ж, %</span><span class="t en">Export change YoY, %</span></div>
+  <div class="narr">
+    <span class="t on ru">Три категории показали двузначный рост: IT (+36%), поездки (+12%), страхование (+10%). Плата за ИС выросла на <strong>+189%</strong> - но с очень низкой базы ($13 млн в 2024). Строительство и финансовые услуги единственные, где экспорт упал. Общий экспорт вырос на 8%.</span>
+    <span class="t kz">Уш санат екi таnбалы осу корсетtі: IT (+36%), сапарлар (+12%), сактандыру (+10%). ЗМ ушiн толем <strong>+189%</strong> осtі - бiрак базасы откiр тomen болды. Курылыс пен каржы кызметтерi гана тустi. Жалпы экспорт 8%-га осtі.</span>
+    <span class="t en">Three categories posted double-digit growth: IT (+36%), travel (+12%), insurance (+10%). IP charges grew <strong>+189%</strong> - but from a very low base ($13M in 2024). Construction and financial services were the only ones where export fell. Total export grew 8%.</span>
+  </div>
+  <svg id="dotplot-svg" width="860" height="320" viewBox="0 0 860 320"></svg>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S15: WAFFLE - EVERY $100 ==== -->
+<div class="sec-wrap">
+<div class="sec" id="s15">
+  <div class="sec-num">15</div>
+  <div class="sec-h2"><span class="t on ru">Из чего состоит каждый $100 экспорта услуг</span><span class="t kz">Кызметтер экспортынын эрбiр $100 неден турады</span><span class="t en">What makes up every $100 of services export</span></div>
+  <div class="sec-dek"><span class="t on ru">Каждый квадрат = $1 из $100, I кв. 2025</span><span class="t kz">Эрбiр шаршы = $100-дан $1, 2025 I токсан</span><span class="t en">Each square = $1 from $100, Q1 2025</span></div>
+  <div class="narr">
+    <span class="t on ru">Визуально видно то, что теряется в таблицах: транспорт и туризм занимают почти весь экспорт. IT - уже заметный кусок. Строительный экспорт, IP, страхование - буквально несколько квадратов. Для страны, которая хочет диверсифицировать экономику, эта картина - вызов.</span>
+    <span class="t kz">Кестелерде жоголатын нарсе визуалды кориnetі: колiк пен туризм почти барлык экспортты алады. IT - белiнетiн болiк. Курылыс экспорты, IP, сактандыру - бiрнеше шаршы гана. Диверсификациялагысы келетiн ел ушiн бул сурет - кагида.</span>
+    <span class="t en">Visually apparent what gets lost in tables: transport and tourism occupy almost all exports. IT is already a noticeable chunk. Construction export, IP, insurance are literally a few squares. For a country wanting to diversify, this picture is a challenge.</span>
+  </div>
+  <div style="display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;">
+    <div id="waffle-main"></div>
+    <div id="waffle-legend" style="padding-top:8px;"></div>
+  </div>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- ==== S16: LEISURE SERVICES ==== -->
+<div class="sec-wrap bg2">
+<div class="sec" id="s16">
+  <div class="sec-num">16</div>
+  <div class="sec-h2"><span class="t on ru">Культура и досуг: симметричный дефицит</span><span class="t kz">Мадениет пен демалыс: симметриялык тапшылык</span><span class="t en">Culture and leisure: symmetric deficit</span></div>
+  <div class="sec-dek"><span class="t on ru">Культурные и досуговые услуги, сравнение 2024-2025, млн долл.</span><span class="t kz">Мадени жане демалыс кызметтерi, 2024-2025 салыстырмасы, млн долл.</span><span class="t en">Cultural and leisure services, 2024-2025 comparison, mln USD</span></div>
+  <div class="narr">
+    <span class="t on ru">Экспорт культурных и досуговых услуг ($435 млн) практически равен импорту ($488 млн). Дефицит небольшой - $53 млн. Обе стороны немного снизились г/г. Скорее всего, это платежи за потоковые сервисы, онлайн-игры, лицензионный контент с обеих сторон - симметричная цифровая торговля.</span>
+    <span class="t kz">Мадени жане демалыс кызметтерi экспорты ($435 млн) импортка ($488 млн) жакын тен. Тапшылык небары - $53 млн. Екi жак та ж/ж аздап тустi. Бул потоктык сервистер мен онлайн-ойындарга толемдер болуы мумкiн.</span>
+    <span class="t en">Cultural and leisure services export ($435M) is nearly equal to import ($488M). The deficit is small - $53M. Both sides fell slightly YoY. This is likely payments for streaming services, online games, licensed content on both sides - symmetric digital trade.</span>
+  </div>
+  <div id="leisure-chart"></div>
+  <div class="src"><span class="t on ru">Источник: Национальный банк РК, 2025</span><span class="t kz">Дерек: ҚР Улттык банкi, 2025</span><span class="t en">Source: National Bank of Kazakhstan, 2025</span></div>
+</div>
+</div>
+
+<!-- CONCLUSION -->
+<div class="concl-wrap">
+  <div style="max-width:var(--max);margin:0 auto;">
+    <div class="sec-num" style="color:rgba(255,255,255,.35);margin-bottom:10px;">
+      <span class="t on ru">Заключение</span><span class="t kz">Корытынды</span><span class="t en">Conclusion</span>
+    </div>
+    <div class="concl-h2">
+      <span class="t on ru">Что говорят данные о Казахстане</span>
+      <span class="t kz">Деректер Казакстан туралы не айтады</span>
+      <span class="t en">What the data says about Kazakhstan</span>
+    </div>
+    <div class="concl-grid">
+      <div class="cstat"><div class="cstat-val">-$1.2B</div><div class="cstat-lbl"><span class="t on ru">Дефицит торговли услугами</span><span class="t kz">Кызметтер саудасы тапшылыгы</span><span class="t en">Services trade deficit</span></div></div>
+      <div class="cstat"><div class="cstat-val">3 из 10</div><div class="cstat-lbl"><span class="t on ru">Категорий в профиците</span><span class="t kz">Санат профициттi</span><span class="t en">Categories in surplus</span></div></div>
+      <div class="cstat"><div class="cstat-val">+35.6%</div><div class="cstat-lbl"><span class="t on ru">Рост IT-экспорта</span><span class="t kz">IT экспорт осiмi</span><span class="t en">IT export growth</span></div></div>
+      <div class="cstat"><div class="cstat-val">13:1</div><div class="cstat-lbl"><span class="t on ru">IP-импорт / IP-экспорт</span><span class="t kz">IP-импорт / IP-экспорт</span><span class="t en">IP import / IP export</span></div></div>
+      <div class="cstat"><div class="cstat-val">+63%</div><div class="cstat-lbl"><span class="t on ru">Рост строительного импорта</span><span class="t kz">Курылыс импортынын осуi</span><span class="t en">Construction import growth</span></div></div>
+      <div class="cstat"><div class="cstat-val">+157%</div><div class="cstat-lbl"><span class="t on ru">Рост инжиниринга из США</span><span class="t kz">АКШ-тан инженерлiк импорт</span><span class="t en">US engineering import surge</span></div></div>
+    </div>
+    <div class="concl-body">
+      <span class="t on ru">Казахстан остается нетто-импортером услуг. Страна зарабатывает на двух вещах - транзите грузов и туризме. Обе статьи растут, но они не создают сложных компетенций.<br><br>
+      IT-сектор - единственный сигнал диверсификации. Рост на 36% за квартал - серьезно. Но пока это 11 центов с каждого доллара экспорта.<br><br>
+      Рост инженерного импорта из США (+157%) и строительного импорта (+63%) говорит о том, что в стране идут крупные проекты. Казахстан строит - но строит с чужими инженерами.<br><br>
+      Соотношение IP-платежей 13:1 - это цена за технологическую зависимость. Пока страна не создает технологии, которые покупают другие, этот счет будет только расти.
+      </span>
+      <span class="t kz">Казакстан кызметтер нетто-импорттаушысы болып кала бередi. Ел екi нарседен табады - жук транзитiнен жане туризмнен. Екеуi де осуде, бiрак куделi кузiреттiлiк тудырмайды.<br><br>
+      IT секторы - жалгыз диверсификация белгiсi. Токсан iшiндегi 36% осу - маnыздыкты. Бiрак эзiрше бул экспорттын эрбiр долларынан 11 цент.<br><br>
+      АКШ-тан инженерлiк импорттын (+157%) жане курылыс импортынын (+63%) осуi - елде iрi жобалар журiп жатканын кorsетедi. Казакстан салады - бiрак баска адамнын инженерлерiмен.
+      </span>
+      <span class="t en">Kazakhstan remains a net services importer. The country earns from two things - freight transit and tourism. Both are growing but they do not build complex competencies.<br><br>
+      The IT sector is the only signal of diversification. 36% growth in a quarter is serious. But it is still 11 cents of every dollar of exports.<br><br>
+      The surge in US engineering imports (+157%) and construction imports (+63%) signals that major projects are underway. Kazakhstan is building - but with other people's engineers.<br><br>
+      The 13:1 IP payment ratio is the price of technological dependency. As long as the country does not create technologies others buy, this bill will only grow.
+      </span>
+    </div>
+    <a href="https://nurasyl.space" class="back-link">nurasyl.space</a>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-inner">
+    <div>
+      <div class="ft-brand">Nurassyl Abdrazakuly</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:5px;">nurasyl.space</div>
+    </div>
+    <div class="ft-meta">
+      <span class="t on ru">Источник: Национальный банк РК<br>Внешняя торговля услугами 2024-2025<br>Данные в тыс. долл. США</span>
+      <span class="t kz">Дерек: ҚР Улттык банкi<br>Сырткы кызметтер саудасы 2024-2025<br>Деректер мын. АКШ долл.</span>
+      <span class="t en">Source: National Bank of Kazakhstan<br>External Services Trade 2024-2025<br>All figures in thousands USD</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const CATS = {
+  ru:['Транспорт','Поездки','Деловые','ТКИ-услуги','Культура','Финансовые','Страхование','Гос. услуги','Плата за ИС','Строительство'],
+  kz:['Колiк','Сапарлар','Iскерлiк','АКТ','Мадениет','Каржылык','Сактандыру','Мемл.','ЗМ толемi','Курылыс'],
+  en:['Transport','Travel','Business','ICT','Culture','Financial','Insurance','Gov.serv.','IP charges','Construction']
+};
+const EXP25=[5748979,2889095,808645,1355234,435266,825031,291436,281987,36962,34080];
+const EXP24=[5467232,2570944,771198,999640,445045,894718,265472,284732,12792,48981];
+const IMP25=[3523927,3846837,2799348,735181,487915,710020,67547,199907,478395,618766];
+const IMP24=[3355803,3932490,2301744,603955,510422,656356,79065,176526,454727,379470];
+const PAL=['#1a6fa8','#c8380a','#2a8a4a','#c8960a','#6a3a9a','#a83a6a','#3a8a8a','#5a6a1a','#3a5a9a','#8a3a2a'];
+
+let LANG='ru';
+
+// ============================================================
+// UTILS
+// ============================================================
+const tip=document.getElementById('tip');
+function showTip(h,e){tip.innerHTML=h;tip.style.display='block';moveTip(e);}
+function moveTip(e){tip.style.left=(e.clientX+14)+'px';tip.style.top=(e.clientY-12)+'px';}
+function hideTip(){tip.style.display='none';}
+document.addEventListener('mousemove',moveTip);
+function fmtM(v){return (v/1000).toFixed(1)+'M';}
+function fmtK(v){return v>=1000?(v/1000).toFixed(1)+'M':v.toFixed(0)+'K';}
+function sgn(v){return v>=0?'+':'';}
+function pctChg(a,b){return ((a-b)/Math.abs(b)*100).toFixed(1);}
+
+// ============================================================
+// LANG
+// ============================================================
+document.getElementById('LB').addEventListener('click',e=>{
+  const btn=e.target.closest('.lb');
+  if(!btn)return;
+  LANG=btn.dataset.l;
+  document.querySelectorAll('.lb').forEach(b=>b.classList.toggle('on',b===btn));
+  document.querySelectorAll('.t').forEach(el=>el.classList.toggle('on',el.classList.contains(LANG)));
+  renderAll();
+});
+
+// ============================================================
+// SCROLL / PROGRESS
+// ============================================================
+function onScroll(){
+  const st=document.documentElement.scrollTop;
+  const dh=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('pbar').style.width=(st/dh*100)+'%';
+  document.querySelectorAll('.sec').forEach(s=>{
+    if(s.getBoundingClientRect().top<window.innerHeight*0.92) s.classList.add('vis');
+  });
+}
+window.addEventListener('scroll',onScroll);
+
+// ============================================================
+// VIZ 1 - HORIZONTAL BARS (export + import side by side)
+// ============================================================
+function renderHBars(){
+  function make(id,vals,vals24,color){
+    const el=document.getElementById(id); if(!el)return;
+    const max=Math.max(...vals);
+    const ord=vals.map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v);
+    el.innerHTML='';
+    ord.forEach(({v,i})=>{
+      const p=v/max*100;
+      const d=pctChg(v,vals24[i]);
+      const dc=parseFloat(d)>=0?'#2a8a4a':'#c8380a';
+      el.innerHTML+=`<div class="hbar-row"
+        onmouseenter="showTip('${CATS[LANG][i]}<br>${fmtM(v)}<br>${sgn(parseFloat(d))}${d}% г/г',event)"
+        onmouseleave="hideTip()">
+        <div class="hbar-meta">
+          <span class="hbar-name">${CATS[LANG][i]}</span>
+          <span class="hbar-delta" style="color:${dc}">${sgn(parseFloat(d))}${d}%</span>
+        </div>
+        <div class="hbar-track">
+          <div class="hbar-fill" style="background:${color};width:${p}%;">
+            <span class="hbar-val">${fmtM(v)}</span>
+          </div>
+        </div>
+      </div>`;
+    });
+  }
+  make('hbar-exp',EXP25,EXP24,'#1a6fa8');
+  make('hbar-imp',IMP25,IMP24,'#c8380a');
+}
+
+// ============================================================
+// VIZ 2 - TREEMAP
+// ============================================================
+function renderTreemap(){
+  const el=document.getElementById('treemap'); if(!el)return;
+  el.innerHTML='';
+  const total=EXP25.reduce((a,b)=>a+b,0);
+  const items=EXP25.map((v,i)=>({v,i,pct:v/total})).sort((a,b)=>b.v-a.v);
+  const W=el.offsetWidth||860,H=380;
+
+  function sq(items,x,y,w,h){
+    if(!items.length)return[];
+    const cells=[];let rem=[...items],cx=x,cy=y,cw=w,ch=h;
+    while(rem.length){
+      const tl=rem.reduce((s,it)=>s+it.pct,0);
+      let batch=[rem[0]];
+      for(let k=1;k<rem.length;k++){
+        const tb=batch.concat(rem[k]);
+        const tp=tb.reduce((s,it)=>s+it.pct,0);
+        const tw=cw>=ch?tp/tl*cw:cw,th2=cw>=ch?ch:tp/tl*ch;
+        const wA=Math.max(...tb.map(it=>{const bw=cw>=ch?tw:it.pct/tp*cw,bh=cw>=ch?it.pct/tp*th2:th2;return Math.max(bw/bh,bh/bw);}));
+        const bp2=batch.reduce((s,it)=>s+it.pct,0);
+        const tw2=cw>=ch?bp2/tl*cw:cw,th3=cw>=ch?ch:bp2/tl*ch;
+        const wB=Math.max(...batch.map(it=>{const bw=cw>=ch?tw2:it.pct/bp2*cw,bh=cw>=ch?it.pct/bp2*th3:th3;return Math.max(bw/bh,bh/bw);}));
+        if(wA<wB){batch=tb;}else break;
+      }
+      const bp=batch.reduce((s,it)=>s+it.pct,0);
+      if(cw>=ch){
+        const bw=bp/tl*cw;let iy=cy;
+        batch.forEach(it=>{const bh=it.pct/bp*ch;cells.push({...it,x:cx,y:iy,w:bw,h:bh});iy+=bh;});
+        cx+=bw;cw-=bw;
+      }else{
+        const bh=bp/tl*ch;let ix=cx;
+        batch.forEach(it=>{const bw=it.pct/bp*cw;cells.push({...it,x:ix,y:cy,w:bw,h:bh});ix+=bw;});
+        cy+=bh;ch-=bh;
+      }
+      rem=rem.slice(batch.length);
+    }
+    return cells;
+  }
+  sq(items,0,0,W,H).forEach(c=>{
+    const d=document.createElement('div');
+    d.className='tm-cell';
+    d.style.cssText=`left:${c.x}px;top:${c.y}px;width:${c.w}px;height:${c.h}px;background:${PAL[c.i%PAL.length]};`;
+    d.innerHTML=`<div class="tm-label">${CATS[LANG][c.i]}</div><div class="tm-val">${fmtM(c.v)}</div>`;
+    d.addEventListener('mouseenter',e=>showTip(`${CATS[LANG][c.i]}<br>${fmtM(c.v)}<br>${(c.pct*100).toFixed(1)}%`,e));
+    d.addEventListener('mouseleave',hideTip);
+    el.appendChild(d);
+  });
+}
+
+// ============================================================
+// VIZ 3 - BALANCE CHART (symmetric)
+// ============================================================
+function renderBalance(){
+  const el=document.getElementById('balance-chart'); if(!el)return;
+  el.innerHTML='';
+  const maxV=Math.max(...EXP25,...IMP25);
+  const half=310;
+  EXP25.map((v,i)=>({v,i,bal:v-IMP25[i]})).sort((a,b)=>b.bal-a.bal).forEach(({v,i,bal})=>{
+    const ep=EXP25[i]/maxV*half,ip=IMP25[i]/maxV*half;
+    const bStr=(bal>0?'+':'')+(bal/1000).toFixed(0)+'M';
+    const bCol=bal>=0?'#1a6fa8':'#c8380a';
+    el.innerHTML+=`<div class="bal-row" style="cursor:pointer;"
+      onmouseenter="showTip('${CATS[LANG][i]}<br>EXP: ${fmtM(EXP25[i])}<br>IMP: ${fmtM(IMP25[i])}<br>BAL: ${bStr}',event)"
+      onmouseleave="hideTip()">
+      <div class="bal-name">${CATS[LANG][i]}</div>
+      <div style="display:flex;align-items:center;flex:1;">
+        <div style="width:${half}px;height:20px;background:#ede9e2;position:relative;flex-shrink:0;">
+          <div style="position:absolute;right:0;top:0;height:100%;width:${ep}px;background:#1a6fa8;transition:width 1.3s;"></div>
+        </div>
+        <div class="bal-sep"></div>
+        <div style="width:${half}px;height:20px;background:#ede9e2;position:relative;flex-shrink:0;">
+          <div style="position:absolute;left:0;top:0;height:100%;width:${ip}px;background:#c8380a;transition:width 1.3s;"></div>
+        </div>
+      </div>
+      <div class="bal-diff" style="color:${bCol}">${bStr}</div>
+    </div>`;
+  });
+}
+
+// ============================================================
+// VIZ 4 - TRANSPORT SCATTER (canvas)
+// ============================================================
+function renderTransportCanvas(){
+  const cv=document.getElementById('transport-canvas'); if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  const pL=80,pR=40,pT=36,pB=56;
+  const cW=W-pL-pR,cH=H-pT-pB;
+
+  const pts=[
+    {lbl:{ru:'Грузовые',kz:'Жук',en:'Freight'}, x:4519070, y:2961303, r:52, c:'#1a6fa8'},
+    {lbl:{ru:'Пассажирские',kz:'Жолаушы',en:'Passenger'}, x:312967, y:110522, r:22, c:'#2a8a4a'},
+    {lbl:{ru:'Прочие',kz:'Баска',en:'Other'}, x:916942, y:452102, r:32, c:'#c8960a'},
+  ];
+  const maxX=5200000,maxY=3300000;
+  function sx(v){return pL+v/maxX*cW;}
+  function sy(v){return pT+cH*(1-v/maxY);}
+
+  // grid
+  ctx.strokeStyle='#ede9e2';ctx.lineWidth=1;
+  [1e6,2e6,3e6,4e6,5e6].forEach(x=>{
+    ctx.beginPath();ctx.moveTo(sx(x),pT);ctx.lineTo(sx(x),pT+cH);ctx.stroke();
+    ctx.fillStyle='#9a948a';ctx.font='9px IBM Plex Mono,monospace';ctx.textAlign='center';
+    ctx.fillText(fmtM(x),sx(x),pT+cH+16);
+  });
+  [5e5,1e6,1.5e6,2e6,2.5e6,3e6].forEach(y=>{
+    ctx.beginPath();ctx.moveTo(pL,sy(y));ctx.lineTo(pL+cW,sy(y));ctx.stroke();
+    ctx.fillStyle='#9a948a';ctx.textAlign='right';
+    ctx.fillText(fmtM(y),pL-5,sy(y)+4);
+  });
+
+  // diagonal (parity line)
+  ctx.setLineDash([5,5]);ctx.strokeStyle='#ccc';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(sx(0),sy(0));ctx.lineTo(sx(maxX),sy(maxX));ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#9a948a';ctx.font='9px IBM Plex Mono,monospace';ctx.textAlign='left';
+  ctx.fillText(LANG==='ru'?'паритет':LANG==='kz'?'паритет':'parity',sx(maxX)-60,sy(maxX)+14);
+
+  // axes
+  ctx.fillStyle='#4a4640';ctx.font='10px IBM Plex Mono,monospace';
+  ctx.textAlign='center';ctx.fillText(LANG==='ru'?'Экспорт (тыс. долл.)':LANG==='kz'?'Экспорт (мын. долл.)':'Export (thousands USD)',pL+cW/2,pT+cH+36);
+  ctx.save();ctx.translate(16,pT+cH/2);ctx.rotate(-Math.PI/2);
+  ctx.fillText(LANG==='ru'?'Импорт':LANG==='kz'?'Импорт':'Import',0,0);ctx.restore();
+
+  // bubbles
+  pts.forEach(p=>{
+    const px=sx(p.x),py=sy(p.y);
+    ctx.beginPath();ctx.arc(px,py,p.r,0,Math.PI*2);
+    ctx.fillStyle=p.c+'bb';ctx.fill();
+    ctx.strokeStyle=p.c;ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle='#1a1814';ctx.font='bold 11px IBM Plex Sans,sans-serif';ctx.textAlign='center';
+    ctx.fillText(p.lbl[LANG],px,py+p.r+16);
+    ctx.font='10px IBM Plex Mono,monospace';ctx.fillStyle='#fff';
+    ctx.fillText(fmtM(p.x),px,py-4);
+  });
+}
+
+// ============================================================
+// VIZ 5 - LOLLIPOP (travel)
+// ============================================================
+function renderLollipops(){
+  function make(id,countries,vals,color){
+    const el=document.getElementById(id);if(!el)return;
+    const max=Math.max(...vals);
+    const ord=vals.map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v);
+    el.innerHTML='';
+    ord.forEach(({v,i})=>{
+      const p=v/max*100;
+      el.innerHTML+=`<div class="lol-row" style="cursor:pointer;"
+        onmouseenter="showTip('${countries[i]}: ${fmtK(v)}',event)" onmouseleave="hideTip()">
+        <div class="lol-name">${countries[i]}</div>
+        <div class="lol-track">
+          <div class="lol-line" style="width:${p}%;background:${color};"></div>
+          <div class="lol-dot" style="background:${color};"></div>
+        </div>
+        <div class="lol-val">${fmtK(v)}</div>
+      </div>`;
+    });
+  }
+  make('lol-exp',
+    ['Россия','Узбекистан','Китай','Киргизия','Таджикистан','Германия','США','ОАЭ','Беларусь','Франция'],
+    [768105,488462,444838,335302,64959,56443,40601,10477,19339,13516],'#1a6fa8');
+  make('lol-imp',
+    ['Россия','Киргизия','Турция','ОАЭ','Китай','Грузия','Корея','Германия','Прочие','Беларусь'],
+    [636090,584310,525972,461284,229354,89871,58680,24461,50000,2576],'#c8380a');
+}
+
+// ============================================================
+// VIZ 6 - IT DONUT (SVG)
+// ============================================================
+function renderITDonut(){
+  const svg=document.getElementById('it-donut');
+  const leg=document.getElementById('it-donut-legend');
+  if(!svg||!leg)return;
+  svg.innerHTML='';leg.innerHTML='';
+  const items=[
+    {name:{ru:'Компьютерные',kz:'Компьютерлiк',en:'Computer'}, v:1142738, c:'#1a6fa8'},
+    {name:{ru:'Телеком',kz:'Телеком',en:'Telecom'}, v:132824, c:'#c8960a'},
+    {name:{ru:'Информационные',kz:'Акпараттык',en:'Information'}, v:79671, c:'#2a8a4a'},
+  ];
+  const total=items.reduce((s,it)=>s+it.v,0);
+  const cx=120,cy=120,R=90,r=55;
+  let angle=-Math.PI/2;
+  items.forEach(it=>{
+    const a=it.v/total*Math.PI*2;
+    const x1=cx+R*Math.cos(angle),y1=cy+R*Math.sin(angle);
+    const x2=cx+R*Math.cos(angle+a),y2=cy+R*Math.sin(angle+a);
+    const xi1=cx+r*Math.cos(angle),yi1=cy+r*Math.sin(angle);
+    const xi2=cx+r*Math.cos(angle+a),yi2=cy+r*Math.sin(angle+a);
+    const lg=a>Math.PI?1:0;
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',`M${xi1} ${yi1} L${x1} ${y1} A${R} ${R} 0 ${lg} 1 ${x2} ${y2} L${xi2} ${yi2} A${r} ${r} 0 ${lg} 0 ${xi1} ${yi1} Z`);
+    path.setAttribute('fill',it.c);
+    path.style.cursor='pointer';
+    path.addEventListener('mouseenter',e=>showTip(it.name[LANG]+'<br>'+fmtM(it.v),e));
+    path.addEventListener('mouseleave',hideTip);
+    svg.appendChild(path);
+    // label in middle of arc
+    const ma=angle+a/2;
+    const lx=cx+(R+r)/2*Math.cos(ma),ly=cy+(R+r)/2*Math.sin(ma);
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',lx);t.setAttribute('y',ly+4);
+    t.setAttribute('text-anchor','middle');t.setAttribute('fill','#fff');
+    t.setAttribute('font-size','11');t.setAttribute('font-family','IBM Plex Mono,monospace');
+    t.textContent=Math.round(it.v/total*100)+'%';
+    svg.appendChild(t);
+    angle+=a;
+    leg.innerHTML+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div style="width:12px;height:12px;background:${it.c};border-radius:2px;flex-shrink:0;"></div>
+      <span style="font-size:12px;color:var(--ink2);">${it.name[LANG]} - ${fmtM(it.v)}</span>
+    </div>`;
+  });
+  // center text
+  const ct=document.createElementNS('http://www.w3.org/2000/svg','text');
+  ct.setAttribute('x',cx);ct.setAttribute('y',cy-6);
+  ct.setAttribute('text-anchor','middle');ct.setAttribute('fill','#1a1814');
+  ct.setAttribute('font-size','13');ct.setAttribute('font-family','IBM Plex Mono,monospace');
+  ct.textContent='ТКИ';svg.appendChild(ct);
+  const cv2=document.createElementNS('http://www.w3.org/2000/svg','text');
+  cv2.setAttribute('x',cx);cv2.setAttribute('y',cx+10);
+  cv2.setAttribute('text-anchor','middle');cv2.setAttribute('fill','#1a6fa8');
+  cv2.setAttribute('font-size','14');cv2.setAttribute('font-weight','700');cv2.setAttribute('font-family','IBM Plex Mono,monospace');
+  cv2.textContent='$1.36B';svg.appendChild(cv2);
+
+  // IT country bars (top 5)
+  const itc=document.getElementById('it-bars-countries');
+  if(!itc)return;
+  const cnames=['Нидерланды','Испания','Узбекистан','Германия','Кыргызстан'];
+  const cvals=[11131,4718,19537,17496,2407];
+  const maxv=Math.max(...cvals);
+  itc.innerHTML=`<div style="font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">${LANG==='ru'?'Топ-5 стран, компьютерные услуги, экспорт 2025':LANG==='kz'?'Топ-5 ел, компьютерлiк кызметтер, экспорт 2025':'Top-5 countries, computer services, export 2025'}</div>`;
+  cnames.forEach((c,i)=>{
+    const p=cvals[i]/maxv*100;
+    itc.innerHTML+=`<div class="lol-row" style="margin-bottom:9px;">
+      <div class="lol-name" style="width:110px;">${c}</div>
+      <div class="lol-track"><div class="lol-line" style="width:${p}%;background:#2a8a4a;"></div><div class="lol-dot" style="background:#2a8a4a;"></div></div>
+      <div class="lol-val">${fmtK(cvals[i])}</div>
+    </div>`;
+  });
+}
+
+// ============================================================
+// VIZ 7 - SLOPE CHART
+// ============================================================
+function renderSlope(){
+  const svg=document.getElementById('slope-svg');if(!svg)return;
+  svg.innerHTML='';
+  const ctry=['Россия','Узбекистан','Китай','Турция','Кыргызстан','Беларусь','Азербайджан','Германия','Таджикистан','США'];
+  const v24=[59838,22171,44813,17469,6746,4631,4917,2517,3728,10406];
+  const v25=[55827,25828,74722,16633,7866,4563,4975,2498,4321,8227];
+  const W=860,H=400,pL=155,pR=155,pT=36,pB=36;
+  const x24=pL,x25=W-pR;
+  const maxV=Math.max(...v24,...v25)*1.06;
+  function sy(v){return pT+(1-v/maxV)*(H-pT-pB);}
+
+  ['2024','2025'].forEach((yr,j)=>{
+    const x=j===0?x24:x25;
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',x);t.setAttribute('y',20);
+    t.setAttribute('text-anchor','middle');t.setAttribute('fill','#9a948a');
+    t.setAttribute('font-size','12');t.setAttribute('font-family','IBM Plex Mono,monospace');
+    t.setAttribute('letter-spacing','0.12em');t.textContent=yr;
+    svg.appendChild(t);
+  });
+
+  ctry.forEach((c,i)=>{
+    const y1=sy(v24[i]),y2=sy(v25[i]);
+    const col=PAL[i%PAL.length];
+    const d=v25[i]-v24[i];
+    const big=Math.abs(d)>8000;
+
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',x24);line.setAttribute('y1',y1);
+    line.setAttribute('x2',x25);line.setAttribute('y2',y2);
+    line.setAttribute('stroke',col);
+    line.setAttribute('stroke-width',big?'2.5':'1.5');
+    line.setAttribute('opacity',big?'1':'0.45');
+    svg.appendChild(line);
+
+    [0,1].forEach(j=>{
+      const dot=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      dot.setAttribute('cx',j===0?x24:x25);dot.setAttribute('cy',j===0?y1:y2);dot.setAttribute('r','4.5');
+      dot.setAttribute('fill',col);
+      svg.appendChild(dot);
+    });
+
+    const tL=document.createElementNS('http://www.w3.org/2000/svg','text');
+    tL.setAttribute('x',x24-8);tL.setAttribute('y',y1+4);tL.setAttribute('text-anchor','end');
+    tL.setAttribute('fill',big?col:'#9a948a');tL.setAttribute('font-size',big?'11':'10');
+    tL.setAttribute('font-family','IBM Plex Mono,monospace');
+    tL.textContent=c+' '+fmtK(v24[i]);svg.appendChild(tL);
+
+    const tR=document.createElementNS('http://www.w3.org/2000/svg','text');
+    tR.setAttribute('x',x25+8);tR.setAttribute('y',y2+4);tR.setAttribute('text-anchor','start');
+    tR.setAttribute('fill',big?col:'#9a948a');tR.setAttribute('font-size',big?'11':'10');
+    tR.setAttribute('font-family','IBM Plex Mono,monospace');
+    tR.textContent=fmtK(v25[i])+' '+(d>=0?'+':'')+fmtK(d);svg.appendChild(tR);
+  });
+}
+
+// ============================================================
+// VIZ 8 - CONSTRUCTION PAIRED BARS
+// ============================================================
+function renderConstructionPaired(){
+  const el=document.getElementById('construction-paired');if(!el)return;
+  const items=[
+    {lbl:{ru:'Экспорт 2024',kz:'Экспорт 2024',en:'Export 2024'},v:48981,c:'#1a6fa855'},
+    {lbl:{ru:'Экспорт 2025',kz:'Экспорт 2025',en:'Export 2025'},v:34080,c:'#1a6fa8'},
+    {lbl:{ru:'Импорт 2024',kz:'Импорт 2024',en:'Import 2024'},v:379470,c:'#c8380a55'},
+    {lbl:{ru:'Импорт 2025',kz:'Импорт 2025',en:'Import 2025'},v:618766,c:'#c8380a'},
+  ];
+  const maxV=700000;
+  el.innerHTML='';
+  items.forEach(it=>{
+    const p=it.v/maxV*100;
+    el.innerHTML+=`<div class="wfall-item">
+      <div class="wfall-name">${it.lbl[LANG]}</div>
+      <div class="wfall-track" style="max-width:580px;">
+        <div class="wfall-fill" style="width:${p}%;background:${it.c};"></div>
+        <span style="position:absolute;left:${p+1}%;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10px;color:#4a4640;">${fmtK(it.v)}</span>
+      </div>
+    </div>`;
+  });
+}
+
+// ============================================================
+// VIZ 9 - IP RANK BARS
+// ============================================================
+function renderIPRank(){
+  const el=document.getElementById('ip-rank');if(!el)return;
+  const ctry=['Россия','США','Ирландия','Швейцария','Великобритания','Кипр','Германия','Нидерланды','Франция','Турция'];
+  const vals=[75126,64167,57429,53131,46845,34139,30655,13820,8019,3982];
+  const maxV=Math.max(...vals);
+  el.innerHTML='';
+  vals.map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v).forEach(({v,i},rank)=>{
+    const p=v/maxV*100;
+    el.innerHTML+=`<div class="rank-item" style="cursor:pointer;"
+      onmouseenter="showTip('${ctry[i]}: ${fmtK(v)} тыс. долл.',event)" onmouseleave="hideTip()">
+      <div class="rank-num">${rank+1}</div>
+      <div class="rank-name">${ctry[i]}</div>
+      <div class="rank-track">
+        <div class="rank-fill" style="width:${p}%;background:${PAL[i%PAL.length]};"></div>
+        <span class="rank-val">${fmtK(v)}</span>
+      </div>
+    </div>`;
+  });
+}
+
+// ============================================================
+// VIZ 10 - ENGINEERING DUAL ROWS
+// ============================================================
+function renderEngBars(){
+  const el=document.getElementById('eng-bars');if(!el)return;
+  const ctry=['США','Россия','Китай','Германия','Великобритания','Швейцария','Италия','ОАЭ'];
+  const v24=[62736,73745,23677,19270,29263,12661,25987,0];
+  const v25=[161334,30076,26851,17763,17781,10878,18879,5916];
+  const maxV=Math.max(...v24,...v25);
+  el.innerHTML='';
+  v25.map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v).forEach(({v,i})=>{
+    const p24=v24[i]/maxV*100,p25=v25[i]/maxV*100;
+    const d=v25[i]-v24[i];
+    const dc=d>=0?'#2a8a4a':'#c8380a';
+    el.innerHTML+=`<div class="eng-item">
+      <div class="eng-head">
+        <span class="eng-country">${ctry[i]}</span>
+        <span class="eng-delta" style="color:${dc}">${sgn(d)}${fmtK(d)}</span>
+      </div>
+      <div class="eng-row"><div class="eng-bar" style="width:${p24}%;background:#1a6fa855;"></div>
+        <span style="position:absolute;right:4px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:9px;color:#9a948a;">${fmtK(v24[i])} 2024</span>
+      </div>
+      <div class="eng-row"><div class="eng-bar" style="width:${p25}%;background:#1a6fa8;"></div>
+        <span style="position:absolute;right:4px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:9px;color:#fff;">${fmtK(v25[i])} 2025</span>
+      </div>
+    </div>`;
+  });
+}
+
+// ============================================================
+// VIZ 11 - BUSINESS ICON BARS
+// ============================================================
+function renderBizIconBars(){
+  const el=document.getElementById('biz-icon-bars');if(!el)return;
+  const comps=[
+    {n:{ru:'Архит. и инженерные',kz:'Архит. жане инженерлiк',en:'Arch. & engineering'},v:859608,ic:'🏗️',c:'#1a6fa8'},
+    {n:{ru:'Реклама и маркетинг',kz:'Жарнама жане маркетинг',en:'Advertising & marketing'},v:567891,ic:'📊',c:'#c8380a'},
+    {n:{ru:'Управленч. консалтинг',kz:'Баскару консалтингi',en:'Management consulting'},v:463357,ic:'💼',c:'#2a8a4a'},
+    {n:{ru:'Аренда оборудования',kz:'Жабдык жалдау',en:'Equipment rental'},v:279790,ic:'🔧',c:'#c8960a'},
+    {n:{ru:'Прочие деловые',kz:'Баска iскерлiк',en:'Other business'},v:436586,ic:'📁',c:'#6a3a9a'},
+    {n:{ru:'Юридические',kz:'Зандык',en:'Legal'},v:52462,ic:'⚖️',c:'#a83a6a'},
+    {n:{ru:'Аудит и бухгалтерия',kz:'Аудит жане бухгалтерия',en:'Audit & accounting'},v:20243,ic:'📋',c:'#3a8a8a'},
+    {n:{ru:'НИОКР',kz:'ГЗТКЖ',en:'R&D'},v:22554,ic:'🔬',c:'#5a6a1a'},
+  ];
+  const maxV=Math.max(...comps.map(c=>c.v));
+  el.innerHTML='';
+  comps.slice().sort((a,b)=>b.v-a.v).forEach(comp=>{
+    const p=comp.v/maxV*100;
+    el.innerHTML+=`<div style="display:flex;align-items:center;gap:12px;margin-bottom:13px;cursor:pointer;"
+      onmouseenter="showTip('${comp.n[LANG]}: ${fmtM(comp.v)}',event)" onmouseleave="hideTip()">
+      <div style="font-size:18px;width:26px;text-align:center;flex-shrink:0;">${comp.ic}</div>
+      <div style="width:195px;font-size:12px;color:var(--ink2);flex-shrink:0;">${comp.n[LANG]}</div>
+      <div style="flex:1;height:22px;background:#ede9e2;position:relative;">
+        <div style="height:100%;width:${p}%;background:${comp.c};transition:width 1.3s;"></div>
+        <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10px;color:${p>28?'#fff':'#4a4640'};">${fmtM(comp.v)}</span>
+      </div>
+    </div>`;
+  });
+}
+
+// ============================================================
+// VIZ 12 - FINANCE CANVAS (grouped mini bars)
+// ============================================================
+function renderFinSlope(){
+  const svg=document.getElementById('fin-slope');if(!svg)return;
+  svg.innerHTML='';
+  const W=860,H=260,pT=40,pB=50;
+
+  // 4 series: fin export, fin import, ins export, ins import
+  const series=[
+    {lbl:{ru:'Фин. экспорт',kz:'Кар. экспорт',en:'Fin. export'}, v24:894718, v25:825031, c:'#1a6fa8'},
+    {lbl:{ru:'Фин. импорт', kz:'Кар. импорт', en:'Fin. import'},  v24:656356, v25:710020, c:'#c8380a'},
+    {lbl:{ru:'Страх. экспорт',kz:'Сакт. экспорт',en:'Ins. export'},v24:265472,v25:291436, c:'#2a8a4a'},
+    {lbl:{ru:'Страх. импорт', kz:'Сакт. импорт', en:'Ins. import'}, v24:79065, v25:67547,  c:'#c8960a'},
+  ];
+
+  const n=series.length;
+  // Spread series evenly: each gets a column pair (2024 node, 2025 node)
+  const colW=W/n;
+  const x24=i=>colW*i+colW*0.28;
+  const x25=i=>colW*i+colW*0.72;
+  const allVals=series.flatMap(s=>[s.v24,s.v25]);
+  const maxV=Math.max(...allVals)*1.1;
+  const minV=0;
+  const sy=v=>pT+(1-(v-minV)/(maxV-minV))*(H-pT-pB);
+
+  // Year axis labels top
+  const mkText=(svg,x,y,txt,opts={})=>{
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',x);t.setAttribute('y',y);
+    t.setAttribute('text-anchor',opts.anchor||'middle');
+    t.setAttribute('fill',opts.fill||'#9a948a');
+    t.setAttribute('font-size',opts.size||'10');
+    t.setAttribute('font-family','IBM Plex Mono,monospace');
+    if(opts.weight)t.setAttribute('font-weight',opts.weight);
+    t.textContent=txt;svg.appendChild(t);
+  };
+
+  series.forEach((s,i)=>{
+    const xa=x24(i), xb=x25(i);
+    const ya=sy(s.v24), yb=sy(s.v25);
+    const d=((s.v25-s.v24)/s.v24*100).toFixed(1);
+    const dPos=parseFloat(d)>=0;
+
+    // Connector line
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',xa);line.setAttribute('y1',ya);
+    line.setAttribute('x2',xb);line.setAttribute('y2',yb);
+    line.setAttribute('stroke',s.c);line.setAttribute('stroke-width','2');line.setAttribute('opacity','0.6');
+    svg.appendChild(line);
+
+    // Dots 2024
+    const d24=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    d24.setAttribute('cx',xa);d24.setAttribute('cy',ya);d24.setAttribute('r','7');
+    d24.setAttribute('fill',s.c);d24.setAttribute('opacity','0.35');
+    svg.appendChild(d24);
+
+    // Dots 2025
+    const d25=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    d25.setAttribute('cx',xb);d25.setAttribute('cy',yb);d25.setAttribute('r','9');
+    d25.setAttribute('fill',s.c);
+    d25.style.cursor='pointer';
+    d25.addEventListener('mouseenter',e=>showTip(s.lbl[LANG]+'<br>2024: '+fmtM(s.v24)+'<br>2025: '+fmtM(s.v25)+'<br>'+(dPos?'+':'')+d+'%',e));
+    d25.addEventListener('mouseleave',hideTip);
+    svg.appendChild(d25);
+
+    // 2024 value above dot
+    mkText(svg,xa,ya-13,fmtM(s.v24),{fill:s.c+'99',size:'10'});
+    // 2025 value above dot
+    mkText(svg,xb,yb-14,fmtM(s.v25),{fill:s.c,size:'11',weight:'600'});
+
+    // Delta badge between dots
+    const xmid=(xa+xb)/2, ymid=(ya+yb)/2;
+    const badge=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    badge.setAttribute('x',xmid-18);badge.setAttribute('y',ymid-9);
+    badge.setAttribute('width',36);badge.setAttribute('height',16);
+    badge.setAttribute('rx',3);badge.setAttribute('fill','#fff');
+    badge.setAttribute('stroke',s.c);badge.setAttribute('stroke-width','1');
+    svg.appendChild(badge);
+    mkText(svg,xmid,ymid+4,(dPos?'+':'')+d+'%',{fill:s.c,size:'9',weight:'600'});
+
+    // Series label bottom
+    const lblLines=s.lbl[LANG].split('. ');
+    const lblX=(xa+xb)/2;
+    mkText(svg,lblX,H-pB+18,s.lbl[LANG],{fill:'#4a4640',size:'11'});
+  });
+
+  // "2024 / 2025" column headers — subtle
+  series.forEach((_,i)=>{
+    mkText(svg,x24(i),pT-14,'2024',{fill:'#bbb8b2',size:'9'});
+    mkText(svg,x25(i),pT-14,'2025',{fill:'#9a948a',size:'9'});
+  });
+}
+function renderFinCanvas(){
+  const cv=document.getElementById('fin-canvas');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  // Higher resolution
+  cv.width=860; cv.height=260;
+  const W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  const pL=50,pR=30,pT=36,pB=60;
+  const cW=W-pL-pR,cH=H-pT-pB;
+
+  // 4 groups: [Fin.EXP, Fin.IMP, Ins.EXP, Ins.IMP]
+  const groups=[
+    {lbl:{ru:'Фин.\nэкспорт',kz:'Кар.\nэкспорт',en:'Fin.\nexport'},   v24:894718, v25:825031, c24:'#a8c8e8', c25:'#1a6fa8'},
+    {lbl:{ru:'Фин.\nимпорт',kz:'Кар.\nимпорт',en:'Fin.\nimport'},    v24:656356, v25:710020, c24:'#f0a898', c25:'#c8380a'},
+    {lbl:{ru:'Страх.\nэкспорт',kz:'Сакт.\nэкспорт',en:'Ins.\nexport'}, v24:265472, v25:291436, c24:'#a0d0b0', c25:'#2a8a4a'},
+    {lbl:{ru:'Страх.\nимпорт',kz:'Сакт.\nимпорт',en:'Ins.\nimport'},  v24:79065,  v25:67547,  c24:'#f8d898', c25:'#c8960a'},
+  ];
+  const maxV=Math.max(...groups.map(g=>Math.max(g.v24,g.v25)))*1.12;
+
+  // Axis line
+  ctx.strokeStyle='#ddd8d0';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(pL,pT+cH);ctx.lineTo(pL+cW,pT+cH);ctx.stroke();
+
+  const groupCount=groups.length;
+  const gapBetweenGroups=cW*0.08;
+  const gw=(cW - gapBetweenGroups*(groupCount-1)) / groupCount;
+  const bw=gw*0.38;
+  const bGap=gw*0.08;
+
+  groups.forEach((g,i)=>{
+    const gx=pL + i*(gw+gapBetweenGroups);
+    const cx=gx+gw/2;
+
+    const h24=g.v24/maxV*cH;
+    const h25=g.v25/maxV*cH;
+
+    // 2024 bar
+    ctx.fillStyle=g.c24;
+    ctx.fillRect(cx-bw-bGap, pT+cH-h24, bw, h24);
+
+    // 2025 bar
+    ctx.fillStyle=g.c25;
+    ctx.fillRect(cx+bGap, pT+cH-h25, bw, h25);
+
+    // value on 2025 bar
+    ctx.fillStyle='#1a1814';ctx.font='bold 10px IBM Plex Mono,monospace';ctx.textAlign='center';
+    ctx.fillText(fmtM(g.v25), cx+bGap+bw/2, pT+cH-h25-5);
+
+    // delta indicator
+    const d=((g.v25-g.v24)/g.v24*100).toFixed(1);
+    const dc=parseFloat(d)>=0?'#2a8a4a':'#c8380a';
+    ctx.fillStyle=dc;ctx.font='9px IBM Plex Mono,monospace';
+    ctx.fillText((parseFloat(d)>=0?'+':'')+d+'%', cx, pT+cH-Math.max(h24,h25)-16);
+
+    // group label
+    ctx.fillStyle='#9a948a';ctx.font='10px IBM Plex Mono,monospace';
+    const lblLines=g.lbl[LANG].split('\n');
+    lblLines.forEach((ln,li)=>ctx.fillText(ln, cx, pT+cH+16+li*14));
+  });
+
+  // Legend top-left
+  ctx.fillStyle='#a8c8e8';ctx.fillRect(pL,10,14,12);
+  ctx.fillStyle='#4a4640';ctx.font='10px IBM Plex Mono,monospace';ctx.textAlign='left';ctx.fillText('2024',pL+18,20);
+  ctx.fillStyle='#1a6fa8';ctx.fillRect(pL+60,10,14,12);
+  ctx.fillStyle='#4a4640';ctx.fillText('2025',pL+78,20);
+}
+
+// ============================================================
+// VIZ 13 - GOVT SERVICES (horizontal dumbbell)
+// ============================================================
+function renderGovt(){
+  const el=document.getElementById('govt-chart');if(!el)return;
+  const items=[
+    {lbl:{ru:'Экспорт 2024',kz:'Экспорт 2024',en:'Export 2024'},v:284732,c:'#1a6fa855',bold:false},
+    {lbl:{ru:'Экспорт 2025',kz:'Экспорт 2025',en:'Export 2025'},v:281987,c:'#1a6fa8',bold:true},
+    {lbl:{ru:'Импорт 2024',kz:'Импорт 2024',en:'Import 2024'},v:176526,c:'#c8380a55',bold:false},
+    {lbl:{ru:'Импорт 2025',kz:'Импорт 2025',en:'Import 2025'},v:199907,c:'#c8380a',bold:true},
+  ];
+  const maxV=320000;
+  el.innerHTML='';
+  items.forEach(it=>{
+    const p=it.v/maxV*100;
+    el.innerHTML+=`<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+      <div style="width:150px;font-size:12px;color:${it.bold?'var(--ink)':'var(--ink3)'};flex-shrink:0;">${it.lbl[LANG]}</div>
+      <div style="flex:1;height:${it.bold?24:16}px;background:#ede9e2;position:relative;max-width:560px;">
+        <div style="height:100%;width:${p}%;background:${it.c};transition:width 1.3s;"></div>
+        <span style="position:absolute;left:${p+1}%;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10px;color:#4a4640;">${fmtK(it.v)}</span>
+      </div>
+    </div>`;
+  });
+}
+
+// ============================================================
+// VIZ 14 - DOT PLOT (YoY change)
+// ============================================================
+function renderDotPlot(){
+  const svg=document.getElementById('dotplot-svg');if(!svg)return;
+  svg.innerHTML='';
+  // Tall enough so rows don't overlap; wide left margin for category labels
+  const W=860,H=360,pL=120,pR=70,pT=40,pB=30;
+  svg.setAttribute('height',H);svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const cW=W-pL-pR,cH=H-pT-pB;
+
+  const changes=EXP25.map((v,i)=>({pct:parseFloat(pctChg(v,EXP24[i])),i})).sort((a,b)=>b.pct-a.pct);
+  // Clamp +189% outlier for scale so everything else is readable; show real value in label
+  const CLAMP=60;
+  const minP=Math.min(...changes.map(c=>c.pct))-5;
+  const maxP=CLAMP+5;
+  const range=maxP-minP;
+  function sx(p){return pL+Math.min(p,CLAMP-minP)/(range)*cW+(-minP/range)*cW;}
+  // simpler:
+  function sxc(p){const cp=Math.max(minP,Math.min(p,CLAMP));return pL+(cp-minP)/range*cW;}
+
+  // X axis ticks
+  [-30,-20,-10,0,10,20,30,40,50,60].forEach(v=>{
+    const x=sxc(v);
+    const tl=document.createElementNS('http://www.w3.org/2000/svg','line');
+    tl.setAttribute('x1',x);tl.setAttribute('y1',pT);tl.setAttribute('x2',x);tl.setAttribute('y2',pT+cH);
+    tl.setAttribute('stroke','#ede9e2');tl.setAttribute('stroke-width','1');
+    svg.appendChild(tl);
+    const tt=document.createElementNS('http://www.w3.org/2000/svg','text');
+    tt.setAttribute('x',x);tt.setAttribute('y',pT-6);
+    tt.setAttribute('text-anchor','middle');tt.setAttribute('fill','#9a948a');
+    tt.setAttribute('font-size','9');tt.setAttribute('font-family','IBM Plex Mono,monospace');
+    tt.textContent=(v>0?'+':'')+v+'%';svg.appendChild(tt);
+  });
+
+  // Zero line bold
+  const x0=sxc(0);
+  const zl=document.createElementNS('http://www.w3.org/2000/svg','line');
+  zl.setAttribute('x1',x0);zl.setAttribute('y1',pT-2);
+  zl.setAttribute('x2',x0);zl.setAttribute('y2',pT+cH+2);
+  zl.setAttribute('stroke','#9a948a');zl.setAttribute('stroke-width','1.5');
+  svg.appendChild(zl);
+
+  const spacing=cH/(changes.length+1);
+  changes.forEach((it,rank)=>{
+    const y=pT+spacing*(rank+1);
+    const xDot=sxc(it.pct);
+    const col=it.pct>=0?'#2a8a4a':'#c8380a';
+    const isOutlier=it.pct>CLAMP;
+
+    // line from zero to dot
+    const ln=document.createElementNS('http://www.w3.org/2000/svg','line');
+    ln.setAttribute('x1',x0);ln.setAttribute('y1',y);
+    ln.setAttribute('x2',xDot);ln.setAttribute('y2',y);
+    ln.setAttribute('stroke',col);ln.setAttribute('stroke-width','1.5');ln.setAttribute('opacity','0.45');
+    if(isOutlier){ln.setAttribute('stroke-dasharray','4 3');}
+    svg.appendChild(ln);
+
+    // dot
+    const dot=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    dot.setAttribute('cx',xDot);dot.setAttribute('cy',y);dot.setAttribute('r','7');
+    dot.setAttribute('fill',col);
+    dot.style.cursor='pointer';
+    dot.addEventListener('mouseenter',e=>showTip(CATS[LANG][it.i]+'<br>'+(it.pct>=0?'+':'')+it.pct+'%',e));
+    dot.addEventListener('mouseleave',hideTip);
+    svg.appendChild(dot);
+
+    // category label — always left-aligned in fixed left column
+    const tl=document.createElementNS('http://www.w3.org/2000/svg','text');
+    tl.setAttribute('x',pL-8);tl.setAttribute('y',y+4);
+    tl.setAttribute('text-anchor','end');tl.setAttribute('fill','#4a4640');
+    tl.setAttribute('font-size','11');tl.setAttribute('font-family','IBM Plex Mono,monospace');
+    tl.textContent=CATS[LANG][it.i];svg.appendChild(tl);
+
+    // value label — right of dot for positive, left for negative; never overlap dot
+    const valStr=(it.pct>=0?'+':'')+it.pct+'%'+(isOutlier?' *':'');
+    const tv=document.createElementNS('http://www.w3.org/2000/svg','text');
+    const pos=it.pct>=0;
+    tv.setAttribute('x',xDot+(pos?12:-12));tv.setAttribute('y',y+4);
+    tv.setAttribute('text-anchor',pos?'start':'end');
+    tv.setAttribute('fill',col);tv.setAttribute('font-size','10');tv.setAttribute('font-weight','600');
+    tv.setAttribute('font-family','IBM Plex Mono,monospace');
+    tv.textContent=valStr;svg.appendChild(tv);
+  });
+
+  // Outlier note
+  if(changes.some(c=>c.pct>CLAMP)){
+    const note=document.createElementNS('http://www.w3.org/2000/svg','text');
+    note.setAttribute('x',W-pR);note.setAttribute('y',H-4);
+    note.setAttribute('text-anchor','end');note.setAttribute('fill','#9a948a');
+    note.setAttribute('font-size','9');note.setAttribute('font-family','IBM Plex Mono,monospace');
+    note.textContent='* ось обрезана на +60%; реальное значение +188.9%';
+    svg.appendChild(note);
+  }
+}
+
+// ============================================================
+// VIZ 15 - WAFFLE
+// ============================================================
+function renderWaffle(){
+  const el=document.getElementById('waffle-main');
+  const leg=document.getElementById('waffle-legend');
+  if(!el||!leg)return;
+  const total=EXP25.reduce((a,b)=>a+b,0);
+  const shares=EXP25.map(v=>Math.round(v/total*100));
+  shares[0]+=(100-shares.reduce((a,b)=>a+b,0));
+  const cells=[];
+  EXP25.forEach((_,i)=>{for(let k=0;k<shares[i];k++)cells.push(i);});
+  el.innerHTML='';
+  el.style.cssText='display:flex;flex-wrap:wrap;gap:3px;width:290px;';
+  cells.forEach(idx=>{
+    const d=document.createElement('div');
+    d.style.cssText=`width:21px;height:21px;border-radius:2px;background:${PAL[idx%PAL.length]};cursor:pointer;transition:transform .15s;`;
+    d.addEventListener('mouseenter',e=>{d.style.transform='scale(1.25)';showTip(CATS[LANG][idx],e);});
+    d.addEventListener('mouseleave',()=>{d.style.transform='scale(1)';hideTip();});
+    el.appendChild(d);
+  });
+  leg.innerHTML='';
+  EXP25.forEach((_,i)=>{
+    if(shares[i]===0)return;
+    leg.innerHTML+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
+      <div style="width:12px;height:12px;background:${PAL[i%PAL.length]};border-radius:2px;flex-shrink:0;"></div>
+      <span style="font-size:12px;color:var(--ink2);">${CATS[LANG][i]} <span style="font-family:var(--mono);color:var(--ink3);">${shares[i]}%</span></span>
+    </div>`;
+  });
+}
+
+// ============================================================
+// VIZ 16 - LEISURE CHART (horizontal paired dots)
+// ============================================================
+function renderLeisure(){
+  const el=document.getElementById('leisure-chart');if(!el)return;
+  const items=[
+    {lbl:{ru:'Экспорт 2024',kz:'Экспорт 2024',en:'Export 2024'},v:445045,c:'#1a6fa855'},
+    {lbl:{ru:'Экспорт 2025',kz:'Экспорт 2025',en:'Export 2025'},v:435266,c:'#1a6fa8'},
+    {lbl:{ru:'Импорт 2024',kz:'Импорт 2024',en:'Import 2024'},v:510422,c:'#c8380a55'},
+    {lbl:{ru:'Импорт 2025',kz:'Импорт 2025',en:'Import 2025'},v:487915,c:'#c8380a'},
+  ];
+  const maxV=560000;
+  el.innerHTML='';
+  items.forEach(it=>{
+    const p=it.v/maxV*100;
+    const isDark=it.c.length===7;
+    el.innerHTML+=`<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+      <div style="width:150px;font-size:12px;color:${isDark?'var(--ink)':'var(--ink3)'};flex-shrink:0;">${it.lbl[LANG]}</div>
+      <div style="flex:1;height:${isDark?22:14}px;background:#ede9e2;position:relative;max-width:560px;">
+        <div style="height:100%;width:${p}%;background:${it.c};transition:width 1.3s;"></div>
+        <span style="position:absolute;left:${p+1}%;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10px;color:#4a4640;">${fmtK(it.v)}</span>
+      </div>
+    </div>`;
+  });
+}
+
+// ============================================================
+// RENDER ALL
+// ============================================================
+function renderAll(){
+  renderHBars();
+  renderTreemap();
+  renderBalance();
+  renderTransportCanvas();
+  renderLollipops();
+  renderITDonut();
+  renderSlope();
+  renderConstructionPaired();
+  renderIPRank();
+  renderEngBars();
+  renderBizIconBars();
+  renderFinSlope();
+  renderGovt();
+  renderDotPlot();
+  renderWaffle();
+  renderLeisure();
+}
+
+window.addEventListener('load',()=>{
+  renderAll();
+  setTimeout(()=>{
+    document.querySelectorAll('.sec').forEach(s=>{
+      if(s.getBoundingClientRect().top<window.innerHeight) s.classList.add('vis');
+    });
+  },200);
+});
+window.addEventListener('resize',renderAll);
+</script>
+</body>
+</html>
