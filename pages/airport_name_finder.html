@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Airport Name Finder</title>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#6f6f6f;
+      --line:#d8d8d8;
+      --soft:#f5f5f2;
+      --red:#d83b00;
+      --blue:#1464f4;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    .topline{height:1px;background:#cfcfcf;margin-top:18px}
+    header{
+      max-width:980px;
+      margin:0 auto;
+      padding:38px 20px 30px;
+      text-align:center;
+    }
+    .kicker{
+      color:var(--red);
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    h1{
+      margin:0;
+      font-family:Georgia, 'Times New Roman', serif;
+      font-size:58px;
+      line-height:.98;
+      letter-spacing:-2.2px;
+      color:#333;
+      font-weight:700;
+    }
+    .subtitle{
+      margin:14px auto 18px;
+      max-width:720px;
+      font-size:18px;
+      line-height:1.42;
+      color:#333;
+    }
+    .toolbar{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:8px;
+      margin:4px auto 20px;
+      flex-wrap:wrap;
+    }
+    .langBtn{
+      border:1px solid var(--line);
+      background:white;
+      padding:7px 12px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:700;
+      cursor:pointer;
+      color:#333;
+    }
+    .langBtn.active{
+      background:#111;
+      color:white;
+      border-color:#111;
+    }
+    .searchbox{
+      width:min(700px,calc(100vw - 40px));
+      height:60px;
+      margin:0 auto 10px;
+      display:flex;
+      align-items:center;
+      background:white;
+      border:1px solid #cfcfcf;
+      box-shadow:0 3px 14px rgba(0,0,0,.07);
+    }
+    .searchbox input{
+      width:100%;
+      height:100%;
+      border:0;
+      outline:0;
+      background:transparent;
+      padding:0 20px;
+      font-size:22px;
+      color:#111;
+    }
+    .meta{
+      font-size:14px;
+      color:#777;
+      margin-top:14px;
+    }
+    .codes{
+      max-width:900px;
+      margin:15px auto 0;
+      padding:0 20px;
+      font-size:14px;
+      line-height:2;
+      color:#666;
+    }
+    .codepill{
+      display:inline-block;
+      padding:3px 10px;
+      margin:4px 3px;
+      border:1px solid #cfcfcf;
+      background:white;
+      color:#222;
+      font-weight:800;
+      border-radius:999px;
+    }
+    .codepill.missing{
+      background:#eeeeee;
+      color:#9b9b9b;
+      border-color:#dddddd;
+    }
+    .codepill.available{
+      background:#ffffff;
+      color:#111;
+      border-color:#aaaaaa;
+    }
+    .story{
+      max-width:1180px;
+      margin:0 auto;
+      padding:0 22px 80px;
+      display:grid;
+      grid-template-columns:minmax(0, 1fr) 520px;
+      gap:52px;
+      align-items:start;
+    }
+    .left{padding-top:22px}
+    .airport-section{
+      min-height:112vh;
+      display:flex;
+      align-items:center;
+      border-top:1px solid var(--line);
+      padding:82px 0;
+    }
+    .airport-card{
+      width:100%;
+      max-width:610px;
+    }
+    .rank{
+      color:var(--red);
+      font-weight:800;
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:17px;
+    }
+    .iata{
+      font-family:Arial, Helvetica, sans-serif;
+      font-size:104px;
+      line-height:.84;
+      font-weight:900;
+      letter-spacing:-6px;
+      color:#111;
+      margin-bottom:18px;
+    }
+    .airport-name{
+      font-size:32px;
+      line-height:1.14;
+      font-weight:900;
+      letter-spacing:-.9px;
+      margin-bottom:13px;
+      color:#111;
+    }
+    .place{
+      font-size:19px;
+      line-height:1.35;
+      color:#222;
+      margin-bottom:12px;
+      font-weight:700;
+    }
+    .flag-img{
+      width:26px;
+      height:19px;
+      object-fit:cover;
+      border:1px solid #ddd;
+      margin-right:8px;
+      vertical-align:-3px;
+      box-shadow:0 0 0 1px rgba(0,0,0,.02);
+    }
+    .details{
+      font-size:15px;
+      color:#666;
+      line-height:1.75;
+      font-weight:700;
+    }
+    .name-match{
+      margin-top:13px;
+      font-size:18px;
+      line-height:1.45;
+      color:#111;
+      font-weight:900;
+      letter-spacing:.02em;
+      word-break:break-word;
+    }
+    .name-match .hit{color:var(--red)}
+    .type{
+      display:inline-block;
+      margin-top:17px;
+      padding:5px 10px;
+      background:#fff;
+      border:1px solid #cfcfcf;
+      color:#555;
+      font-size:12px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.03em;
+    }
+    .right{
+      position:sticky;
+      top:16px;
+      height:calc(100vh - 32px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .globe-wrap{width:100%;text-align:center}
+    #globe{width:100%;height:auto;display:block}
+    .globe-caption{
+      border-top:1px solid var(--line);
+      margin:4px auto 0;
+      padding-top:18px;
+      text-align:left;
+      max-width:450px;
+    }
+    .caption-iata{
+      color:var(--red);
+      font-size:60px;
+      font-weight:900;
+      line-height:.9;
+      letter-spacing:-3px;
+    }
+    .caption-name{
+      font-size:18px;
+      font-weight:900;
+      line-height:1.2;
+      margin-top:10px;
+      color:#111;
+    }
+    .caption-place{
+      font-size:14px;
+      color:#666;
+      margin-top:7px;
+      font-weight:800;
+    }
+    .empty{
+      max-width:650px;
+      margin:70px auto 130px;
+      text-align:center;
+      font-size:20px;
+      color:#555;
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      padding:60px 20px;
+    }
+    .footer{
+      max-width:980px;
+      margin:0 auto 40px;
+      padding:24px 20px 0;
+      border-top:1px solid var(--line);
+      color:#777;
+      font-size:12px;
+      line-height:1.5;
+    }
+    @media(max-width:920px){
+      h1{font-size:44px;letter-spacing:-1.4px}
+      .subtitle{font-size:16px}
+      .story{display:flex;flex-direction:column-reverse;padding:0 18px 70px;gap:20px}
+      .right{position:relative;top:auto;height:auto;margin:8px 0 20px}
+      .airport-section{min-height:100vh;padding:74px 0}
+      .iata{font-size:82px;letter-spacing:-4px}
+      .airport-name{font-size:25px}
+      .caption-iata{font-size:48px}
+      .searchbox{height:54px}
+      .searchbox input{font-size:19px}
+    }
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+  <header>
+    <div class="kicker" data-i18n="kicker">DATA INTERACTIVE</div>
+    <h1 data-i18n="title">Airport Name Finder</h1>
+    <div class="subtitle" data-i18n="subtitle">Enter first and last name. The page splits it into consecutive 3-letter chunks and checks them only against IATA airport codes.</div>
+    <div class="toolbar" aria-label="Language selector">
+      <button class="langBtn" data-lang="en">EN</button>
+      <button class="langBtn active" data-lang="ru">RU</button>
+      <button class="langBtn" data-lang="kk">KZ</button>
+    </div>
+    <div class="searchbox">
+      <input id="nameInput" value="" placeholder="Введите имя и фамилию" />
+    </div>
+    <div class="meta" id="meta">Loading airport database...</div>
+    <div class="codes" id="codes"></div>
+  </header>
+
+  <main id="main"></main>
+
+  <div class="footer" data-i18n="footer">
+    Data: IATA
+  </div>
+
+<script>
+const AIRPORTS_URL = "https://davidmegginson.github.io/ourairports-data/airports.csv";
+const WORLD_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+
+const input = document.getElementById('nameInput');
+const main = document.getElementById('main');
+const meta = document.getElementById('meta');
+const codesBox = document.getElementById('codes');
+
+let airports = [];
+let worldTopo = null;
+let countriesFeature = null;
+let landFeature = null;
+let active = null;
+let observer = null;
+let lang = 'ru';
+
+const ui = {
+  en: {
+    kicker:'DATA INTERACTIVE',
+    title:'Airport Name Finder',
+    subtitle:'Enter first and last name. The page splits it into consecutive 3-letter chunks and checks them only against IATA airport codes.',
+    placeholder:'Enter first and last name',
+    loading:'Loading airport database...',
+    meta:(n,m)=>`${n.toLocaleString('en-US')} IATA airports loaded · ${m} found`,
+    no:'No matches found among IATA airport codes.',
+    match:(i,n)=>`Match ${String(i).padStart(2,'0')} of ${n}`,
+    footer:'Data: IATA'
+  },
+  ru: {
+    kicker:'ИНТЕРАКТИВНЫЕ ДАННЫЕ',
+    title:'Airport Name Finder',
+    subtitle:'Введите имя и фамилию. Страница разбивает текст на 3 буквы подряд и ищет совпадения только среди IATA-кодов аэропортов.',
+    placeholder:'Введите имя и фамилию',
+    loading:'Загружается база аэропортов...',
+    meta:(n,m)=>`${n.toLocaleString('en-US')} IATA-аэропортов загружено · найдено: ${m}`,
+    no:'Совпадений среди IATA-кодов не найдено.',
+    match:(i,n)=>`Совпадение ${String(i).padStart(2,'0')} из ${n}`,
+    footer:'Данные: IATA'
+  },
+  kk: {
+    kicker:'ИНТЕРАКТИВ ДЕРЕК',
+    title:'Airport Name Finder',
+    subtitle:'Атыңыз бен тегіңізді енгізіңіз. Сайт мәтінді қатар тұрған 3 әріпке бөледі және тек IATA әуежай кодтарымен салыстырады.',
+    placeholder:'Атыңыз бен тегіңізді енгізіңіз',
+    loading:'Әуежай базасы жүктеліп жатыр...',
+    meta:(n,m)=>`${n.toLocaleString('en-US')} IATA әуежайы жүктелді · табылды: ${m}`,
+    no:'IATA кодтары арасында сәйкестік табылмады.',
+    match:(i,n)=>`Сәйкестік ${String(i).padStart(2,'0')} / ${n}`,
+    footer:'Дерек: IATA'
+  }
+};
+
+function countryName(code){
+  try {
+    return new Intl.DisplayNames([lang === 'kk' ? 'en' : lang], { type: 'region' }).of(code.toUpperCase()) || code;
+  } catch(e){
+    try { return new Intl.DisplayNames(['en'], { type: 'region' }).of(code.toUpperCase()) || code; } catch(_) { return code; }
+  }
+}
+function flagUrl(code){
+  return `https://flagcdn.com/48x36/${String(code || '').toLowerCase()}.png`;
+}
+function normalizeName(text){
+  return text.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z]/g,'');
+}
+function displayName(text){
+  return text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .toUpperCase()
+    .replace(/[^A-Z\s]/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+function getTrigrams(text){
+  const clean = normalizeName(text);
+  const out = [];
+  for(let i=0;i<=clean.length-3;i++) out.push(clean.slice(i,i+3));
+  return [...new Set(out)];
+}
+function highlightName(display, code){
+  const letters = [];
+  const clean = display.replace(/[^A-Z]/g, '');
+
+  for(let i = 0; i < display.length; i++){
+    if(/[A-Z]/.test(display[i])) letters.push(i);
+  }
+
+  const idx = clean.indexOf(code);
+  if(idx < 0) return display;
+
+  const start = letters[idx];
+  const end = letters[idx + 2] + 1;
+
+  return `${display.slice(0, start)}<span class="hit">${display.slice(start, end)}</span>${display.slice(end)}`;
+}
+function applyLanguage(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if(typeof ui[lang][key] === 'string') el.textContent = ui[lang][key];
+  });
+  document.querySelectorAll('.langBtn').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === lang));
+  input.placeholder = ui[lang].placeholder;
+}
+async function loadData(){
+  applyLanguage();
+  meta.textContent = ui[lang].loading;
+  const [csvText, world] = await Promise.all([
+    fetch(AIRPORTS_URL).then(r=>r.text()),
+    fetch(WORLD_URL).then(r=>r.json())
+  ]);
+  airports = d3.csvParse(csvText)
+    .filter(d => d.iata_code && d.iata_code.length === 3 && d.latitude_deg && d.longitude_deg)
+    .map(d => ({
+      iata: d.iata_code.toUpperCase(),
+      name: d.name,
+      city: d.municipality || 'Unknown city',
+      countryCode: d.iso_country,
+      lat: +d.latitude_deg,
+      lon: +d.longitude_deg,
+      type: d.type || 'airport'
+    }));
+
+  worldTopo = world;
+  countriesFeature = topojson.feature(worldTopo, worldTopo.objects.countries);
+  landFeature = topojson.feature(worldTopo, worldTopo.objects.land);
+  render();
+}
+function findMatches(name){
+  const trigrams = getTrigrams(name);
+  const set = new Set(trigrams);
+  const matches = airports
+    .filter(a => set.has(a.iata))
+    .sort((a,b) => trigrams.indexOf(a.iata) - trigrams.indexOf(b.iata));
+  return { trigrams, matches, display: displayName(name) };
+}
+function render(){
+  applyLanguage();
+  const {trigrams, matches, display} = findMatches(input.value);
+  const available = new Set(matches.map(d => d.iata));
+  meta.textContent = ui[lang].meta(airports.length, matches.length);
+  codesBox.innerHTML = trigrams.map(c => `<span class="codepill ${available.has(c) ? 'available' : 'missing'}">${c}</span>`).join('');
+
+  if(matches.length === 0){
+    main.innerHTML = `<div class="empty">${ui[lang].no}</div>`;
+    return;
+  }
+
+  main.innerHTML = `
+    <div class="story">
+      <section class="left" id="sections">
+        ${matches.map((a,i)=>`
+          <article class="airport-section" data-index="${i}">
+            <div class="airport-card">
+              <div class="rank">${ui[lang].match(i+1, matches.length)}</div>
+              <div class="iata">${a.iata}</div>
+              <div class="airport-name">${a.name}</div>
+              <div class="place"><img class="flag-img" src="${flagUrl(a.countryCode)}" alt="${a.countryCode}">${a.city}, ${countryName(a.countryCode)}</div>
+              <div class="details">${a.lat.toFixed(4)}, ${a.lon.toFixed(4)}</div>
+              <div class="name-match">${highlightName(display, a.iata)}</div>
+              <div class="type">${a.type.replaceAll('_',' ')}</div>
+            </div>
+          </article>
+        `).join('')}
+      </section>
+      <aside class="right">
+        <div class="globe-wrap">
+          <svg id="globe" viewBox="0 0 520 560" aria-label="Interactive globe"></svg>
+          <div class="globe-caption">
+            <div class="caption-iata" id="capIata"></div>
+            <div class="caption-name" id="capName"></div>
+            <div class="caption-place" id="capPlace"></div>
+          </div>
+        </div>
+      </aside>
+    </div>`;
+
+  initGlobe();
+  setupScroll(matches);
+  active = null;
+  setActive(matches[0], true);
+}
+
+let svg, projection, path, graticule;
+function initGlobe(){
+  svg = d3.select('#globe');
+  svg.selectAll('*').remove();
+  projection = d3.geoOrthographic()
+    .scale(214)
+    .translate([260, 260])
+    .clipAngle(90)
+    .precision(.35);
+  path = d3.geoPath(projection);
+  graticule = d3.geoGraticule10();
+
+  svg.append('path').attr('class','sphere')
+    .datum({type:'Sphere'})
+    .attr('d',path)
+    .attr('fill','#f2f6fb')
+    .attr('stroke','#222')
+    .attr('stroke-width',1.4);
+
+  svg.append('path').attr('class','graticule')
+    .datum(graticule)
+    .attr('d',path)
+    .attr('fill','none')
+    .attr('stroke','#c0c8d2')
+    .attr('stroke-width',.55)
+    .attr('opacity',.65);
+
+  svg.append('path').attr('class','land')
+    .datum(landFeature)
+    .attr('d',path)
+    .attr('fill','#d9d9d3')
+    .attr('stroke','none');
+
+  svg.append('path').attr('class','borders')
+    .datum(topojson.mesh(worldTopo, worldTopo.objects.countries, (a,b)=>a!==b))
+    .attr('d',path)
+    .attr('fill','none')
+    .attr('stroke','#ffffff')
+    .attr('stroke-width',.45)
+    .attr('opacity',.95);
+
+  svg.append('path').attr('class','outline')
+    .datum({type:'Sphere'})
+    .attr('d',path)
+    .attr('fill','none')
+    .attr('stroke','#222')
+    .attr('stroke-width',1.4);
+
+  svg.append('g').attr('class','markerGroup');
+}
+function markerPoint(a){
+  const visible = d3.geoDistance([a.lon,a.lat], [-projection.rotate()[0], -projection.rotate()[1]]) < Math.PI/2;
+  return visible ? projection([a.lon, a.lat]) : null;
+}
+function redrawGlobe(a){
+  svg.select('.sphere').attr('d',path);
+  svg.select('.graticule').attr('d',path);
+  svg.select('.land').attr('d',path);
+  svg.select('.borders').attr('d',path);
+  svg.select('.outline').attr('d',path);
+
+  const g = svg.select('.markerGroup');
+  g.selectAll('*').remove();
+  const p = markerPoint(a);
+  if(!p) return;
+
+  g.append('circle')
+    .attr('cx',p[0]).attr('cy',p[1]).attr('r',24)
+    .attr('fill','none')
+    .attr('stroke', '#d83b00')
+    .attr('stroke-width',2.2)
+    .attr('opacity',.42);
+  g.append('circle')
+    .attr('cx',p[0]).attr('cy',p[1]).attr('r',6)
+    .attr('fill','#d83b00');
+  g.append('text')
+    .attr('x',p[0]).attr('y',p[1]-31)
+    .attr('text-anchor','middle')
+    .attr('font-size',22)
+    .attr('font-weight',900)
+    .attr('fill','#111')
+    .text(a.iata);
+}
+function rotateTo(a, instant=false){
+  const current = projection.rotate();
+  const target = [-a.lon, -a.lat, 0];
+  if(instant){
+    projection.rotate(target);
+    redrawGlobe(a);
+    return;
+  }
+  d3.transition()
+    .duration(1150)
+    .ease(d3.easeCubicInOut)
+    .tween('rotate', () => {
+      const r = d3.interpolate(current, target);
+      return t => { projection.rotate(r(t)); redrawGlobe(a); };
+    });
+}
+function setActive(a, instant=false){
+  if(!a || (active && active.iata === a.iata && active.name === a.name)) return;
+  active = a;
+  document.getElementById('capIata').textContent = a.iata;
+  document.getElementById('capName').textContent = a.name;
+  document.getElementById('capPlace').innerHTML = `<img class="flag-img" src="${flagUrl(a.countryCode)}" alt="${a.countryCode}">${a.city}, ${countryName(a.countryCode)}`;
+  rotateTo(a, instant);
+}
+function setupScroll(matches){
+  if(observer) observer.disconnect();
+  const sections = [...document.querySelectorAll('.airport-section')];
+  observer = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter(e => e.isIntersecting)
+      .sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+    if(visible){
+      const idx = +visible.target.dataset.index;
+      setActive(matches[idx]);
+    }
+  }, { threshold:[.2,.35,.5,.65,.8], rootMargin:'-12% 0px -12% 0px' });
+  sections.forEach(s => observer.observe(s));
+}
+
+let timer;
+input.addEventListener('input', () => {
+  clearTimeout(timer);
+  timer = setTimeout(render, 120);
+});
+document.querySelectorAll('.langBtn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    lang = btn.dataset.lang;
+    render();
+  });
+});
+
+loadData().catch(err => {
+  console.error(err);
+  applyLanguage();
+  meta.textContent = 'Could not load airport database. Check internet connection.';
+});
+</script>
+</body>
+</html>
