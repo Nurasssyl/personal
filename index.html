@@ -200,7 +200,9 @@ body{font-family:var(--body);background:var(--paper);color:var(--ink);line-heigh
 .service-card p{font-size:13px;line-height:1.65;color:var(--ink)}
 .service-cta{margin-top:18px;padding:16px 18px;border:1px solid var(--ink);border-radius:4px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;background:var(--paper-off)}
 .service-cta strong{font-family:var(--serif);font-size:18px}
-.service-cta a{font-family:var(--sans);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--paper);background:var(--ink);padding:9px 14px;text-decoration:none;border-radius:2px}
+.contact-links{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.contact-link{font-family:var(--sans);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--paper);background:var(--ink);padding:9px 14px;text-decoration:none;border-radius:2px;display:inline-flex;align-items:center;gap:7px;transition:opacity .15s}
+.contact-link:hover{opacity:.78}
 @media(max-width:1100px){.services-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}}
 
 
@@ -301,7 +303,7 @@ body{font-family:var(--body);background:var(--paper);color:var(--ink);line-heigh
     <a href="https://www.linkedin.com/in/nurasyl-abdrazakuly/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
     <a href="https://github.com/Nurasssyl" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
     <a href="https://www.kaggle.com/nurasssyl" target="_blank" title="Kaggle"><i class="fab fa-kaggle"></i></a>
-    <a href="mailto:nurassyl.abdrazakuly@gmail.com" title="Email"><i class="fas fa-envelope"></i> </a>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nurassyl.abdrazakuly@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i> </a>
     <a href="https://wa.me/77073545257" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
   </div>
 </aside>
@@ -518,7 +520,14 @@ body{font-family:var(--body);background:var(--paper);color:var(--ink);line-heigh
       <div class="service-card"><h3>Data research</h3><p>Collecting, cleaning and analyzing open data for reports, media stories and presentations.</p></div>
       <div class="service-card"><h3>Web scraping & datasets</h3><p>Building clean datasets from public websites, listings, registries and messy source files.</p></div>
     </div>
-    <div class="service-cta"><strong>Need a map, dashboard or data story?</strong><a href="mailto:nurassyl.abdrazakuly@gmail.com">Contact me</a></div>
+    <div class="service-cta">
+      <strong>Need a map, dashboard or data story?</strong>
+      <div class="contact-links">
+        <a class="contact-link" href="https://mail.google.com/mail/?view=cm&fs=1&to=nurassyl.abdrazakuly@gmail.com" target="_blank" rel="noopener"><i class="fas fa-envelope"></i> Email</a>
+        <a class="contact-link" href="https://wa.me/77073545257" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <a class="contact-link" href="https://t.me/data_Nurasyl" target="_blank" rel="noopener"><i class="fab fa-telegram"></i> Telegram</a>
+      </div>
+    </div>
   </div>
 </section>
 
